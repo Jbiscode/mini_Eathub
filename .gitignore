@@ -2,6 +2,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+src/main/resources/spring/db.properties
+src/main/resources/spring/mybatis-config.xml
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

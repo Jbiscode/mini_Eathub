@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd     http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+<!--     View Resolver Bean HTML 정의 -->
+<!--     Spring MVC에서는 Controller가 반환하는 View 이름을 실제 View로 변환하는 작업을 View Resolver가 담당. -->
+<!--     View Resolver는 View 이름을 통해 실제 View를 찾아내는 역할을 한다. -->
+<!--    Thymeleaf 템플릿 Mapping-->
+    <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".html"/>
+        <property name="templateMode" value="HTML"/>
+    </bean>
+
+    <bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver"/>
+    </bean>
+
+    <bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine"/>
+    </bean>
+
+    <!--파일업로드를 위한 resolver-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5000000"/> <!-- 최대 5MB 까지-->
+    </bean>
+
+
+    <!-- Spring Web MVC를 하기 위해서 설정해야 하는 값들을 자동으로 추가 -->
+    <mvc:annotation-driven/>
+    <mvc:resources location="/WEB-INF/resources/css/" mapping="/css/**"/>
+    <mvc:resources location="/WEB-INF/resources/js/" mapping="/js/**"/>
+    <mvc:resources location="/WEB-INF/resources/images/" mapping="/images/**"/>
+    <mvc:resources location="/WEB-INF/resources/storage/" mapping="/storage/**"/>
+
+
+    <!-- component scan -->
+    <context:component-scan base-package="com.eathub"/>
+
+
+
+</beans>

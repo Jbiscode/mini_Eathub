@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eathub.mapper.UserMapper">
+
+<!-- 아이디 중복 체크-->
+<!--    <select id="isExistId" parameterType="String" resultType="user">-->
+<!--        select * from usertable where id=#{id}-->
+<!--    </select>-->
+
+<!--등록 -->
+<!--    <insert id="write" parameterType="user">-->
+<!--        insert into usertable values(#{name},#{id},#{pwd})-->
+<!--    </insert>-->
+
+<!--    <select id="getUserList" parameterType="java.util.Map" resultType="user">-->
+<!--        SELECT * FROM usertable-->
+<!--        LIMIT #{startNum}, #{endNum}-->
+<!--    </select>-->
+
+<!--    <select id="getTotalA" resultType="int">-->
+<!--        select count(*) from usertable-->
+<!--    </select>-->
+
+
+<!-- id에 해당하는 글 가져오기 -->
+<!--    <select id="getUser" parameterType="String" resultType="user">-->
+<!--        select * from usertable where id = #{id}-->
+<!--    </select>-->
+
+<!--    <update id="update" parameterType="user">-->
+<!--        update usertable set name=#{name}, pwd=#{pwd} where id=#{id}-->
+<!--    </update>-->
+
+
+<!--삭제-->
+<!--    <delete id="delete" parameterType="String">-->
+<!--        delete from usertable where id=#{id}-->
+<!--    </delete>-->
+</mapper>
