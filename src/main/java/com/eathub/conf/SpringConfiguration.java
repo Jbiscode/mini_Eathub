@@ -1,6 +1,5 @@
 package com.eathub.conf;
 
-import com.eathub.mapper.UserMapper;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -70,7 +69,7 @@ public class SpringConfiguration {
 
 //    Mapper 추가시 아래와 같이 추가
 //    @Bean
-//    public MapperFactoryBean<UserMapper> userMapper() throws Exception {
-//        return mapperFactoryBean(UserMapper.class);
+//    public MapperFactoryBean<MemberMapper> userMapper() throws Exception {
+//        return mapperFactoryBean(MemberMapper.class);
 //    }
 }
