@@ -2,40 +2,54 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.eathub.mapper.UserMapper">
+<mapper namespace="com.eathub.mapper.MemberMapper">
 
-<!-- 아이디 중복 체크-->
-<!--    <select id="isExistId" parameterType="String" resultType="user">-->
-<!--        select * from usertable where id=#{id}-->
-<!--    </select>-->
+<!-- 아이디 중복 체크 -->
+	<select id="selectMemberById" parameterType="String" resultType="memberDTO">
+		select * from members where member_id=#{member_id}
+	</select>
 
 <!--등록 -->
-<!--    <insert id="write" parameterType="user">-->
-<!--        insert into usertable values(#{name},#{id},#{pwd})-->
-<!--    </insert>-->
+	<insert id="insertMember" parameterType="memberDTO" >
+		insert into members (member_id, 
+							member_pwd, 
+							member_name, 
+							member_email, 
+							member_phone, 
+							member_type) 
+					values(#{member_id},
+							#{member_pwd},
+							#{member_name},
+							#{member_email},
+							#{member_phone},
+							#{member_type})
+	</insert>
+<select id="login" parameterType="loginDTO" resultType="memberDTO">
+	select * from members where member_id=#{member_id} and member_pwd=#{member_pwd}
+</select>
 
-<!--    <select id="getUserList" parameterType="java.util.Map" resultType="user">-->
-<!--        SELECT * FROM usertable-->
+<!--    <select id="getmemberList" parameterType="java.util.Map" resultType="member">-->
+<!--        SELECT * FROM members-->
 <!--        LIMIT #{startNum}, #{endNum}-->
 <!--    </select>-->
 
 <!--    <select id="getTotalA" resultType="int">-->
-<!--        select count(*) from usertable-->
+<!--        select count(*) from members-->
 <!--    </select>-->
 
 
 <!-- id에 해당하는 글 가져오기 -->
-<!--    <select id="getUser" parameterType="String" resultType="user">-->
-<!--        select * from usertable where id = #{id}-->
+<!--    <select id="getmember" parameterType="String" resultType="member">-->
+<!--        select * from members where id = #{id}-->
 <!--    </select>-->
 
-<!--    <update id="update" parameterType="user">-->
-<!--        update usertable set name=#{name}, pwd=#{pwd} where id=#{id}-->
+<!--    <update id="update" parameterType="member">-->
+<!--        update members set name=#{name}, pwd=#{pwd} where id=#{id}-->
 <!--    </update>-->
 
 
 <!--삭제-->
 <!--    <delete id="delete" parameterType="String">-->
-<!--        delete from usertable where id=#{id}-->
+<!--        delete from members where id=#{id}-->
 <!--    </delete>-->
 </mapper>
