@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1 th:text="${message}">Hello World</h1>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Title</title>
+    </head>
+    <body>
+        <a th:href="@{/members/login}">로그인</a>
+        메인입니다.
+        <h1 th:text="${message}">Hello World</h1>
+    </body>
 </html>
