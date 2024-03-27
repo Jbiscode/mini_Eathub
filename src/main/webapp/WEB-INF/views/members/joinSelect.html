@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>타입선택</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./login.css" th:href="@{/css/login.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+</head>
+<body>
+    
+
+    <main>
+        <div class="signselect-wrapper">
+            <div class="inner">
+                <div class="logo">Logo</div>
+                <div class="selectDiv">
+                    <div class="customer-select">
+                        <a href="./login.html" th:href="@{/members/join/customer}"><div></div></a>
+                        <p><a href="./login.html" th:href="@{/members/join/customer}">고객 회원가입</a></p>
+                    </div>
+                    <div class="owner-select">
+                        <a href="./login.html" th:href="@{/members/join/owner}"> <div></div></a>
+                        <p><a href="./login.html" th:href="@{/members/join/owner}">점주 회원가입</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <!-- footer -->
+    <aside id="dock">
+        <div class="dock-container">
+            <nav class="dock-menu">
+                <a href="javascript:void(0)">
+                    <i class="home">홈</i>
+                </a>
+                <a href="javascript:void(0)">
+                    <i class="search-icon">검색</i>
+                </a>
+                <a href="javascript:void(0)">
+                    <i class="review">리뷰</i>
+                </a>
+                <a href="javascript:void(0)">
+                    <i class="mydining">마이다이닝</i>
+                </a>
+                <a href="javascript:void(0)" class="active">
+                    <i class="account">내 계정</i>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+</body>
+</html>
