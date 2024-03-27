@@ -6,6 +6,7 @@ src/main/resources/spring/db.properties
 src/main/resources/spring/mybatis-config.xml
 
 ### IntelliJ IDEA ###
+.idea/
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
