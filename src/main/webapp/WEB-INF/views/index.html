@@ -10,7 +10,7 @@
 </head>
 <body>
 <span th:with="isLoggedIn=${session != null and session.member_id != null}">
-    <a th:if="${!isLoggedIn}" th:href="@{/members/login}">로그인</a>
+    <a th:if="${!isLoggedIn}" th:href="@{/members/login}">로그인하기</a>
     <a th:if="${isLoggedIn}" th:href="@{/members/logout}">로그아웃</a>
 </span>
 
