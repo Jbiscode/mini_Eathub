@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!--/* footer th:fragment="footerFragment" */-->
+<aside  th:fragment="footerFragment" id="dock">
+    <div class="dock-container">
+        <nav class="dock-menu">
+            <a href="javascript:void(0)" th:href="@{/}" th:class="${page=='home'?'active':''}">
+                <i class="home">홈</i>
+            </a>
+            <a href="javascript:void(0)">
+                <i class="search-icon">검색</i>
+            </a>
+            <a href="javascript:void(0)">
+                <i class="review">리뷰</i>
+            </a>
+            <a href="javascript:void(0)">
+                <i class="mydining">마이다이닝</i>
+            </a>
+            <a href="javascript:void(0)" th:href="@{/members/my}" th:class="${page=='members'?'active':''}">
+                <i class="account">내 계정</i>
+            </a>
+        </nav>
+    </div>
+</aside>
+<!--/* footer */-->
+</body>
+</html>
