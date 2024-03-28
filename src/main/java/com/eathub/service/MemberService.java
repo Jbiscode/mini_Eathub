@@ -18,6 +18,10 @@ public class MemberService {
         return memberMapper.selectMemberById(member_id);
     }
 
+    public  boolean isExist(String member_id) {
+        return memberMapper.selectMemberById(member_id) != null;
+    }
+
     public void insertMember(MemberDTO memberDTO) {
         memberMapper.insertMember(memberDTO);
     }
@@ -34,13 +38,18 @@ public class MemberService {
             return null;
         }
 
-        MemberDTO loginMember = memberMapper.selectMemberById(loginDTO.getMember_id());
+        MemberDTO loginMember = memberMapper.login(loginDTO);
 
-        if (loginMember == null || !loginMember.getMember_pwd().equals(loginDTO.getMember_pwd())) {
+        if (loginMember == null) {
             bindingResult.rejectValue("member_pwd", "incorrect");
             return null;
         }
 
         return loginMember;
     }
+
+    public void updateMember(String member_id, MemberDTO memberDTO) {
+        memberMapper.updateMember(member_id, memberDTO);
+    }
+
 }
