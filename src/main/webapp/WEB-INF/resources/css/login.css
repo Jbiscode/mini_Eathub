@@ -44,12 +44,12 @@ input::placeholder {
 }
 /* main */
 .signselect-wrapper{
-    padding: 10vh 0 40px;
+    padding: 6vh 0 40px;
     max-width: 760px;
     margin: 0 auto;
 }
 .signin-wrapper{
-    padding: 28vh 0 40px;
+    padding: 16vh 0 40px;
 }
 .inner{
     margin: 0 auto;
@@ -58,7 +58,7 @@ input::placeholder {
     max-width: 480px;
 }
 .logo{
-    margin-bottom: 200px;
+    margin-bottom: 160px;
     background: url(/images/20240327_160702.png) 50% 50% no-repeat;
     text-indent: -9999px;
     width: 200px;
