@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/members")
@@ -23,25 +25,51 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @ModelAttribute("page")
+    public String page() {
+        return "members";
+    }
+
+    @GetMapping("/my")
+    public String myPage(MemberDTO memberDTO, Model model, HttpSession session) {
+        model.addAttribute("memberDTO", memberDTO);
+        if (session.getAttribute("member_id")==null) {
+            return "redirect:/members/login";
+        }
+        return "/members/myPage";
+    }
+
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login(Model model, HttpSession session) {
+        if (session.getAttributeNames().hasMoreElements()) {
+            log.error("이미 로그인 되어 있습니다");
+            return "/index";
+        }
         model.addAttribute("loginDTO", new LoginDTO());
         log.info("login 페이지 이동");
         return "/members/loginForm";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginDTO loginDTO, BindingResult bindingResult) {
+    public String login(@ModelAttribute LoginDTO loginDTO, BindingResult bindingResult, HttpSession session) {
         log.info("로그인 시도");
-        MemberDTO loginMember = memberService.login(loginDTO , bindingResult);
+        MemberDTO loginMember = memberService.login(loginDTO, bindingResult);
 
         if (loginMember == null) {
             log.error("로그인 실패");
             return "/members/loginForm";
         }
-        return "/index";
+
+        // 세션에 로그인 정보 저장
+        session.setAttribute("member_id", loginMember.getMember_id());
+        return "redirect:/";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
 
     /**
      * 회원가입 종류 선택

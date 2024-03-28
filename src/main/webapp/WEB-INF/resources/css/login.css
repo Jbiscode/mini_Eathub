@@ -133,7 +133,8 @@ span.error-message {
 }
 
 .sticky-bottom-btn{
-    position: fixed;
+    /*position: fixed;*/
+    position: relative;
     bottom: 0;
     z-index: 99;
     width: auto;
@@ -144,7 +145,7 @@ span.error-message {
     box-sizing: border-box;
     width: 100vw;
     background: rgba(255, 255, 255, .7);
-    -webkit-backdrop-filter: blur(2px);
+    /*-webkit-backdrop-filter: blur(2px);*/
     backdrop-filter: blur(2px);
     display: flex;
 }
@@ -247,63 +248,8 @@ span.error-message {
 .mb-10{
     margin-bottom: 10px;
 }
-/* dock */
-#dock{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 99;
-}
-#dock .dock-container{
-    position: relative;
-    margin: 0 auto;
-    max-width: 480px;
-    background: #fff;
-    border-top: 1px solid #f9f9f9;
-}
-#dock .dock-container .dock-menu{
-    display: flex;
-    height: 48px;
-    box-sizing: border-box;
-    position: relative;
-}
-#dock .dock-container .dock-menu a{
-    position: relative;
-    display: block;
-    flex: 1;
-    height: 48px;
-}
-#dock .dock-container .dock-menu a i{
-    display: block;
-    text-indent: -999em;
-    height: 48px;
-    /* background: 50% 50% no-repeat; */
-    overflow: hidden;
-    width: 100%;
-    position: relative;
-    /* background-size: 25px; */
-    mask-repeat: no-repeat;
-    mask-position: 50% 50%;
-    mask-size: 25px;
-    background-color: #222222;
-}
-#dock .dock-container .dock-menu a i.home{
-    mask-image: url(/images/home-solid.svg);
-}
-#dock .dock-container .dock-menu a i.search-icon{
-    mask-image: url(/images/search-solid.svg);
-}
-#dock .dock-container .dock-menu a i.review{
-    mask-image: url(/images/comment-dots-regular.svg);
-}
-#dock .dock-container .dock-menu a i.mydining{
-    mask-image: url(/images/calendar-minus-regular.svg);
-}
-#dock .dock-container .dock-menu a i.account{
-    mask-image: url(/images/user-regular.svg);
-}
-
-#dock .dock-container .dock-menu a.active i{
-    background-color: #FF3D00;
+.messages{
+    position: absolute;
+    left: 65%;
+    top: 30.3%;
 }

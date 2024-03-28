@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Title</title>
-    </head>
-    <body>
-        <a th:href="@{/members/login}">로그인</a>
-        메인입니다.
-        <h1 th:text="${message}">Hello World</h1>
-    </body>
+<head>
+    <meta charset="UTF-8"/>
+    <title>메인</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:replace="~{template/common-js :: common-links}"/>
+    <link rel="stylesheet" href="./login.css" th:href="@{/css/login.css}">
+    <link rel="stylesheet" href="../../resources/css/footer.css" th:href="@{/css/footer.css}">
+</head>
+<body>
+<span th:with="isLoggedIn=${session != null and session.member_id != null}">
+    <a th:if="${!isLoggedIn}" th:href="@{/members/login}">로그인</a>
+    <a th:if="${isLoggedIn}" th:href="@{/members/logout}">로그아웃</a>
+</span>
+
+<div th:replace="~{template/footer :: footerFragment}"></div>
+</body>
 </html>

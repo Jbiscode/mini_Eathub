@@ -4,11 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link th:replace="~{template/common-js :: common-links}"/>
     <link rel="stylesheet" href="../../resources/css/login.css" th:href="@{/css/login.css}">
     <script defer th:src="@{/js/joinForm.js}" src="../../resources/js/joinForm.js"></script>
 </head>
@@ -50,7 +46,8 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <input type="text" class="form-input" th:field="${memberDTO.member_id}" placeholder="아이디를 입력해 주세요.">
+                                <input type="text" class="form-input" th:field="${memberDTO.member_id}" placeholder="아이디를 입력해 주세요."  onfocusout="checkMemberId()" th:autocomplete="off">
+                                <span class="messages" id="message_id"></span>
                             </div>
                         </div>
                     </div>
@@ -63,10 +60,10 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control mb-10">
-                                <input type="password" class="form-input" th:field="${memberDTO.member_pwd}" placeholder="비밀번호를 입력해주세요.">
+                                <input type="password" th:autocomplete="new-password" class="form-input" th:field="${memberDTO.member_pwd}" placeholder="비밀번호를 입력해주세요.">
                             </div>
                             <div class="input-control">
-                                <input type="password" class="form-input" id="member_pwd_re" placeholder="비밀번호를 다시 한 번 입력해 주세요.">
+                                <input type="password" th:autocomplete="new-password" class="form-input" id="member_pwd_re" placeholder="비밀번호를 다시 한 번 입력해 주세요.">
                             </div>
                         </div>
                     </div>
@@ -102,7 +99,6 @@
                 </form>
             </div>
         </section>
-
     </main>
 </div>
 </body>
