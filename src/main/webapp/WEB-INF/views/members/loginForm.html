@@ -4,16 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eatHub 로그인</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link th:replace="~{template/common-js :: common-links}"/>
     <link rel="stylesheet" href="./login.css" th:href="@{/css/login.css}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="../../resources/css/footer.css" th:href="@{/css/footer.css}">
     <script defer src="../../resources/js/loginForm.js" th:src="@{/js/loginForm.js}"></script>
 </head>
 <body>
-    
     <main>
         <div class="signin-wrapper">
             <div class="inner">
@@ -21,12 +17,12 @@
                     <div class="logo">Logo</div>
 
                     <div class="input-control mb-30">
-                        <input type="text" class="form-input form-input-underline" placeholder="아이디" th:field="${loginDTO.member_id}">
+                        <input type="text" class="form-input form-input-underline" th:autocomplete="member_id" placeholder="아이디" th:field="${loginDTO.member_id}">
                         <span class="error-message" th:errors="${loginDTO.member_id}"></span>
                     </div>
 
                     <div class="input-control mb-30">
-                        <input type="password" class="form-input form-input-underline" placeholder="비밀번호" th:field="${loginDTO.member_pwd}">
+                        <input type="password" class="form-input form-input-underline" th:autocomplete="current-password" placeholder="비밀번호" th:field="${loginDTO.member_pwd}">
                         <span class="error-message" th:errors="${loginDTO.member_pwd}"></span>
                     </div>
 
@@ -42,6 +38,9 @@
             <button id="submitButton" type="submit" class="btn" >로그인</button>
         </div>
     </main>
+
+    <!-- footer -->
+    <div th:replace="~{template/footer :: footerFragment}"></div>
 
 </body>
 </html>
