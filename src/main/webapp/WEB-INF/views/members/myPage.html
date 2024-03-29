@@ -6,12 +6,261 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:replace="~{template/common-js :: common-links}"/>
     <link rel="stylesheet" href="../../resources/css/footer.css" th:href="@{/css/footer.css}">
-
-
+    <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
+    <link rel="stylesheet" href="../../resources/css/memberMypage.css" th:href="@{/css/memberMypage.css}">
+    <!-- 임시 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    
 </head>
 <body>
-마이페이지
-<!-- footer -->
-<div th:replace="~{template/footer :: footerFragment}"></div>
+    <div class="wrapper">
+        <header id="header" class="opaque">
+            <div class="container">
+                <div class="header-left">
+                    <h1 class="page-title">마이페이지</h1>
+                </div>
+                <div class="header-right">
+                    <button class="qww8ue0"></button>
+                </div>
+            </div>
+        </header>
+        <main id="main">
+            <section class="section pt-24">
+                <div class="container gutter-sm">
+                    <div class="mypage-profile">
+                        <div class="profile-pic">
+                            <div class="img"></div>
+                        </div>
+                        <div class="mypage-profile-meta">
+                            <h4 class="name username">이름</h4>
+                            <div class="meta">
+                                <dl>
+                                    <dt>팔로잉</dt>
+                                    <dt>0</dt>
+                                </dl>
+                                <span>|</span>
+                                <dl>
+                                    <dt>팔로워</dt>
+                                    <dt>0</dt>
+                                </dl>
+                            </div>
+                            <div class="social"></div>
+                        </div>
+                    </div>
+                    <div class="mypage-profile--desc" style="display: block;">
+                        <button class="btn btn-md btn-outline btn-rounded full-width mt-18">
+                            <span class="label">프로필 수정</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <section class="section section-overflow-hidden">
+                <div class="profile-summary"></div>
+            </section>
+            <div class="tab-menu mb-10 sticky mt-18">
+                <ul>
+                    <li class="active">
+                        <a href="javascript:void(0)">
+                            <span>
+                                나의 저장
+                                <small class="count">0</small>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <span>
+                                리뷰
+                                <small class="count">0</small>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="collection">
+                <!-- <section class="section pt-20 section-overflow-hidden"></section> -->
+                <section class="section pt-24 section-overflow-hidden">
+                    <div class="container gutter-sm">
+                        <!-- 저장한 레스토랑이 있을 때 들어가는 부분 -->
+                        <div class="__d-flex"> <!-- 저장한 레스토랑 생기면 d-flex추가-->
+                            <div class="section-header --d-flex __v-center" style="justify-content: space-between; width: 100%;">
+                                <h3 class="section-title font-16">
+                                    저장한 레스토랑
+                                    <span class="count">0</span>
+                                </h3>
+                                <div class="__d-flex __v-center font-13"> <!-- 저장한 레스토랑 생기면 들어가는 부분 -->
+                                    전체보기
+                                    <img src="../../resources/images/arrow-right-20.svg" alt="오른쪽화살표" style="margin-left: 4px; width: 16px; height: 16px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-body pb-32" style="padding-top: 10px;">
+                            <div id="common_infinity_sc" class="saved-restaurant-list">
+                                <div id="common_infinity_sc_0" data-dummy="189">
+                                    <div class="saved-restaurant-list-item">
+                                        <div class="restaurant-info">
+                                            <a href="javascript:void(0)" class="tb">
+                                                <div class="img" style="background-image: url(../../resources/images/mongtanjeju.jpg);"></div>
+                                            </a>
+                                            <a href="javascript:void(0)" class="detail">
+                                                <h4 class="name">산청숯불가든 마곡</h4>
+                                                <p class="excerpt">
+                                                    산청흑돼지, 전통 숯가마, 산지 식재료로 우리만의 맛을 담은 고깃집
+                                                    <br>
+                                                    * 원격 웨이팅이 많은 관계로 저녁 9시 50분까지 연락을 못받으실 경우, 영업시간 내 입장이 부득이하게 어려울 수 있습니다.
+                                                    <br>
+                                                    * 당일 예약 불가/평일 오후 5시까지만 예약 가능합니다.
+                                                </p>
+                                                <div class="restaurant-meta">
+                                                    <div class="rating" style="margin-bottom: 5px;">
+                                                        <span class="star">4.7</span>
+                                                        <span class="count">(123)</span>
+                                                    </div>
+                                                    <span class="tags">돼지고기구이 • 마곡</span>
+                                                    <span class="price">점심 저녁 동일가 1 - 4만원</span>
+                                                </div>
+                                            </a>
+                                            <a href="javascript:void(0)" class="btn-bookmark active">북마크</a>
+                                        </div>
+                                        <div>
+                                            <div class="restaurant-meta mt-16"></div>
+                                            <div class="form-control">
+                                                <input type="text" class="form-input" placeholder="나만의 메모를 남겨보세요.">
+                                            </div>
+                                        </div>
+                                        <div style="height: 0px;">&nbsp;</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 저장한 레스토랑이 없을 때 들어가는 부분 -->
+                        <div class="scrap-wrap">
+                            <div class="nodata font-14 mb-24">
+                                저장한 레스토랑이 없습니다.
+                                <br>
+                                <b>요즘 많이 저장하는 레스토랑을 확인해보세요</b>
+                            </div>
+                            <div class="v-scroll">
+                                <div class="v-scroll-inner">
+                                    <div class="restaurant-list restaurant-list-sm">
+                                        <div class="restaurant-list-item">
+                                            <div class="tb">
+                                                <img src="../../resources/images/mongtanjeju.jpg" class="img" alt="햄버거">
+                                                <a href="javascript:void(0)" class="btn-bookmark">북마크</a>
+                                            </div>
+                                            <div class="detail">
+                                                <a>
+                                                    <h3 class="name">하이디라오 코엑스점</h3>
+                                                    <div class="meta">
+                                                        <span class="tags">중식 • 삼성</span>
+                                                        <span class="score">
+                                                            4.5
+                                                            <span class="count">(166)</span>
+                                                        </span>
+                                                        
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="restaurant-list-item">
+                                            <div class="tb">
+                                                <img src="../../resources/images/mongtanjeju.jpg" class="img" alt="햄버거">
+                                                <a href="javascript:void(0)" class="btn-bookmark">북마크</a>
+                                            </div>
+                                            <div class="detail">
+                                                <a>
+                                                    <h3 class="name">하이디라오 코엑스점</h3>
+                                                    <div class="meta">
+                                                        <span class="tags">중식 • 삼성</span>
+                                                        <span class="score">
+                                                            4.5
+                                                            <span class="count">(166)</span>
+                                                        </span>
+                                                        
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="restaurant-list-item">
+                                            <div class="tb">
+                                                <img src="../../resources/images/mongtanjeju.jpg" class="img" alt="햄버거">
+                                                <a href="javascript:void(0)" class="btn-bookmark">북마크</a>
+                                            </div>
+                                            <div class="detail">
+                                                <a>
+                                                    <h3 class="name">하이디라오 코엑스점</h3>
+                                                    <div class="meta">
+                                                        <span class="tags">중식 • 삼성</span>
+                                                        <span class="score">
+                                                            4.5
+                                                            <span class="count">(166)</span>
+                                                        </span>
+                                                        
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="restaurant-list-item">
+                                            <div class="tb">
+                                                <img src="../../resources/images/mongtanjeju.jpg" class="img" alt="햄버거">
+                                                <a href="javascript:void(0)" class="btn-bookmark">북마크</a>
+                                            </div>
+                                            <div class="detail">
+                                                <a>
+                                                    <h3 class="name">하이디라오 코엑스점</h3>
+                                                    <div class="meta">
+                                                        <span class="tags">중식 • 삼성</span>
+                                                        <span class="score">
+                                                            4.5
+                                                            <span class="count">(166)</span>
+                                                        </span>
+                                                        
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+        </main>
+    </div>
+
+
+    <!-- footer -->
+    <!-- <div th:replace="~{template/footer :: footerFragment}"></div> -->
+    <aside  th:fragment="footerFragment" id="dock">
+        <div class="dock-container">
+            <nav class="dock-menu">
+                <a href="javascript:void(0)" th:href="@{/}" th:class="${page=='home'?'active':''}">
+                    <i class="home">홈</i>
+                </a>
+                <a href="javascript:void(0)">
+                    <i class="search-icon">검색</i>
+                </a>
+                <a href="javascript:void(0)">
+                    <i class="review">리뷰</i>
+                </a>
+                <a href="javascript:void(0)">
+                    <i class="mydining">마이다이닝</i>
+                </a>
+                <a href="javascript:void(0)"
+                th:with="userLoggedIn=${session.member_id != null}"
+                th:href="${userLoggedIn} ? '/members/my' : '/members/login'"
+                th:class="${page=='members'?'active':''}">
+                    <i class="account">내 계정</i>
+                </a>
+            </nav>
+        </div>
+    </aside>
+    <script src="../../resources/js/myPage.js"></script>
 </body>
 </html>
