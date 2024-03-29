@@ -1,5 +1,5 @@
 *{
-    letter-spacing: -.05em;
+    letter-spacing: -.15em;
     -webkit-font-smoothing: antialiased;
 }
 body{
@@ -9,6 +9,9 @@ body{
 a{
     text-decoration: none;
     color: #222222;
+}
+b{
+    font-weight: 900 !important;
 }
 input, select, textarea {
     font-size: inherit;
@@ -43,6 +46,241 @@ input::placeholder {
     letter-spacing: -.05em;
 }
 
+.hide{
+    display: none !important;
+}
+
+/* color */
+.color-red{
+    color: #FF3D00;
+}
+.color-gray{
+    color: #666;
+}
+
+/* padding-top */
+.pt-20{
+    padding-top: 20px;
+}
+.pt-24{
+    padding-top: 24px;
+}
+
+/* padding-bottom */
+.pb-32{
+    padding-bottom: 32px;
+}
+
+/* margin-top */
+.mt-10{
+    margin-top: 10px;
+}
+.mt-18 {
+    margin-top: 18px !important;
+}
+
+/* margin-bottom */
+.mb-10{
+    margin-bottom: 10px;
+}
+.mb-24{
+    margin-bottom: 24px !important;
+}
+.mb-30{
+    margin-bottom: 30px;
+}
+.mb-32{
+    margin-bottom: 32px;
+}
+
+/* font-size */
+.font-12{
+    font-size: 12px !important;
+}
+.font-13{
+    font-size: 13px !important;
+}
+.font-14{
+    font-size: 14px !important;
+}
+.font-16 {
+    font-size: 16px !important;
+}
+.font-12 {
+    font-size: 12px !important;
+}
+/* flex */
+.__d-flex {
+    display: flex;
+}
+.__d-flex.__v-center {
+    align-items: center;
+}
+
+/* button */
+.btn {
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    color: #000;
+}
+.btn-rounded {
+    border-radius: 24px;
+    background-color: #f9f9f9;
+    padding: 12px 18px;
+}
+.btn-md, .btn-lg {
+    line-height: 46px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 20px;
+    position: relative;
+    border: 1px solid #666;
+    border-radius: 6px;
+    background: #fff;
+}
+.btn-md {
+    line-height: 38px;
+}
+.btn-rounded.btn-outline-orange, .btn-rounded.btn-outline-red, .btn-rounded.btn-outline {
+    border-radius: 24px;
+}
+.btn-rounded .label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    display: block;
+    position: relative;
+}
+.btn.full-width {
+    width: 100%;
+    display: block;
+}
+.btn.full-width .label {
+    position: relative;
+    display: block;
+}
+.btn-md.btn-outline, .btn-lg.btn-outline {
+    border-color: #d5d5d5;
+}
+
+/* bookmark */
+.btn-bookmark {
+    display: block;
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    background: #fff url(../images/bookmark.svg) 50% 50% no-repeat;
+    border-radius: 50%;
+    text-indent: -999em;
+    overflow: hidden;
+}
+.btn-bookmark.active {
+    background: url(../images/bookmarked.svg) 50% 50% no-repeat;
+    
+}
+.saved-restaurant-list-item .restaurant-info .btn-bookmark {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+/* restaurant-item */
+.restaurant-list-item {
+    width: 250px;
+}
+.restaurant-list .restaurant-list-item {
+    display: block;
+    flex: 0 0 auto;
+    margin-right: 10px;
+}
+.restaurant-list-item .tb {
+    display: block;
+    border-radius: 10px;
+    border: 1px solid #f4f4f4;
+    overflow: hidden;
+    margin-bottom: 8px;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    position: relative;
+}
+.restaurant-list.restaurant-list-sm {
+    display: block;
+}
+.restaurant-list.restaurant-list-sm .restaurant-list-item {
+    width: 200px;
+}
+
+/* meta */
+.meta {
+    display: flex;
+    align-items: baseline;
+    line-height: 14px;
+}
+.meta .tags {
+    overflow: hidden;
+    display: block;
+    max-width: 135px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: #666;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    letter-spacing: -.10em;
+}
+.meta .score {
+    display: block;
+    padding-left: 18px;
+    position: relative;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 6px;
+    letter-spacing: -.05em;
+}
+.meta .score:before {
+    background: url(../images/star-yellow.svg) 0% 50% no-repeat;
+    background-size: contain;
+    width: 16px;
+    height: 16px;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.meta .score .count {
+    font-size: 13px;
+    color: #999;
+    letter-spacing: -.04em;
+}
+
+/* form-input */
+.form-input {
+    background: #f9f9f9;
+    font-size: 14px;
+    border-radius: 8px;
+    display: block;
+    width: 100%;
+    padding: 16px;
+    line-height: 21px;
+}
+.form-input::placeholder {
+    color: #c8c8c8;
+    letter-spacing: -.05em;
+}
+.section .confirm-box .__select-textarea textarea, .section .form-input {
+    padding: 12px;
+}
+
+/* Animation */
 @keyframes shake {
     0% { transform: translate(0.5px, 0.5px) rotate(0deg); }
     10% { transform: translate(-0.5px, -1px) rotate(-0.2deg); }

@@ -41,9 +41,6 @@
 }
 
 /* login */
-.mb-30{
-    margin-bottom: 30px;
-}
 .signin-wrapper form{
     padding: 0 10px;
 }
@@ -186,31 +183,11 @@ span.error-message {
     line-height: normal;
     font-weight: 500;
 }
-.color-red{
-    color: #FF3D00;
-}
-.color-gray{
-    color: #666;
-}
-.font-12{
-    font-size: 12px;
-}
-.mt-10{
-    margin-top: 10px;
-}
-.mb-32{
-    margin-bottom: 32px;
-}
-.mb-10{
-    margin-bottom: 10px;
-}
 .messages{
     position: relative;
     left: 65%;
     bottom: 33px;
 }
-
-
 .valid{
     border: 4px solid rgba(0, 255, 0, 0.30);
 }
