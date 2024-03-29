@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>마이페이지</title>
@@ -8,12 +8,7 @@
     <link rel="stylesheet" href="../../resources/css/footer.css" th:href="@{/css/footer.css}">
     <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
     <link rel="stylesheet" href="../../resources/css/memberMypage.css" th:href="@{/css/memberMypage.css}">
-    <!-- 임시 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <script defer src="../../resources/js/myPage.js" th:src="@{/js/myPage.js}"></script>
     
 </head>
 <body>
@@ -94,7 +89,7 @@
                                 </h3>
                                 <div class="__d-flex __v-center font-13"> <!-- 저장한 레스토랑 생기면 들어가는 부분 -->
                                     전체보기
-                                    <img src="../../resources/images/arrow-right-20.svg" alt="오른쪽화살표" style="margin-left: 4px; width: 16px; height: 16px;">
+                                    <img src="../../resources/images/arrow-right-20.svg" th:src="@{/images/arrow-right-20.svg}" alt="오른쪽화살표" style="margin-left: 4px; width: 16px; height: 16px;">
                                 </div>
                             </div>
                         </div>
@@ -104,7 +99,7 @@
                                     <div class="saved-restaurant-list-item">
                                         <div class="restaurant-info">
                                             <a href="javascript:void(0)" class="tb">
-                                                <div class="img" style="background-image: url(../../resources/images/mongtanjeju.jpg);"></div>
+                                                <div class="img" style="background-image: url(/images/mongtanjeju.jpg);"></div>
                                             </a>
                                             <a href="javascript:void(0)" class="detail">
                                                 <h4 class="name">산청숯불가든 마곡</h4>
@@ -149,7 +144,7 @@
                                     <div class="restaurant-list restaurant-list-sm">
                                         <div class="restaurant-list-item">
                                             <div class="tb">
-                                                <img src="../../resources/images/mongtanjeju.jpg" class="img" alt="햄버거">
+                                                <img src="../../resources/images/mongtanjeju.jpg" th:src="@{/images/mongtanjeju.jpg}" class="img" alt="햄버거">
                                                 <a href="javascript:void(0)" class="btn-bookmark">북마크</a>
                                             </div>
                                             <div class="detail">
@@ -168,7 +163,7 @@
                                         </div>
                                         <div class="restaurant-list-item">
                                             <div class="tb">
-                                                <img src="../../resources/images/mongtanjeju.jpg" class="img" alt="햄버거">
+                                                <img src="../../resources/images/mongtanjeju.jpg" th:src="@{/images/mongtanjeju.jpg}" class="img" alt="햄버거">
                                                 <a href="javascript:void(0)" class="btn-bookmark">북마크</a>
                                             </div>
                                             <div class="detail">
@@ -187,7 +182,7 @@
                                         </div>
                                         <div class="restaurant-list-item">
                                             <div class="tb">
-                                                <img src="../../resources/images/mongtanjeju.jpg" class="img" alt="햄버거">
+                                                <img src="../../resources/images/mongtanjeju.jpg" th:src="@{/images/mongtanjeju.jpg}" class="img" alt="햄버거">
                                                 <a href="javascript:void(0)" class="btn-bookmark">북마크</a>
                                             </div>
                                             <div class="detail">
@@ -206,7 +201,7 @@
                                         </div>
                                         <div class="restaurant-list-item">
                                             <div class="tb">
-                                                <img src="../../resources/images/mongtanjeju.jpg" class="img" alt="햄버거">
+                                                <img src="../../resources/images/mongtanjeju.jpg" th:src="@{/images/mongtanjeju.jpg}" class="img" alt="햄버거">
                                                 <a href="javascript:void(0)" class="btn-bookmark">북마크</a>
                                             </div>
                                             <div class="detail">
@@ -236,31 +231,7 @@
 
 
     <!-- footer -->
-    <!-- <div th:replace="~{template/footer :: footerFragment}"></div> -->
-    <aside  th:fragment="footerFragment" id="dock">
-        <div class="dock-container">
-            <nav class="dock-menu">
-                <a href="javascript:void(0)" th:href="@{/}" th:class="${page=='home'?'active':''}">
-                    <i class="home">홈</i>
-                </a>
-                <a href="javascript:void(0)">
-                    <i class="search-icon">검색</i>
-                </a>
-                <a href="javascript:void(0)">
-                    <i class="review">리뷰</i>
-                </a>
-                <a href="javascript:void(0)">
-                    <i class="mydining">마이다이닝</i>
-                </a>
-                <a href="javascript:void(0)"
-                th:with="userLoggedIn=${session.member_id != null}"
-                th:href="${userLoggedIn} ? '/members/my' : '/members/login'"
-                th:class="${page=='members'?'active':''}">
-                    <i class="account">내 계정</i>
-                </a>
-            </nav>
-        </div>
-    </aside>
-    <script src="../../resources/js/myPage.js"></script>
+    <div th:replace="~{template/footer :: footerFragment}"></div>
+
 </body>
 </html>
