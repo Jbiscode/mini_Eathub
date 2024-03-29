@@ -6,6 +6,7 @@
     <title>회원가입</title>
     <link th:replace="~{template/common-js :: common-links}"/>
     <link rel="stylesheet" href="../../resources/css/login.css" th:href="@{/css/login.css}">
+    <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
     <script defer th:src="@{/js/joinForm.js}" src="../../resources/js/joinForm.js"></script>
 </head>
 <body>
@@ -61,9 +62,11 @@
                         <div class="form-block-body">
                             <div class="input-control mb-10">
                                 <input type="password" th:autocomplete="new-password" class="form-input" th:field="${memberDTO.member_pwd}" placeholder="비밀번호를 입력해주세요.">
+                                <span class="messages" id="message_pwd"></span>
                             </div>
                             <div class="input-control">
                                 <input type="password" th:autocomplete="new-password" class="form-input" id="member_pwd_re" placeholder="비밀번호를 다시 한 번 입력해 주세요.">
+                                <span class="messages" id="message_pwd_re"></span>
                             </div>
                         </div>
                     </div>
