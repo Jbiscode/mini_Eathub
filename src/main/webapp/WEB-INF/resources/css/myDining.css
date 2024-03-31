@@ -1,0 +1,35 @@
+.tag-radio-group {
+    display: flex;
+    align-items: center;
+}
+.tag-radio-group label {
+    display: block;
+    position: relative;
+    margin-right: 6px;
+}
+._1ximz4q2 {
+    border-color: #000;
+    color: #000;
+    background: var(--_1ltqxco3);
+}
+.tag-radio-group label input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+.tag-radio-group label .label {
+    white-space: nowrap;
+    display: block;
+    border-radius: 18px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 15px;
+    border: 1px solid transparent;
+    color: #666;
+}
+.tag-radio-group input:checked+.label {
+    border-color: #000;
+    color: #000;
+    background: #fff;
+}
