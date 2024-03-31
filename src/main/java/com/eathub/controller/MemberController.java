@@ -2,6 +2,7 @@ package com.eathub.controller;
 
 import com.eathub.dto.LoginDTO;
 import com.eathub.dto.MemberJoinDTO;
+import com.eathub.dto.MemberUpdateDTO;
 import com.eathub.entity.ENUM.MEMBER_TYPE;
 import com.eathub.entity.Members;
 import com.eathub.service.MemberService;
@@ -148,6 +149,31 @@ public class MemberController {
                         .build()
         );
         return "/members/loginForm";
+    }
+    @GetMapping("/update")
+    public String updatePage(Model model, HttpSession session) {
+        if (session.getAttribute("member_id") == null) {
+            return "redirect:/members/login";
+        }
+        Members member = memberService.selectMemberById((String) session.getAttribute("member_id"));
+        model.addAttribute("memberUpdateDTO", member);
+        return "/members/updateForm";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute MemberUpdateDTO memberUpdateDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/members/updateForm";
+        }
+        memberService.updateMember(
+                Members.builder()
+                        .member_id(memberUpdateDTO.getMember_id())
+                        .member_pwd(memberUpdateDTO.getMember_pwd())
+                        .member_email(memberUpdateDTO.getMember_email())
+                        .member_phone(memberUpdateDTO.getMember_phone())
+                        .build()
+        );
+        return "redirect:/members/my";
     }
 
 }

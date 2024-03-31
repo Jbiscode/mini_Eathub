@@ -13,7 +13,7 @@ public class MemberJoinDTO {
   private String member_name;
   private String member_email;
   private String member_phone;
-  private MEMBER_TYPE member_type;
+  private final MEMBER_TYPE member_type;
 
   public MemberJoinDTO(MEMBER_TYPE member_type) {
     this.member_type = member_type;

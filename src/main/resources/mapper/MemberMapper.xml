@@ -43,9 +43,13 @@
 <!--        select * from members where id = #{id}-->
 <!--    </select>-->
 
-<!--    <update id="update" parameterType="member">-->
-<!--        update members set name=#{name}, pwd=#{pwd} where id=#{id}-->
-<!--    </update>-->
+    <update id="updateMember" parameterType="members">
+        update members
+        set member_email=#{member_email},
+            member_pwd=#{member_pwd},
+            member_phone=#{member_phone}
+                       where member_id=#{member_id}
+    </update>
 
 
 <!--삭제-->
