@@ -4,8 +4,8 @@
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
         <typeAliases>
-                <typeAlias type="com.eathub.dto.MemberDTO" alias="memberDTO"/>
+                <typeAlias type="com.eathub.dto.MemberJoinDTO" alias="memberJoinDTO"/>
                 <typeAlias type="com.eathub.dto.LoginDTO" alias="loginDTO"/>
-
+                <typeAlias type="com.eathub.entity.Members" alias="members"/>
         </typeAliases>
 </configuration>

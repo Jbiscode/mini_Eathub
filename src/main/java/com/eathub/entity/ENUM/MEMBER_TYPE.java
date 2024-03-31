@@ -1,4 +1,4 @@
-package com.eathub.type;
+package com.eathub.entity.ENUM;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
