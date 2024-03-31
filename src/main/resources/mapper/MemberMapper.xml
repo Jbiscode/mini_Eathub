@@ -5,12 +5,12 @@
 <mapper namespace="com.eathub.mapper.MemberMapper">
 
 <!-- 아이디 중복 체크 -->
-	<select id="selectMemberById" parameterType="String" resultType="memberDTO">
+	<select id="selectMemberById" parameterType="String" resultType="members">
 		select * from members where member_id=#{member_id}
 	</select>
 
 <!--등록 -->
-	<insert id="insertMember" parameterType="memberDTO" >
+	<insert id="insertMember" parameterType="members" >
 		insert into members (member_id, 
 							member_pwd, 
 							member_name, 
@@ -24,7 +24,7 @@
 							#{member_phone},
 							#{member_type})
 	</insert>
-<select id="login" parameterType="loginDTO" resultType="memberDTO">
+<select id="login" parameterType="loginDTO" resultType="members">
 	select * from members where member_id=#{member_id} and member_pwd=#{member_pwd}
 </select>
 
@@ -43,9 +43,13 @@
 <!--        select * from members where id = #{id}-->
 <!--    </select>-->
 
-<!--    <update id="update" parameterType="member">-->
-<!--        update members set name=#{name}, pwd=#{pwd} where id=#{id}-->
-<!--    </update>-->
+    <update id="updateMember" parameterType="members">
+        update members
+        set member_email=#{member_email},
+            member_pwd=#{member_pwd},
+            member_phone=#{member_phone}
+                       where member_id=#{member_id}
+    </update>
 
 
 <!--삭제-->

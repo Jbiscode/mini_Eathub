@@ -1,14 +1,15 @@
 package com.eathub.controller;
 
 import com.eathub.dto.LoginDTO;
-import com.eathub.dto.MemberDTO;
+import com.eathub.dto.MemberJoinDTO;
+import com.eathub.dto.MemberUpdateDTO;
+import com.eathub.entity.ENUM.MEMBER_TYPE;
+import com.eathub.entity.Members;
 import com.eathub.service.MemberService;
-import com.eathub.type.MEMBER_TYPE;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,9 +32,9 @@ public class MemberController {
     }
 
     @GetMapping("/my")
-    public String myPage(MemberDTO memberDTO, Model model, HttpSession session) {
-        model.addAttribute("memberDTO", memberDTO);
-        if (session.getAttribute("member_id")==null) {
+    public String myPage(MemberJoinDTO memberJoinDTO, Model model, HttpSession session) {
+        model.addAttribute("memberJoinDTO", memberJoinDTO);
+        if (session.getAttribute("member_id") == null) {
             return "redirect:/members/login";
         }
         return "/members/myPage";
@@ -53,7 +54,7 @@ public class MemberController {
     @PostMapping("/login")
     public String login(@ModelAttribute LoginDTO loginDTO, BindingResult bindingResult, HttpSession session) {
         log.info("로그인 시도");
-        MemberDTO loginMember = memberService.login(loginDTO, bindingResult);
+        Members loginMember = memberService.login(loginDTO, bindingResult);
 
         if (loginMember == null) {
             log.error("로그인 실패");
@@ -90,28 +91,30 @@ public class MemberController {
      */
     @GetMapping("/join/customer")
     public String joinCustomer(Model model) {
-        model.addAttribute("memberDTO", new MemberDTO(MEMBER_TYPE.CUSTOMER));
+        model.addAttribute("memberJoinDTO", new MemberJoinDTO(MEMBER_TYPE.CUSTOMER));
         return "/members/joinForm";
     }
 
     @PostMapping("/join/customer")
-    public String joinCustomer(@ModelAttribute MemberDTO memberDTO, BindingResult bindingResult, Model model) {
+    public String joinCustomer(@ModelAttribute MemberJoinDTO memberJoinDTO, BindingResult bindingResult, Model model) {
 
-        if (!StringUtils.hasText(memberDTO.getMember_id())) {
-            log.error("아이디가 없습니다.");
-            bindingResult.rejectValue("member_id", "required");
-        }
-        if (!StringUtils.hasText(memberDTO.getMember_pwd())) {
-            log.error("비밀번호가 없습니다.");
-            bindingResult.rejectValue("member_pwd", "required");
-        }
+        memberService.validateJoinInputs(memberJoinDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "/members/joinForm";
         }
-        memberService.insertMember(memberDTO);
+        memberService.insertMember(
+                Members.builder()
+                        .member_id(memberJoinDTO.getMember_id())
+                        .member_pwd(memberJoinDTO.getMember_pwd())
+                        .member_name(memberJoinDTO.getMember_name())
+                        .member_email(memberJoinDTO.getMember_email())
+                        .member_phone(memberJoinDTO.getMember_phone())
+                        .member_type(MEMBER_TYPE.CUSTOMER)
+                        .build()
+        );
 
-        model.addAttribute("loginDTO", new LoginDTO(memberDTO.getMember_id(), ""));
+        model.addAttribute("loginDTO", new LoginDTO(memberJoinDTO.getMember_id(), ""));
         return "/members/loginForm";
     }
 
@@ -124,21 +127,53 @@ public class MemberController {
      */
     @GetMapping("/join/owner")
     public String joinOwner(Model model) {
-        model.addAttribute("memberDTO", new MemberDTO(MEMBER_TYPE.OWNER));
+        model.addAttribute("memberJoinDTO", new MemberJoinDTO(MEMBER_TYPE.OWNER));
         return "/members/joinForm";
     }
 
     @PostMapping("/join/owner")
-    public String joinOwner(MemberDTO memberDTO, BindingResult bindingResult) {
-        if (!StringUtils.hasText(memberDTO.getMember_id())) {
-            bindingResult.rejectValue("member_id", "required");
-        }
-        if (!StringUtils.hasText(memberDTO.getMember_pwd())) {
-            bindingResult.rejectValue("member_pwd", "required");
-        }
+    public String joinOwner(MemberJoinDTO memberJoinDTO, BindingResult bindingResult) {
 
-        memberService.insertMember(memberDTO);
+        memberService.validateJoinInputs(memberJoinDTO, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "/members/joinForm";
+        }
+        memberService.insertMember(
+                Members.builder()
+                        .member_id(memberJoinDTO.getMember_id())
+                        .member_pwd(memberJoinDTO.getMember_pwd())
+                        .member_name(memberJoinDTO.getMember_name())
+                        .member_email(memberJoinDTO.getMember_email())
+                        .member_phone(memberJoinDTO.getMember_phone())
+                        .member_type(MEMBER_TYPE.OWNER)
+                        .build()
+        );
         return "/members/loginForm";
+    }
+    @GetMapping("/update")
+    public String updatePage(Model model, HttpSession session) {
+        if (session.getAttribute("member_id") == null) {
+            return "redirect:/members/login";
+        }
+        Members member = memberService.selectMemberById((String) session.getAttribute("member_id"));
+        model.addAttribute("memberUpdateDTO", member);
+        return "/members/updateForm";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute MemberUpdateDTO memberUpdateDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/members/updateForm";
+        }
+        memberService.updateMember(
+                Members.builder()
+                        .member_id(memberUpdateDTO.getMember_id())
+                        .member_pwd(memberUpdateDTO.getMember_pwd())
+                        .member_email(memberUpdateDTO.getMember_email())
+                        .member_phone(memberUpdateDTO.getMember_phone())
+                        .build()
+        );
+        return "redirect:/members/my";
     }
 
 }

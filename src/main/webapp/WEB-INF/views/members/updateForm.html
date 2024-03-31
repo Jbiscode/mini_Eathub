@@ -1,10 +1,107 @@
 <!DOCTYPE html>
-<html lang="ko">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=chrome" />
-        <title>Document</title>
-    </head>
-    <body></body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 정보 수정</title>
+    <link th:replace="~{template/common-js :: common-links}"/>
+    <link rel="stylesheet" href="../../resources/css/login.css" th:href="@{/css/login.css}">
+    <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
+    <script defer th:src="@{/js/joinForm.js}" src="../../resources/js/joinForm.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <header id="header">
+        <div class="container">
+            <div class="header-left">
+                <button class="btn-back">이전</button>
+                <h1 class="page-title" >내 정보수정</h1>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="section">
+            <div class="container">
+                <form th:action th:object="${memberUpdateDTO}" method="post">
+                    <div class="form-block mb-32">
+                        <div class="form-block-header">
+                            <h3 class="form-block-title">
+                                이름
+                                <span class="color-red">*</span>
+                            </h3>
+                        </div>
+                        <div class="form-block-body">
+                            <div class="input-control">
+                                <input type="text" class="form-input" th:field="${memberUpdateDTO.member_name}" disabled>
+                            </div>
+                            <p class="color-gray font-12 mt-10">레스토랑을 예약할 때 사용할 이름이므로 꼭 실명을 사용해주세요.</p>
+                        </div>
+                    </div>
+                    <div class="form-block mb-32">
+                        <div class="form-block-header">
+                            <h3 class="form-block-title">
+                                아이디
+                                <span class="color-red">*</span>
+                            </h3>
+                        </div>
+                        <div class="form-block-body">
+                            <div class="input-control">
+                                <input type="text" class="form-input" th:field="${memberUpdateDTO.member_id}"  th:autocomplete="off" readonly>
+                                <span class="messages" id="message_id"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-block mb-32">
+                        <div class="form-block-header">
+                            <h3 class="form-block-title">
+                                비밀번호
+                                <span class="color-red">*</span>
+                            </h3>
+                        </div>
+                        <div class="form-block-body">
+                            <div class="input-control mb-10">
+                                <input type="password" th:autocomplete="new-password" class="form-input" th:field="${memberUpdateDTO.member_pwd}" placeholder="비밀번호를 입력해주세요.">
+                                <span class="messages" id="message_pwd"></span>
+                            </div>
+                            <div class="input-control">
+                                <input type="password" th:autocomplete="new-password" class="form-input" id="member_pwd_re" placeholder="비밀번호를 다시 한 번 입력해 주세요.">
+                                <span class="messages" id="message_pwd_re"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-block mb-32">
+                        <div class="form-block-header">
+                            <h3 class="form-block-title">
+                                이메일
+                                <span class="color-red">*</span>
+                            </h3>
+                        </div>
+                        <div class="form-block-body">
+                            <div class="input-control">
+                                <input type="text" class="form-input" th:field="${memberUpdateDTO.member_email}" placeholder="이메일을 입력해 주세요.">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-block mb-32">
+                        <div class="form-block-header">
+                            <h3 class="form-block-title">
+                                전화번호
+                                <span class="color-red">*</span>
+                            </h3>
+                        </div>
+                        <div class="form-block-body">
+                            <div class="input-control">
+                                <input type="text" class="form-input" th:field="${memberUpdateDTO.member_phone}" placeholder="전화번호를 입력해 주세요.">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sticky-bottom-btn">
+                        <button type="submit" class="btn">저장하기</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
 </html>
