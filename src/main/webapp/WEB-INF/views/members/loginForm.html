@@ -14,7 +14,7 @@
     <main>
         <div class="signin-wrapper">
             <div class="inner">
-                <form id="loginForm" action th:action="@{/members/login}" th:object="${loginDTO}" method="post">
+                <form id="loginForm" action th:action th:object="${loginDTO}" method="post">
                     <div class="logo">Logo</div>
 
                     <div class="input-control mb-30">

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../resources/css/footer.css" th:href="@{/css/footer.css}">
 </head>
 <body>
-<span th:with="isLoggedIn=${session != null and session.member_id != null}">
+<span th:with="isLoggedIn=${session != null and session.loginMember != null}">
     <a th:if="${!isLoggedIn}" th:href="@{/members/login}">로그인하기</a>
     <a th:if="${isLoggedIn}" th:href="@{/members/logout}">로그아웃</a>
 </span>
