@@ -18,7 +18,7 @@
                 <i class="mydining">마이다이닝</i>
             </a>
             <a href="javascript:void(0)"
-               th:with="userLoggedIn=${session.member_id != null}"
+               th:with="userLoggedIn=${session.loginMember != null}"
                th:href="${userLoggedIn} ? '/members/my' : '/members/login'"
                th:class="${page=='members'?'active':''}">
                 <i class="account">내 계정</i>

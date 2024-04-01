@@ -14,7 +14,7 @@
     <header id="header">
         <div class="container">
             <div class="header-left">
-                <button class="btn-back">이전</button>
+                <button id="back" class="btn-back">이전</button>
                 <h1 class="page-title" th:text="${#strings.equals(memberJoinDTO.member_type,'CUSTOMER')? '고객 회원가입' : '점주 회원가입'}" >회원가입</h1>
             </div>
         </div>

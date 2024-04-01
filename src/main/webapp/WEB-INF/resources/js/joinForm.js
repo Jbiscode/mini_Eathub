@@ -20,7 +20,7 @@ inputs.forEach((input, index) => {
 });
 
 // 뒤로가기 이미지 버튼 클릭 시 이전 페이지로 이동
-document.querySelector('.btn-back').addEventListener('click', function () {
+document.getElementById('back').addEventListener('click', function () {
     history.back();
 });
 

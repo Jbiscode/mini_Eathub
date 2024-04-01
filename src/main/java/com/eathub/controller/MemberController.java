@@ -1,5 +1,6 @@
 package com.eathub.controller;
 
+import com.eathub.conf.SessionConf;
 import com.eathub.dto.LoginDTO;
 import com.eathub.dto.MemberJoinDTO;
 import com.eathub.dto.MemberUpdateDTO;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -32,27 +35,22 @@ public class MemberController {
     }
 
     @GetMapping("/my")
-    public String myPage(MemberJoinDTO memberJoinDTO, Model model, HttpSession session) {
+    public String myPage(MemberJoinDTO memberJoinDTO, Model model) {
         model.addAttribute("memberJoinDTO", memberJoinDTO);
-        if (session.getAttribute("member_id") == null) {
-            return "redirect:/members/login";
-        }
         return "/members/myPage";
     }
 
     @GetMapping("/login")
     public String login(Model model, HttpSession session) {
-        if (session.getAttributeNames().hasMoreElements()) {
-            log.error("이미 로그인 되어 있습니다");
-            return "/index";
-        }
         model.addAttribute("loginDTO", new LoginDTO());
         log.info("login 페이지 이동");
         return "/members/loginForm";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginDTO loginDTO, BindingResult bindingResult, HttpSession session) {
+    public String login(@ModelAttribute LoginDTO loginDTO, BindingResult bindingResult,
+                        @RequestParam(defaultValue = "/") String redirectURL,
+                        HttpServletRequest request) {
         log.info("로그인 시도");
         Members loginMember = memberService.login(loginDTO, bindingResult);
 
@@ -61,9 +59,10 @@ public class MemberController {
             return "/members/loginForm";
         }
 
+        HttpSession session = request.getSession();
         // 세션에 로그인 정보 저장
-        session.setAttribute("member_id", loginMember.getMember_id());
-        return "redirect:/";
+        session.setAttribute(SessionConf.LOGIN_MEMBER, loginMember.getMember_id());
+        return "redirect:" + redirectURL;
     }
 
     @GetMapping("/logout")
@@ -150,12 +149,10 @@ public class MemberController {
         );
         return "/members/loginForm";
     }
+
     @GetMapping("/update")
     public String updatePage(Model model, HttpSession session) {
-        if (session.getAttribute("member_id") == null) {
-            return "redirect:/members/login";
-        }
-        Members member = memberService.selectMemberById((String) session.getAttribute("member_id"));
+        Members member = memberService.selectMemberById((String) session.getAttribute(SessionConf.LOGIN_MEMBER));
         model.addAttribute("memberUpdateDTO", member);
         return "/members/updateForm";
     }
