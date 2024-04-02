@@ -49,7 +49,8 @@
                         <div class="form-block-body">
                             <div class="input-control">
                                 <input type="text" class="form-input" th:field="${memberJoinDTO.member_id}" placeholder="아이디를 입력해 주세요."  th:autocomplete="off">
-                                <span class="messages" id="message_id" th:errors="${memberJoinDTO.member_id}"></span>
+                                <span class="messages" th:errors="${memberJoinDTO.member_id}"></span>
+                                <span class="messages" id="message_id"></span>
                             </div>
                         </div>
                     </div>
@@ -63,7 +64,8 @@
                         <div class="form-block-body">
                             <div class="input-control mb-10">
                                 <input type="password" th:autocomplete="new-password" class="form-input" th:field="${memberJoinDTO.member_pwd}" placeholder="비밀번호를 입력해주세요.">
-                                <span class="messages" id="message_pwd" th:errors="${memberJoinDTO.member_pwd}"></span>
+                                <span class="messages" th:errors="${memberJoinDTO.member_pwd}"></span>
+                                <span class="messages" id="message_pwd"></span>
                             </div>
                             <div class="input-control">
                                 <input type="password" th:autocomplete="new-password" class="form-input" id="member_pwd_re" placeholder="비밀번호를 다시 한 번 입력해 주세요.">
@@ -81,7 +83,8 @@
                         <div class="form-block-body">
                             <div class="input-control">
                                 <input type="text" class="form-input" th:field="${memberJoinDTO.member_email}" placeholder="이메일을 입력해 주세요.">
-                                <span class="messages" id="message_email" th:errors="${memberJoinDTO.member_email}"></span>
+                                <span class="messages" th:errors="${memberJoinDTO.member_email}"></span>
+                                <span class="messages" id="message_email"></span>
                             </div>
                         </div>
                     </div>
@@ -95,7 +98,8 @@
                         <div class="form-block-body">
                             <div class="input-control">
                                 <input type="text" class="form-input" th:field="${memberJoinDTO.member_phone}" placeholder="전화번호를 입력해 주세요.">
-                                <span class="messages" id="message_phone" th:errors="${memberJoinDTO.member_phone}"></span>
+                                <span class="messages" th:errors="${memberJoinDTO.member_phone}"></span>
+                                <span class="messages" id="message_phone"></span>
                             </div>
                         </div>
                     </div>
