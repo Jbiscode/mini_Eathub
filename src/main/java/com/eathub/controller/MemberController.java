@@ -6,7 +6,9 @@ import com.eathub.dto.MemberJoinDTO;
 import com.eathub.dto.MemberUpdateDTO;
 import com.eathub.entity.ENUM.MEMBER_TYPE;
 import com.eathub.entity.Members;
+import com.eathub.entity.RestaurantInfo;
 import com.eathub.service.MemberService;
+import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,6 +32,7 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
 
     private final MemberService memberService;
+    private final RestaurantService restaurantService;
 
     @ModelAttribute("page")
     public String page() {
@@ -36,8 +40,10 @@ public class MemberController {
     }
 
     @GetMapping("/my")
-    public String myPage(MemberJoinDTO memberJoinDTO, Model model) {
+    public String myPage(MemberJoinDTO memberJoinDTO, Model model, HttpSession session) {
         model.addAttribute("memberJoinDTO", memberJoinDTO);
+        List<RestaurantInfo> zzimRestaurantList = restaurantService.getZzimRestaurantList((Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ));
+        model.addAttribute("zzimRestaurantList", zzimRestaurantList);
         return "/members/myPage";
     }
 
@@ -61,7 +67,9 @@ public class MemberController {
         }
 
         HttpSession session = request.getSession();
+        long memberSeq = memberService.getMemberSeqById(loginMember.getMember_id());
         // 세션에 로그인 정보 저장
+        session.setAttribute(SessionConf.LOGIN_MEMBER_SEQ, memberSeq);
         session.setAttribute(SessionConf.LOGIN_MEMBER, loginMember.getMember_id());
         return "redirect:" + redirectURL;
     }
@@ -113,7 +121,7 @@ public class MemberController {
         );
 
         model.addAttribute("loginDTO", new LoginDTO(memberJoinDTO.getMember_id(), ""));
-        return "/members/loginForm";
+        return "redirect:/members/login";
     }
 
 
@@ -147,7 +155,7 @@ public class MemberController {
         );
 
         model.addAttribute("loginDTO", new LoginDTO(memberJoinDTO.getMember_id(), ""));
-        return "/members/loginForm";
+        return "redirect:/members/login";
     }
 
     @GetMapping("/update")

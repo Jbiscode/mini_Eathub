@@ -19,6 +19,22 @@ inputs.forEach((input, index) => {
     });
 });
 
+// 모든 입력 필드를 가져옵니다.
+const inputFields = document.querySelectorAll('.form-input');
+
+// 각 입력 필드에 이벤트 리스너를 추가합니다.
+inputFields.forEach(inputField => {
+    inputField.addEventListener('input', function() {
+        // 입력 필드와 연관된 'messages' 클래스를 가진 span 요소를 찾습니다.
+        const messageElement = inputField.parentNode.querySelector('.messages');
+
+        // span 요소의 내용을 지웁니다.
+        if (messageElement) {
+            messageElement.textContent = '';
+        }
+    });
+});
+
 // 뒤로가기 이미지 버튼 클릭 시 이전 페이지로 이동
 document.getElementById('back').addEventListener('click', function () {
     history.back();
@@ -41,7 +57,7 @@ document.getElementById("member_name").addEventListener('focusout', function (e)
 });
 
 // 아이디 중복 검사 실행 및 유효성 검사
-document.getElementById("member_id").addEventListener('input', async function (e) {
+document.getElementById("member_id").addEventListener('focusout', async function (e) {
     const input = e.target.value;
 
     if (input.length >= 4) {
