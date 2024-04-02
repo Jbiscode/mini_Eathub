@@ -1,7 +1,6 @@
 package com.eathub.service;
 
 import com.eathub.dto.LoginDTO;
-import com.eathub.dto.MemberJoinDTO;
 import com.eathub.entity.Members;
 import com.eathub.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -55,27 +54,5 @@ public class MemberService {
             bindingResult.rejectValue("member_pwd", "incorrect");
         }
         return loginMember;
-    }
-    public void validateJoinInputs(MemberJoinDTO memberJoinDTO, BindingResult bindingResult) {
-        if (!StringUtils.hasText(memberJoinDTO.getMember_id())) {
-            log.error("member_id is empty");
-            bindingResult.rejectValue("member_id", "required");
-        }
-        if (!StringUtils.hasText(memberJoinDTO.getMember_pwd())) {
-            log.error("member_pwd is empty");
-            bindingResult.rejectValue("member_pwd", "required");
-        }
-        if (!StringUtils.hasText(memberJoinDTO.getMember_name())) {
-            log.error("member_name is empty");
-            bindingResult.rejectValue("member_name", "required");
-        }
-        if (!StringUtils.hasText(memberJoinDTO.getMember_email())) {
-            log.error("member_email is empty");
-            bindingResult.rejectValue("member_email", "required");
-        }
-        if (!StringUtils.hasText(memberJoinDTO.getMember_phone())) {
-            log.error("member_phone is empty");
-            bindingResult.rejectValue("member_phone", "required");
-        }
     }
 }

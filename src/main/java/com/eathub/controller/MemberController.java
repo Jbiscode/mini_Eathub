@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -95,9 +96,7 @@ public class MemberController {
     }
 
     @PostMapping("/join/customer")
-    public String joinCustomer(@ModelAttribute MemberJoinDTO memberJoinDTO, BindingResult bindingResult, Model model) {
-
-        memberService.validateJoinInputs(memberJoinDTO, bindingResult);
+    public String joinCustomer(@ModelAttribute @Validated MemberJoinDTO memberJoinDTO, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             return "/members/joinForm";
@@ -131,9 +130,8 @@ public class MemberController {
     }
 
     @PostMapping("/join/owner")
-    public String joinOwner(MemberJoinDTO memberJoinDTO, BindingResult bindingResult) {
+    public String joinOwner(@Validated MemberJoinDTO memberJoinDTO, BindingResult bindingResult, Model model) {
 
-        memberService.validateJoinInputs(memberJoinDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return "/members/joinForm";
         }
@@ -147,6 +145,8 @@ public class MemberController {
                         .member_type(MEMBER_TYPE.OWNER)
                         .build()
         );
+
+        model.addAttribute("loginDTO", new LoginDTO(memberJoinDTO.getMember_id(), ""));
         return "/members/loginForm";
     }
 
@@ -158,7 +158,7 @@ public class MemberController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute MemberUpdateDTO memberUpdateDTO, BindingResult bindingResult) {
+    public String update(@ModelAttribute @Validated MemberUpdateDTO memberUpdateDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/members/updateForm";
         }
