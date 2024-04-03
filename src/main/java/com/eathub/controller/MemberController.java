@@ -4,9 +4,9 @@ import com.eathub.conf.SessionConf;
 import com.eathub.dto.LoginDTO;
 import com.eathub.dto.MemberJoinDTO;
 import com.eathub.dto.MemberUpdateDTO;
+import com.eathub.dto.MyPageDTO;
 import com.eathub.entity.ENUM.MEMBER_TYPE;
 import com.eathub.entity.Members;
-import com.eathub.entity.RestaurantInfo;
 import com.eathub.service.MemberService;
 import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +42,8 @@ public class MemberController {
     @GetMapping("/my")
     public String myPage(MemberJoinDTO memberJoinDTO, Model model, HttpSession session) {
         model.addAttribute("memberJoinDTO", memberJoinDTO);
-        List<RestaurantInfo> zzimRestaurantList = restaurantService.getZzimRestaurantList((Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ));
-        model.addAttribute("zzimRestaurantList", zzimRestaurantList);
+        List<MyPageDTO> zzimRestaurantList = restaurantService.getZzimRestaurantList((Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ));
+        model.addAttribute("myPageDTO", zzimRestaurantList);
         return "/members/myPage";
     }
 

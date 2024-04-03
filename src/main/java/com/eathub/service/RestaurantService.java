@@ -1,6 +1,6 @@
 package com.eathub.service;
 
-import com.eathub.entity.RestaurantInfo;
+import com.eathub.dto.MyPageDTO;
 import com.eathub.entity.RestaurantZzim;
 import com.eathub.mapper.RestaurantMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +17,11 @@ public class RestaurantService {
     private final RestaurantMapper restaurantMapper;
 
 //   유저가 찜한 식당 리스트 조회
-    public List<RestaurantInfo> getZzimRestaurantList(Long member_seq) {
+    public List<MyPageDTO> getZzimRestaurantList(Long member_seq) {
         List<RestaurantZzim> zzimList = restaurantMapper.selectZzimList(member_seq);
-        List<RestaurantInfo> restaurantInfoList = new ArrayList<>();
+        List<MyPageDTO> restaurantInfoList = new ArrayList<>();
         for (RestaurantZzim zzim : zzimList) {
-            restaurantInfoList.add(restaurantMapper.selectRestaurantInfo(zzim.getRestaurant_seq()));
+            restaurantInfoList.add(restaurantMapper.selectMyPageDTO(zzim.getRestaurant_seq(), member_seq));
         }
         return restaurantInfoList;
     }
@@ -47,6 +47,11 @@ public class RestaurantService {
             restaurantMapper.deleteZzimRestaurant(zzim);
             return false;
         }
+    }
+
+    // 마이페이지 찜목록에 comment 추가
+    public void updateZzimComment(Long zzim_seq, String comment) {
+        restaurantMapper.updateZzimComment(zzim_seq, comment);
     }
 
 }
