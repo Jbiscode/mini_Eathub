@@ -347,6 +347,7 @@ input::placeholder {
     display: flex;
     align-items: center;
     height: 100%;
+    flex: 1;
 }
 #header .header-right{
     display: flex;
