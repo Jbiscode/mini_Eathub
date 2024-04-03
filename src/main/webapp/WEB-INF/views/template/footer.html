@@ -8,13 +8,18 @@
             <a href="javascript:void(0)" th:href="@{/}" th:class="${page=='home'?'active':''}">
                 <i class="home">홈</i>
             </a>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)"
+            th:href="@{/search}"
+               th:class="${page=='search'?'active':''}"
+            >
                 <i class="search-icon">검색</i>
             </a>
             <a href="javascript:void(0)">
                 <i class="review">리뷰</i>
             </a>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)"
+               th:href="@{/mydining}"
+               th:class="${page=='mydining'?'active':''}">
                 <i class="mydining">마이다이닝</i>
             </a>
             <a href="javascript:void(0)"

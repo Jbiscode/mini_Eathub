@@ -1,0 +1,245 @@
+/* customizedCalender.css */
+.scriptCalendar { 
+  text-align:center; 
+}
+.scriptCalendar > thead > tr > td { 
+  width:50px;
+  height:50px; 
+}
+.scriptCalendar > thead > tr:first-child > td { 
+  font-weight:bold; 
+}
+.scriptCalendar > thead > tr:last-child > td {
+  width: 25px;
+  color: #bbb;
+  font-size: 12px;
+}
+.scriptCalendar > tbody > tr > td { 
+  width:50px;
+  height:50px; 
+  font-size: 13px;
+}
+.calendarBtn { 
+  cursor:pointer; 
+} 
+
+td{
+  vertical-align: middle;
+}
+
+
+/* presentation.css */
+
+body{
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+div[role="presentation"]{
+  transition-duration: 500ms; 
+  visibility: hidden;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  bottom: -100%;
+  background-color: white;
+}
+
+
+/* #root{
+  position: relative;
+  z-index: 0;
+  height: 100vh;
+  overflow:  auto;
+} */
+
+/* 원래 css에 wrapper css가 없으면 적용. */
+/* .wrapper{
+  max-width: 480px;
+  margin: 0 auto;
+  background-color: #fff;
+  width: auto;
+  position: relative;
+} */
+
+.pb-100 {
+  padding-bottom: 100px !important;
+}
+
+/*header*/
+#bottom-drawer-header .container {
+  margin: 0 auto;
+  max-width: 480px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  height: 48px;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #f9f9f9;
+}
+.bottom-drawer-header-right {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.bottom-drawer-header-right .btn-close {
+  background: url(../images/close.svg) 50% 50% no-repeat;
+  width: 32px;
+  height: 32px;
+  display: block;
+  text-indent: -999em;
+  overflow: hidden;
+}
+
+/* section */
+.section {
+  box-sizing: border-box;
+}
+.section.section-overflow-hidden {
+  overflow: hidden;
+}
+.container.gutter-sm {
+  padding: 0 20px;
+}
+
+/* calenderBox */
+.calendarBox{
+  display: flex;
+  justify-content: center;
+}
+
+/* 인원 swiper */
+.swiper-container-free-mode>.swiper-wrapper {
+  transition-timing-function: ease-out;
+  margin: 0 auto;
+}
+/* 인원 swiper / label */
+.option-personnel label {
+  display: block;
+  width: 48px;
+  height: 48px;
+  position: relative;
+}
+.option-personnel label input {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.option-personnel label input:checked+span {
+  border-color: #ff3d00;
+  background-color: #ff3d00;
+  color: #fff;
+}
+
+.option-personnel label span {
+  display: block;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #aaa;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+/* 시간 swiper / label */
+.option-timetable{
+  margin: 0px -20px; 
+  padding: 0px 20px;
+}
+.option-timetable label {
+  display: block;
+  width: 80px;
+  height: 38px;
+  position: relative;
+}
+.option-timetable label input {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.option-timetable label span {
+  width: 80px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+.option-timetable label input:checked+span {
+  border-color: #ff3d00;
+  background-color: #ff3d00;
+  color: #fff;
+}
+.option-timetable > .swiper-wrapper{
+  cursor: grab; 
+  transition-duration: 500ms; 
+  transform: translate3d(-86px, 0px, 0px);
+}
+
+
+section {
+  font-size: 13px;
+}
+
+
+
+
+
+
+/* 버튼 */
+
+.sticky-bottom-btns .btn:last-child {
+  margin-right: 0;
+}
+.sticky-bottom-btns {
+  position: fixed;
+  bottom: 6%;
+  z-index: 99;
+  /* width: auto; */
+  max-width: 480px;
+  left: 50%;
+  transform: translate(-50%);
+  padding: 20px !important;
+  box-sizing: border-box;
+  width: 100vw;
+  background: rgba(255, 255, 255, .7);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  display: flex;
+}
+.sticky-bottom-btns .btn {
+  display: block;
+  width: 100%;
+  flex: 1;
+  /* margin-right: 10px; */
+  font-weight: 700;
+}
+.btn-md.btn-red, .btn-lg.btn-red {
+  background: #ff3d00;
+  border-color: #ff3d00;
+  color: #fff;
+}
+.btn-md, .btn-lg {
+  line-height: 46px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 20px;
+  position: relative;
+  border: 1px solid #666;
+  border-radius: 6px;
+  background: #fff;
+}
+.ebold {
+  font-weight: 700 !important;
+}
+
