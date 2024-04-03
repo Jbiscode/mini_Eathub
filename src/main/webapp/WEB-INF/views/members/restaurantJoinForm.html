@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../../resources/css/restaurantJoinForm.css">
   
   <script defer src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script defer src="../../resources/js/restaurantJoinForm.js"></script>
+  <script defer src="../../resources/js/restaurantJoinForm.js" th:src="@{/js/restaurantJoinForm.js}"></script>
 </head>
 <body>
   <div class="wrapper">
