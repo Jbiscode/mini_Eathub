@@ -181,4 +181,8 @@ public class MemberController {
         return "redirect:/members/my";
     }
 
+    @GetMapping("/restaurant/join")
+    public String joinRestaurant(Model model) {
+        return "/members/restaurantJoinForm";
+    }
 }
