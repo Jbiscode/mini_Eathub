@@ -8,16 +8,8 @@
     <link rel="stylesheet" href="../../resources/css/footer.css" th:href="@{/css/footer.css}">
     <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
     <link rel="stylesheet" href="../../resources/css/myDining.css" th:href="@{/css/myDining.css}">
+
     <script defer src="../../resources/js/myPage.js" th:src="@{/js/myPage.js}"></script>
-    
-    <!-- 임시 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
-    
 </head>
 <body>
     <div class="wrapper">
@@ -67,6 +59,7 @@
             <div class="container gutter-sm">
                 <div class="section-body">
                   <div class="my-dining-list">
+                    <!-- 예약한 레스토랑이 없을때 들어가는 부분 -->
                     <p class="txt-center plain-txt font-16 bold color-gray3 mt-70 mb-20">
                       방문예정이 없습니다.
                       <br>
@@ -80,7 +73,60 @@
                         </span>
                       </a>
                     </div>
+                     <!-- 예약한 레스토랑있을때 리스트 들어가는 부분 -->
+                   <div class="section-body pb-32" style="padding-top: 10px;">
+                      <div id="common_infinity_sc" class="booked-restaurant-list">
+                          <div id="common_infinity_sc_0" data-dummy="189">
+                              <div class="booked-restaurant-list-item">
+                                  <div class="booked-info">
+                                    <span class="booked-Dday">D-7</span>
+                                    <span class="booked-status">예약확인중</span>
+                                  </div>
+                                  <div class="restaurant-info">
+                                      <a href="javascript:void(0)" class="tb">
+                                          <div class="img" style="background-image: url(../../resources/images/mongtanjeju.jpg);"></div>
+                                      </a>
+                                      <a href="javascript:void(0)" class="detail">
+                                          <h4 class="name">산청숯불가든 마곡</h4>
+                                          <div class="restaurant-meta">
+                                              <span class="tags">돼지고기구이 • 마곡</span>
+                                          </div>
+                                          <div class="booked-date-info">
+                                            <span>2023.1.23 (월)</span> • 
+                                            <span>오후 1:30</span> • 
+                                            <span>2명</span>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>
+                               <div class="booked-restaurant-list-item">
+                                  <div class="booked-info">
+                                    <span class="booked-Dday">D-7</span>
+                                    <span class="booked-status">예약확인중</span>
+                                  </div>
+                                  <div class="restaurant-info">
+                                      <a href="javascript:void(0)" class="tb">
+                                          <div class="img" style="background-image: url(../../resources/images/mongtanjeju.jpg);"></div>
+                                      </a>
+                                      <a href="javascript:void(0)" class="detail">
+                                          <h4 class="name">산청숯불가든 마곡</h4>
+                                          <div class="restaurant-meta">
+                                              <span class="tags">돼지고기구이 • 마곡</span>
+                                          </div>
+                                          <div class="booked-date-info">
+                                            <span>2023.1.23 (월)</span> • 
+                                            <span>오후 1:30</span> • 
+                                            <span>2명</span>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>
+                              
+                          </div>
+                      </div>
                   </div>
+                  </div>
+                 
                 </div>
             </div>
          </section>

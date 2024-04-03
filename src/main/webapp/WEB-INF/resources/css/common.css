@@ -81,7 +81,7 @@ input::placeholder {
 
 /* padding-bottom */
 .pb-32{
-    padding-bottom: 32px;
+    padding-bottom: 32px !important;
 }
 
 /* margin-top */
