@@ -4,8 +4,13 @@
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
         <typeAliases>
-                <typeAlias type="com.eathub.dto.MemberJoinDTO" alias="memberJoinDTO"/>
+                <typeAlias type="java.lang.Long" alias="Long"/>
+
                 <typeAlias type="com.eathub.dto.LoginDTO" alias="loginDTO"/>
                 <typeAlias type="com.eathub.entity.Members" alias="members"/>
+                <typeAlias type="com.eathub.entity.RestaurantInfo" alias="restaurantInfo"/>
+                <typeAlias type="com.eathub.entity.RestaurantZzim" alias="restaurantZzim"/>
+
+                <typeAlias type="com.eathub.dto.MyPageDTO" alias="myPageDTO"/>
         </typeAliases>
 </configuration>
