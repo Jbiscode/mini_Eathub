@@ -40,19 +40,19 @@
     background-color: #222222;
 }
 #dock .dock-container .dock-menu a i.home{
-    mask-image: url(/images/home-solid.svg);
+    mask-image: url(../images/home-solid.svg);
 }
 #dock .dock-container .dock-menu a i.search-icon{
-    mask-image: url(/images/search-solid.svg);
+    mask-image: url(../images/search-solid.svg);
 }
 #dock .dock-container .dock-menu a i.review{
-    mask-image: url(/images/comment-dots-regular.svg);
+    mask-image: url(../images/comment-dots-regular.svg);
 }
 #dock .dock-container .dock-menu a i.mydining{
-    mask-image: url(/images/calendar-minus-regular.svg);
+    mask-image: url(../images/calendar-minus-regular.svg);
 }
 #dock .dock-container .dock-menu a i.account{
-    mask-image: url(/images/user-regular.svg);
+    mask-image: url(../images/user-regular.svg);
 }
 
 #dock .dock-container .dock-menu a.active i{
