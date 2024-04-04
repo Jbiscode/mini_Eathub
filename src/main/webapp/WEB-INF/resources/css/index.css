@@ -380,15 +380,18 @@ section {
     font-size: 12px;
 }
 
-.btn_bookmark{
+/* bookmark */
+.btn-bookmark{
     display: block;
     width: 30px;
     min-width: 30px;
     height: 30px;
-    background: #fff url('../images/bookmark.svg') 50% 50% no-repeat;
+    background: #fff url(../images/bookmark.svg) 50% 50% no-repeat;
     border-radius: 50%;
     text-indent: -999em;
     overflow: hidden;
 }
-
+.btn-bookmark.active {
+    background: url(../images/bookmarked.svg) 50% 50% no-repeat;
+}
 

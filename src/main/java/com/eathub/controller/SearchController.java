@@ -41,8 +41,4 @@ public class SearchController {
         model.addAttribute("timeOptions", timeOptionDTOS);
         return "/members/searchResult";
     }
-    @GetMapping("/1")
-    public String detail(){
-        return "/restaurant/restaurantInfo";
-    }
 }

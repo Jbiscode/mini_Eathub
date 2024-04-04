@@ -4,6 +4,12 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eathub.mapper.RestaurantMapper">
 
+    <select id="selectRestaurantInfo" resultType="restaurantInfo">
+        SELECT *
+        FROM restaurant_info
+        WHERE restaurant_seq = #{restaurant_seq}
+    </select>
+
     <select id="selectRestaurantInfoList" resultType="restaurantInfo">
         SELECT * FROM restaurant_info
     </select>
@@ -27,6 +33,13 @@
         WHERE z.restaurant_seq = #{restaurant_seq}
           AND z.member_seq = #{member_seq}
     </select>
+    <!-- 현재 식당을 찜했는지 여부 확인 -->
+    <select id="checkZzimData" resultType="int">
+        SELECT COUNT(*) FROM restaurant_zzim
+        WHERE member_seq = #{member_seq} AND restaurant_seq = #{restaurant_seq}
+    </select>
+
+
 
     <!-- 카테고리 목록 불러오기   -->
     <select id="selectCategoryList" resultType="categoryDTO">
@@ -40,6 +53,10 @@
         SET comment = #{comment}
         WHERE zzim_seq = #{zzim_seq}
     </update>
+    <update id="updateZzimTotal">
+        update restaurant_info set zzim_total = zzim_total + #{count} where restaurant_seq = #{restaurant_seq}
+    </update>
+    
 
     <!-- 찜목록 추가-->
     <insert id="insertZzimRestaurant">

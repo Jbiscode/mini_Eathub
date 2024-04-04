@@ -2,17 +2,14 @@ package com.eathub.service;
 
 import com.eathub.dto.CategoryDTO;
 import com.eathub.dto.MyPageDTO;
-import com.eathub.dto.RestaurantJoinDTO;
 import com.eathub.dto.SearchResultDTO;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
 import com.eathub.mapper.RestaurantMapper;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -25,6 +22,10 @@ import java.util.Map;
 public class RestaurantService {
 
     private final RestaurantMapper restaurantMapper;
+
+    public RestaurantInfo selectRestaurantInfo(Long restaurant_seq) {
+        return restaurantMapper.selectRestaurantInfo(restaurant_seq);
+    }
 
     //   식당 정보 조회
     public List<RestaurantInfo> selectRestaurantInfoList() {
@@ -58,6 +59,9 @@ public class RestaurantService {
         }
         return restaurantInfoList;
     }
+    public int getZzimCount(Long restaurant_seq, Long member_seq) {
+        return restaurantMapper.checkZzimData(restaurant_seq, member_seq);
+    }
 
 //    찜 추가 및 삭제
     @Transactional
@@ -76,9 +80,11 @@ public class RestaurantService {
         log.info("zzimResult: {}", zzimResult);
         if (zzimResult == null) {
             restaurantMapper.insertZzimRestaurant(zzim);
+            restaurantMapper.updateZzimTotal(restaurant_seq,1);
             return true;
         } else {
             restaurantMapper.deleteZzimRestaurant(zzim);
+            restaurantMapper.updateZzimTotal(restaurant_seq,-1);
             return false;
         }
     }

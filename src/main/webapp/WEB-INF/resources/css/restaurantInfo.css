@@ -34,7 +34,7 @@ header {
     justify-content: space-between;
     transition: background .12s;
 }
-._9j16x82 {
+.icon-wrapper {
     background: linear-gradient(180deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .15) 37.5%, rgba(0, 0, 0, 0) 100%);
 }
 ._9j16x83 {
@@ -53,18 +53,21 @@ header {
 ._9j16x85 {
     background-image: url(/images/back.svg);
 }
-._9j16x87 {
-    background-image: url(/images/bookmarked-w.svg);
-}
-._9j16x82 ._9j16x85 {
+.icon-wrapper ._9j16x85 {
     background-image: url(/images/back-w.svg);
 }
-._9j16x82 ._9j16x86 {
+.icon-wrapper ._9j16x86 {
     background-image: url(/images/home-w.svg);
 }
-._9j16x82 ._9j16x87 {
-    background-image: url(/images/bookmarked-w.svg);
+
+.btn-bookmark-detail {
+    background-image: url(../images/bookmark-w.svg);
 }
+
+.btn-bookmark-detail.active {
+    background-image: url(../images/bookmarked-w.svg);
+}
+
 a {
     color: #000;
 }
@@ -1188,10 +1191,14 @@ p, h1, h2, h3, h4, h5, h6 {
     width: 30px;
     min-width: 30px;
     height: 30px;
-    background: #fff url(/images/bookmark\ \(1\).svg) 50% 50% no-repeat;
+    background: #fff url(../images/bookmark.svg) 50% 50% no-repeat;
     border-radius: 50%;
     text-indent: -999em;
     overflow: hidden;
+}
+
+.btn-bookmark.active {
+    background: url(../images/bookmarked.svg) 50% 50% no-repeat;
 }
 .restaurant-list-item .detail .name {
     line-height: 25px;
@@ -1322,14 +1329,18 @@ p, h1, h2, h3, h4, h5, h6 {
     align-items: center;
     gap: 2px;
 }
-._1kfi3w61 {
+.btn-bookmark-detail2 {
     overflow: hidden;
     display: block;
     width: 24px;
     height: 24px;
     text-indent: -999em;
-    background: url(/images/header-mark.svg) 50% 50% no-repeat;
+    background: url(../images/bookmark-b.svg) 50% 50% no-repeat;
 }
+.btn-bookmark-detail2.active {
+    background: url(../images/bookmarked-w.svg) 50% 50% no-repeat;
+}
+
 ._1kfi3w63 {
     color: #666;
 }
