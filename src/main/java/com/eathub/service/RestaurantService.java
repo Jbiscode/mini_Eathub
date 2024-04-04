@@ -7,12 +7,10 @@ import com.eathub.dto.SearchResultDTO;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
 import com.eathub.mapper.RestaurantMapper;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -104,5 +102,15 @@ public class RestaurantService {
 
     public void insertRestaurant(RestaurantInfo restaurantJoinDTO) {
         restaurantMapper.insertRestaurant(restaurantJoinDTO);
+    }
+
+
+    public RestaurantInfo selectSavedRestaurant(RestaurantJoinDTO restaurantJoinDTO) {
+
+        return restaurantMapper.selectRestaurant(restaurantJoinDTO);
+    }
+
+    public void insertRestaurantStatus(RestaurantInfo restaurantJoinDTO) {
+        restaurantMapper.insertRestaurantStatus(restaurantJoinDTO);
     }
 }

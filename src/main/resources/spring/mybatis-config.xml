@@ -14,5 +14,6 @@
                 <typeAlias type="com.eathub.dto.MyPageDTO" alias="myPageDTO"/>
 
                 <typeAlias type="com.eathub.dto.CategoryDTO" alias="categoryDTO"/>
+                <typeAlias type="com.eathub.dto.RestaurantJoinDTO" alias="restaurantJoinDTO"/>
         </typeAliases>
 </configuration>
