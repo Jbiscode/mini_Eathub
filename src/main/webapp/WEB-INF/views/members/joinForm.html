@@ -6,6 +6,7 @@
     <title>회원가입</title>
     <link th:replace="~{template/common-js :: common-links}"/>
     <link rel="stylesheet" href="../../resources/css/login.css" th:href="@{/css/login.css}">
+    <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
     <script defer th:src="@{/js/joinForm.js}" src="../../resources/js/joinForm.js"></script>
 </head>
 <body>
@@ -13,16 +14,16 @@
     <header id="header">
         <div class="container">
             <div class="header-left">
-                <button class="btn-back">이전</button>
-                <h1 class="page-title" th:text="${#strings.equals(memberDTO.member_type,'CUSTOMER')? '고객 회원가입' : '점주 회원가입'}" >회원가입</h1>
+                <button id="back" class="btn-back">이전</button>
+                <h1 class="page-title" th:text="${#strings.equals(memberJoinDTO.member_type,'CUSTOMER')? '고객 회원가입' : '점주 회원가입'}" >회원가입</h1>
             </div>
         </div>
     </header>
     <main>
         <section class="section">
             <div class="container">
-                <form th:action th:object="${memberDTO}" method="post">
-                    <input type="hidden" th:field="${memberDTO.member_type}" />
+                <form th:action th:object="${memberJoinDTO}" method="post">
+                    <input type="hidden" th:field="${memberJoinDTO.member_type}" />
                     <div class="form-block mb-32">
                         <div class="form-block-header">
                             <h3 class="form-block-title">
@@ -32,7 +33,8 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <input type="text" class="form-input" th:field="${memberDTO.member_name}" placeholder="한글, 영문만 입력해주세요.">
+                                <input type="text" class="form-input" th:field="${memberJoinDTO.member_name}" placeholder="한글, 영문만 입력해주세요.">
+                                <span class="messages" id="message_name" th:errors="${memberJoinDTO.member_name}"></span>
                             </div>
                             <p class="color-gray font-12 mt-10">레스토랑을 예약할 때 사용할 이름이므로 꼭 실명을 사용해주세요.</p>
                         </div>
@@ -46,7 +48,8 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <input type="text" class="form-input" th:field="${memberDTO.member_id}" placeholder="아이디를 입력해 주세요."  th:autocomplete="off">
+                                <input type="text" class="form-input" th:field="${memberJoinDTO.member_id}" placeholder="아이디를 입력해 주세요."  th:autocomplete="off">
+                                <span class="messages" th:errors="${memberJoinDTO.member_id}"></span>
                                 <span class="messages" id="message_id"></span>
                             </div>
                         </div>
@@ -60,10 +63,13 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control mb-10">
-                                <input type="password" th:autocomplete="new-password" class="form-input" th:field="${memberDTO.member_pwd}" placeholder="비밀번호를 입력해주세요.">
+                                <input type="password" th:autocomplete="new-password" class="form-input" th:field="${memberJoinDTO.member_pwd}" placeholder="비밀번호를 입력해주세요.">
+                                <span class="messages" th:errors="${memberJoinDTO.member_pwd}"></span>
+                                <span class="messages" id="message_pwd"></span>
                             </div>
                             <div class="input-control">
                                 <input type="password" th:autocomplete="new-password" class="form-input" id="member_pwd_re" placeholder="비밀번호를 다시 한 번 입력해 주세요.">
+                                <span class="messages" id="message_pwd_re"></span>
                             </div>
                         </div>
                     </div>
@@ -76,7 +82,9 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <input type="text" class="form-input" th:field="${memberDTO.member_email}" placeholder="이메일을 입력해 주세요.">
+                                <input type="text" class="form-input" th:field="${memberJoinDTO.member_email}" placeholder="이메일을 입력해 주세요.">
+                                <span class="messages" th:errors="${memberJoinDTO.member_email}"></span>
+                                <span class="messages" id="message_email"></span>
                             </div>
                         </div>
                     </div>
@@ -89,7 +97,9 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <input type="text" class="form-input" th:field="${memberDTO.member_phone}" placeholder="전화번호를 입력해 주세요.">
+                                <input type="text" class="form-input" th:field="${memberJoinDTO.member_phone}" placeholder="전화번호를 입력해 주세요.">
+                                <span class="messages" th:errors="${memberJoinDTO.member_phone}"></span>
+                                <span class="messages" id="message_phone"></span>
                             </div>
                         </div>
                     </div>

@@ -7,13 +7,14 @@
     <link th:replace="~{template/common-js :: common-links}"/>
     <link rel="stylesheet" href="./login.css" th:href="@{/css/login.css}">
     <link rel="stylesheet" href="../../resources/css/footer.css" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
     <script defer src="../../resources/js/loginForm.js" th:src="@{/js/loginForm.js}"></script>
 </head>
 <body>
     <main>
         <div class="signin-wrapper">
             <div class="inner">
-                <form id="loginForm" action th:action="@{/members/login}" th:object="${loginDTO}" method="post">
+                <form id="loginForm" action th:action th:object="${loginDTO}" method="post">
                     <div class="logo">Logo</div>
 
                     <div class="input-control mb-30">

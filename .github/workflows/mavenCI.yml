@@ -3,7 +3,7 @@ on:
     push:
       branches: [ develop ]
     pull_request:
-        branches: [ develop, main ]
+        branches: [ develop ]
     workflow_dispatch:
 jobs:
   test:
