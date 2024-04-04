@@ -19,10 +19,16 @@
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(255,61,0,.25);
 }
+.form-block .form-block-header {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+}
 .form-block .form-block-header .form-block-title {
     font-size: 14px;
     line-height: normal;
     font-weight: 500;
+
 }
 .input-control .address-control{
   display: flex;
@@ -43,4 +49,43 @@
 }
 .form-check-input{
   margin-right: 2px;
+}
+.form-block-body.closed-day-form{
+    display: flex;
+    flex-wrap: wrap;
+}
+.form-block-body.closed-day-form .input-control{
+    margin-right: 20px;
+}
+.form-block-body.closed-day-form .input-control label{
+    margin-top: .25em;
+}
+
+.sticky-bottom-btn {
+    /*position: fixed;*/
+    position: relative;
+    bottom: 0;
+    z-index: 99;
+    width: auto;
+    max-width: 480px;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100vw;
+    background: rgba(255, 255, 255, .7);
+    /*-webkit-backdrop-filter: blur(2px);*/
+    backdrop-filter: blur(2px);
+    display: flex;
+}
+.sticky-bottom-btn .btn {
+    display: block;
+    width: 100%;
+    flex: 1;
+
+    font-weight: 700;
+    background-color: #FF3D00;
+    padding: 14px 20px;
+    color: white;
+    border-radius: 5px;
 }
