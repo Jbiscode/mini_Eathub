@@ -224,8 +224,6 @@ public class MemberController {
                         .closedDay(restaurantJoinDTO.getClosedDay())
                         .build()
         );
-
-
         return "redirect:/members/my";
     }
 

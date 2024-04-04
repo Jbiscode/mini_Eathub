@@ -15,6 +15,7 @@ $(document).ready(function () {
                     if (data.isBookmarked) {
                         // 찜 추가된 경우
                         $this.addClass('active');
+                        alert('찜 목록에 추가되었습니다.');
                     } else {
                         // 찜 해제된 경우
                         $this.removeClass('active');
