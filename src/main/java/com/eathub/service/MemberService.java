@@ -6,6 +6,7 @@ import com.eathub.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 @Slf4j
@@ -16,6 +17,7 @@ public class MemberService {
     private final MemberMapper memberMapper;
 
     // 로그인후 member_id로 member_seq 가져오기
+    @Transactional(readOnly = true)
     public long getMemberSeqById(String member_id) {
         return memberMapper.getMemberSeqById(member_id);
     }
@@ -64,4 +66,6 @@ public class MemberService {
         }
         return loginMember;
     }
+
+
 }

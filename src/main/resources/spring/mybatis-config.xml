@@ -12,5 +12,7 @@
                 <typeAlias type="com.eathub.entity.RestaurantZzim" alias="restaurantZzim"/>
 
                 <typeAlias type="com.eathub.dto.MyPageDTO" alias="myPageDTO"/>
+
+                <typeAlias type="com.eathub.dto.CategoryDTO" alias="categoryDTO"/>
         </typeAliases>
 </configuration>

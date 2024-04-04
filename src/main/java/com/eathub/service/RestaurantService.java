@@ -1,16 +1,24 @@
 package com.eathub.service;
 
+import com.eathub.dto.CategoryDTO;
 import com.eathub.dto.MyPageDTO;
+import com.eathub.dto.RestaurantJoinDTO;
 import com.eathub.dto.SearchResultDTO;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
 import com.eathub.mapper.RestaurantMapper;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -52,6 +60,7 @@ public class RestaurantService {
     }
 
 //    찜 추가 및 삭제
+    @Transactional
     public boolean toggleZzimRestaurant(Long member_seq, Long restaurant_seq) {
 
         RestaurantZzim zzim = RestaurantZzim.builder()
@@ -79,4 +88,21 @@ public class RestaurantService {
         restaurantMapper.updateZzimComment(zzim_seq, comment);
     }
 
+
+    public Map<String ,String> getLocationList(){
+        Map<String, String> locations = new LinkedHashMap<>();
+        locations.put("SEOUL", "서울");
+        locations.put("BUSAN", "부산");
+        locations.put("JEJU", "제주");
+        return locations;
+    }
+
+    public List<CategoryDTO> getCategoryList(){
+        return restaurantMapper.selectCategoryList();
+    }
+
+
+    public void insertRestaurant(RestaurantInfo restaurantJoinDTO) {
+        restaurantMapper.insertRestaurant(restaurantJoinDTO);
+    }
 }
