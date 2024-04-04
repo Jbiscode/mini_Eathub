@@ -27,7 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
-import static com.eathub.entity.ENUM.MEMBER_TYPE.CUSTOMER;
 
 @Controller
 @RequiredArgsConstructor
@@ -104,7 +103,7 @@ public class MemberController {
      */
     @GetMapping("/join/customer")
     public String joinCustomer(Model model) {
-        model.addAttribute("memberJoinDTO", new MemberJoinDTO(CUSTOMER));
+        model.addAttribute("memberJoinDTO", new MemberJoinDTO(MEMBER_TYPE.CUSTOMER));
         return "/members/joinForm";
     }
 
@@ -121,7 +120,7 @@ public class MemberController {
                         .member_name(memberJoinDTO.getMember_name())
                         .member_email(memberJoinDTO.getMember_email())
                         .member_phone(memberJoinDTO.getMember_phone())
-                        .member_type(CUSTOMER)
+                        .member_type(MEMBER_TYPE.CUSTOMER)
                         .build()
         );
 
@@ -191,7 +190,7 @@ public class MemberController {
 
         // 멤버 타입 확인 후, OWNER인 경우만 등록폼을 이동
         MEMBER_TYPE memberType =(MEMBER_TYPE) session.getAttribute(SessionConf.LOGIN_MEMBER_TYPE);
-        if (memberType.equals(CUSTOMER)){
+        if (memberType.equals(MEMBER_TYPE.CUSTOMER)){
             return "redirect:/";
         }
 
