@@ -40,6 +40,7 @@ function handleBookmarkDetailClick(e) {
                 } else {
                     $(".btn-bookmark-detail, .btn-bookmark-detail2").removeClass("active");
                 }
+                window.location.reload();
             } else {
                 // 서버에서 오류 응답을 받은 경우
                 alert("오류가 발생했습니다. 다시 시도해주세요.");
