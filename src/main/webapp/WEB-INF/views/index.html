@@ -6,14 +6,378 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:replace="~{template/common-js :: common-links}"/>
     <link rel="stylesheet" href="./login.css" th:href="@{/css/login.css}">
-    <link rel="stylesheet" href="../../resources/css/footer.css" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" href="../resources/css/footer.css" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" href="../resources/css/index.css" th:href="@{/css/index.css}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 </head>
 <body>
-<span th:with="isLoggedIn=${session != null and session.loginMember != null}">
-    <a th:if="${!isLoggedIn}" th:href="@{/members/login}">로그인하기</a>
-    <a th:if="${isLoggedIn}" th:href="@{/members/logout}">로그아웃</a>
-</span>
+<div class="wrapper">
+    <header id="header">
+        <div class="container">
+            <div class="header-left">
+                <h3>Logo</h3>
+            </div>
+            <div class="header-center">
+                
+            </div>
+            <div class="header-right">
+                <a class="bookmark_icon"><img src="../resources/images/header-mark.svg" alt="bookmark"></a>
+                <a class="notice_icon"><img src="../resources/images/header_notice.png" alt="bell"></a>
+            </div>
+        </div>
+    </header>
 
-<div th:replace="~{template/footer :: footerFragment}"></div>
+    <section class="section1">
+        <main id="main">
+            <div class="swiper swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a><img src="../resources/images/ad_ex.png" alt="ad_1" ></a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a><img src="../resources/images/ad_ex.png" alt="ad_2" ></a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a><img src="../resources/images/ad_ex.png" alt="ad_3" ></a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a><img src="../resources/images/ad_ex.png" alt="ad_4" ></a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a><img src="../resources/images/ad_ex.png" alt="ad_5"></a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a><img src="../resources/images/ad_ex.png" alt="ad_6"></a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a><img src="../resources/images/ad_ex.png" alt="ad_7"></a>
+                    </div>
+                </div>
+                <!-- 페이지네이션 -->
+                <div class="swiper-pagination"></div>
+            </div>
+    </section>
+
+    <section class="section2">
+        <div class="shortcut_list_wrap">
+            <div class="shortcut_list">
+                <div class="list_item">
+                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="title">예약TOP</div>
+                </div>
+                <div class="list_item">
+                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="title">오늘의 예약</div>
+                </div>
+                <div class="list_item">
+                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="title">한식</div>
+                </div>
+                <div class="list_item">
+                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="title">양식</div>
+                </div>
+                <div class="list_item">
+                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="title">중식</div>
+                </div>
+                <div class="list_item">
+                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="title">일식</div>
+                </div>
+                <div class="list_item">
+                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="title">아시안</div>
+                </div>
+                <div class="list_item">
+                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="title">카페&디저트</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section3">
+        <div class="container_scroll">
+            <div class="section_header">
+                <h3 class="section_title">어디로 가시나요?</h3>
+            </div>
+            <div class="section_body">
+                <div class="v_scroll">
+                    <div class="v_scroll_inner">
+                        <div class="quick_search">
+                            <a class="icon"></a>
+                            <a class="icon1"><span>압구정<br>청담</span></a>
+                            <a class="icon1"><span>잠실<br>송파</span></a>
+                            <a class="icon1"><span>부산</span></a>
+                            <a class="icon1"><span>이태원<br>한남</span></a>
+                            <a class="icon1"><span>성수</span></a>
+                            <a class="icon1"><span>강남<br>역삼</span></a>
+                            <a class="icon7"><span>망원</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+    <section class="section4">
+        <div  class="container_sub">
+            <div class="sub_header">
+                <div class="sub_header_container">
+                    <h3 class="sub_header_title">예약 핫플 BEST</h3>
+                    <p>이달의 best 예약! 이번주는 여기 어떠세요?</p>
+                </div>
+                <a class="btn-more">전체보기 ></a>
+            </div>
+            <div class="sub_body">
+                <div class="v_scroll">
+                    <div class="v_scroll_inner">
+                        <div class="restaurant_list">
+                            <div class="restaurant_list_item">
+                                <a class="restaurant_list_item_img"></a>
+                                <div class="detail">
+                                    <a class="info">
+                                        <h3 class="restaurant_name">남영돈</h3>
+                                        <div class="meta">
+                                            <span class="score">5.0</span>
+                                            <span class="tags">돼지고기구이 • 남영</span>
+                                        </div>
+                                    </a>
+                                    <a class="btn_bookmark"></a>
+                                </div>
+                            </div>
+                            <div class="restaurant_list_item">
+                                <a class="restaurant_list_item_img"></a>
+                                <div class="detail">
+                                    <a class="info">
+                                        <h3 class="restaurant_name">남영돈</h3>
+                                        <div class="meta">
+                                            <span class="score">5.0</span>
+                                            <span class="tags">돼지고기구이 • 남영</span>
+                                        </div>
+                                    </a>
+                                    <a class="btn_bookmark"></a>
+                                </div>
+                            </div>
+                            <div class="restaurant_list_item">
+                                <a class="restaurant_list_item_img"></a>
+                                <div class="detail">
+                                    <a class="info">
+                                        <h3 class="restaurant_name">남영돈</h3>
+                                        <div class="meta">
+                                            <span class="score">5.0</span>
+                                            <span class="tags">돼지고기구이 • 남영</span>
+                                        </div>
+                                    </a>
+                                    <a class="btn_bookmark"></a>
+                                </div>
+                            </div>
+                            <div class="restaurant_list_item5">
+                                <a class="restaurant_list_item_img"></a>
+                                <div class="detail">
+                                    <a class="info">
+                                        <h3 class="restaurant_name">남영돈</h3>
+                                        <div class="meta">
+                                            <span class="score">5.0</span>
+                                            <span class="tags">돼지고기구이 • 남영</span>
+                                        </div>
+                                    </a>
+                                    <a class="btn_bookmark"></a>
+                                </div>
+                            </div>
+                            <div class="showall">
+                                <a><span>전체보기</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section4">
+        <div  class="container_sub">
+            <div class="sub_header">
+                <div class="sub_header_container">
+                    <h3 class="sub_header_title">예약 핫플 BEST</h3>
+                    <p>이달의 best 예약! 이번주는 여기 어떠세요?</p>
+                </div>
+                <a class="btn-more">전체보기 ></a>
+            </div>
+            <div class="sub_body">
+                <div class="v_scroll">
+                    <div class="v_scroll_inner">
+                        <div class="restaurant_list">
+                            <div class="restaurant_list_item">
+                                <a class="restaurant_list_item_img"></a>
+                                <div class="detail">
+                                    <a class="info">
+                                        <h3 class="restaurant_name">남영돈</h3>
+                                        <div class="meta">
+                                            <span class="score">5.0</span>
+                                            <span class="tags">돼지고기구이 • 남영</span>
+                                        </div>
+                                    </a>
+                                    <a class="btn_bookmark"></a>
+                                </div>
+                            </div>
+                            <div class="restaurant_list_item">
+                                <a class="restaurant_list_item_img"></a>
+                                <div class="detail">
+                                    <a class="info">
+                                        <h3 class="restaurant_name">남영돈</h3>
+                                        <div class="meta">
+                                            <span class="score">5.0</span>
+                                            <span class="tags">돼지고기구이 • 남영</span>
+                                        </div>
+                                    </a>
+                                    <a class="btn_bookmark"></a>
+                                </div>
+                            </div>
+                            <div class="restaurant_list_item">
+                                <a class="restaurant_list_item_img"></a>
+                                <div class="detail">
+                                    <a class="info">
+                                        <h3 class="restaurant_name">남영돈</h3>
+                                        <div class="meta">
+                                            <span class="score">5.0</span>
+                                            <span class="tags">돼지고기구이 • 남영</span>
+                                        </div>
+                                    </a>
+                                    <a class="btn_bookmark"></a>
+                                </div>
+                            </div>
+                            <div class="restaurant_list_item5">
+                                <a class="restaurant_list_item_img"></a>
+                                <div class="detail">
+                                    <a class="info">
+                                        <h3 class="restaurant_name">남영돈</h3>
+                                        <div class="meta">
+                                            <span class="score">5.0</span>
+                                            <span class="tags">돼지고기구이 • 남영</span>
+                                        </div>
+                                    </a>
+                                    <a class="btn_bookmark"></a>
+                                </div>
+                            </div>
+                            <div class="showall">
+                                <a><span>전체보기</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section4">
+        <div  class="container_sub">
+            <div class="sub_header">
+                <div class="sub_header_container">
+                    <h3 class="sub_header_title">예약 핫플 BEST</h3>
+                    <p>이달의 best 예약! 이번주는 여기 어떠세요?</p>
+                </div>
+                <a class="btn-more">전체보기 ></a>
+            </div>
+            <div class="sub_body">
+                <div class="v_scroll">
+                    <div class="v_scroll_inner">
+                        <div class="restaurant_list">
+                            <div class="restaurant_list_item">
+                                <a class="restaurant_list_item_img"></a>
+                                <div class="detail">
+                                    <a class="info">
+                                        <h3 class="restaurant_name">남영돈</h3>
+                                        <div class="meta">
+                                            <span class="score">5.0</span>
+                                            <span class="tags">돼지고기구이 • 남영</span>
+                                        </div>
+                                    </a>
+                                    <a class="btn_bookmark"></a>
+                                </div>
+                            </div>
+                            <div class="restaurant_list_item">
+                                <a class="restaurant_list_item_img"></a>
+                                <div class="detail">
+                                    <a class="info">
+                                        <h3 class="restaurant_name">남영돈</h3>
+                                        <div class="meta">
+                                            <span class="score">5.0</span>
+                                            <span class="tags">돼지고기구이 • 남영</span>
+                                        </div>
+                                    </a>
+                                    <a class="btn_bookmark"></a>
+                                </div>
+                            </div>
+                            <div class="restaurant_list_item">
+                                <a class="restaurant_list_item_img"></a>
+                                <div class="detail">
+                                    <a class="info">
+                                        <h3 class="restaurant_name">남영돈</h3>
+                                        <div class="meta">
+                                            <span class="score">5.0</span>
+                                            <span class="tags">돼지고기구이 • 남영</span>
+                                        </div>
+                                    </a>
+                                    <a class="btn_bookmark"></a>
+                                </div>
+                            </div>
+                            <div class="restaurant_list_item5">
+                                <a class="restaurant_list_item_img"></a>
+                                <div class="detail">
+                                    <a class="info">
+                                        <h3 class="restaurant_name">남영돈</h3>
+                                        <div class="meta">
+                                            <span class="score">5.0</span>
+                                            <span class="tags">돼지고기구이 • 남영</span>
+                                        </div>
+                                    </a>
+                                    <a class="btn_bookmark"></a>
+                                </div>
+                            </div>
+                            <div class="showall">
+                                <a><span>전체보기</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+        
+
+
+    </main>
+</div>
+
+<!-- <div th:replace="~{template/footer :: footerFragment}"></div> -->
+<aside  th:fragment="footerFragment" id="dock">
+    <div class="dock-container">
+        <nav class="dock-menu">
+            <a href="javascript:void(0)" th:href="@{/}" th:class="${page=='home'?'active':''}">
+                <i class="home">홈</i>
+            </a>
+            <a href="javascript:void(0)">
+                <i class="search-icon">검색</i>
+            </a>
+            <a href="javascript:void(0)">
+                <i class="review">리뷰</i>
+            </a>
+            <a href="javascript:void(0)">
+                <i class="mydining">마이다이닝</i>
+            </a>
+            <a href="javascript:void(0)"
+               th:with="userLoggedIn=${session.member_id != null}"
+               th:href="${userLoggedIn} ? '/members/my' : '/members/login'"
+               th:class="${page=='members'?'active':''}">
+                <i class="account">내 계정</i>
+            </a>
+        </nav>
+    </div>
+</aside>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="../resources/js/index.js"></script>
 </body>
 </html>
