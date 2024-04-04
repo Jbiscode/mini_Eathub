@@ -3,21 +3,22 @@
 <head>
     <meta content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
     <link rel="stylesheet" href="../restaurantInfo.css" th:href="@{/css/restaurantInfo.css}"/>
-    <script defer src="../../resources/js/zzim.js" th:src="@{/js/zzim.js}"></script>
     <script src="http://code.jQuery.com/jquery-3.7.1.min.js"></script>
+    <script defer src="../../resources/js/zzim.js" th:src="@{/js/zzim.js}"></script>
+    <script defer src="../../resources/js/restaurantInfo.js" th:src="@{/js/restaurantInfo.js}"></script>
     <title>페이지 제목</title>
 </head>
 <body class="disable-user-select" style>
 <noscript></noscript>
 <div class="wrapper" id="wrapperDiv">
     <header class="_9j16x80">
-        <div class="_9j16x81 _9j16x82">
+        <div class="_9j16x81 icon-wrapper">
             <div class="_9j16x83">
                 <a class="_9j16x84 _9j16x85">뒤로</a>
                 <a class="_9j16x84 _9j16x86">홈</a>
             </div>
             <div class="_9j16x83">
-                <button class="_9j16x84 _9j16x87">저장</button>
+                <button class="_9j16x84 btn-bookmark-detail">저장</button>
             </div>
         </div>
     </header>
@@ -508,7 +509,7 @@
 </main>
 <aside id="dock" class="pgjaj00">
     <div class="_1kfi3w60">
-        <button class="_1kfi3w61">저장</button>
+        <button class="btn-bookmark-detail2">저장</button>
         <span class="_1kfi3w63">7,325</span>
     </div>
     <button class="pgjaj01" type="button">
@@ -624,35 +625,6 @@
     </div>
     <div tabindex="0" data-test="sentinelEnd"></div>
 </div>
-
-
-<script>
-
-    $('#__notes-item').click(function () {
-        document.getElementById('__notes-item').classList.toggle('__closed');
-    });
-    $('#__notes-item2').click(function () {
-        document.getElementById('__notes-item2').classList.toggle('__closed');
-    });
-    $('#__notes-item3').click(function () {
-        document.getElementById('__notes-item3').classList.toggle('__closed');
-    });
-
-
-    /*모달*/
-    var modal = document.getElementById("myModal");
-    var btn = document.getElementById("myBtn");
-
-    $('#myBtn').click(function () {
-        modal.style.display = "none";
-    });
-
-    $('#mymybtn').click(function () {
-        modal.style.display = "flex";
-    });
-
-
-</script>
 
 </body>
 </html>
