@@ -6,9 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:replace="~{template/common-js :: common-links}"/>
     <link rel="stylesheet" href="./login.css" th:href="@{/css/login.css}">
-    <link rel="stylesheet" href="../resources/css/footer.css" th:href="@{/css/footer.css}">
-    <link rel="stylesheet" href="../resources/css/index.css" th:href="@{/css/index.css}">
+    <link rel="stylesheet"  href="../resources/css/footer.css" th:href="@{/css/footer.css}">
+    <link rel="stylesheet"  href="../resources/css/index.css" th:href="@{/css/index.css}">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+
+    <script defer src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script defer th:src="@{/js/index.js}" src="../resources/js/index.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -21,8 +24,8 @@
                 
             </div>
             <div class="header-right">
-                <a class="bookmark_icon"><img src="../resources/images/header-mark.svg" alt="bookmark"></a>
-                <a class="notice_icon"><img src="../resources/images/header_notice.png" alt="bell"></a>
+                <a class="bookmark_icon"><img th:src="@{/images/header-mark.svg}" src="../resources/images/header-mark.svg" alt="bookmark"></a>
+                <a class="notice_icon"><img th:src="@{/images/header_notice.png}" src="../resources/images/header_notice.png" alt="bell"></a>
             </div>
         </div>
     </header>
@@ -32,25 +35,25 @@
             <div class="swiper swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <a><img src="../resources/images/ad_ex.png" alt="ad_1" ></a>
+                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_1" ></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img src="../resources/images/ad_ex.png" alt="ad_2" ></a>
+                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_2" ></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img src="../resources/images/ad_ex.png" alt="ad_3" ></a>
+                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_3" ></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img src="../resources/images/ad_ex.png" alt="ad_4" ></a>
+                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_4" ></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img src="../resources/images/ad_ex.png" alt="ad_5"></a>
+                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_5"></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img src="../resources/images/ad_ex.png" alt="ad_6"></a>
+                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_6"></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img src="../resources/images/ad_ex.png" alt="ad_7"></a>
+                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_7"></a>
                     </div>
                 </div>
                 <!-- 페이지네이션 -->
@@ -62,35 +65,35 @@
         <div class="shortcut_list_wrap">
             <div class="shortcut_list">
                 <div class="list_item">
-                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
                     <div class="title">예약TOP</div>
                 </div>
                 <div class="list_item">
-                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
                     <div class="title">오늘의 예약</div>
                 </div>
                 <div class="list_item">
-                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
                     <div class="title">한식</div>
                 </div>
                 <div class="list_item">
-                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
                     <div class="title">양식</div>
                 </div>
                 <div class="list_item">
-                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
                     <div class="title">중식</div>
                 </div>
                 <div class="list_item">
-                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
                     <div class="title">일식</div>
                 </div>
                 <div class="list_item">
-                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
                     <div class="title">아시안</div>
                 </div>
                 <div class="list_item">
-                    <div class="icon"><img src="../resources/images/top.png"></div>
+                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
                     <div class="title">카페&디저트</div>
                 </div>
             </div>
@@ -351,33 +354,6 @@
     </main>
 </div>
 
-<!-- <div th:replace="~{template/footer :: footerFragment}"></div> -->
-<aside  th:fragment="footerFragment" id="dock">
-    <div class="dock-container">
-        <nav class="dock-menu">
-            <a href="javascript:void(0)" th:href="@{/}" th:class="${page=='home'?'active':''}">
-                <i class="home">홈</i>
-            </a>
-            <a href="javascript:void(0)">
-                <i class="search-icon">검색</i>
-            </a>
-            <a href="javascript:void(0)">
-                <i class="review">리뷰</i>
-            </a>
-            <a href="javascript:void(0)">
-                <i class="mydining">마이다이닝</i>
-            </a>
-            <a href="javascript:void(0)"
-               th:with="userLoggedIn=${session.member_id != null}"
-               th:href="${userLoggedIn} ? '/members/my' : '/members/login'"
-               th:class="${page=='members'?'active':''}">
-                <i class="account">내 계정</i>
-            </a>
-        </nav>
-    </div>
-</aside>
-
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script src="../resources/js/index.js"></script>
+ <div th:replace="~{template/footer :: footerFragment}"></div>
 </body>
 </html>
