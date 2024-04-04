@@ -2,7 +2,7 @@
     width: 32px;
     height: 32px;
     margin-left: 4px;
-    background: url(../images/icon_notice_line_reguler_nor.webp) 50% 50% no-repeat;
+    background: url(../images/header_notice.png) 50% 50% no-repeat;
     position: relative;
     background-size: contain;
 }

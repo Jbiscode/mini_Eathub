@@ -1,13 +1,16 @@
 package com.eathub.mapper;
 
+import com.eathub.dto.CategoryDTO;
 import com.eathub.dto.MyPageDTO;
 import com.eathub.dto.SearchResultDTO;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface RestaurantMapper {
     RestaurantInfo selectRestaurantInfo(Long restaurant_seq);
     List<RestaurantInfo> selectRestaurantInfoList();
@@ -18,9 +21,15 @@ public interface RestaurantMapper {
     MyPageDTO selectMyPageDTO(@Param("restaurant_seq") Long restaurant_seq, @Param("member_seq") Long member_seq);
     void updateZzimComment(@Param("zzim_seq") Long zzim_seq, @Param("comment") String comment);
 
+    int checkZzimData(@Param("restaurant_seq") Long restaurant_seq, @Param("member_seq") Long member_seq);
     List<RestaurantZzim> selectZzimList(Long member_seq);
 
     void insertZzimRestaurant(RestaurantZzim restaurantZzim);
 
     void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
+    void updateZzimTotal(@Param("restaurant_seq") Long restaurant_seq, @Param("count") int count);
+
+    List<CategoryDTO> selectCategoryList();
+
+    void insertRestaurant(RestaurantInfo restaurantJoinDTO);
 }

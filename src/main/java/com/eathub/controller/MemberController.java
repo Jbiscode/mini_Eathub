@@ -1,12 +1,10 @@
 package com.eathub.controller;
 
 import com.eathub.conf.SessionConf;
-import com.eathub.dto.LoginDTO;
-import com.eathub.dto.MemberJoinDTO;
-import com.eathub.dto.MemberUpdateDTO;
-import com.eathub.dto.MyPageDTO;
+import com.eathub.dto.*;
 import com.eathub.entity.ENUM.MEMBER_TYPE;
 import com.eathub.entity.Members;
+import com.eathub.entity.RestaurantInfo;
 import com.eathub.service.MemberService;
 import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -182,7 +184,47 @@ public class MemberController {
     }
 
     @GetMapping("/restaurant/join")
-    public String joinRestaurant(Model model) {
+    public String joinRestaurant(Model model){
+        Map<String, String> locationList = restaurantService.getLocationList();
+        List<CategoryDTO> categoryList = restaurantService.getCategoryList();
+
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("locationList",locationList);
+        model.addAttribute("restaurantJoinDTO", new RestaurantJoinDTO());
         return "/members/restaurantJoinForm";
     }
+
+    @PostMapping("/restaurant/join")
+    public String joinRestaurant(@ModelAttribute RestaurantJoinDTO restaurantJoinDTO, HttpSession session) throws ParseException {
+
+        Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        log.info("restaurant ={}", restaurantJoinDTO.toString());
+
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        String openHour = restaurantJoinDTO.getOpenHour();
+        String closeHour = restaurantJoinDTO.getCloseHour();
+
+        Time parsedOpenHour = new Time(format.parse(openHour).getTime());
+        Time parsedCloseHour = new Time(format.parse(closeHour).getTime());
+
+        restaurantService.insertRestaurant(
+                RestaurantInfo.builder()
+                        .member_seq(member_seq)
+                        .category_seq(restaurantJoinDTO.getCategory_seq())
+                        .restaurant_name(restaurantJoinDTO.getRestaurant_name())
+                        .tag(restaurantJoinDTO.getTag())
+                        .location(restaurantJoinDTO.getLocation())
+                        .description(restaurantJoinDTO.getDescription())
+                        .phone(restaurantJoinDTO.getPhone())
+                        .zipcode(restaurantJoinDTO.getZipcode())
+                        .address1(restaurantJoinDTO.getAddress1())
+                        .address2(restaurantJoinDTO.getAddress2())
+                        .openHour(parsedOpenHour)
+                        .closeHour(parsedCloseHour)
+                        .closedDay(restaurantJoinDTO.getClosedDay())
+                        .build()
+        );
+        return "redirect:/members/my";
+    }
+
 }

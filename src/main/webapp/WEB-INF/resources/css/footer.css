@@ -39,6 +39,7 @@
     
     background-color: #222222;
 }
+
 #dock .dock-container .dock-menu a i.home{
     mask-image: url(../images/dock-home.svg);
 }

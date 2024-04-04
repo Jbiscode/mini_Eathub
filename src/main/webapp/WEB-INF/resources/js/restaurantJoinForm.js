@@ -14,9 +14,9 @@ function checkPost(){
               
                // 우편번호와 주소 정보를 해당 필드에 넣는다.
                document.getElementById('zipcode').value = data.zonecode;
-               document.getElementById("addr1").value = addr;
+               document.getElementById("address1").value = addr;
                // 커서를 상세주소 필드로 이동한다.
-               document.getElementById("addr2").focus();
+               document.getElementById("address2").focus();
            }
        }).open();
 }

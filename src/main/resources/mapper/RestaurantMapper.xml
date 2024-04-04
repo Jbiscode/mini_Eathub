@@ -4,6 +4,12 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eathub.mapper.RestaurantMapper">
 
+    <select id="selectRestaurantInfo" resultType="restaurantInfo">
+        SELECT *
+        FROM restaurant_info
+        WHERE restaurant_seq = #{restaurant_seq}
+    </select>
+
     <select id="selectRestaurantInfoList" resultType="restaurantInfo">
         SELECT * FROM restaurant_info
     </select>
@@ -15,29 +21,82 @@
 </select>
 
     <select id="selectZzimList" parameterType="Long" resultType="restaurantZzim">
-        SELECT * FROM restaurant_zzim WHERE member_seq = #{member_seq}
+        SELECT *
+        FROM restaurant_zzim
+        WHERE member_seq = #{member_seq}
     </select>
 
     <select id="selectMyPageDTO" resultType="myPageDTO">
         SELECT *
         FROM restaurant_zzim z
-                 LEFT JOIN restaurant_info Using(restaurant_seq)
-        WHERE z.restaurant_seq = #{restaurant_seq} AND z.member_seq = #{member_seq}
+                 LEFT JOIN restaurant_info Using (restaurant_seq)
+        WHERE z.restaurant_seq = #{restaurant_seq}
+          AND z.member_seq = #{member_seq}
     </select>
-<!-- 마이페이지 찜목록 comment 업데이트-->
+    <!-- 현재 식당을 찜했는지 여부 확인 -->
+    <select id="checkZzimData" resultType="int">
+        SELECT COUNT(*) FROM restaurant_zzim
+        WHERE member_seq = #{member_seq} AND restaurant_seq = #{restaurant_seq}
+    </select>
+
+
+
+    <!-- 카테고리 목록 불러오기   -->
+    <select id="selectCategoryList" resultType="categoryDTO">
+        SELECT *
+        FROM category
+    </select>
+
+    <!-- 마이페이지 찜목록 comment 업데이트-->
     <update id="updateZzimComment">
         UPDATE restaurant_zzim
         SET comment = #{comment}
         WHERE zzim_seq = #{zzim_seq}
     </update>
+    <update id="updateZzimTotal">
+        update restaurant_info set zzim_total = zzim_total + #{count} where restaurant_seq = #{restaurant_seq}
+    </update>
+    
 
-<!-- 찜목록 추가-->
+    <!-- 찜목록 추가-->
     <insert id="insertZzimRestaurant">
         INSERT INTO restaurant_zzim (member_seq, restaurant_seq)
         VALUES (#{member_seq}, #{restaurant_seq})
     </insert>
 
-<!-- 찜목록 삭제-->
+    <!-- 레스토랑 추가 -->
+    <select id="insertRestaurant" parameterType="restaurantInfo">
+        INSERT INTO restaurant_info(member_seq
+                                   ,category_seq
+                                   , restaurant_name
+                                   , tag
+                                   , location
+                                   , description
+                                   , phone
+                                   , zipcode
+                                   , address1
+                                   , address2
+                                   , openHour
+                                   , closeHour
+                                   , closedDay)
+        VALUES (#{member_seq}
+               ,#{category_seq}
+               ,#{restaurant_name}
+               ,#{tag}
+               ,#{location}
+               ,#{description}
+               ,#{phone}
+               ,#{zipcode}
+               ,#{address1}
+               ,#{address2}
+               ,#{openHour}
+               ,#{closeHour}
+               ,#{closedDay})
+
+    </select>
+
+
+    <!-- 찜목록 삭제-->
     <delete id="deleteZzimRestaurant">
         DELETE FROM restaurant_zzim
         WHERE member_seq = #{member_seq} AND restaurant_seq = #{restaurant_seq}
