@@ -220,7 +220,6 @@ input::placeholder {
 }
 .btn-bookmark.active {
     background: url(../images/bookmarked.svg) 50% 50% no-repeat;
-    
 }
 .saved-restaurant-list-item .restaurant-info .btn-bookmark {
     margin-top: 5px;
