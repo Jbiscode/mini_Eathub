@@ -2,6 +2,7 @@ package com.eathub.service;
 
 import com.eathub.dto.CategoryDTO;
 import com.eathub.dto.MyPageDTO;
+import com.eathub.dto.RestaurantJoinDTO;
 import com.eathub.dto.SearchResultDTO;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
@@ -110,5 +111,15 @@ public class RestaurantService {
 
     public void insertRestaurant(RestaurantInfo restaurantJoinDTO) {
         restaurantMapper.insertRestaurant(restaurantJoinDTO);
+    }
+
+
+    public RestaurantInfo selectSavedRestaurant(RestaurantJoinDTO restaurantJoinDTO) {
+
+        return restaurantMapper.selectRestaurant(restaurantJoinDTO);
+    }
+
+    public void insertRestaurantStatus(RestaurantInfo restaurantJoinDTO) {
+        restaurantMapper.insertRestaurantStatus(restaurantJoinDTO);
     }
 }

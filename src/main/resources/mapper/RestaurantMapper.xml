@@ -47,6 +47,13 @@
         FROM category
     </select>
 
+    <!-- 방금 등록한 가게 불러오기   -->
+    <select id="selectRestaurant" parameterType="restaurantJoinDTO" resultType="restaurantInfo">
+        SELECT *
+        FROM restaurant_info
+        WHERE zipcode=#{zipcode} and address1=#{address1} and address2=#{address2}
+    </select>
+
     <!-- 마이페이지 찜목록 comment 업데이트-->
     <update id="updateZzimComment">
         UPDATE restaurant_zzim
@@ -65,7 +72,7 @@
     </insert>
 
     <!-- 레스토랑 추가 -->
-    <select id="insertRestaurant" parameterType="restaurantInfo">
+    <insert id="insertRestaurant" parameterType="restaurantInfo">
         INSERT INTO restaurant_info(member_seq
                                    ,category_seq
                                    , restaurant_name
@@ -93,8 +100,13 @@
                ,#{closeHour}
                ,#{closedDay})
 
-    </select>
+    </insert>
 
+    <!-- 레스토랑 등록대기열 추가   -->
+    <insert id="insertRestaurantStatus" parameterType="restaurantInfo">
+        INSERT INTO restaurant_status(restaurant_seq)
+        VALUES (#{restaurant_seq})
+    </insert>
 
     <!-- 찜목록 삭제-->
     <delete id="deleteZzimRestaurant">

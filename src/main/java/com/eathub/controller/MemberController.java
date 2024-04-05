@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/members")
@@ -69,9 +70,10 @@ public class MemberController {
         }
 
         HttpSession session = request.getSession();
-        long memberSeq = memberService.getMemberSeqById(loginMember.getMember_id());
+
         // 세션에 로그인 정보 저장
-        session.setAttribute(SessionConf.LOGIN_MEMBER_SEQ, memberSeq);
+        session.setAttribute(SessionConf.LOGIN_MEMBER_SEQ, loginMember.getMember_seq());
+        session.setAttribute(SessionConf.LOGIN_MEMBER_TYPE,loginMember.getMember_type());
         session.setAttribute(SessionConf.LOGIN_MEMBER, loginMember.getMember_id());
         return "redirect:" + redirectURL;
     }
@@ -184,7 +186,15 @@ public class MemberController {
     }
 
     @GetMapping("/restaurant/join")
-    public String joinRestaurant(Model model){
+    public String joinRestaurant(Model model, HttpSession session){
+
+        // 멤버 타입 확인 후, OWNER인 경우만 등록폼을 이동
+        MEMBER_TYPE memberType =(MEMBER_TYPE) session.getAttribute(SessionConf.LOGIN_MEMBER_TYPE);
+        if (memberType.equals(MEMBER_TYPE.CUSTOMER)){
+            return "redirect:/";
+        }
+
+        // 지역리스트, 카테고리 리스트 받아오기
         Map<String, String> locationList = restaurantService.getLocationList();
         List<CategoryDTO> categoryList = restaurantService.getCategoryList();
 
@@ -197,16 +207,18 @@ public class MemberController {
     @PostMapping("/restaurant/join")
     public String joinRestaurant(@ModelAttribute RestaurantJoinDTO restaurantJoinDTO, HttpSession session) throws ParseException {
 
-        Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         log.info("restaurant ={}", restaurantJoinDTO.toString());
 
+        Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+
+        // Time 형으로 형변환
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
         String openHour = restaurantJoinDTO.getOpenHour();
         String closeHour = restaurantJoinDTO.getCloseHour();
-
         Time parsedOpenHour = new Time(format.parse(openHour).getTime());
         Time parsedCloseHour = new Time(format.parse(closeHour).getTime());
 
+        // 가게 등록
         restaurantService.insertRestaurant(
                 RestaurantInfo.builder()
                         .member_seq(member_seq)
@@ -224,6 +236,17 @@ public class MemberController {
                         .closedDay(restaurantJoinDTO.getClosedDay())
                         .build()
         );
+
+        // 관리자 승인을 위한 승인대기 리스트에 등록
+        RestaurantInfo savedRestaurant =  restaurantService.selectSavedRestaurant(restaurantJoinDTO);
+        Long savedRestaurant_seq =  savedRestaurant.getRestaurant_seq();
+
+        restaurantService.insertRestaurantStatus(
+                RestaurantInfo.builder()
+                        .restaurant_seq(savedRestaurant_seq)
+                        .build()
+        );
+
         return "redirect:/members/my";
     }
 
