@@ -22,11 +22,13 @@ public interface RestaurantMapper {
     MyPageDTO selectMyPageDTO(@Param("restaurant_seq") Long restaurant_seq, @Param("member_seq") Long member_seq);
     void updateZzimComment(@Param("zzim_seq") Long zzim_seq, @Param("comment") String comment);
 
+    int checkZzimData(@Param("restaurant_seq") Long restaurant_seq, @Param("member_seq") Long member_seq);
     List<RestaurantZzim> selectZzimList(Long member_seq);
 
     void insertZzimRestaurant(RestaurantZzim restaurantZzim);
 
     void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
+    void updateZzimTotal(@Param("restaurant_seq") Long restaurant_seq, @Param("count") int count);
 
     List<CategoryDTO> selectCategoryList();
 
