@@ -122,4 +122,23 @@ public class RestaurantService {
     public void insertRestaurantStatus(RestaurantInfo restaurantJoinDTO) {
         restaurantMapper.insertRestaurantStatus(restaurantJoinDTO);
     }
+
+    public List<MyPageDTO> getOwnerRestaurantList(Long member_seq) {
+        return restaurantMapper.selectOwnerRestaurantList(member_seq);
+
+    /**
+     * 식당의 상태를 업데이트하는 메서드입니다.
+     *
+     * @param restaurant_seq 업데이트하려는 식당의 고유 번호입니다.
+     * @param status 식당에 설정하려는 새로운 상태입니다.
+     * 이 메서드는 두 단계로 작동한다.
+     * 먼저, restaurantMapper의 updateRestaurantStatus 메서드를 호출하여 식당의 상태를 업데이트합니다.
+     * 그 다음, restaurantMapper의 updateRestaurantInfoStatus 메서드를 호출하여 식당 정보의 상태도 업데이트합니다.
+     * 이 두 메서드는 각각 식당 테이블과 식당 정보 테이블에서 해당 식당의 상태를 업데이트하는 SQL 쿼리를 실행합니다.
+     * 따라서 이 메서드는 식당과 관련된 두 테이블의 상태를 동시에 업데이트하므로, 데이터의 일관성을 유지하는 데 도움이 됨
+     */
+    public void updateRestaurantStatus(Long restaurant_seq,Long admin_seq, String status, String comment) {
+        restaurantMapper.updateRestaurantStatus(restaurant_seq,admin_seq, status ,comment);
+        restaurantMapper.updateRestaurantInfoStatus(restaurant_seq, status);
+    }
 }

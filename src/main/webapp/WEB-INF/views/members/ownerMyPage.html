@@ -7,17 +7,16 @@
     <link th:replace="~{template/common-js :: common-links}"/>
     <link rel="stylesheet" href="../../resources/css/footer.css" th:href="@{/css/footer.css}">
     <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
-    <link rel="stylesheet" href="../../resources/css/ownerMypage.css" th:href="@{/css/ownerMypage.css}">
-    <link rel="stylesheet" href="../../resources/css/restaurantinfo.css" th:href="@{/css/restaurantinfo.css}">
+    <link rel="stylesheet" href="../../resources/css/ownerMyPage.css" th:href="@{/css/ownerMyPage.css}">
     <script defer src="../../resources/js/myPage.js" th:src="@{/js/myPage.js}"></script>
 
     <!-- 임시 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />-->
+<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">-->
+<!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>-->
+<!--    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>-->
 
 </head>
 <body>
@@ -111,8 +110,7 @@
 
     </main>
 </div>
-<div role="presentation" id="myModal" class="MuiDrawer-root MuiDrawer-modal jss1"
-     style="position: fixed; z-index: 100000; inset: 0px;">
+<div role="presentation" id="myModal" class="MuiDrawer-root MuiDrawer-modal jss1" style="position: fixed; z-index: 100000; inset: 0px;">
     <div class="MuiBackdrop-root" aria-hidden="true"
          style="opacity: 1; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"></div>
     <div tabindex="0" data-test="sentinelStart"></div>
@@ -120,63 +118,39 @@
          style="transform: none; transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;">
         <div class="drawer-box"
              style="position: sticky; background-color: rgb(255, 255, 255); top: 0px; left: 0px; right: 0px; z-index: 99;">
-            <div class="drawer-box-header"
+            <div class="drawer-box-header "
                  style="border-radius: 20px 20px 0px 0px; border-bottom: none; justify-content: center; position: sticky; background-color: rgb(255, 255, 255); top: 0px; left: 0px; right: 0px; z-index: 99;">
-                <h2 class="drawer-box-title">숙성도 중문점</h2>
+                <h2 class="drawer-box-title">내 가게 목록</h2>
             </div>
             <div class="drawer-box-body" style="padding: 0px; overflow-y: auto; position: static; max-height: 70vh;">
-                <section class="section pt-30 pb-25">
-
-                </section>
                 <section class="section pt-30">
                     <div class="container gutter-sm">
                         <div class="section-body">
-                            <div class="desc-blocks" style="word-break: break-word;">
-                                <div class="desc-block">
-                                    <dl>
-                                        <dt><a class="__toggle">전화번호</a></dt>
-                                        <dd><a class="call">064-739-5213</a></dd>
-                                    </dl>
-                                </div>
-                                <div class="desc-block">
-                                    <dl>
-                                        <dt><a class="__toggle">매장 소개</a></dt>
-                                        <dd class="color-gray">
-                                            제주가 낳고, 기른<br>
-                                            100% 제주 흑돼지만을 사용하며<br>
-                                            깐깐한 원육선별과 섬세한 교차숙성 기술로<br>
-                                            숙성고기의 정점이 무엇인지 보여드리겠습니다.<br>
-                                            프리미엄 숙성육 퀄리티 하우스<br>
-                                            제주 숙성도 중문점을 찾아주세요!
-                                        </dd>
-                                    </dl>
-                                </div>
-                                <div class="desc-block">
-                                    <dl>
-                                        <dt><a class="__toggle">영업시간</a></dt>
-                                        <dd class="color-gray">
-                                            12시 오픈일 때 (스타트 최대 24팀까지 입장 가능)<br><br>
-                                            11:00 부터 현장대기등록 시작<br><br>
-                                            12시 오픈과 동시에 원격줄서기 시작합니다.<br><br>
-                                            마지막 입장시간 21:00까지 입니다.<br><br>
-                                            대기가 길어서 부득이하게 식사시간을 2시간으로 제한 됩니다.<br><br>
-                                            라스트 오더 21:15<br><br>
-                                            퇴장시간 21:50
-                                        </dd>
-                                    </dl>
-                                </div>
-                                <div class="desc-block">
-                                    <dl>
-                                        <dt><a class="__toggle">안내 및 유의사항</a></dt>
-                                        <dd class="color-gray">
-                                            *단체안내<br>
-                                            숙성도를 방문해주셔서 감사합니다.<br>
-                                            6인이상 방문객분들은 매장이 협소하고<br>
-                                            테이블 수가 적은 관계로 안내 받으실때 <br>
-                                            연결되지 않은 테이블로 배정 받아 따로 않으실 확률이 높습니다.<br>
-                                            대기등록 전에 참고해주시면 감사하겠습니다.
-                                        </dd>
-                                    </dl>
+                            <div id="common_infinity_sc" class="owner-restaurant-list">
+                                <div id="common_infinity_sc_0" data-dummy="189">
+                                    <div class="owner-restaurant-list-item" th:each="restaurant : ${myPageDTO}">
+                                        <div class="restaurant-info">
+                                            <a href="javascript:void(0)" class="tb">
+                                                <img class="img" th:src="@{/images/mongtanjeju.jpg}"  alt="page"/>
+                                            </a>
+                                            <a href="javascript:void(0)" class="detail">
+                                                <h4 class="name" th:text="${restaurant.restaurant_name}">산청숯불가든 마곡</h4>
+                                                <p class="excerpt" th:text="${restaurant.description}">
+                                                    여기에 레스토랑 설명이 들어감
+                                                </p>
+                                                <div class="restaurant-meta">
+                                                    <div class="rating" style="margin-bottom: 5px;">
+                                                        <span class="star" th:text="${restaurant.rating}">(평점)</span>
+                                                        <span class="count" th:text="'(' + ${restaurant.review_total} + ')'">(리뷰수)</span>
+                                                    </div>
+                                                    <span class="tags" th:text="${restaurant.tag}">돼지고기구이 • 마곡</span>
+                                                    <span class="price" th:text="|영업시간 ${#dates.format(restaurant.openHour,'HH:mm')}~${#dates.format(restaurant.closeHour,'HH:mm')}|">점심 저녁 동일가 1 - 4만원</span>
+                                                </div>
+                                            </a>
+
+                                        </div>
+                                        <div style="height: 0px;">&nbsp;</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -196,16 +170,5 @@
 <div th:replace="~{template/footer :: footerFragment}"></div>
 
 </body>
-<script>
-    var modal = document.getElementById("myModal");
-    var btn = document.getElementById("myBtn");
 
-    $('#myBtn').click(function () {
-        modal.style.display = "none";
-    });
-
-    $('.my-restaurant').click(function () {
-        modal.style.display = "flex";
-    });
-</script>
 </html>

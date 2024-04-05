@@ -29,4 +29,5 @@ public class RestaurantInfo {
     private Double rating;
     private Integer review_total;
     private Integer zzim_total;
+    private String status;
 }
