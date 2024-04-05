@@ -122,4 +122,8 @@ public class RestaurantService {
     public void insertRestaurantStatus(RestaurantInfo restaurantJoinDTO) {
         restaurantMapper.insertRestaurantStatus(restaurantJoinDTO);
     }
+
+    public List<MyPageDTO> getOwnerRestaurantList(Long member_seq) {
+        return restaurantMapper.selectOwnerRestaurantList(member_seq);
+    }
 }

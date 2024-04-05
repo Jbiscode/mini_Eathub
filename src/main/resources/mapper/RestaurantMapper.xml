@@ -54,6 +54,13 @@
         WHERE zipcode=#{zipcode} and address1=#{address1} and address2=#{address2}
     </select>
 
+    <!-- 점주의 레스토랑 리스트 불러오기   -->
+    <select id="selectOwnerRestaurantList" resultType="mypageDTO">
+        SELECT *
+        FROM restaurant_info
+        WHERE member_seq=#{member_seq}
+    </select>
+
     <!-- 마이페이지 찜목록 comment 업데이트-->
     <update id="updateZzimComment">
         UPDATE restaurant_zzim

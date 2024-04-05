@@ -114,33 +114,33 @@
     margin-left: 8px;
     font-weight: 400;
 }
-.saved-restaurant-list-item {
+.owner-restaurant-list-item {
     position: relative;
 }
-.saved-restaurant-list .saved-restaurant-list-item {
+.owner-restaurant-list .owner-restaurant-list-item {
     margin-bottom: 20px;
     padding-bottom: 4px;
     position: relative;
 }
-.saved-restaurant-list .saved-restaurant-list-item:last-child {
+.owner-restaurant-list .owner-restaurant-list-item:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
 }
-.saved-restaurant-list-item .restaurant-info {
+.owner-restaurant-list-item .restaurant-info {
     display: flex;
     margin-bottom: 16px;
     position: relative;
 }
-.saved-restaurant-list-item .restaurant-info .tb {
+.owner-restaurant-list-item .restaurant-info .tb {
     margin-top: 2px;
     overflow: hidden;
     margin-right: 15px;
 }
-.saved-restaurant-list-item .restaurant-info .detail {
+.owner-restaurant-list-item .restaurant-info .detail {
     flex: 1;
     min-width: 1px;
 }
-.saved-restaurant-list-item .restaurant-info .tb .img {
+.owner-restaurant-list-item .restaurant-info .tb .img {
     width: 78px;
     height: 104px;
     border-radius: 4px;
@@ -150,19 +150,19 @@
     box-sizing: border-box;
     border: 1px solid #f1f1f1;
 }
-.saved-restaurant-list-item .restaurant-info .tb .img {
+.owner-restaurant-list-item .restaurant-info .tb .img {
     position: relative;
     overflow: hidden;
 }
-.saved-restaurant-list-item .restaurant-info .detail .name,
-.saved-restaurant-list-item .restaurant-info .detail .excerpt {
+.owner-restaurant-list-item .restaurant-info .detail .name,
+.owner-restaurant-list-item .restaurant-info .detail .excerpt {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
-.saved-restaurant-list-item .restaurant-info .detail .name {
+.owner-restaurant-list-item .restaurant-info .detail .name {
     font-size: 20px;
     margin-bottom: 3px;
     font-weight: 900;
@@ -170,7 +170,7 @@
     line-height: 1.4;
     letter-spacing: -0.1em;
 }
-.saved-restaurant-list-item .restaurant-info .detail .excerpt {
+.owner-restaurant-list-item .restaurant-info .detail .excerpt {
     font-size: 11px;
     line-height: 15px;
     color: #000;
@@ -215,7 +215,7 @@
     font-weight: 400;
     letter-spacing: -.05em !important;
 }
-.saved-restaurant-list-item .restaurant-info .detail .restaurant-meta .tags {
+.owner-restaurant-list-item .restaurant-info .detail .restaurant-meta .tags {
     display: block;
     color: #aaa;
     margin-bottom: 5px;
@@ -228,17 +228,17 @@
     align-items: center;
     color: #333;
 }
-.saved-restaurant-list-item .restaurant-info .detail .restaurant-meta .price {
+.owner-restaurant-list-item .restaurant-info .detail .restaurant-meta .price {
     display: block;
     color: #aaa;
     font-size: 11px;
     letter-spacing: -0.15em;
 }
-.saved-restaurant-list-item .restaurant-info .btn-bookmark {
+.owner-restaurant-list-item .restaurant-info .btn-bookmark {
     margin-top: 5px;
     margin-left: 5px;
 }
-.section .saved-restaurant-list-item .form-input {
+.section .owner-restaurant-list-item .form-input {
     margin-bottom: 16px;
     padding: 15px 20px;
 }
@@ -328,7 +328,7 @@
 
 /* 추가 css */
 #myModal{
-    display: none;
+    visibility: hidden;
 }
 .MuiBackdrop-root {
     width: 100%;
@@ -364,6 +364,7 @@ jss1 .MuiPaper-root {
     z-index: 1200;
     overflow-y: auto;
     flex-direction: column;
+    justify-content: end;
     -webkit-overflow-scrolling: touch;
 }
 .drawer-box {
@@ -431,4 +432,18 @@ jss1 .MuiPaper-root {
     display: block;
     margin-bottom: 10px;
     width: 100%;
+}
+.owner-restaurant-list .owner-restaurant-list-item:first-child{
+    margin-top: 5px;
+}
+.owner-restaurant-list .owner-restaurant-list-item {
+    margin-bottom: 20px;
+    padding-bottom: 4px;
+    position: relative;
+}
+.owner-restaurant-list-item {
+    box-shadow: 0px 0px 10px #c8c8c8;
+    border-radius: 10px;
+    position: relative;
+    padding: 20px 20px;
 }

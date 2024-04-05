@@ -37,4 +37,6 @@ public interface RestaurantMapper {
     RestaurantInfo selectRestaurant(RestaurantJoinDTO restaurantJoinDTO);
 
     void insertRestaurantStatus(RestaurantInfo restaurantJoinDTO);
+
+    List<MyPageDTO> selectOwnerRestaurantList(Long member_seq);
 }

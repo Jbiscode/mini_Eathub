@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,8 +45,17 @@ public class MemberController {
 
     @GetMapping("/my")
     public String myPage(MemberJoinDTO memberJoinDTO, Model model, HttpSession session) {
+        MEMBER_TYPE mem_type = (MEMBER_TYPE) session.getAttribute(SessionConf.LOGIN_MEMBER_TYPE);
+        Long mem_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+
+        if(mem_type.equals(MEMBER_TYPE.OWNER)){
+            List<MyPageDTO> ownerRestaurantList = restaurantService.getOwnerRestaurantList(mem_seq);
+            model.addAttribute("myPageDTO", ownerRestaurantList);
+            return "/members/ownerMyPage";
+        }
+
         model.addAttribute("memberJoinDTO", memberJoinDTO);
-        List<MyPageDTO> zzimRestaurantList = restaurantService.getZzimRestaurantList((Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ));
+        List<MyPageDTO> zzimRestaurantList = restaurantService.getZzimRestaurantList(mem_seq);
         model.addAttribute("myPageDTO", zzimRestaurantList);
         return "/members/myPage";
     }
