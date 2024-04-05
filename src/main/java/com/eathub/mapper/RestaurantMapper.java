@@ -32,6 +32,8 @@ public interface RestaurantMapper {
     List<CategoryDTO> selectCategoryList();
     RestaurantInfo selectRestaurant(RestaurantJoinDTO restaurantJoinDTO);
 
+    List<MyPageDTO> selectOwnerRestaurantList(Long member_seq);
+
 
 
 //    UPDATE
@@ -54,11 +56,7 @@ public interface RestaurantMapper {
 
 
 
-
 //    DELETE
     void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
-
-
-
 
 }

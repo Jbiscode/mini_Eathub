@@ -24,4 +24,5 @@ public class RestaurantJoinDTO {
     private String closeHour;
     private String closedDay;
 
+    // 상세 정보 (메뉴, 공지사항 등등)
 }

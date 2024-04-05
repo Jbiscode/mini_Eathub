@@ -123,6 +123,9 @@ public class RestaurantService {
         restaurantMapper.insertRestaurantStatus(restaurantJoinDTO);
     }
 
+    public List<MyPageDTO> getOwnerRestaurantList(Long member_seq) {
+        return restaurantMapper.selectOwnerRestaurantList(member_seq);
+
     /**
      * 식당의 상태를 업데이트하는 메서드입니다.
      *

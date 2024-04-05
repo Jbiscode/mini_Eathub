@@ -29,3 +29,15 @@ $(document).ready(function () {
         });
     });
 });
+
+
+var modal = document.getElementById("myModal");
+var btn = document.getElementById("myBtn");
+
+$('#myBtn').click(function () {
+    modal.style.visibility = "hidden";
+});
+
+$('.my-restaurant').click(function () {
+    modal.style.visibility = "visible";
+});
