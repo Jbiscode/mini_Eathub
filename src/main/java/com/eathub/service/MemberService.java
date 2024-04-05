@@ -16,11 +16,6 @@ public class MemberService {
 
     private final MemberMapper memberMapper;
 
-    // 로그인후 member_id로 member_seq 가져오기
-    @Transactional(readOnly = true)
-    public long getMemberSeqById(String member_id) {
-        return memberMapper.getMemberSeqById(member_id);
-    }
     // member_id로 회원정보 가져오기
     public Members selectMemberById(String member_id) {
         return memberMapper.selectMemberById(member_id);
