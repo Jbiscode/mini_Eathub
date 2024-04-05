@@ -2,6 +2,7 @@ package com.eathub.service;
 
 import com.eathub.dto.CategoryDTO;
 import com.eathub.dto.MyPageDTO;
+import com.eathub.dto.RestaurantJoinDTO;
 import com.eathub.dto.SearchResultDTO;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
