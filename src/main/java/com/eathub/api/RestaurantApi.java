@@ -1,6 +1,7 @@
 package com.eathub.api;
 
 import com.eathub.conf.SessionConf;
+import com.eathub.entity.RestaurantInfo;
 import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,5 +43,26 @@ public class RestaurantApi {
         return ResponseEntity.ok().body(Map.of(
                 "success", true
         ));
+    }
+
+    // 점주의 내 가게 리스트에서 가게 선택하기 API
+    @PostMapping("/owner/{restaurantSeq}")
+    public ResponseEntity<?> selectOwnerRestaurant(@PathVariable("restaurantSeq") Long restaurant_seq) {
+
+        try {
+            RestaurantInfo restaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
+            String category = restaurantService.getRestaurantType(restaurantInfo.getCategory_seq());
+            log.info("category = {}", category);
+            Map<String, String> locationList = restaurantService.getLocationList();
+            log.info("location ={}", restaurantInfo.getLocation());
+            String location = locationList.get(restaurantInfo.getLocation());
+            return ResponseEntity.ok().body(Map.of(
+                        "restaurantInfo" , restaurantInfo,
+                        "category", category,
+                        "location",location
+                   ));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("오류 메시지");
+        }
     }
 }

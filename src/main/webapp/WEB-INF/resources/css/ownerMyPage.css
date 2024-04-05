@@ -506,3 +506,11 @@ jss1 .MuiPaper-root {
     margin-top: .25em;
 }
 /* form */
+
+.closed-day .form-check-input:disabled{
+    opacity: 1;
+}
+.closed-day .form-check-input:disabled~.form-check-label, .form-check-input[disabled]~.form-check-label {
+    cursor: default;
+    opacity: 1;
+}

@@ -114,6 +114,12 @@
         WHERE member_seq=#{member_seq}
     </select>
 
+    <!-- 레스토랑 타입(카테고리) 불러오기   -->
+    <select id="getRestaurantType" resultType="String">
+        SELECT restaurant_type
+        FROM category
+        WHERE category_seq = #{categorySeq}
+    </select>
 
 
 

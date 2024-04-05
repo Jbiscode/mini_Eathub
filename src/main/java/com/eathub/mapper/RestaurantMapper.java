@@ -59,4 +59,5 @@ public interface RestaurantMapper {
 //    DELETE
     void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
 
+    String getRestaurantType(Long categorySeq);
 }

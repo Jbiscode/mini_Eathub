@@ -101,6 +101,7 @@ public class RestaurantService {
         locations.put("SEOUL", "서울");
         locations.put("BUSAN", "부산");
         locations.put("JEJU", "제주");
+
         return locations;
     }
 
@@ -141,4 +142,10 @@ public class RestaurantService {
         restaurantMapper.updateRestaurantStatus(restaurant_seq,admin_seq, status ,comment);
         restaurantMapper.updateRestaurantInfoStatus(restaurant_seq, status);
     }
+
+    public String getRestaurantType(Long categorySeq) {
+        return restaurantMapper.getRestaurantType(categorySeq);
+    }
+
+
 }
