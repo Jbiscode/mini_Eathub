@@ -51,6 +51,7 @@ public class MemberController {
         if(mem_type.equals(MEMBER_TYPE.OWNER)){
             List<MyPageDTO> ownerRestaurantList = restaurantService.getOwnerRestaurantList(mem_seq);
             model.addAttribute("myPageDTO", ownerRestaurantList);
+            model.addAttribute("restaurantJoinDTO", new RestaurantJoinDTO());
             return "/members/ownerMyPage";
         }
 

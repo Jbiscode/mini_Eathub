@@ -14,15 +14,7 @@
     <link rel="stylesheet" href="../../resources/css/ownerMyPage.css" th:href="@{/css/ownerMyPage.css}">
     <script defer src="../../resources/js/myPage.js" th:src="@{/js/myPage.js}"></script>
 
-    
 
-    <!-- 임시 -->
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
-   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 </head>
 <body>
@@ -304,7 +296,7 @@
                         <div class="section-body">
                             <div id="common_infinity_sc" class="owner-restaurant-list">
                                 <div id="common_infinity_sc_0" data-dummy="189">
-                                    <div class="owner-restaurant-list-item" th:each="restaurant : ${myPageDTO}">
+                                    <div class="owner-restaurant-list-item" th:each="restaurant : ${myPageDTO}" th:data-restaurant-seq="${restaurant.restaurant_seq}">
                                         <div class="restaurant-info">
                                             <a href="javascript:void(0)" class="tb">
                                                 <img class="img" th:src="@{/images/mongtanjeju.jpg}"  alt="page"/>
