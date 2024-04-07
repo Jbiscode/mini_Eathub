@@ -8,31 +8,31 @@
     <!-- 레스토랑 추가 -->
     <insert id="insertRestaurant" parameterType="restaurantInfo">
         INSERT INTO restaurant_info( member_seq
-                                   , category_seq
-                                   , restaurant_name
-                                   , tag
-                                   , location
-                                   , description
-                                   , phone
-                                   , zipcode
-                                   , address1
-                                   , address2
-                                   , openHour
-                                   , closeHour
-                                   , closedDay)
+                                    , category_seq
+                                    , restaurant_name
+                                    , tag
+                                    , location
+                                    , description
+                                    , phone
+                                    , zipcode
+                                    , address1
+                                    , address2
+                                    , openHour
+                                    , closeHour
+                                    , closedDay)
         VALUES ( #{member_seq}
-               , #{category_seq}
-               , #{restaurant_name}
-               , #{tag}
-               , #{location}
-               , #{description}
-               , #{phone}
-               , #{zipcode}
-               , #{address1}
-               , #{address2}
-               , #{openHour}
-               , #{closeHour}
-               , #{closedDay})
+                , #{category_seq}
+                , #{restaurant_name}
+                , #{tag}
+                , #{location}
+                , #{description}
+                , #{phone}
+                , #{zipcode}
+                , #{address1}
+                , #{address2}
+                , #{openHour}
+                , #{closeHour}
+                , #{closedDay})
 
     </insert>
 
@@ -63,6 +63,13 @@
         WHERE restaurant_seq = #{restaurant_seq}
     </select>
 
+    <select id="selectRestaurantInfoWithType" resultType="com.eathub.dto.OwnerRestaurantDetailDTO">
+        SELECT r.*, c.restaurant_type
+        FROM restaurant_info r
+        LEFT JOIN category c ON r.category_seq = c.category_seq
+        WHERE r.restaurant_seq = #{restaurant_seq}
+    </select>
+
     <select id="selectRestaurantInfoList" resultType="restaurantInfo">
         SELECT * FROM restaurant_info
     </select>
@@ -83,9 +90,9 @@
     <select id="selectMyPageDTO" resultType="myPageDTO">
         SELECT *
         FROM restaurant_zzim z
-                 LEFT JOIN restaurant_info Using (restaurant_seq)
+                LEFT JOIN restaurant_info Using (restaurant_seq)
         WHERE z.restaurant_seq = #{restaurant_seq}
-          AND z.member_seq = #{member_seq}
+            AND z.member_seq = #{member_seq}
     </select>
     <!-- 현재 식당을 찜했는지 여부 확인 -->
     <select id="checkZzimData" resultType="int">

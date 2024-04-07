@@ -1,7 +1,12 @@
 package com.eathub.controller;
 
 import com.eathub.conf.SessionConf;
-import com.eathub.dto.*;
+import com.eathub.dto.CategoryDTO;
+import com.eathub.dto.LoginDTO;
+import com.eathub.dto.MemberJoinDTO;
+import com.eathub.dto.MemberUpdateDTO;
+import com.eathub.dto.MyPageDTO;
+import com.eathub.dto.RestaurantJoinDTO;
 import com.eathub.entity.ENUM.MEMBER_TYPE;
 import com.eathub.entity.Members;
 import com.eathub.entity.RestaurantInfo;
@@ -13,14 +18,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +47,14 @@ public class MemberController {
         return "members";
     }
 
+    /**
+        * 사용자의 마이페이지를 반환하는 메소드입니다.
+        * 
+        * @param memberJoinDTO MemberJoinDTO 객체
+        * @param model Model 객체
+        * @param session HttpSession 객체
+        * @return 사용자의 마이페이지 경로
+        */
     @GetMapping("/my")
     public String myPage(MemberJoinDTO memberJoinDTO, Model model, HttpSession session) {
         MEMBER_TYPE mem_type = (MEMBER_TYPE) session.getAttribute(SessionConf.LOGIN_MEMBER_TYPE);
@@ -64,6 +80,15 @@ public class MemberController {
         return "/members/loginForm";
     }
 
+    /**
+     * 로그인을 처리하는 메소드입니다.
+     * 
+     * @param loginDTO 로그인 정보를 담고 있는 LoginDTO 객체
+     * @param bindingResult 데이터 바인딩 결과를 담고 있는 BindingResult 객체
+     * @param redirectURL 리다이렉트할 URL을 나타내는 문자열
+     * @param request HttpServletRequest 객체
+     * @return 로그인 성공 시 리다이렉트할 URL
+     */
     @PostMapping("/login")
     public String login(@ModelAttribute LoginDTO loginDTO, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURL,
@@ -148,6 +173,14 @@ public class MemberController {
         return "/members/joinForm";
     }
 
+    /**
+        * 주어진 MemberJoinDTO를 사용하여 소유자 회원가입을 처리하고, 결과에 따라 적절한 뷰를 반환합니다.
+        * 
+        * @param memberJoinDTO 회원가입 정보를 담고 있는 MemberJoinDTO 객체
+        * @param bindingResult 유효성 검사 결과를 담고 있는 BindingResult 객체
+        * @param model 뷰에 전달할 데이터를 담고 있는 Model 객체
+        * @return 회원가입이 성공한 경우 로그인 페이지로 리다이렉트하고, 실패한 경우 회원가입 폼을 보여주는 뷰
+        */
     @PostMapping("/join/owner")
     public String joinOwner(@Validated MemberJoinDTO memberJoinDTO, BindingResult bindingResult, Model model) {
 
@@ -169,6 +202,13 @@ public class MemberController {
         return "redirect:/members/login";
     }
 
+    /**
+        * updatePage 메소드는 회원 정보 수정 페이지로 이동하는 기능을 수행합니다.
+        * 
+        * @param model    Model 객체
+        * @param session  HttpSession 객체
+        * @return         회원 정보 수정 페이지 경로
+        */
     @GetMapping("/update")
     public String updatePage(Model model, HttpSession session) {
         Members member = memberService.selectMemberById((String) session.getAttribute(SessionConf.LOGIN_MEMBER));
@@ -176,6 +216,13 @@ public class MemberController {
         return "/members/updateForm";
     }
 
+    /**
+        * 회원 정보를 업데이트하는 메소드입니다.
+        *
+        * @param memberUpdateDTO 업데이트할 회원 정보를 담고 있는 DTO 객체
+        * @param bindingResult   데이터 유효성 검사 결과를 담고 있는 BindingResult 객체
+        * @return 업데이트가 성공하면 "/members/my"로 리다이렉트하고, 유효성 검사에 실패하면 "/members/updateForm"으로 이동합니다.
+        */
     @PostMapping("/update")
     public String update(@ModelAttribute @Validated MemberUpdateDTO memberUpdateDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -192,6 +239,16 @@ public class MemberController {
         return "redirect:/members/my";
     }
 
+    /**
+        * 가게 등록 폼으로 이동하는 메소드입니다.
+        * 멤버 타입이 OWNER인 경우에만 등록 폼으로 이동합니다.
+        * 멤버 타입이 CUSTOMER인 경우에는 홈 화면으로 리다이렉트합니다.
+        * 지역 리스트와 카테고리 리스트를 받아와 모델에 추가합니다.
+        * 
+        * @param model    모델 객체
+        * @param session  HttpSession 객체
+        * @return         가게 등록 폼 페이지 경로
+        */
     @GetMapping("/restaurant/join")
     public String joinRestaurant(Model model, HttpSession session){
 
@@ -211,6 +268,14 @@ public class MemberController {
         return "/members/restaurantJoinForm";
     }
 
+    /**
+        * 가게 등록을 처리하는 메소드입니다.
+        * 
+        * @param restaurantJoinDTO 가게 등록 정보를 담고 있는 DTO 객체
+        * @param session HttpSession 객체
+        * @return 회원 페이지로 리다이렉트하는 문자열
+        * @throws ParseException 날짜 형식 변환 중 발생하는 예외
+        */
     @PostMapping("/restaurant/join")
     public String joinRestaurant(@ModelAttribute RestaurantJoinDTO restaurantJoinDTO, HttpSession session) throws ParseException {
 

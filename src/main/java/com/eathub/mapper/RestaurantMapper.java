@@ -2,6 +2,7 @@ package com.eathub.mapper;
 
 import com.eathub.dto.CategoryDTO;
 import com.eathub.dto.MyPageDTO;
+import com.eathub.dto.OwnerRestaurantDetailDTO;
 import com.eathub.dto.RestaurantJoinDTO;
 import com.eathub.dto.SearchResultDTO;
 import com.eathub.entity.RestaurantInfo;
@@ -31,7 +32,7 @@ public interface RestaurantMapper {
     List<RestaurantZzim> selectZzimList(Long member_seq);
     List<CategoryDTO> selectCategoryList();
     RestaurantInfo selectRestaurant(RestaurantJoinDTO restaurantJoinDTO);
-
+    OwnerRestaurantDetailDTO selectRestaurantInfoWithType(Long restaurant_seq);
     List<MyPageDTO> selectOwnerRestaurantList(Long member_seq);
 
 

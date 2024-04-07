@@ -6,7 +6,6 @@ import com.eathub.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 @Slf4j
@@ -32,6 +31,13 @@ public class MemberService {
     }
 
     // 로그인
+    /**
+        * 로그인을 수행하는 메서드입니다.
+        *
+        * @param loginDTO 로그인 정보를 담고 있는 LoginDTO 객체
+        * @param bindingResult 유효성 검사 결과를 담고 있는 BindingResult 객체
+        * @return 로그인에 성공한 경우 Members 객체를 반환하고, 실패한 경우 null을 반환합니다.
+        */
     public Members login(LoginDTO loginDTO, BindingResult bindingResult) {
         if (validateLoginInputs(loginDTO, bindingResult)) {
             return null;
@@ -45,6 +51,13 @@ public class MemberService {
     }
 
     // 로그인시 아이디, 비밀번호 체크
+    /**
+     * 로그인 입력값을 유효성 검사하는 메서드입니다.
+     * 
+     * @param loginDTO 로그인 정보를 담고 있는 LoginDTO 객체
+     * @param bindingResult 유효성 검사 결과를 담고 있는 BindingResult 객체
+     * @return 유효성 검사 결과를 반환합니다. 유효성 검사에 실패하면 true를 반환하고, 성공하면 false를 반환합니다.
+     */
     private boolean validateLoginInputs(LoginDTO loginDTO, BindingResult bindingResult) {
         if (!StringUtils.hasText(loginDTO.getMember_id())) {
             bindingResult.rejectValue("member_id", "required");
@@ -54,6 +67,13 @@ public class MemberService {
         }
         return bindingResult.hasErrors();
     }
+    /**
+     * Members에 대한 설명입니다.
+     *
+     * @param loginDTO 로그인 정보를 담고 있는 LoginDTO 객체
+     * @param bindingResult 유효성 검사 결과를 담고 있는 BindingResult 객체
+     * @return 로그인에 성공한 Members 객체, 실패 시 null을 반환합니다.
+     */
     private Members processLogin(LoginDTO loginDTO, BindingResult bindingResult) {
         Members loginMember = memberMapper.login(loginDTO);
         if (loginMember == null) {

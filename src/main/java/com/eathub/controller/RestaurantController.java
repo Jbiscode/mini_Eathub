@@ -17,6 +17,14 @@ import lombok.RequiredArgsConstructor;
 public class RestaurantController {
     private final RestaurantService restaurantService;
 
+    /**
+        * 해당 레스토랑의 정보를 가져와서 모델에 추가하고, 레스토랑 상세 정보 페이지로 이동합니다.
+        * 
+        * @param restaurant_seq 레스토랑 시퀀스
+        * @param model 모델 객체
+        * @param session 세션 객체
+        * @return 레스토랑 상세 정보 페이지 경로
+        */
     @GetMapping("/detail/{restaurant_seq}")
     public String restaurantInfo(@PathVariable Long restaurant_seq,Model model,HttpSession session){
         RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
