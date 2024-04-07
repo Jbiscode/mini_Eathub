@@ -53,6 +53,12 @@ public class RestaurantService {
 
 
 //   유저가 찜한 식당 리스트 조회
+    /**
+        * 찜한 식당 목록을 가져오는 메소드입니다.
+        *
+        * @param member_seq 회원 번호
+        * @return 찜한 식당 정보 목록
+        */
     public List<MyPageDTO> getZzimRestaurantList(Long member_seq) {
         List<RestaurantZzim> zzimList = restaurantMapper.selectZzimList(member_seq);
         List<MyPageDTO> restaurantInfoList = new ArrayList<>();
@@ -66,6 +72,13 @@ public class RestaurantService {
     }
 
 //    찜 추가 및 삭제
+    /**
+     * 회원의 찜한 식당을 토글하는 메소드입니다.
+     *
+     * @param member_seq 회원 번호
+     * @param restaurant_seq 식당 번호
+     * @return 찜 상태가 변경되었는지 여부를 나타내는 boolean 값
+     */
     @Transactional
     public boolean toggleZzimRestaurant(Long member_seq, Long restaurant_seq) {
 
