@@ -1,39 +1,60 @@
-$('.owner-restaurant-list-item').on('click',function (){
-    let restaurantSeq = $(this).data("restaurant-seq");
-    console.log(restaurantSeq);
+document.querySelectorAll(".owner-restaurant-list-item").forEach((item) => {
+    item.addEventListener("click", async function () {
+        let restaurantSeq = this.dataset.restaurantSeq;
+        console.log(restaurantSeq);
 
-    $.ajax({
-        type : 'post',
-        url : `/api/restaurants/owner/${restaurantSeq}`,
-        success : function (data){
-            console.log(JSON.stringify(data))
-            $('#restaurant_name').val(data.restaurantInfo.restaurant_name);
-            $('#location').val(data.location);
-            $('#category_seq').val(data.category);
-            $('#tag').val(data.restaurantInfo.tag);
-            $('#description').val(data.restaurantInfo.description);
-            $('#phone').val(data.restaurantInfo.phone);
-            $('#zipcode').val(data.restaurantInfo.zipcode);
-            $('#address1').val(data.restaurantInfo.address1);
-            $('#address2').val(data.restaurantInfo.address2);
-            $('#openHour').val( data.restaurantInfo.openHour.substring(0,5));
-            $('#closeHour').val(data.restaurantInfo.closeHour.substring(0,5));
-            $('input[type="checkbox"][value="' + data.restaurantInfo.closedDay + '"]').prop('checked', true);
-            $('input[type="checkbox"]').not(`[value="${data.restaurantInfo.closedDay}"]`).prop('checked', false);
-
-            var modal = document.getElementById("myModal");
-            modal.style.visibility = "hidden";
-
-            window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: 'smooth'
+        try {
+            const response = await fetch(`/api/restaurants/owner/${restaurantSeq}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
-        },
-        error : function (e){
-            alert("요청 처리 중 문제가 발생했습니다. 다시 시도해주세요.")
-            console.log(e)
-        }
-    })
 
-})
+            if (!response.ok) {
+                throw new Error("네트워크 응답이 올바르지 않습니다.");
+            }
+
+            const data = await response.json();
+            console.log(JSON.stringify(data));
+
+            updateFormFields(data.restaurantInfo);
+            toggleModalVisibility(false);
+            scrollToTop();
+        } catch (error) {
+            alert("요청 처리 중 문제가 발생했습니다. 다시 시도해주세요.");
+            console.error(error);
+        }
+    });
+});
+
+
+function updateFormFields(restaurantInfo) {
+    const fields = ["restaurant_name", "location", "tag", "description", "phone", "zipcode", "address1", "address2"];
+    fields.forEach((field) => {
+        document.getElementById(field).value = restaurantInfo[field];
+    });
+
+    document.getElementById("category_seq").value = restaurantInfo.restaurant_type;
+    document.getElementById("openHour").value = restaurantInfo.openHour.substring(0, 5);
+    document.getElementById("closeHour").value = restaurantInfo.closeHour.substring(0, 5);
+
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = checkbox.value === restaurantInfo.closedDay;
+    });
+}
+
+
+function toggleModalVisibility(visible) {
+    const modal = document.getElementById("myModal");
+    modal.style.visibility = visible ? "visible" : "hidden";
+}
+
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+    });
+}

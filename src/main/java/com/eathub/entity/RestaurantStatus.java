@@ -1,5 +1,10 @@
 package com.eathub.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class RestaurantStatus {
     private Long request_seq;
     private Long restaurant_seq;

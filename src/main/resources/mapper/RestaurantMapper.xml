@@ -63,6 +63,13 @@
         WHERE restaurant_seq = #{restaurant_seq}
     </select>
 
+    <select id="selectRestaurantInfoWithType" resultType="com.eathub.dto.OwnerRestaurantDetailDTO">
+        SELECT r.*, c.restaurant_type
+        FROM restaurant_info r
+        LEFT JOIN category c ON r.category_seq = c.category_seq
+        WHERE r.restaurant_seq = #{restaurant_seq}
+    </select>
+
     <select id="selectRestaurantInfoList" resultType="restaurantInfo">
         SELECT * FROM restaurant_info
     </select>
