@@ -321,9 +321,7 @@
     margin-top: 4px;
 }
 
-.my-restaurant svg{
-    transform: translateX(5px) translateY(3px);
-}
+
 
 
 /* 추가 css */
@@ -447,3 +445,64 @@ jss1 .MuiPaper-root {
     position: relative;
     padding: 20px 20px;
 }
+
+/* form */
+/* form */
+.form-input {
+    background: #f9f9f9;
+    font-size: 14px;
+    border-radius: 8px;
+    display: block;
+    width: 100%;
+    padding: 16px;
+    line-height: 21px;
+    box-sizing: border-box;
+}
+
+.form-select:focus {
+    border-color: #FF3D00;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(255,61,0,.25);
+}
+.form-block .form-block-header {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+}
+.form-block .form-block-header .form-block-title {
+    font-size: 14px;
+    line-height: normal;
+    font-weight: 500;
+
+}
+.input-control .address-control{
+  display: flex;
+  margin-bottom: 5px;
+}
+.input-control.closed-time{
+  display: flex;
+}
+.form-block-body.closed-time{
+  display: flex;
+}
+
+.input-control.closed-day input:checked{
+  width: 15px;
+  height: 15px;
+  
+  background-color: #ff3D00;
+}
+.form-check-input{
+  margin-right: 2px;
+}
+.form-block-body.closed-day-form{
+    display: flex;
+    flex-wrap: wrap;
+}
+.form-block-body.closed-day-form .input-control{
+    margin-right: 20px;
+}
+.form-block-body.closed-day-form .input-control label{
+    margin-top: .25em;
+}
+/* form */
