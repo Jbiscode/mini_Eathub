@@ -517,6 +517,7 @@ jss1 .MuiPaper-root {
 .btn-box{
     display: flex;
     justify-content: end;
+    visibility: hidden;
 }
 .owner-restaurant-info .btn{
     margin-bottom: 10px;

@@ -1,6 +1,7 @@
 package com.eathub.mapper;
 
 import com.eathub.dto.CategoryDTO;
+import com.eathub.dto.MenuFormDTO;
 import com.eathub.dto.MyPageDTO;
 import com.eathub.dto.OwnerRestaurantDetailDTO;
 import com.eathub.dto.RestaurantJoinDTO;
@@ -18,6 +19,13 @@ public interface RestaurantMapper {
     void insertZzimRestaurant(RestaurantZzim restaurantZzim);
     void insertRestaurant(RestaurantInfo restaurantJoinDTO);
     void insertRestaurantStatus(RestaurantInfo restaurantJoinDTO);
+
+    /**
+     * 해당 식당에 메뉴 등록
+     * @param restaurant_seq
+     * @param MenuFormDTOList
+     */
+    void insertRestaurantMenu(@Param("restaurant_seq") Long restaurant_seq, @Param("menuFormDTOList") List<MenuFormDTO> MenuFormDTOList);
 
 
 
