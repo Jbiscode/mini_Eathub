@@ -229,9 +229,10 @@ public class MemberController {
     @PostMapping("/update")
     public String update(@ModelAttribute @Validated MemberUpdateDTO memberUpdateDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            log.error("업데이트실패");
             return "/members/updateForm";
         }
-        memberService.updateMember(
+        memberService.update(
                 Members.builder()
                         .member_id(memberUpdateDTO.getMember_id())
                         .member_name(memberUpdateDTO.getMember_name())

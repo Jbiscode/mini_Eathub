@@ -1,6 +1,7 @@
 package com.eathub.service;
 
 import com.eathub.dto.LoginDTO;
+import com.eathub.dto.MemberUpdateDTO;
 import com.eathub.entity.Members;
 import com.eathub.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -46,8 +47,8 @@ public class MemberService {
     }
 
     // 회원정보 수정
-    public void updateMember(Members memberUpdateDTO) {
-        memberMapper.updateMember(memberUpdateDTO);
+    public void update(Members memberUpdateDTO) {
+        memberMapper.update(memberUpdateDTO);
     }
 
     // 로그인시 아이디, 비밀번호 체크
@@ -81,6 +82,5 @@ public class MemberService {
         }
         return loginMember;
     }
-
 
 }
