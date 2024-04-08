@@ -282,11 +282,19 @@ public class MemberController {
         * @throws ParseException 날짜 형식 변환 중 발생하는 예외
         */
     @PostMapping("/restaurant/join")
-    public String joinRestaurant(@ModelAttribute RestaurantJoinDTO restaurantJoinDTO, HttpSession session) throws ParseException {
+    public String joinRestaurant(@Validated @ModelAttribute RestaurantJoinDTO restaurantJoinDTO, BindingResult bindingResult,Model model,HttpSession session) throws ParseException {
 
         log.info("restaurant ={}", restaurantJoinDTO.toString());
 
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        Map<String, String> locationList = restaurantService.getLocationList();
+        List<CategoryDTO> categoryList = restaurantService.getCategoryList();
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categoryList", categoryList);
+            model.addAttribute("locationList",locationList);
+            return "/members/restaurantJoinForm";
+        }
 
         // Time 형으로 형변환
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
