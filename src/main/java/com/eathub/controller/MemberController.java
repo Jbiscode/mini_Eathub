@@ -182,11 +182,13 @@ public class MemberController {
     @PostMapping("/update")
     public String update(@ModelAttribute @Validated MemberUpdateDTO memberUpdateDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            log.error("업데이트실패");
             return "/members/updateForm";
         }
-        memberService.updateMember(
+        memberService.update(
                 Members.builder()
                         .member_id(memberUpdateDTO.getMember_id())
+                        .member_name(memberUpdateDTO.getMember_name())
                         .member_pwd(memberUpdateDTO.getMember_pwd())
                         .member_email(memberUpdateDTO.getMember_email())
                         .member_phone(memberUpdateDTO.getMember_phone())

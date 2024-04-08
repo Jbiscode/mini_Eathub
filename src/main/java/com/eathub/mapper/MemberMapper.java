@@ -1,6 +1,7 @@
 package com.eathub.mapper;
 
 import com.eathub.dto.LoginDTO;
+import com.eathub.dto.MemberUpdateDTO;
 import com.eathub.entity.Members;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,7 +14,8 @@ public interface MemberMapper {
   void insertMember(Members memberJoinDTO);
   Members login(LoginDTO loginDTO);
   List<Members> selectMemberList();
-  void updateMember(Members memberUpdateDTO);
+  void update(Members memberUpdateDTO);
   void deleteMemberById(String member_id);
   void clearStore();
+
 }
