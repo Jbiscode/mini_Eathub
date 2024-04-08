@@ -395,3 +395,7 @@ section {
     background: url(../images/bookmarked.svg) 50% 50% no-repeat;
 }
 
+.info {
+    text-decoration-line: none;
+    color: inherit;
+}
