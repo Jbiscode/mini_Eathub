@@ -112,7 +112,10 @@
                     <div class="owner-restaurant-info">
                         <div class="btn-box">
                             <button class="btn-rounded btn-outline btn-md btn btn-md">
-                                <a class="label">가게수정</a>
+                                <a id="restaurantEditButton" href="javascript:void(0)" class="label">가게수정</a>
+                            </button>
+                            <button class="btn-rounded btn-outline btn-md btn btn-md">
+                                <a id="restaurantMenuAddButton" href="javascript:void(0)" class="label">메뉴추가</a>
                             </button>
                         </div>
                         <div class="form-block mb-32" th:object="${restaurantJoinDTO}">

@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-<form action="#" th:action="@{save}" th:object="${menuForm}" method="post" enctype="multipart/form-data">
+<form action="#" th:action th:object="${menuForm}" method="post" enctype="multipart/form-data">
     <div id="menuForms">
         <div th:each="menu, iterStat : *{MenuList}">
             <input type="text" th:field="*{MenuList[__${iterStat.index}__].menu_name}" placeholder="메뉴 이름"/>

@@ -21,6 +21,7 @@ document.querySelectorAll(".owner-restaurant-list-item").forEach((item) => {
             updateFormFields(data.restaurantInfo);
             toggleModalVisibility(false);
             scrollToTop();
+            makeLinkButton(restaurantSeq);
         } catch (error) {
             alert("요청 처리 중 문제가 발생했습니다. 다시 시도해주세요.");
             console.error(error);
@@ -57,4 +58,14 @@ function scrollToTop() {
         left: 0,
         behavior: "smooth",
     });
+}
+
+function makeLinkButton(restaurantSeq) {
+    const btn_box = document.querySelector(".btn-box");
+    const edit = document.getElementById("restaurantEditButton");
+    const menu = document.getElementById("restaurantMenuAddButton");
+    btn_box.style.visibility = "visible";
+
+    edit.href = `/members/restaurant/${restaurantSeq}/edit`;
+    menu.href = `/members/restaurant/${restaurantSeq}/menu/add`;
 }
