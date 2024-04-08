@@ -10,7 +10,8 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 public class MemberUpdateDTO {
     private String member_id;
-
+    @NotEmpty
+    private String member_name;
     @NotEmpty
     private String member_name;
     @NotEmpty

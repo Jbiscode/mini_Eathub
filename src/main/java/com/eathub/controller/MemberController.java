@@ -5,10 +5,13 @@ import com.eathub.dto.CategoryDTO;
 import com.eathub.dto.LoginDTO;
 import com.eathub.dto.MemberJoinDTO;
 import com.eathub.dto.MemberUpdateDTO;
+import com.eathub.dto.MenuFormDTO;
 import com.eathub.dto.MyPageDTO;
 import com.eathub.dto.RestaurantJoinDTO;
 import com.eathub.entity.ENUM.MEMBER_TYPE;
+import com.eathub.entity.ENUM.MENU_TYPE;
 import com.eathub.entity.Members;
+import com.eathub.entity.Menu;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.service.MemberService;
 import com.eathub.service.RestaurantService;
@@ -323,5 +326,21 @@ public class MemberController {
 
         return "redirect:/members/my";
     }
+    @GetMapping("/restaurant/menu/add")
+    public String showForm(Model model) {
+        MenuFormDTO menuForm = new MenuFormDTO();
+        menuForm.getMenuList().add(new Menu()); // 기본 메뉴 폼 추가
+        model.addAttribute("menuForm", menuForm);
+        model.addAttribute("menuTypeOptions", MENU_TYPE.values());
+        return "/restaurant/addMenus";
+    }
 
+    @PostMapping("/restaurant/menu/save")
+    public String saveForm(@ModelAttribute MenuFormDTO menuFormDTO) {
+        List<Menu> menuList = menuFormDTO.getMenuList();
+        for (Menu menu : menuList) {
+            log.info("menu = {}", menu);
+        }
+        return "redirect:/";
+    }
 }
