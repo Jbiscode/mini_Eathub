@@ -164,3 +164,12 @@
     font-size: 15px;
 }
 
+.booked-restaurant-list-item .booked-status.reserved{
+    background-color: #FF3D00;
+}
+.booked-restaurant-list-item .booked-status.complete{
+    background-color: #2DB400;
+}
+.booked-restaurant-list-item .booked-status.hide{
+    display: none;
+}
