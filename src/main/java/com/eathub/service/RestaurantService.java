@@ -1,5 +1,6 @@
 package com.eathub.service;
 
+import com.eathub.dto.TimeOptionDTO;
 import com.eathub.dto.CategoryDTO;
 import com.eathub.dto.MenuFormDTO;
 import com.eathub.dto.MenuFormDTOWrapper;
@@ -7,6 +8,7 @@ import com.eathub.dto.MyPageDTO;
 import com.eathub.dto.OwnerRestaurantDetailDTO;
 import com.eathub.dto.RestaurantJoinDTO;
 import com.eathub.dto.SearchResultDTO;
+
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
 import com.eathub.mapper.ObjectStorageMapper;
@@ -16,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -170,6 +173,20 @@ public class RestaurantService {
     }
     public OwnerRestaurantDetailDTO selectRestaurantInfoWithType(Long restaurant_seq) {
         return restaurantMapper.selectRestaurantInfoWithType(restaurant_seq);
+    }
+
+
+    // 타임리프에 사용할 시간 옵션을 생성하는 메서드 6시부터 23시 30분까지 30분 단위로 생성
+    public List<TimeOptionDTO> generateTimeOptions() {
+        List<TimeOptionDTO> timeOptions = new ArrayList<>();
+        LocalTime time = LocalTime.of(6, 0);
+        while (!time.equals(LocalTime.of(23, 30))) {
+            TimeOptionDTO option = new TimeOptionDTO();
+            option.setTime(time.toString());
+            timeOptions.add(option);
+            time = time.plusMinutes(30);
+        }
+        return timeOptions;
     }
 
 

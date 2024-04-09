@@ -38,7 +38,29 @@ body ::-webkit-scrollbar {
     /* border-bottom: 1px solid #e5e5e5; */
 }
 
+#header .header-left {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
 
+#header .logo {
+    overflow: hidden;
+    text-indent: -999em;
+    background:  50% 50% no-repeat;
+    background-size: 50px;
+    width: 50px;
+    height: 50px;
+    padding: 1px 0 0 1px;
+    margin: 0 0 0 -1px;
+}
+
+.logo {
+    z-index: 1000;
+    background: 25% 25% no-repeat;
+    height: 100%;
+    object-fit: contain;
+}
 
 .bookmark_icon, .notice_icon {
     margin: 0 5px; 

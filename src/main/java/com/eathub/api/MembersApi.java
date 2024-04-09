@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,5 +28,15 @@ public class MembersApi {
         return response;
     }
 
+    @PostMapping("/wantingDetails")
+    public void wantingDetails(@RequestBody Map<String, String> request, HttpSession session) {
+        String wantingDate = request.get("date");
+        String wantingHour = request.get("hour");
+        String wantingPerson = request.get("person");
 
+        session.setAttribute("wantingDate", wantingDate);
+        session.setAttribute("wantingHour", wantingHour);
+        session.setAttribute("wantingPerson", wantingPerson);
+
+    }
 }

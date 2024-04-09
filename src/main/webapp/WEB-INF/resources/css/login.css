@@ -18,10 +18,11 @@
 
 .logo {
     margin-bottom: 160px;
-    background: url(/images/20240327_160702.png) 50% 50% no-repeat;
+    background: 25% 25% no-repeat;
     text-indent: -9999px;
     width: 200px;
     height: 100px;
+    object-fit: contain;
 }
 
 .signin-wrapper .logo {
@@ -219,4 +220,9 @@ span.error-message {
 .invalid {
     border: 4px solid rgba(255, 0, 0, 0.30);
     animation: shake 1s; /* 애니메이션 이름과 지속 시간 */
+}
+
+/*정보 수정 css*/
+hr.separator.no-grad {
+    background: #ececec !important;
 }
