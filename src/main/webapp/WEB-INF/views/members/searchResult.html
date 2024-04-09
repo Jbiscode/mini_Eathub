@@ -39,9 +39,9 @@
                                 <span class="date"></span>
                                 <span class="hour"></span>
                                 <span class="person"></span>
-<!--                                <input class="date" type="hidden" name="date" />-->
-<!--                                <input class="hour" type="hidden" name="hour" />-->
-<!--                                <input class="person" type="hidden" name="person"  />-->
+                                <input class="date" type="hidden" name="date" th:value="${session.wantingDate}"/>
+                                <input class="hour" type="hidden" name="hour" th:value="${session.wantingHour}"/>
+                                <input class="person" type="hidden" name="person"  th:value="${session.wantingPerson}"/>
                             </a>
                         </div>
                         <div style="background: rgb(255, 255, 255)">
@@ -239,7 +239,7 @@
                 </main>
             </div>
         </div>
-        <div role="presentation">
+        <div role="presentation" id="resModal">
             <div>
                 <div class="wrapper">
                     <main class="pb-100">
