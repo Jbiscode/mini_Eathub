@@ -1,7 +1,7 @@
 package com.eathub.mapper;
 
 import com.eathub.dto.LoginDTO;
-import com.eathub.dto.MemberUpdateDTO;
+import com.eathub.dto.ReservationDTO;
 import com.eathub.entity.Members;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,4 +18,5 @@ public interface MemberMapper {
   void deleteMemberById(String member_id);
   void clearStore();
 
+  List<ReservationDTO> selectReservationList(Long memSeq);
 }
