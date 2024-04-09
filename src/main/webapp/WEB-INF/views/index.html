@@ -73,32 +73,32 @@
                     <div class="title">예약TOP</div>
                 </div>
                 <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
+                    <div class="icon"><img th:src="@{/images/today.png}" src="../resources/images/top.png"></div>
                     <div class="title">오늘의 예약</div>
                 </div>
-                <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
+                <div class="list_item" data-category-seq="1">
+                    <div class="icon_food"><img th:src="@{/images/food1.png}" src="../resources/images/top.png"></div>
                     <div class="title">한식</div>
                 </div>
-                <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
-                    <div class="title">양식</div>
-                </div>
-                <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
+                <div class="list_item" data-category-seq="2">
+                    <div class="icon_food"><img th:src="@{/images/food2.png}" src="../resources/images/top.png"></div>
                     <div class="title">중식</div>
                 </div>
-                <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
+                <div class="list_item" data-category-seq="3">
+                    <div class="icon_food"><img th:src="@{/images/food3.png}" src="../resources/images/top.png"></div>
                     <div class="title">일식</div>
                 </div>
-                <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
-                    <div class="title">아시안</div>
+                <div class="list_item" data-category-seq="4">
+                    <div class="icon_food"><img th:src="@{/images/food4.png}" src="../resources/images/top.png"></div>
+                    <div class="title">양식</div>
                 </div>
-                <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
-                    <div class="title">카페&디저트</div>
+                <div class="list_item" data-category-seq="5">
+                    <div class="icon_food"><img th:src="@{/images/food5.png}" src="../resources/images/top.png"></div>
+                    <div class="title">분식</div>
+                </div>
+                <div class="list_item" data-category-seq="6">
+                    <div class="icon_food"><img th:src="@{/images/food6.png}" src="../resources/images/top.png"></div>
+                    <div class="title">카페</div>
                 </div>
             </div>
         </div>
@@ -180,7 +180,7 @@
                 <div class="v_scroll">
                     <div class="v_scroll_inner">
                         <div class="restaurant_list">
-                            <div class="restaurant_list_item"th:each="restaurant : ${restaurantList}">
+                            <div class="restaurant_list_item" th:each="restaurant : ${restaurantList}">
                                 <a class="restaurant_list_item_img" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}"></a>
                                 <div class="detail">
                                     <a class="info" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">

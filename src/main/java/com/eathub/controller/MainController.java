@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainController {
 
+    private final SearchService searchService;
     private final RestaurantService restaurantService;
     @GetMapping("/")
     public String index(Model model, HttpSession session) {
@@ -24,5 +26,15 @@ public class MainController {
         List<SearchResultDTO> searchResultList = restaurantService.selectSearchResultList(member_seq);
         model.addAttribute("restaurantList", searchResultList);
         return "index";
+    }
+
+    @GetMapping("/search/category/{category_seq}")
+    public String category(@PathVariable Long category_seq, Model model, HttpSession session){
+        Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        List<TimeOptionDTO> timeOptionDTOS = searchService.generateTimeOptions();
+        List<SearchResultDTO> searchResultList = restaurantService.selectSearchCategotyResultList(member_seq, category_seq);
+        model.addAttribute("timeOptions", timeOptionDTOS);
+        model.addAttribute("restaurantList", searchResultList);
+        return "/members/searchResult";
     }
 }

@@ -135,6 +135,12 @@
         WHERE category_seq = #{categorySeq}
     </select>
 
+    <!-- category_seq별 레스토랑 리스트 불러오기 -->
+    <select id="selectSearchCategotyResultList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        WHERE  category_seq= #{category_seq}
+    </select>
 
 
 <!-- UPDATE-->
