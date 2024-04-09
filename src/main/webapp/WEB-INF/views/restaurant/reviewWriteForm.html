@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../resources/js/reviewWriteForm.js" th:src="@{/js/reviewWriteForm.js}"></script>
+    <link rel="stylesheet" href="../../resources/css/reviewWriteForm.css" th:href="@{/css/reviewWriteForm.css}">
+    <title>음식점 리뷰 페이지</title>
+</head>
+<body>
+
+<h2>음식점 리뷰 작성</h2>
+
+<form id="reviewForm" onsubmit="submitReview(); return false;">
+
+    <!-- 별점 폼 -->
+    <div class="star-rating">
+        <input type="radio" id="5-star" name="rating" value="5" />
+        <label for="5-star">&#9733;</label>
+        <input type="radio" id="4-stars" name="rating" value="4" />
+        <label for="4-stars">&#9733;</label>
+        <input type="radio" id="3-stars" name="rating" value="3" />
+        <label for="3-stars">&#9733;</label>
+        <input type="radio" id="2-stars" name="rating" value="2" />
+        <label for="2-stars">&#9733;</label>
+        <input type="radio" id="1-stars" name="rating" value="1" />
+        <label for="1-stars">&#9733;</label>
+    </div>
+
+    <p id="charCount">0자<span>/최대300자</span></p> <!-- 글자 수를 표시할 요소 -->
+    <!-- 리뷰 텍스트 입력 -->
+    <p><textarea id="reviewText" name="reviewText" placeholder="여기에 리뷰를 작성해 주세요." oninput="countCharacters()" maxlength="300"></textarea></p>
+
+    <!-- 이미지 업로드 및 미리보기 -->
+    <p>이미지 첨부 (최대 10개):</p>
+    <input type="file" id="reviewImages" name="reviewImages" accept="image/*" multiple onchange="previewImages()">
+    <div id="preview"></div>
+
+    <!-- 리뷰 제출 버튼 -->
+    <p><button type="submit">리뷰 제출하기</button></p>
+</form>
+
+</body>
+</html>
