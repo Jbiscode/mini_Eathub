@@ -50,9 +50,10 @@
 
 <!-- 해당 식당메뉴들 추가-->
     <insert id="insertRestaurantMenu" parameterType="map">
-        <foreach collection="menuFormDTOList" item="menu" separator=";">
-            INSERT INTO Menu (restaurant_seq, menu_name, menu_info, menu_image, menu_image_path, menu_price, menu_type)
-            VALUES (#{restaurant_seq}, #{menu.menu_name}, #{menu.menu_info}, #{menu.menu_image_name}, #{menu.menu_image_path}, #{menu.menu_price}, #{menu.menu_type})
+        INSERT INTO Menu (restaurant_seq, menu_name, menu_info, menu_image, menu_image_path, menu_price, menu_type)
+        VALUES
+        <foreach collection="menuFormDTOList" item="menu" separator=",">
+            (#{restaurant_seq}, #{menu.menu_name}, #{menu.menu_info}, #{menu.menu_image_name}, #{menu.menu_image_path}, #{menu.menu_price}, #{menu.menu_type})
         </foreach>
     </insert>
 

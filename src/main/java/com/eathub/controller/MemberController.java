@@ -390,4 +390,10 @@ public class MemberController {
 
         return "redirect:/members/my";
     }
+
+    @GetMapping("/restaurant/{restaurantSeq}/edit")
+    public String editForm(@PathVariable("restaurantSeq") Long restaurant_seq){
+
+        return "restaurant/restaurantDetailForm";
+    }
 }

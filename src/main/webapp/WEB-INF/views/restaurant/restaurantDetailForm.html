@@ -98,23 +98,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-block mb-32" >
-                        <div class="form-block-header">
-                            <h3 class="form-block-title">
-                                메뉴 추가하기
-                                <span class="color-red">*</span>
-                            </h3>
-                        </div>
-                        <div class="form-block-body">
-                            <div class="input-control">
-                                <div class="btn-box">
-                                    <button id="modal-open-btn" class="btn-rounded btn-outline btn-md btn btn-md">
-                                        <a href="javascript:void(0)" class="label">메뉴 추가</a>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="form-block mb-32">
                         <div class="form-block-header">
                             <h3 class="form-block-title">
@@ -274,99 +257,9 @@
             </div>
         </section>
     </main>
-    <div role="presentation" id="myModal" class="MuiDrawer-root MuiDrawer-modal jss1" style="position: fixed; z-index: 100000; inset: 0px;">
-        <div class="MuiBackdrop-root" aria-hidden="true"
-             style="opacity: 1; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"></div>
-        <div tabindex="0" data-test="sentinelStart"></div>
-        <div class="MuiPaper-root MuiDrawer-paper MuiDrawer-paperAnchorBottom MuiPaper-elevation0" tabindex="-1"
-             style="transform: none; transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;">
-            <div class="drawer-box"
-                 style="position: sticky; background-color: rgb(255, 255, 255); top: 0px; left: 0px; right: 0px; z-index: 99;">
-                <div class="drawer-box-header "
-                     style="border-radius: 20px 20px 0px 0px; border-bottom: none; justify-content: center; position: sticky; background-color: rgb(255, 255, 255); top: 0px; left: 0px; right: 0px; z-index: 99;">
-                    <h2 class="drawer-box-title">내 가게 목록</h2>
-                </div>
-                <div class="drawer-box-body" style="padding: 0px; overflow-y: auto; position: static; max-height: 70vh;">
-                    <section class="section pt-30">
-                        <div class="container gutter-sm">
-                            <div class="section-body">
-                                <div id="common_infinity_sc" class="owner-restaurant-list">
-                                    <div id="common_infinity_sc_0" data-dummy="189">
-                                        <div class="owner-restaurant-list-item" th:each="restaurant : ${myPageDTO}" th:data-restaurant-seq="${restaurant.restaurant_seq}">
-                                            <div class="restaurant-info">
-                                                <a href="javascript:void(0)" class="tb">
-                                                    <img class="img" src="../../resources/images/mongtanjeju.jpg" th:src="@{/images/mongtanjeju.jpg}"  alt="page"/>
-                                                </a>
-                                                <a href="javascript:void(0)" class="detail">
-                                                    <h4 class="name" th:text="${restaurant.restaurant_name}">메뉴 이름</h4>
-                                                    <p class="excerpt" th:text="${restaurant.description}">
-                                                        메뉴 설명
-                                                    </p>
-                                                    <div class="restaurant-meta">
-                                                        <div class="rating" style="margin-bottom: 5px;">
-                                                            <span class="star" th:text="${restaurant.rating}">메뉴 가격</span>
-                                                            <span class="count" th:text="'(' + ${restaurant.review_total} + ')'">(리뷰수)</span>
-                                                        </div>
-                                                        <div>
-                                                            <select>
-                                                                <option>==메뉴타입==</option>
-                                                                <option>MAIN</option>
-                                                                <option>SIDE</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div style="height: 0px;">&nbsp;</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="drawer-box-footer"
-                     style="bottom: 0px; left: 0px; right: 0px; z-index: 99; background-color: rgb(255, 255, 255);">
-                    <button class="btn btn-lg btn-red" id="myBtn" style="border-radius: 6px;">확인</button>
-                </div>
-            </div>
-        </div>
-        <div tabindex="0" data-test="sentinelEnd"></div>
-    </div>
-    <hr style="margin-bottom: 24px;"></hr>
+
     <!-- footer -->
     <div th:replace="~{template/footer :: footerFragment}"></div>
-    <!--/* footer th:fragment="footerFragment" */-->
-    <aside  th:fragment="footerFragment" id="dock">
-        <div class="dock-container">
-            <nav class="dock-menu">
-                <a href="javascript:void(0)" th:href="@{/}" th:class="${page=='home'?'active':''}">
-                    <i class="home">홈</i>
-                </a>
-                <a href="javascript:void(0)"
-                   th:href="@{/search}"
-                   th:class="${page=='search'?'active':''}"
-                >
-                    <i class="search-icon">검색</i>
-                </a>
-                <a href="javascript:void(0)">
-                    <i class="review">리뷰</i>
-                </a>
-                <a href="javascript:void(0)"
-                   th:href="@{/mydining}"
-                   th:class="${page=='mydining'?'active':''}">
-                    <i class="mydining">마이다이닝</i>
-                </a>
-                <a href="javascript:void(0)"
-                   th:with="userLoggedIn=${session.loginMember != null}"
-                   th:href="${userLoggedIn} ? '/members/my' : '/members/login'"
-                   th:class="${page=='members'?'active':''}">
-                    <i class="account">내 계정</i>
-                </a>
-            </nav>
-        </div>
-    </aside>
-    <!--/* footer */-->
 </div>
 </body>
 </html>
