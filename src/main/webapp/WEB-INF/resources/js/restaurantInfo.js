@@ -9,15 +9,34 @@ $("#__notes-item3").click(function () {
 });
 
 /*모달*/
-var modal = document.getElementById("myModal");
-var btn = document.getElementById("myBtn");
+let myModal = $("#myModal");
+let myBtn = $("#myBtn");
 
 $("#myBtn").click(function () {
-    modal.style.display = "none";
+    myModal.css("display", 'none');
 });
 
 $("#mymybtn").click(function () {
-    modal.style.display = "flex";
+    myModal.css("display", 'flex');
+});
+
+let resModal = $('#resModal');
+$(document).ready(function () {
+    $("div.mb-8").add('button.pgjaj01').click(function () {
+        resModal.css("visibility", 'visible');
+        resModal.css("transform", 'translateY(-100%)');
+    });
+
+    $(".btn-close").click(function () {
+        resModal.css("transform", 'translateY(+100%)');
+        resModal.css("visibility", 'hidden');
+    });
+
+    $("div.sticky-bottom-btns > button").click(function () {
+        fillingInfo();
+        resModal.css("transform", 'translateY(+100%)');
+        resModal.css("visibility", 'hidden');
+    });
 });
 
 // 위아래 찜목록 연동
