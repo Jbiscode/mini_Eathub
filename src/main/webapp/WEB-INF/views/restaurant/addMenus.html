@@ -4,53 +4,212 @@
     <meta content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" name="viewport"/>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link th:replace="~{template/common-js :: common-links}"/>
+    <link rel="stylesheet" href="../../resources/css/footer.css" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
+
+    <link rel="stylesheet" href="../../resources/css/restaurantJoinForm.css" th:href="@{/css/restaurantJoinForm.css}">
+    <link rel="stylesheet" href="../../resources/css/restaurantDetailForm.css" th:href="@{/css/restaurantDetailForm.css}">
+
     <style>
         .menuImagePreview {
-            width: 250px;
-            height: 250px;
+            width: 70px;
+            height: 70px;
             object-fit: cover;
             margin-top: 10px;
         }
+
+
     </style>
 </head>
 <body>
-<form action="#" th:action th:object="${menuForm}" method="post" enctype="multipart/form-data">
-    <div id="menuForms">
-        <div th:each="menu, iterStat : *{MenuList}">
-            <input type="text" th:field="*{MenuList[__${iterStat.index}__].menu_name}" placeholder="메뉴 이름"/>
-            <input type="text" th:field="*{MenuList[__${iterStat.index}__].menu_price}" placeholder="가격"/>
-            <input type="text" th:field="*{MenuList[__${iterStat.index}__].menu_info}" placeholder="설명"/>
-            <select th:field="*{MenuList[__${iterStat.index}__].menu_type}">
-                <option value="" th:text="#{label.select}">선택하십시오</option>
-                <option th:each="type : ${menuTypeOptions}"
-                        th:value="${type}"
-                        th:text="${type}">Menu Type</option>
-            </select>
-            <input type="file" th:id="'menuImageInput' + ${iterStat.index}" th:field="*{MenuList[__${iterStat.index}__].menu_image}" accept="image/*" th:onchange="|previewImage(this, 'menuImagePreview' + ${iterStat.index})|"/>
-            <img th:attr="id='menuImagePreview' + ${iterStat.index}" class="menuImagePreview" src="#" alt="Menu Image Preview" style="display: none;">
+<div class="wrapper">
+    <header id="header">
+        <div class="container">
+            <div class="header-left">
+                <h1 class="page-title">메뉴 추가</h1>
+            </div>
         </div>
-    </div>
-    <button type="button" onclick="addMenuForm()">메뉴 추가</button>
-    <button type="submit">저장</button>
-</form>
+    </header>
+    <main id="main">
+        <section class="section">
+            <div class="container">
+                <form action="#" th:action th:object="${menuForm}" method="post" enctype="multipart/form-data">
+                    <div id="menuForms" class="">
+                        <div th:each="menu, iterStat : *{MenuList}" class="menu-add-item">
+                            <div style="display: flex">
+                                <div class="form-block" style="width: 50%">
+                                    <div class="form-block-header">
+                                        <h3 class="form-block-title">
+                                            메뉴 이름
+                                            <span class="color-red">*</span>
+                                        </h3>
+                                    </div>
+                                    <div class="form-block-body">
+                                        <div class="input-control">
+                                            <input class="form-input" type="text" th:field="*{MenuList[__${iterStat.index}__].menu_name}" placeholder="메뉴 이름"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-block" style="width: 50%">
+                                    <div class="form-block-header">
+                                        <h3 class="form-block-title">
+                                            메뉴 가격
+                                            <span class="color-red">*</span>
+                                        </h3>
+                                    </div>
+                                    <div class="form-block-body">
+                                        <div class="input-control">
+                                            <input class="form-input" type="text" th:field="*{MenuList[__${iterStat.index}__].menu_price}" placeholder="가격"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex">
+                                <div class="form-block" style="width: 50%">
+                                    <div class="form-block-header">
+                                        <h3 class="form-block-title">
+                                            메뉴 설명
+                                            <span class="color-red">*</span>
+                                        </h3>
+                                    </div>
+                                    <div class="form-block-body">
+                                        <div class="input-control">
+                                            <input class="form-input" type="text" th:field="*{MenuList[__${iterStat.index}__].menu_info}" placeholder="설명"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-block" style="width: 50%">
+                                    <div class="form-block-header">
+                                        <h3 class="form-block-title">
+                                            메뉴 타입
+                                            <span class="color-red">*</span>
+                                        </h3>
+                                    </div>
+                                    <div class="form-block-body">
+                                        <div class="input-control">
+                                            <select class="form-input form-select" th:field="*{MenuList[__${iterStat.index}__].menu_type}">
+                                                <option value="" th:text="#{label.select}">선택하십시오</option>
+                                                <option th:each="type : ${menuTypeOptions}"
+                                                        th:value="${type}"
+                                                        th:text="${type}">Menu Type</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-block">
+                                <div class="form-block-header">
+                                    <h3 class="form-block-title">
+                                        메뉴 이미지
+                                        <span class="color-red">*</span>
+                                    </h3>
+                                </div>
+                                <div class="form-block-body">
+                                    <div class="input-control">
+                                        <input class="form-input" type="file" th:id="'menuImageInput' + ${iterStat.index}" th:field="*{MenuList[__${iterStat.index}__].menu_image}" accept="image/*" th:onchange="|previewImage(this, 'menuImagePreview' + ${iterStat.index})|"/>
+                                        <img th:attr="id='menuImagePreview' + ${iterStat.index}" class="menuImagePreview" src="#" alt="Menu Image Preview" style="display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sticky-bottom-btn">
+                        <button type="button" class="btn btn-reverse" onclick="addMenuForm()">메뉴 추가</button>
+                        <button type="submit" class="btn">메뉴 등록</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+</div>
 <script>
     function addMenuForm() {
         var menuFormsDiv = document.getElementById('menuForms');
         var newFormIndex = menuFormsDiv.children.length;
 
         var newFormGroup = document.createElement('div');
-        newFormGroup.innerHTML = `
-        <input type="text" name="MenuList[${newFormIndex}].menu_name" placeholder="메뉴 이름"/>
-        <input type="text" name="MenuList[${newFormIndex}].menu_price" placeholder="가격"/>
-        <input type="text" name="MenuList[${newFormIndex}].menu_info" placeholder="설명"/>
-        <select name="MenuList[${newFormIndex}].menu_type">
-            <option value="">선택하세요</option>
-            <option value="MAIN">MAIN</option>
-            <option value="SIDE">SIDE</option>
-        </select>
-        <input type="file" id="menuImageInput${newFormIndex}" name="MenuList[${newFormIndex}].menu_image" accept="image/*" onchange="previewImage(this, 'menuImagePreview' + ${newFormIndex})"/>
-        <img id="menuImagePreview${newFormIndex}" class="menuImagePreview" src="#" alt="Menu Image Preview" style="display: none;">
-    `;
+        newFormGroup.className = 'menu-add-item'
+        newFormGroup.innerHTML =
+            `
+                  <div style="display: flex">
+                    <div class="form-block" style="width: 50%">
+                        <div class="form-block-header">
+                            <h3 class="form-block-title">
+                                메뉴 이름
+                                <span class="color-red">*</span>
+                            </h3>
+                        </div>
+                        <div class="form-block-body">
+                            <div class="input-control">
+                                <input class="form-input" type="text" name="MenuList[${newFormIndex}].menu_name" placeholder="메뉴 이름"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-block" style="width: 50%">
+                        <div class="form-block-header">
+                            <h3 class="form-block-title">
+                                메뉴 가격
+                                <span class="color-red">*</span>
+                            </h3>
+                        </div>
+                        <div class="form-block-body">
+                            <div class="input-control">
+                               <input class="form-input" type="text" name="MenuList[${newFormIndex}].menu_price" placeholder="가격"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex">
+                    <div class="form-block" style="width: 50%">
+                        <div class="form-block-header">
+                            <h3 class="form-block-title">
+                                메뉴 설명
+                                <span class="color-red">*</span>
+                            </h3>
+                        </div>
+                        <div class="form-block-body">
+                            <div class="input-control">
+                               <input class="form-input" type="text" name="MenuList[${newFormIndex}].menu_info" placeholder="설명"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-block" style="width: 50%">
+                        <div class="form-block-header">
+                            <h3 class="form-block-title">
+                                메뉴 타입
+                                <span class="color-red">*</span>
+                            </h3>
+                        </div>
+                        <div class="form-block-body">
+                            <div class="input-control">
+                                <select class="form-input form-select" name="MenuList[${newFormIndex}].menu_type">
+                                    <option value="">선택하세요</option>
+                                    <option value="MAIN">MAIN</option>
+                                    <option value="SIDE">SIDE</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-block">
+                    <div class="form-block-header">
+                        <h3 class="form-block-title">
+                            메뉴 이미지
+                            <span class="color-red">*</span>
+                        </h3>
+                    </div>
+                    <div class="form-block-body">
+                        <div class="input-control">
+                            <input class="form-input" type="file" id="menuImageInput${newFormIndex}" name="MenuList[${newFormIndex}].menu_image" accept="image/*" onchange="previewImage(this, 'menuImagePreview' + ${newFormIndex})"/>
+                            <img id="menuImagePreview${newFormIndex}" class="menuImagePreview" src="#" alt="Menu Image Preview" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            `
+
+
 
         menuFormsDiv.appendChild(newFormGroup);
     }
@@ -62,6 +221,9 @@
             reader.onload = function(e) {
                 document.getElementById(previewId).src = e.target.result;
                 document.getElementById(previewId).style.display = 'block';
+                document.getElementById(previewId).width = 70;
+                document.getElementById(previewId).height = 70;
+
             };
 
             reader.readAsDataURL(input.files[0]);
