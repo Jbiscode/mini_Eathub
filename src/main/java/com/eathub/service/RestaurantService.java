@@ -1,17 +1,24 @@
 package com.eathub.service;
 
+import com.eathub.dto.TimeOptionDTO;
 import com.eathub.dto.CategoryDTO;
+import com.eathub.dto.MenuFormDTO;
+import com.eathub.dto.MenuFormDTOWrapper;
 import com.eathub.dto.MyPageDTO;
+import com.eathub.dto.OwnerRestaurantDetailDTO;
 import com.eathub.dto.RestaurantJoinDTO;
 import com.eathub.dto.SearchResultDTO;
+
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
+import com.eathub.mapper.ObjectStorageMapper;
 import com.eathub.mapper.RestaurantMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,6 +30,7 @@ import java.util.Map;
 public class RestaurantService {
 
     private final RestaurantMapper restaurantMapper;
+    private final ObjectStorageMapper objectStorageMapper;
 
     public RestaurantInfo selectRestaurantInfo(Long restaurant_seq) {
         return restaurantMapper.selectRestaurantInfo(restaurant_seq);
@@ -52,6 +60,12 @@ public class RestaurantService {
 
 
 //   유저가 찜한 식당 리스트 조회
+    /**
+        * 찜한 식당 목록을 가져오는 메소드입니다.
+        *
+        * @param member_seq 회원 번호
+        * @return 찜한 식당 정보 목록
+        */
     public List<MyPageDTO> getZzimRestaurantList(Long member_seq) {
         List<RestaurantZzim> zzimList = restaurantMapper.selectZzimList(member_seq);
         List<MyPageDTO> restaurantInfoList = new ArrayList<>();
@@ -65,6 +79,13 @@ public class RestaurantService {
     }
 
 //    찜 추가 및 삭제
+    /**
+     * 회원의 찜한 식당을 토글하는 메소드입니다.
+     *
+     * @param member_seq 회원 번호
+     * @param restaurant_seq 식당 번호
+     * @return 찜 상태가 변경되었는지 여부를 나타내는 boolean 값
+     */
     @Transactional
     public boolean toggleZzimRestaurant(Long member_seq, Long restaurant_seq) {
 
@@ -101,6 +122,7 @@ public class RestaurantService {
         locations.put("SEOUL", "서울");
         locations.put("BUSAN", "부산");
         locations.put("JEJU", "제주");
+
         return locations;
     }
 
@@ -113,6 +135,10 @@ public class RestaurantService {
         restaurantMapper.insertRestaurant(restaurantJoinDTO);
     }
 
+    public void insertRestaurantMenu(Long restaurant_seq, MenuFormDTOWrapper menuListWrapper) {
+        List<MenuFormDTO> menuForm = menuListWrapper.getMenuList();
+        restaurantMapper.insertRestaurantMenu(restaurant_seq, menuForm);
+    }
 
     public RestaurantInfo selectSavedRestaurant(RestaurantJoinDTO restaurantJoinDTO) {
 
@@ -141,4 +167,38 @@ public class RestaurantService {
         restaurantMapper.updateRestaurantStatus(restaurant_seq,admin_seq, status ,comment);
         restaurantMapper.updateRestaurantInfoStatus(restaurant_seq, status);
     }
+
+    public String getRestaurantType(Long categorySeq) {
+        return restaurantMapper.getRestaurantType(categorySeq);
+    }
+    public OwnerRestaurantDetailDTO selectRestaurantInfoWithType(Long restaurant_seq) {
+        return restaurantMapper.selectRestaurantInfoWithType(restaurant_seq);
+    }
+
+    //카테고리별 레스토랑 조회
+    public List<SearchResultDTO> selectSearchCategotyResultList(Long member_seq, Long category_seq) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectSearchCategotyResultList(category_seq);
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
+
+
+    // 타임리프에 사용할 시간 옵션을 생성하는 메서드 6시부터 23시 30분까지 30분 단위로 생성
+    public List<TimeOptionDTO> generateTimeOptions() {
+        List<TimeOptionDTO> timeOptions = new ArrayList<>();
+        LocalTime time = LocalTime.of(6, 0);
+        while (!time.equals(LocalTime.of(23, 30))) {
+            TimeOptionDTO option = new TimeOptionDTO();
+            option.setTime(time.toString());
+            timeOptions.add(option);
+            time = time.plusMinutes(30);
+        }
+        return timeOptions;
+    }
+
+
 }

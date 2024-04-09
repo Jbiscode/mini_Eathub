@@ -1,7 +1,9 @@
 package com.eathub.mapper;
 
 import com.eathub.dto.CategoryDTO;
+import com.eathub.dto.MenuFormDTO;
 import com.eathub.dto.MyPageDTO;
+import com.eathub.dto.OwnerRestaurantDetailDTO;
 import com.eathub.dto.RestaurantJoinDTO;
 import com.eathub.dto.SearchResultDTO;
 import com.eathub.entity.RestaurantInfo;
@@ -18,6 +20,13 @@ public interface RestaurantMapper {
     void insertRestaurant(RestaurantInfo restaurantJoinDTO);
     void insertRestaurantStatus(RestaurantInfo restaurantJoinDTO);
 
+    /**
+     * 해당 식당에 메뉴 등록
+     * @param restaurant_seq
+     * @param MenuFormDTOList
+     */
+    void insertRestaurantMenu(@Param("restaurant_seq") Long restaurant_seq, @Param("menuFormDTOList") List<MenuFormDTO> MenuFormDTOList);
+
 
 
 //    SELECT
@@ -31,8 +40,11 @@ public interface RestaurantMapper {
     List<RestaurantZzim> selectZzimList(Long member_seq);
     List<CategoryDTO> selectCategoryList();
     RestaurantInfo selectRestaurant(RestaurantJoinDTO restaurantJoinDTO);
-
+    OwnerRestaurantDetailDTO selectRestaurantInfoWithType(Long restaurant_seq);
     List<MyPageDTO> selectOwnerRestaurantList(Long member_seq);
+
+    //category_seq별 레스토랑 리스트
+    List<SearchResultDTO> selectSearchCategotyResultList(Long categorySeq);
 
 
 
@@ -58,5 +70,8 @@ public interface RestaurantMapper {
 
 //    DELETE
     void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
+
+    String getRestaurantType(Long categorySeq);
+
 
 }

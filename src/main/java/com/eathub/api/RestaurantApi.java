@@ -1,6 +1,8 @@
 package com.eathub.api;
 
 import com.eathub.conf.SessionConf;
+import com.eathub.dto.OwnerRestaurantDetailDTO;
+import com.eathub.entity.RestaurantInfo;
 import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +41,31 @@ public class RestaurantApi {
     public ResponseEntity<?> zzimComment(@PathVariable("zzim_seq") Long zzim_seq,@RequestBody Map<String,Object> json) {
         String comment = (String) json.get("comment");
         restaurantService.updateZzimComment(zzim_seq, comment);
+        return ResponseEntity.ok().body(Map.of(
+                "success", true
+        ));
+    }
+
+    // 점주의 내 가게 리스트에서 가게 선택하기 API
+    @PostMapping("/owner/{restaurantSeq}")
+    public ResponseEntity<?> selectOwnerRestaurant(@PathVariable("restaurantSeq") Long restaurant_seq) {
+        try {
+            OwnerRestaurantDetailDTO restaurantInfo = restaurantService.selectRestaurantInfoWithType(restaurant_seq);
+            log.info("restaurantInfo = {}", restaurantInfo);
+
+            return ResponseEntity.ok().body(Map.of(
+                        "restaurantInfo" , restaurantInfo
+                ));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("오류 메시지");
+        }
+    }
+
+    @PostMapping("/admin/updateRestaurantStatus")
+    public ResponseEntity<?> updateRestaurantStatus(@RequestBody Map<String, Object> json) {
+        Long restaurant_seq = Long.parseLong(json.get("restaurantSeq").toString());
+        String  status= (String) json.get("status");
+        restaurantService.updateRestaurantStatus(restaurant_seq, 1L,status,null);
         return ResponseEntity.ok().body(Map.of(
                 "success", true
         ));

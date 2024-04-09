@@ -1,0 +1,294 @@
+.camera-box{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.btn-box{
+    margin-top: 5px;
+}
+
+/* 모달 */
+#myModal{
+    visibility: hidden;
+}
+.MuiBackdrop-root {
+    width: 100%;
+    height: 100%;
+}
+.MuiBackdrop-root {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    z-index: -1;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-tap-highlight-color: transparent;
+}
+jss1 .MuiPaper-root {
+    background-color: rgba(0, 0, 0, 0);
+}
+.MuiDrawer-paperAnchorBottom {
+    inset: auto 0 0;
+    height: auto;
+    max-height: 100%;
+}
+.MuiDrawer-paper {
+    top: 108px;
+    flex: 1 0 auto;
+    height: 100%;
+    display: flex;
+    outline: 0;
+    z-index: 1200;
+    overflow-y: auto;
+    flex-direction: column;
+    justify-content: end;
+    -webkit-overflow-scrolling: touch;
+}
+.drawer-box {
+    border-radius: 20px 20px 0 0;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+}
+.drawer-box .drawer-box-header {
+    display: flex;
+    align-items: center;
+    padding: 18px 20px;
+    border-bottom: 1px solid #f1f1f1;
+    justify-content: space-between;
+}
+.drawer-box .drawer-box-header .drawer-box-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+.desc-blocks .desc-block {
+    display: flex;
+    margin-bottom: 25px;
+}
+.desc-blocks .desc-block dl {
+    flex: 1;
+}
+.desc-blocks .desc-block dl dt {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.desc-blocks .desc-block dl dd {
+    font-size: 14px;
+    line-height: 1.6;
+}
+.desc-blocks .desc-block .call {
+    display: flex;
+    color: #0091ff;
+    font-size: 14px;
+    line-height: 1.6;
+}
+.desc-blocks .desc-block .call:before {
+    content: "";
+    background: url(/images/call.svg) 50% 50% no-repeat;
+    background-size: contain;
+    width: 12.5px;
+    margin-right: 4px;
+}
+.color-gray {
+    color: #666 !important;
+}
+.desc-blocks .desc-block dl dd * {
+    line-height: 1.6;
+}
+.drawer-box .drawer-box-footer {
+    padding: 20px;
+}
+.drawer-box .drawer-box-footer .btn:last-child {
+    margin-bottom: 0;
+}
+.drawer-box .drawer-box-footer .btn {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.owner-restaurant-list .owner-restaurant-list-item:first-child{
+    margin-top: 5px;
+}
+.owner-restaurant-list .owner-restaurant-list-item {
+    margin-bottom: 20px;
+    padding-bottom: 4px;
+    position: relative;
+}
+.owner-restaurant-list-item {
+    box-shadow: 0px 0px 10px #c8c8c8;
+    border-radius: 10px;
+    position: relative;
+    padding: 20px 20px;
+}
+
+/* */
+
+.section .section-header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.section .section-header .section-title {
+    font-weight: 700;
+    font-size: 20px;
+    align-items: center;
+    display: flex;
+    letter-spacing: 0;
+    min-width: 1px;
+}
+.section .section-header .section-title .count {
+    font-size: 14px;
+    color: #999;
+    margin-left: 8px;
+    font-weight: 400;
+}
+.owner-restaurant-list-item {
+    position: relative;
+}
+.owner-restaurant-list .owner-restaurant-list-item {
+    margin-bottom: 20px;
+    padding-bottom: 4px;
+    position: relative;
+}
+.owner-restaurant-list .owner-restaurant-list-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.owner-restaurant-list-item .restaurant-info {
+    display: flex;
+    margin-bottom: 16px;
+    position: relative;
+}
+.owner-restaurant-list-item .restaurant-info .tb {
+    margin-top: 2px;
+    overflow: hidden;
+    margin-right: 15px;
+}
+.owner-restaurant-list-item .restaurant-info .detail {
+    flex: 1;
+    min-width: 1px;
+}
+.owner-restaurant-list-item .restaurant-info .tb .img {
+    width: 78px;
+    height: 104px;
+    border-radius: 4px;
+    background: 50% 50% no-repeat;
+    background-size: cover;
+    object-fit: cover;
+    box-sizing: border-box;
+    border: 1px solid #f1f1f1;
+}
+.owner-restaurant-list-item .restaurant-info .tb .img {
+    position: relative;
+    overflow: hidden;
+}
+.owner-restaurant-list-item .restaurant-info .detail .name,
+.owner-restaurant-list-item .restaurant-info .detail .excerpt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.owner-restaurant-list-item .restaurant-info .detail .name {
+    font-size: 20px;
+    margin-bottom: 3px;
+    font-weight: 900;
+    word-break: break-word;
+    line-height: 1.4;
+    letter-spacing: -0.1em;
+}
+.owner-restaurant-list-item .restaurant-info .detail .excerpt {
+    font-size: 11px;
+    line-height: 15px;
+    color: #000;
+    margin-bottom: 8px;
+    letter-spacing: -0.12em;
+}
+.restaurant-meta {
+    font-size: 16px;
+    font-weight: 500;
+}
+.restaurant-meta .rating {
+    display: flex;
+    margin-bottom: 8px;
+    align-items: baseline;
+    letter-spacing: -.05em !important;
+}
+.restaurant-meta .rating .star {
+    font-size: 14px;
+    position: relative;
+    padding-left: 18px;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 900 !important;
+    letter-spacing: -.05em !important;
+}
+.restaurant-meta .rating .star:before {
+    background: url(../images/star-yellow.svg) 0% 50% no-repeat;
+    background-size: contain;
+
+    width: 16px;
+    height: 16px;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.restaurant-meta .rating .count {
+    vertical-align: middle;
+    font-size: 12px;
+    margin-left: 5px;
+    color: #999;
+    font-weight: 400;
+    letter-spacing: -.05em !important;
+}
+.owner-restaurant-list-item .restaurant-info .detail .restaurant-meta .tags {
+    display: block;
+    color: #aaa;
+    margin-bottom: 5px;
+    font-size: 11px;
+    letter-spacing: -0.15em;
+}
+.restaurant-meta .price {
+    display: flex;
+    font-size: 14px;
+    align-items: center;
+    color: #333;
+}
+.owner-restaurant-list-item .restaurant-info .detail .restaurant-meta .price {
+    display: block;
+    color: #aaa;
+    font-size: 11px;
+    letter-spacing: -0.15em;
+}
+.owner-restaurant-list-item .restaurant-info .btn-bookmark {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+.section .owner-restaurant-list-item .form-input {
+    margin-bottom: 16px;
+    padding: 15px 20px;
+}
+
+.btn.btn-reverse{
+    background-color: white;
+    color: #FF3D00;
+    border: 1px solid;
+    border-color: #FF3D00;
+}
+input::placeholder {
+    color: #c8c8c8;
+    font-weight: 700;
+    letter-spacing: -.05em;
+    font-size: 13px;
+}

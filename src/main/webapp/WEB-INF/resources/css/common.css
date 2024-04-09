@@ -70,7 +70,9 @@ input::placeholder {
 .color-gray3{
     color: #c8c8c8 !important;
 }
-
+.color-silver {
+    color: #aaa !important;
+}
 /* padding-top */
 .pt-20{
     padding-top: 20px;

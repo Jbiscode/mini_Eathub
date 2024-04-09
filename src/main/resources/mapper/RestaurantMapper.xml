@@ -8,31 +8,31 @@
     <!-- 레스토랑 추가 -->
     <insert id="insertRestaurant" parameterType="restaurantInfo">
         INSERT INTO restaurant_info( member_seq
-                                   , category_seq
-                                   , restaurant_name
-                                   , tag
-                                   , location
-                                   , description
-                                   , phone
-                                   , zipcode
-                                   , address1
-                                   , address2
-                                   , openHour
-                                   , closeHour
-                                   , closedDay)
+                                    , category_seq
+                                    , restaurant_name
+                                    , tag
+                                    , location
+                                    , description
+                                    , phone
+                                    , zipcode
+                                    , address1
+                                    , address2
+                                    , openHour
+                                    , closeHour
+                                    , closedDay)
         VALUES ( #{member_seq}
-               , #{category_seq}
-               , #{restaurant_name}
-               , #{tag}
-               , #{location}
-               , #{description}
-               , #{phone}
-               , #{zipcode}
-               , #{address1}
-               , #{address2}
-               , #{openHour}
-               , #{closeHour}
-               , #{closedDay})
+                , #{category_seq}
+                , #{restaurant_name}
+                , #{tag}
+                , #{location}
+                , #{description}
+                , #{phone}
+                , #{zipcode}
+                , #{address1}
+                , #{address2}
+                , #{openHour}
+                , #{closeHour}
+                , #{closedDay})
 
     </insert>
 
@@ -48,6 +48,14 @@
         VALUES (#{member_seq}, #{restaurant_seq})
     </insert>
 
+<!-- 해당 식당메뉴들 추가-->
+    <insert id="insertRestaurantMenu" parameterType="map">
+        INSERT INTO Menu (restaurant_seq, menu_name, menu_info, menu_image, menu_image_path, menu_price, menu_type)
+        VALUES
+        <foreach collection="menuFormDTOList" item="menu" separator=",">
+            (#{restaurant_seq}, #{menu.menu_name}, #{menu.menu_info}, #{menu.menu_image_name}, #{menu.menu_image_path}, #{menu.menu_price}, #{menu.menu_type})
+        </foreach>
+    </insert>
 
 
 
@@ -61,6 +69,13 @@
         SELECT *
         FROM restaurant_info
         WHERE restaurant_seq = #{restaurant_seq}
+    </select>
+
+    <select id="selectRestaurantInfoWithType" resultType="com.eathub.dto.OwnerRestaurantDetailDTO">
+        SELECT r.*, c.restaurant_type
+        FROM restaurant_info r
+        LEFT JOIN category c ON r.category_seq = c.category_seq
+        WHERE r.restaurant_seq = #{restaurant_seq}
     </select>
 
     <select id="selectRestaurantInfoList" resultType="restaurantInfo">
@@ -83,9 +98,9 @@
     <select id="selectMyPageDTO" resultType="myPageDTO">
         SELECT *
         FROM restaurant_zzim z
-                 LEFT JOIN restaurant_info Using (restaurant_seq)
+                LEFT JOIN restaurant_info Using (restaurant_seq)
         WHERE z.restaurant_seq = #{restaurant_seq}
-          AND z.member_seq = #{member_seq}
+            AND z.member_seq = #{member_seq}
     </select>
     <!-- 현재 식당을 찜했는지 여부 확인 -->
     <select id="checkZzimData" resultType="int">
@@ -114,7 +129,19 @@
         WHERE member_seq=#{member_seq}
     </select>
 
+    <!-- 레스토랑 타입(카테고리) 불러오기   -->
+    <select id="getRestaurantType" resultType="String">
+        SELECT restaurant_type
+        FROM category
+        WHERE category_seq = #{categorySeq}
+    </select>
 
+    <!-- category_seq별 레스토랑 리스트 불러오기 -->
+    <select id="selectSearchCategotyResultList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        WHERE  category_seq= #{category_seq}
+    </select>
 
 
 <!-- UPDATE-->

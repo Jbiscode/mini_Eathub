@@ -232,26 +232,104 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// function fillingHidden(){
+//
+//     $.ajax({
+//         type: "POST",
+//         url: "/api/members/getWantingDetails",
+//         success: function(data) {
+//             // 서버로부터 받은 데이터를 각 input 필드에 채웁니다.
+//             // $('input.date').val(data.get("wantingDate"));
+//             // $('input.hour').val(data.get("wantingHour"));
+//             // $('input.person').val(data.get("wantingPerson"));
+//             $('input.date').val(data.wantingDate);
+//             $('input.hour').val(data.wantingHour);
+//             $('input.person').val(data.wantingPerson);
+//             alert('세션에서 알맞게 할당하였습니다..' + $('input.date').val()
+//                 + $('input.hour').val()
+//                 + $('input.person').val());
+//         },
+//         error: function(error) {
+//             console.error("에러 발생:", error);
+//         }
+//     });
+//
+// }
 
-$(document).ready(function () {
+// 캘린더에 값 넣기
+function assigningInfo(){
 
-    $("div.datetime-selector a").click(function () {
-        $('div[role="presentation"]').css("visibility", 'visible');
-        $('div[role="presentation"]').css("transform", 'translateY(-100%)');
+    // hidden 태그에서 값 받아오기
+    let inputDate = $('input.date').val();
+    let time =  $('input.hour').val();
+    let number = $('input.person').val();
+
+
+    console.log("hiddenInfo value" + inputDate + " " + time + " " + number);
+
+    if(inputDate === "") {
+        this.toDay = new Date();
+    }else{
+        console.log("엘스가 실행되고 있니?")
+        let dateParts = inputDate.split('-');
+        let year = parseInt(dateParts[0]);
+        let month = parseInt(dateParts[1]);
+        let date = parseInt(dateParts[2]);
+
+        this.toDay = new Date(year, month - 1, date)
+        console.log("year =" + year + "month = " + month + "date = " + date )
+
+        buildCalendar();
+        //업적 ^김승원^
+
+        let tds = $('td');
+
+        tds.each(function() {
+            if (parseInt($(this).html()) === date) {
+                console.log("마즘")
+                $(this).click();
+            }
+
+        });
+    }
+    console.log("buildCalendarAssigning Done");
+
+    if(time == null) {
+        time = new Date().getHours();
+        if (time < 10) {
+            time = '0' + time + "00";
+        }
+        console.log("assigning 중 time 은 바로 " + time);
+    }
+
+    let timeRadio = $('input[type="radio"][name="time"]');
+
+    timeRadio.each(function() {
+        if ($(this).val() === time) {
+            // th:value와 일치하는 input을 체크합니다.
+            $(this).click();
+        }
     });
+    console.log("timeAssigning Done");
 
-    $(".btn-close").click(function () {
-        $('div[role="presentation"]').css("transform", 'translateY(+100%)');
-        $('div[role="presentation"]').css("visibility", 'hidden');
+    if(number == null) {
+        number=1;
+        console.log("assigning 중 time 은 바로 " + number);
+    }
+    let countRadio = $('input[type="radio"][name="count"]');
+
+    //각 input 요소를 순회하며 th:value와 일치하는 것을 찾습니다.
+    countRadio.each(function() {
+        if ($(this).val() === number) {
+            // th:value와 일치하는 input을 체크합니다.
+            $(this).click();
+        }
     });
+    console.log("numberAssigning Done");
+}
 
-    $("div.sticky-bottom-btns > button").click(function () {
-        fillingInfo();
-        $('div[role="presentation"]').css("transform", 'translateY(+100%)');
-        $('div[role="presentation"]').css("visibility", 'hidden');
 
-    });
-});
+
 
 function fillingInfo() {
 
@@ -263,38 +341,46 @@ function fillingInfo() {
     let time = null;
     let number = null;
 
-    if ($('td.choiceDay') !== null) {
+    if ($('td.choiceDay').length !== 0) {
         year = $('span#calYear').html();
         month = $('span#calMonth').html();
         date = $('td.choiceDay').html();
         day = getDayOfWeek($('td.choiceDay').index());
-    } else {
-        return;
-    }
-    if ($('.option-timetable label input:checked') !== null) {
-        time = $('.option-timetable label input:checked').parent().children().eq(1).html();
-    } else {
-        return;
-    }
-    if ($('.option-personnel label input:checked') !== null) {
-        number = $('.option-personnel label input:checked').parent().children().eq(1).html();
         $('span.date').text(year + " . " + month + " . " + date + " (" + day + ")");
-        $('span.hour').text(time);
-        $('span.person').text(number);
-
         $('input.date').val(year+"-"+month+"-"+date);
+    }
+    if ($('.option-timetable label input:checked').length !== 0) {
+        time = $('.option-timetable label input:checked').parent().children().eq(1).html();
+        $('span.hour').text(time);
+        time = $('.option-timetable label input:checked').val();
         $('input.hour').val(time);
+    }
+    if ($('.option-personnel label input:checked').length !== 0) {
+        number = $('.option-personnel label input:checked').parent().children().eq(1).html();
+        $('span.person').text(number);
+        number = $('.option-personnel label input:checked').val();
         $('input.person').val(number);
-    } else {
-        return;
+        var requestData = {
+            date: year+"-"+month+"-"+date, // 입력 필드에서 date 값을 읽어옴
+            hour: time, // 입력 필드에서 hour 값을 읽어옴
+            person: number // 입력 필드에서 person 값을 읽어옴
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/api/members/putWantingDetails',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            success: function(response) {
+                alert('세션에 알맞게 저장되었습니다.' + response);
+            },
+            error: function(error) {
+                console.log('에러 발생:', error);
+            }
+        });
     }
 }
 
 function getDayOfWeek(su) {
     const week = ['일', '월', '화', '수', '목', '금', '토'];
-    const dayOfWeek = week[su];
-    return dayOfWeek;
-}
-window.onload = function () {
-    fillingInfo();
+    return week[su];
 }

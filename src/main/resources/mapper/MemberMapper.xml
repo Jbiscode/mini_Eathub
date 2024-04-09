@@ -47,13 +47,37 @@
 <!--        select * from members where id = #{id}-->
 <!--    </select>-->
 
-    <update id="updateMember" parameterType="members">
+	<!-- 회원의 Reservation 모두 가져오기	-->
+	<select id="selectReservationList" resultType="reservationDTO" parameterType="Long">
+		SELECT
+			r.res_seq,
+			r.restaurant_seq,
+			r.member_seq,
+			r.res_status,
+			r.res_log,
+			r.res_date,
+			r.res_people,
+			r.res_comment,
+			ri.restaurant_name,
+			ri.tag
+		FROM
+			reservation r
+				INNER JOIN
+			restaurant_info ri ON r.restaurant_seq = ri.restaurant_seq;
+
+	</select>
+
+
+    <update id="update" parameterType="members">
         update members
-        set member_email=#{member_email},
+        set member_name=#{member_name},
+			member_email=#{member_email},
             member_pwd=#{member_pwd},
             member_phone=#{member_phone}
                        where member_id=#{member_id}
     </update>
+
+
 
 
 <!--삭제-->

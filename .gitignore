@@ -3,6 +3,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 src/main/resources/spring/db.properties
+src/main/resources/spring/naver.properties
 
 ### IntelliJ IDEA ###
 .idea/

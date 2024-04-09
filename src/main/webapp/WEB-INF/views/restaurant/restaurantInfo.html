@@ -2,10 +2,16 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" name="viewport" />
+        <link th:replace="~{template/common-js :: common-links}" />
+        <link rel="stylesheet" href="../../resources/css/search-common.css" th:href="@{/css/search-common.css}" />
         <link rel="stylesheet" href="../../resources/css/restaurantInfo.css" th:href="@{/css/restaurantInfo.css}" />
-        <script src="http://code.jQuery.com/jquery-3.7.1.min.js"></script>
+        <link rel="stylesheet" href="../../resources/css/restaurant-modal.css" th:href="@{/css/restaurant-modal.css}" />
+        <script src="https://code.jQuery.com/jquery-3.7.1.min.js"></script>
+        <!-- Swiper JS -->
+        <script defer src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
         <script defer src="../../resources/js/zzim.js" th:src="@{/js/zzim.js}"></script>
         <script defer src="../../resources/js/restaurantInfo.js" th:src="@{/js/restaurantInfo.js}"></script>
+        <script defer type="text/javascript" src="../../resources/js/restaurant-modal.js" th:src="@{/js/restaurant-modal.js}"></script>
         <title>페이지 제목</title>
     </head>
     <body class="disable-user-select" style>
@@ -105,7 +111,16 @@
                                 <div class="section-body">
                                     <div class="mb-8">
                                         <a href="#" class="btn btn-lg btn-outline btn-cta full-width arrowdown">
-                                            <span><span class="label calendar">오늘 (화) / 2명</span></span>
+                                            <span>
+                                                <span class="label calendar">
+                                                    <span class="date"></span>
+                                                    <span class="hour"></span>
+                                                    <span class="person"></span>
+                                                    <input class="date" type="hidden" />
+                                                    <input class="hour" type="hidden" />
+                                                    <input class="person" type="hidden" />
+                                                </span>
+                                            </span>
                                         </a>
                                     </div>
                                     <div class="section-time-slot mb-24" style="height: 59px; display: flex; align-items: center">
@@ -120,7 +135,6 @@
                                                         class="timetable-list-item empty full-width"
                                                         style="margin-bottom: auto; margin-top: auto; text-decoration: none"
                                                     >
-                                                        <i></i>
                                                         <span class="time">빈자리 알림 신청</span>
                                                     </a>
                                                 </div>
@@ -140,23 +154,20 @@
 
                     <!--홈 메뉴 사진 리뷰-->
                     <hr class="separator" />
-                    <div class="tab-menu sticky" style="top: 48px">
+                    <div class="tab-menu sticky" style="top: 48px" >
                         <ul>
                             <li class="active">
                                 <a><span>홈</span></a>
                             </li>
-                            <li class="">
-                                <a href="menuList.html"><span>메뉴</span></a>
+
+                            <li class="" >
+                                <a th:href="@{|/restaurant/detail/${restaurant_seq}/menuList|}"><span>메뉴</span></a>
                             </li>
                             <li class="">
-                                <a href="photo.html" style="display: flex; align-items: center"
-                                    ><span>사진</span><span style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px"></span
-                                ></a>
+                                <a th:href="@{|/restaurant/detail/${restaurant_seq}/photo|}" style="display: flex; align-items: center"><span>사진</span></a>
                             </li>
                             <li class="">
-                                <a href="review.html" style="display: flex; align-items: center"
-                                    ><span>리뷰</span><span style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px"></span
-                                ></a>
+                                <a th:href="@{|/restaurant/detail/${restaurant_seq}/review|}" style="display: flex; align-items: center"><span>리뷰</span><span style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px"></span></a>
                             </li>
                         </ul>
                     </div>
@@ -544,8 +555,6 @@
                 <div class="pgjaj02 pgjaj04">예약하기</div>
             </button>
         </aside>
-
-
         <div role="presentation" id="myModal" class="MuiDrawer-root MuiDrawer-modal jss1" style="position: fixed; z-index: 100000; inset: 0">
             <div class="MuiBackdrop-root" aria-hidden="true" style="opacity: 1; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"></div>
             <div tabindex="0" data-test="sentinelStart"></div>
@@ -634,6 +643,88 @@
                 </div>
             </div>
             <div tabindex="0" data-test="sentinelEnd"></div>
+        </div>
+        <div role="presentation" id="resModal">
+            <div class="wrapper">
+                <main class="pb-100">
+                    <div id="bottom-drawer-header">
+                        <div class="container">
+                            <div class="bottom-drawer-header-right">
+                                <a href="#" class="btn-close"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="section section-overflow-hidden">
+                        <div class="container gutter-sm">
+                            <div class="calendarBox">
+                                <table class="scriptCalendar">
+                                    <thead>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="calendarBtn" id="btnPrevCalendar">
+                                                <img src="../../resources/images/left.svg" th:src="@{/images/left.svg}" height="14px" />
+                                            </div>
+                                        </td>
+                                        <td colspan="3"><span id="calYear">YYYY</span>년 <span id="calMonth">MM</span>월</td>
+                                        <td>
+                                            <div class="calendarBtn" id="nextNextCalendar">
+                                                <img src="../../resources/images/right.svg" th:src="@{/images/right.svg}" height="14px" />
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>일</td>
+                                        <td>월</td>
+                                        <td>화</td>
+                                        <td>수</td>
+                                        <td>목</td>
+                                        <td>금</td>
+                                        <td>토</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <h3 class="font-16 ebold mb-15">인원</h3>
+                            <div class="option-personnel mb-24 ml--20 mr--20 pl-20 pr-20">
+                                <div
+                                        class="swiper swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events swiper-container-free-mode"
+                                        style="overflow: visible"
+                                >
+                                    <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px)">
+                                        <div th:each="count : ${#numbers.sequence(1, 30)}" class="swiper-slide" style="width: auto; margin-right: 6px">
+                                            <label>
+                                                <input type="radio" name="count" th:value="${count}" />
+                                                <span th:text="${count + '명'}"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="font-16 ebold mb-15">시간</h3>
+                            <div
+                                    class="swiper swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-free-mode swiper-container-ios timeslot-swiper option-timetable"
+                            >
+                                <div class="swiper-wrapper">
+                                    <div th:each="timeOption : ${timeOptions}" class="swiper-slide" style="width: unset; margin-right: 6px">
+                                        <label>
+                                            <input type="radio" name="time" th:value="${#strings.replace(timeOption.time, ':', '')}" />
+                                            <span th:text="${timeOption.time}"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+                <div class="sticky-bottom-btns">
+                    <button class="btn btn-lg btn-red">
+                        <span class="ebold">확인</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </body>
 </html>

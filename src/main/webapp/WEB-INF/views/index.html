@@ -19,7 +19,9 @@
     <header id="header">
         <div class="container">
             <div class="header-left">
-                <h3>Logo</h3>
+                     <img class="logo" src="../../resources/images/mainPageLogo.png" th:src="@{/images/mainPageLogo.png}" alt="" />
+<!--                <h1 class="logo">C</h1>-->
+
             </div>
             <div class="header-center">
                 
@@ -71,32 +73,32 @@
                     <div class="title">예약TOP</div>
                 </div>
                 <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
+                    <div class="icon"><img th:src="@{/images/today.png}" src="../resources/images/top.png"></div>
                     <div class="title">오늘의 예약</div>
                 </div>
-                <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
+                <div class="list_item" data-category-seq="1">
+                    <div class="icon_food"><img th:src="@{/images/food1.png}" src="../resources/images/top.png"></div>
                     <div class="title">한식</div>
                 </div>
-                <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
-                    <div class="title">양식</div>
-                </div>
-                <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
+                <div class="list_item" data-category-seq="2">
+                    <div class="icon_food"><img th:src="@{/images/food2.png}" src="../resources/images/top.png"></div>
                     <div class="title">중식</div>
                 </div>
-                <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
+                <div class="list_item" data-category-seq="3">
+                    <div class="icon_food"><img th:src="@{/images/food3.png}" src="../resources/images/top.png"></div>
                     <div class="title">일식</div>
                 </div>
-                <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
-                    <div class="title">아시안</div>
+                <div class="list_item" data-category-seq="4">
+                    <div class="icon_food"><img th:src="@{/images/food4.png}" src="../resources/images/top.png"></div>
+                    <div class="title">양식</div>
                 </div>
-                <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
-                    <div class="title">카페&디저트</div>
+                <div class="list_item" data-category-seq="5">
+                    <div class="icon_food"><img th:src="@{/images/food5.png}" src="../resources/images/top.png"></div>
+                    <div class="title">분식</div>
+                </div>
+                <div class="list_item" data-category-seq="6">
+                    <div class="icon_food"><img th:src="@{/images/food6.png}" src="../resources/images/top.png"></div>
+                    <div class="title">카페</div>
                 </div>
             </div>
         </div>
@@ -139,56 +141,21 @@
                 <div class="v_scroll">
                     <div class="v_scroll_inner">
                         <div class="restaurant_list">
-                            <div class="restaurant_list_item">
-                                <a class="restaurant_list_item_img"></a>
+                            <div class="restaurant_list_item"th:each="restaurant : ${restaurantList}">
+                                <a class="restaurant_list_item_img" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}"></a>
                                 <div class="detail">
-                                    <a class="info">
-                                        <h3 class="restaurant_name">남영돈</h3>
-                                        <div class="meta">
-                                            <span class="score">5.0</span>
-                                            <span class="tags">돼지고기구이 • 남영</span>
+                                    <a class="info" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
+                                        <h3 class="restaurant_name" th:text="${restaurant.restaurant_name}">남영돈</h3>
+                                        <div class="meta" >
+                                            <span class="score" th:text="${restaurant.rating}">5.0</span>
+                                            <span class="tags" th:text="${restaurant.tag}">돼지고기구이 • 남영</span>
                                         </div>
                                     </a>
-                                    <a class="btn-bookmark"></a>
-                                </div>
-                            </div>
-                            <div class="restaurant_list_item">
-                                <a class="restaurant_list_item_img"></a>
-                                <div class="detail">
-                                    <a class="info">
-                                        <h3 class="restaurant_name">남영돈</h3>
-                                        <div class="meta">
-                                            <span class="score">5.0</span>
-                                            <span class="tags">돼지고기구이 • 남영</span>
-                                        </div>
-                                    </a>
-                                    <a class="btn-bookmark"></a>
-                                </div>
-                            </div>
-                            <div class="restaurant_list_item">
-                                <a class="restaurant_list_item_img"></a>
-                                <div class="detail">
-                                    <a class="info">
-                                        <h3 class="restaurant_name">남영돈</h3>
-                                        <div class="meta">
-                                            <span class="score">5.0</span>
-                                            <span class="tags">돼지고기구이 • 남영</span>
-                                        </div>
-                                    </a>
-                                    <a class="btn-bookmark"></a>
-                                </div>
-                            </div>
-                            <div class="restaurant_list_item5">
-                                <a class="restaurant_list_item_img"></a>
-                                <div class="detail">
-                                    <a class="info">
-                                        <h3 class="restaurant_name">남영돈</h3>
-                                        <div class="meta">
-                                            <span class="score">5.0</span>
-                                            <span class="tags">돼지고기구이 • 남영</span>
-                                        </div>
-                                    </a>
-                                    <a class="btn-bookmark"></a>
+                                    <a class="btn-bookmark"
+                                       th:classappend="${restaurant.isZzimed} ? 'active' : ''"
+                                       th:text="${restaurant.isZzimed}"
+                                       th:data-restaurant-seq="${restaurant.restaurant_seq}"
+                                    ></a>
                                 </div>
                             </div>
                             <div class="showall">
@@ -213,130 +180,21 @@
                 <div class="v_scroll">
                     <div class="v_scroll_inner">
                         <div class="restaurant_list">
-                            <div class="restaurant_list_item">
-                                <a class="restaurant_list_item_img"></a>
+                            <div class="restaurant_list_item" th:each="restaurant : ${restaurantList}">
+                                <a class="restaurant_list_item_img" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}"></a>
                                 <div class="detail">
-                                    <a class="info">
-                                        <h3 class="restaurant_name">남영돈</h3>
-                                        <div class="meta">
-                                            <span class="score">5.0</span>
-                                            <span class="tags">돼지고기구이 • 남영</span>
+                                    <a class="info" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
+                                        <h3 class="restaurant_name" th:text="${restaurant.restaurant_name}">남영돈</h3>
+                                        <div class="meta" >
+                                            <span class="score" th:text="${restaurant.rating}">5.0</span>
+                                            <span class="tags" th:text="${restaurant.tag}">돼지고기구이 • 남영</span>
                                         </div>
                                     </a>
-                                    <a class="btn-bookmark"></a>
-                                </div>
-                            </div>
-                            <div class="restaurant_list_item">
-                                <a class="restaurant_list_item_img"></a>
-                                <div class="detail">
-                                    <a class="info">
-                                        <h3 class="restaurant_name">남영돈</h3>
-                                        <div class="meta">
-                                            <span class="score">5.0</span>
-                                            <span class="tags">돼지고기구이 • 남영</span>
-                                        </div>
-                                    </a>
-                                    <a class="btn-bookmark"></a>
-                                </div>
-                            </div>
-                            <div class="restaurant_list_item">
-                                <a class="restaurant_list_item_img"></a>
-                                <div class="detail">
-                                    <a class="info">
-                                        <h3 class="restaurant_name">남영돈</h3>
-                                        <div class="meta">
-                                            <span class="score">5.0</span>
-                                            <span class="tags">돼지고기구이 • 남영</span>
-                                        </div>
-                                    </a>
-                                    <a class="btn-bookmark"></a>
-                                </div>
-                            </div>
-                            <div class="restaurant_list_item5">
-                                <a class="restaurant_list_item_img"></a>
-                                <div class="detail">
-                                    <a class="info">
-                                        <h3 class="restaurant_name">남영돈</h3>
-                                        <div class="meta">
-                                            <span class="score">5.0</span>
-                                            <span class="tags">돼지고기구이 • 남영</span>
-                                        </div>
-                                    </a>
-                                    <a class="btn-bookmark"></a>
-                                </div>
-                            </div>
-                            <div class="showall">
-                                <a><span>전체보기</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="section4">
-        <div  class="container_sub">
-            <div class="sub_header">
-                <div class="sub_header_container">
-                    <h3 class="sub_header_title">예약 핫플 BEST</h3>
-                    <p>이달의 best 예약! 이번주는 여기 어떠세요?</p>
-                </div>
-                <a class="btn-more">전체보기 ></a>
-            </div>
-            <div class="sub_body">
-                <div class="v_scroll">
-                    <div class="v_scroll_inner">
-                        <div class="restaurant_list">
-                            <div class="restaurant_list_item">
-                                <a class="restaurant_list_item_img"></a>
-                                <div class="detail">
-                                    <a class="info">
-                                        <h3 class="restaurant_name">남영돈</h3>
-                                        <div class="meta">
-                                            <span class="score">5.0</span>
-                                            <span class="tags">돼지고기구이 • 남영</span>
-                                        </div>
-                                    </a>
-                                    <a class="btn-bookmark"></a>
-                                </div>
-                            </div>
-                            <div class="restaurant_list_item">
-                                <a class="restaurant_list_item_img"></a>
-                                <div class="detail">
-                                    <a class="info">
-                                        <h3 class="restaurant_name">남영돈</h3>
-                                        <div class="meta">
-                                            <span class="score">5.0</span>
-                                            <span class="tags">돼지고기구이 • 남영</span>
-                                        </div>
-                                    </a>
-                                    <a class="btn-bookmark"></a>
-                                </div>
-                            </div>
-                            <div class="restaurant_list_item">
-                                <a class="restaurant_list_item_img"></a>
-                                <div class="detail">
-                                    <a class="info">
-                                        <h3 class="restaurant_name">남영돈</h3>
-                                        <div class="meta">
-                                            <span class="score">5.0</span>
-                                            <span class="tags">돼지고기구이 • 남영</span>
-                                        </div>
-                                    </a>
-                                    <a class="btn-bookmark"></a>
-                                </div>
-                            </div>
-                            <div class="restaurant_list_item5">
-                                <a class="restaurant_list_item_img"></a>
-                                <div class="detail">
-                                    <a class="info">
-                                        <h3 class="restaurant_name">남영돈</h3>
-                                        <div class="meta">
-                                            <span class="score">5.0</span>
-                                            <span class="tags">돼지고기구이 • 남영</span>
-                                        </div>
-                                    </a>
-                                    <a class="btn-bookmark"></a>
+                                    <a class="btn-bookmark"
+                                       th:classappend="${restaurant.isZzimed} ? 'active' : ''"
+                                       th:text="${restaurant.isZzimed}"
+                                       th:data-restaurant-seq="${restaurant.restaurant_seq}"
+                                    ></a>
                                 </div>
                             </div>
                             <div class="showall">
