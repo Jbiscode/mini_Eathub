@@ -12,8 +12,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-var toDay = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 toDay에 Date 객체를 넣어줌
+let toDay = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 toDay에 Date 객체를 넣어줌
 let nowDate = new Date();  // @param 전역 변수, 실제 오늘날짜 고정값
+// toDay.setFullYear(2025);
+// toDay.setMonth(5);
+// toDay.setDate(5);
 
 /**
  * @brief   이전달 버튼 클릭시
@@ -233,26 +236,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-$(document).ready(function () {
-
-    $("div.datetime-selector a").click(function () {
-        $('div[role="presentation"]').css("visibility", 'visible');
-        $('div[role="presentation"]').css("transform", 'translateY(-100%)');
-    });
-
-    $(".btn-close").click(function () {
-        $('div[role="presentation"]').css("transform", 'translateY(+100%)');
-        $('div[role="presentation"]').css("visibility", 'hidden');
-    });
-
-    $("div.sticky-bottom-btns > button").click(function () {
-        fillingInfo();
-        $('div[role="presentation"]').css("transform", 'translateY(+100%)');
-        $('div[role="presentation"]').css("visibility", 'hidden');
-
-    });
-});
-
 function fillingInfo() {
 
 
@@ -282,9 +265,30 @@ function fillingInfo() {
         $('span.hour').text(time);
         $('span.person').text(number);
 
-        $('input.date').val(year+"-"+month+"-"+date);
-        $('input.hour').val(time);
-        $('input.person').val(number);
+        // $('input.date').val(year+"-"+month+"-"+date);
+        // $('input.hour').val(time);
+        // $('input.person').val(number);
+        var requestData = {
+            date: year+"-"+month+"-"+date, // 입력 필드에서 date 값을 읽어옴
+            hour: time, // 입력 필드에서 hour 값을 읽어옴
+            person: number // 입력 필드에서 person 값을 읽어옴
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/wantingDetails',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            success: function(response) {
+                console.log('서버로부터 응답:', response);
+            },
+            error: function(error) {
+                console.log('에러 발생:', error);
+            }
+        });
+
+
+
     } else {
         return;
     }
@@ -297,4 +301,33 @@ function getDayOfWeek(su) {
 }
 window.onload = function () {
     fillingInfo();
+}
+
+
+
+// 모달 상세정보 값이 변경되면 세션에 값 저장.
+async function wantingDetails() {
+    const memberId = document.getElementById('member_id').value;
+    if (memberId) {
+        try {
+            const response = await fetch('/api/members/isexistid', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({memberId})
+            });
+            const data = await response.json();
+            const isAvailable = !data.exists;
+            updateStatusMessage(isAvailable ? '사용 가능' : '사용중인 아이디', isAvailable ? 'blue' : 'red');
+            return isAvailable;
+        } catch (error) {
+            console.error('Error:', error);
+            updateStatusMessage('에러 발생', 'red');
+            return false;
+        }
+    } else {
+        updateStatusMessage('', ''); // 메시지 초기화
+        return false;
+    }
 }

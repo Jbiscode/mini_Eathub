@@ -39,9 +39,9 @@
                                 <span class="date"></span>
                                 <span class="hour"></span>
                                 <span class="person"></span>
-                                <input class="date" type="hidden" />
-                                <input class="hour" type="hidden" />
-                                <input class="person" type="hidden" />
+<!--                                <input class="date" type="hidden" name="date" />-->
+<!--                                <input class="hour" type="hidden" name="hour" />-->
+<!--                                <input class="person" type="hidden" name="person"  />-->
                             </a>
                         </div>
                         <div style="background: rgb(255, 255, 255)">
@@ -115,11 +115,13 @@
                                     style="background: center center no-repeat transparent"
                                 />
                                 <span class="__label">추천순</span>
-                                <i>
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="https://www.w3.org/2000.svg">
-                                        <path d="M4.94 6L8 9.05333L11.06 6L12 6.94L8 10.94L4 6.94L4.94 6Z" fill="black"></path>
-                                    </svg>
-                                </i>
+                                <img
+                                        src="../../resources/images/arrow-down.svg"
+                                        th:src="@{/images/arrow-down.svg}"
+                                        alt=""
+                                        style="background: center center no-repeat transparent"
+                                        width="16" height="16"
+                                />
                             </button>
                             <div class="_1cjtq760 _1ltqxco1o _54rkq63">
                                 <label class="nakw3z1">
@@ -155,78 +157,74 @@
                                 <div style="padding-bottom: 10px">
                                     <div id="pickup_search_list">
                                         <div data-dummy="" th:each="restaurant : ${restaurantList}">
-                                            <div>
-                                                <div>
-                                                    <div class="saved-restaurant-list-item">
-                                                        <div class="restaurant-info">
-                                                            <div class="tb">
-                                                                <a th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}"
-                                                                    ><img
-                                                                        class="img"
-                                                                        src="../../resources/images/mongtanjeju.jpg"
-                                                                        th:src="@{/images/mongtanjeju.jpg}"
-                                                                /></a>
-                                                            </div>
-                                                            <div class="detail">
-                                                                <div class="detail-header">
-                                                                    <div class="txt">
-                                                                        <a th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
-                                                                            <h4 class="name" th:text="${restaurant.restaurant_name}">MAISON HANNAM</h4>
-                                                                            <p class="excerpt" th:text="${restaurant.description}">
-                                                                                유엔빌리지 대저택, 이태리 대사관저를 리모델링한 <br />한강뷰 멋진 온실 테라스
-                                                                                레스토랑
-                                                                            </p>
-                                                                        </a>
-                                                                    </div>
-                                                                    <a
-                                                                        class="btn-bookmark"
-                                                                        th:classappend="${restaurant.isZzimed} ? 'active' : ''"
-                                                                        th:text="${restaurant.isZzimed}"
-                                                                        th:data-restaurant-seq="${restaurant.restaurant_seq}"
-                                                                        >북마크</a
-                                                                    >
-                                                                </div>
+                                            <div class="saved-restaurant-list-item">
+                                                <div class="restaurant-info">
+                                                    <div class="tb">
+                                                        <a th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
+                                                            <img
+                                                                class="img"
+                                                                src="../../resources/images/mongtanjeju.jpg"
+                                                                th:src="@{/images/mongtanjeju.jpg}"/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="detail">
+                                                        <div class="detail-header">
+                                                            <div class="txt">
                                                                 <a th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
-                                                                    <div class="restaurant-meta">
-                                                                        <div class="_1xnbt310 _1xnbt311">
-                                                                            <div class="_1xnbt313">
-                                                                                <img
-                                                                                    class="_1xnbt314"
-                                                                                    width="16"
-                                                                                    height="16"
-                                                                                    src="../../resources/images/star-yellow.svg"
-                                                                                    th:src="@{/images/star-yellow.svg}"
-                                                                                />
-                                                                                <span class="_1xnbt316 _1ltqxco1d" th:text="${restaurant.rating}">4.3</span>
-                                                                                <span class="_1xnbt317 _1ltqxco1g" th:text="${restaurant.review_total}"
-                                                                                    >(1,469)</span
-                                                                                >
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="tag-wrapper">
-                                                                            <div>
-                                                                                <span class="tags" th:text="${restaurant.tag}">태그내용</span>
-                                                                                <span
-                                                                                    class="price"
-                                                                                    th:text="|영업시간 ${#dates.format(restaurant.openHour,'HH:mm')}~${#dates.format(restaurant.closeHour,'HH:mm')}|"
-                                                                                    >영업시간</span
-                                                                                >
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                    <h4 class="name" th:text="${restaurant.restaurant_name}">MAISON HANNAM</h4>
+                                                                    <p class="excerpt" th:text="${restaurant.description}">
+                                                                        유엔빌리지 대저택, 이태리 대사관저를 리모델링한 <br />한강뷰 멋진 온실 테라스
+                                                                        레스토랑
+                                                                    </p>
                                                                 </a>
-                                                                <div class="timetable-list timetable-list-sm">
-                                                                    <button class="timetable-list-item">
-                                                                        <span class="time">오후6:30</span>
-                                                                    </button>
-                                                                    <button class="timetable-list-item disabled" disabled="">
-                                                                        <span class="time">&nbsp;</span>
-                                                                    </button>
-                                                                    <button class="timetable-list-item">
-                                                                        <span class="time">오후7:30</span>
-                                                                    </button>
+                                                            </div>
+                                                            <a
+                                                                class="btn-bookmark"
+                                                                th:classappend="${restaurant.isZzimed} ? 'active' : ''"
+                                                                th:text="${restaurant.isZzimed}"
+                                                                th:data-restaurant-seq="${restaurant.restaurant_seq}"
+                                                                >북마크</a
+                                                            >
+                                                        </div>
+                                                        <a th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
+                                                            <div class="restaurant-meta">
+                                                                <div class="_1xnbt310 _1xnbt311">
+                                                                    <div class="_1xnbt313">
+                                                                        <img
+                                                                            class="_1xnbt314"
+                                                                            width="16"
+                                                                            height="16"
+                                                                            src="../../resources/images/star-yellow.svg"
+                                                                            th:src="@{/images/star-yellow.svg}"
+                                                                        />
+                                                                        <span class="_1xnbt316 _1ltqxco1d" th:text="${restaurant.rating}">4.3</span>
+                                                                        <span class="_1xnbt317 _1ltqxco1g" th:text="${restaurant.review_total}"
+                                                                            >(1,469)</span
+                                                                        >
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tag-wrapper">
+                                                                    <div>
+                                                                        <span class="tags" th:text="${restaurant.tag}">태그내용</span>
+                                                                        <span
+                                                                            class="price"
+                                                                            th:text="|영업시간 ${#dates.format(restaurant.openHour,'HH:mm')}~${#dates.format(restaurant.closeHour,'HH:mm')}|"
+                                                                            >영업시간</span
+                                                                        >
+                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                        </a>
+                                                        <div class="timetable-list timetable-list-sm">
+                                                            <button class="timetable-list-item">
+                                                                <span class="time">오후6:30</span>
+                                                            </button>
+                                                            <button class="timetable-list-item disabled" disabled="">
+                                                                <span class="time">&nbsp;</span>
+                                                            </button>
+                                                            <button class="timetable-list-item">
+                                                                <span class="time">오후7:30</span>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
