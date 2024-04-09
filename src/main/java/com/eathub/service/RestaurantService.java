@@ -1,8 +1,17 @@
 package com.eathub.service;
 
-import com.eathub.dto.*;
+
+import com.eathub.dto.CategoryDTO;
+import com.eathub.dto.MenuFormDTO;
+import com.eathub.dto.MenuFormDTOWrapper;
+import com.eathub.dto.MyPageDTO;
+import com.eathub.dto.OwnerRestaurantDetailDTO;
+import com.eathub.dto.RestaurantJoinDTO;
+import com.eathub.dto.SearchResultDTO;
+
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
+import com.eathub.mapper.ObjectStorageMapper;
 import com.eathub.mapper.RestaurantMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +30,7 @@ import java.util.Map;
 public class RestaurantService {
 
     private final RestaurantMapper restaurantMapper;
+    private final ObjectStorageMapper objectStorageMapper;
 
     public RestaurantInfo selectRestaurantInfo(Long restaurant_seq) {
         return restaurantMapper.selectRestaurantInfo(restaurant_seq);
@@ -125,6 +135,10 @@ public class RestaurantService {
         restaurantMapper.insertRestaurant(restaurantJoinDTO);
     }
 
+    public void insertRestaurantMenu(Long restaurant_seq, MenuFormDTOWrapper menuListWrapper) {
+        List<MenuFormDTO> menuForm = menuListWrapper.getMenuList();
+        restaurantMapper.insertRestaurantMenu(restaurant_seq, menuForm);
+    }
 
     public RestaurantInfo selectSavedRestaurant(RestaurantJoinDTO restaurantJoinDTO) {
 

@@ -7,7 +7,8 @@
     <link th:replace="~{template/common-js :: common-links}"/>
     <link rel="stylesheet" href="../../resources/css/login.css" th:href="@{/css/login.css}">
     <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
-    <script defer th:src="@{/js/joinForm.js}" src="../../resources/js/joinForm.js"></script>
+    <script defer th:src="@{/js/update.js}" src="../../resources/js/update.js"></script>
+
 </head>
 <body>
 <div class="wrapper">
@@ -22,7 +23,7 @@
     <main>
         <section class="section">
             <div class="container">
-                <form th:action th:object="${memberUpdateDTO}" method="post">
+                <form id="updateForm" th:action th:object="${memberUpdateDTO}" method="post">
                     <div class="form-block mb-32">
                         <div class="form-block-header">
                             <h3 class="form-block-title">
@@ -32,7 +33,9 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <input type="text" class="form-input" th:field="${memberUpdateDTO.member_name}" disabled>
+                                <input type="text" class="form-input" th:field="${memberUpdateDTO.member_name}">
+                                <span class="messages" th:errors="${memberUpdateDTO.member_name}"></span>
+                                <span class="messages" id="message_name"></span>
                             </div>
                             <p class="color-gray font-12 mt-10">레스토랑을 예약할 때 사용할 이름이므로 꼭 실명을 사용해주세요.</p>
                         </div>
@@ -61,6 +64,7 @@
                         <div class="form-block-body">
                             <div class="input-control mb-10">
                                 <input type="password" th:autocomplete="new-password" class="form-input" th:field="${memberUpdateDTO.member_pwd}" placeholder="비밀번호를 입력해주세요.">
+                                <span class="messages" th:errors="${memberUpdateDTO.member_pwd}"></span>
                                 <span class="messages" id="message_pwd"></span>
                             </div>
                             <div class="input-control">
@@ -79,6 +83,7 @@
                         <div class="form-block-body">
                             <div class="input-control">
                                 <input type="text" class="form-input" th:field="${memberUpdateDTO.member_email}" placeholder="이메일을 입력해 주세요.">
+                                <span class="messages" th:errors="${memberUpdateDTO.member_email}"></span>
                             </div>
                         </div>
                     </div>
@@ -92,6 +97,7 @@
                         <div class="form-block-body">
                             <div class="input-control">
                                 <input type="text" class="form-input" th:field="${memberUpdateDTO.member_phone}" placeholder="전화번호를 입력해 주세요.">
+                                <span class="messages" th:errors="${memberUpdateDTO.member_phone}"></span>
                             </div>
                         </div>
                     </div>
@@ -110,5 +116,6 @@
         </section>
     </main>
 </div>
+
 </body>
 </html>

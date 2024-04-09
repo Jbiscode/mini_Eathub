@@ -514,3 +514,13 @@ jss1 .MuiPaper-root {
     cursor: default;
     opacity: 1;
 }
+.btn-box{
+    display: flex;
+    justify-content: end;
+    visibility: hidden;
+}
+.owner-restaurant-info .btn{
+    margin-bottom: 10px;
+    margin-top: -22px;
+
+}

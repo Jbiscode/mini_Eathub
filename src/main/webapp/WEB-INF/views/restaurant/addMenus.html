@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" name="viewport"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .menuImagePreview {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<form action="#" th:action th:object="${menuForm}" method="post" enctype="multipart/form-data">
+    <div id="menuForms">
+        <div th:each="menu, iterStat : *{MenuList}">
+            <input type="text" th:field="*{MenuList[__${iterStat.index}__].menu_name}" placeholder="메뉴 이름"/>
+            <input type="text" th:field="*{MenuList[__${iterStat.index}__].menu_price}" placeholder="가격"/>
+            <input type="text" th:field="*{MenuList[__${iterStat.index}__].menu_info}" placeholder="설명"/>
+            <select th:field="*{MenuList[__${iterStat.index}__].menu_type}">
+                <option value="" th:text="#{label.select}">선택하십시오</option>
+                <option th:each="type : ${menuTypeOptions}"
+                        th:value="${type}"
+                        th:text="${type}">Menu Type</option>
+            </select>
+            <input type="file" th:id="'menuImageInput' + ${iterStat.index}" th:field="*{MenuList[__${iterStat.index}__].menu_image}" accept="image/*" th:onchange="|previewImage(this, 'menuImagePreview' + ${iterStat.index})|"/>
+            <img th:attr="id='menuImagePreview' + ${iterStat.index}" class="menuImagePreview" src="#" alt="Menu Image Preview" style="display: none;">
+        </div>
+    </div>
+    <button type="button" onclick="addMenuForm()">메뉴 추가</button>
+    <button type="submit">저장</button>
+</form>
+<script>
+    function addMenuForm() {
+        var menuFormsDiv = document.getElementById('menuForms');
+        var newFormIndex = menuFormsDiv.children.length;
+
+        var newFormGroup = document.createElement('div');
+        newFormGroup.innerHTML = `
+        <input type="text" name="MenuList[${newFormIndex}].menu_name" placeholder="메뉴 이름"/>
+        <input type="text" name="MenuList[${newFormIndex}].menu_price" placeholder="가격"/>
+        <input type="text" name="MenuList[${newFormIndex}].menu_info" placeholder="설명"/>
+        <select name="MenuList[${newFormIndex}].menu_type">
+            <option value="">선택하세요</option>
+            <option value="MAIN">MAIN</option>
+            <option value="SIDE">SIDE</option>
+        </select>
+        <input type="file" id="menuImageInput${newFormIndex}" name="MenuList[${newFormIndex}].menu_image" accept="image/*" onchange="previewImage(this, 'menuImagePreview' + ${newFormIndex})"/>
+        <img id="menuImagePreview${newFormIndex}" class="menuImagePreview" src="#" alt="Menu Image Preview" style="display: none;">
+    `;
+
+        menuFormsDiv.appendChild(newFormGroup);
+    }
+
+    function previewImage(input, previewId) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                document.getElementById(previewId).src = e.target.result;
+                document.getElementById(previewId).style.display = 'block';
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+</body>
+</html>

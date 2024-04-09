@@ -5,12 +5,16 @@ import com.eathub.dto.CategoryDTO;
 import com.eathub.dto.LoginDTO;
 import com.eathub.dto.MemberJoinDTO;
 import com.eathub.dto.MemberUpdateDTO;
+import com.eathub.dto.MenuFormDTO;
+import com.eathub.dto.MenuFormDTOWrapper;
 import com.eathub.dto.MyPageDTO;
 import com.eathub.dto.RestaurantJoinDTO;
 import com.eathub.entity.ENUM.MEMBER_TYPE;
+import com.eathub.entity.ENUM.MENU_TYPE;
 import com.eathub.entity.Members;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.service.MemberService;
+import com.eathub.service.NCPObjectStorageService;
 import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +24,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +47,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final RestaurantService restaurantService;
+    private final NCPObjectStorageService ncpObjectStorageService;
 
     @ModelAttribute("page")
     public String page() {
@@ -226,11 +233,13 @@ public class MemberController {
     @PostMapping("/update")
     public String update(@ModelAttribute @Validated MemberUpdateDTO memberUpdateDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            log.error("업데이트실패");
             return "/members/updateForm";
         }
-        memberService.updateMember(
+        memberService.update(
                 Members.builder()
                         .member_id(memberUpdateDTO.getMember_id())
+                        .member_name(memberUpdateDTO.getMember_name())
                         .member_pwd(memberUpdateDTO.getMember_pwd())
                         .member_email(memberUpdateDTO.getMember_email())
                         .member_phone(memberUpdateDTO.getMember_phone())
@@ -277,11 +286,19 @@ public class MemberController {
         * @throws ParseException 날짜 형식 변환 중 발생하는 예외
         */
     @PostMapping("/restaurant/join")
-    public String joinRestaurant(@ModelAttribute RestaurantJoinDTO restaurantJoinDTO, HttpSession session) throws ParseException {
+    public String joinRestaurant(@Validated @ModelAttribute RestaurantJoinDTO restaurantJoinDTO, BindingResult bindingResult,Model model,HttpSession session) throws ParseException {
 
         log.info("restaurant ={}", restaurantJoinDTO.toString());
 
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        Map<String, String> locationList = restaurantService.getLocationList();
+        List<CategoryDTO> categoryList = restaurantService.getCategoryList();
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categoryList", categoryList);
+            model.addAttribute("locationList",locationList);
+            return "/members/restaurantJoinForm";
+        }
 
         // Time 형으로 형변환
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
@@ -321,5 +338,56 @@ public class MemberController {
 
         return "redirect:/members/my";
     }
+    @GetMapping("/restaurant/{restaurantSeq}/menu/add")
+    public String showForm(@PathVariable("restaurantSeq") Long restaurant_seq , Model model,HttpSession session){
+        Long OwnerSeq = restaurantService.selectRestaurantInfo(restaurant_seq).getMember_seq();
+        if (!OwnerSeq.equals(session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ))){
+            log.error("접근권한이 없습니다.오너{} 유저{}", OwnerSeq, session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ));
+            return "redirect:/";
+        }
 
+        MenuFormDTOWrapper menuForm = new MenuFormDTOWrapper();
+        menuForm.getMenuList().add(new MenuFormDTO()); // 기본 메뉴 폼 추가
+
+        model.addAttribute("menuForm", menuForm);
+        model.addAttribute("menuTypeOptions", MENU_TYPE.values());
+        return "/restaurant/addMenus";
+    }
+
+    @PostMapping("/restaurant/{restaurantSeq}/menu/add")
+    public String saveForm(@ModelAttribute MenuFormDTOWrapper menuFormDTOWrapper,
+                            @PathVariable("restaurantSeq") Long restaurant_seq,
+                            HttpSession session){
+        String BucketFolderName = "storage/";
+        String UUID;
+        String imageOriginalName;
+        File file;
+
+        String filepath = session.getServletContext().getRealPath("WEB-INF/storage");
+        System.out.println("실제폴더 = " + filepath);
+
+        List<MenuFormDTO> menuList = menuFormDTOWrapper.getMenuList();
+
+        for (MenuFormDTO menu : menuList) {
+            log.info("menu = {}", menu);
+            // 이미지 파일 저장
+            if (menu.getMenu_image() != null) {
+                imageOriginalName = menu.getMenu_image().getOriginalFilename();
+                // NCP Object Storage에 이미지 업로드
+                UUID = ncpObjectStorageService.uploadFile(SessionConf.BUCKET_NAME, BucketFolderName, menu.getMenu_image());
+                file = new File(filepath, imageOriginalName);
+                try {
+                    menu.getMenu_image().transferTo(file);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                menu.setMenu_image_name(imageOriginalName);
+                menu.setMenu_image_path(UUID);
+            }
+        }
+        // DB에 메뉴 저장
+        restaurantService.insertRestaurantMenu(restaurant_seq, menuFormDTOWrapper);
+
+        return "redirect:/members/my";
+    }
 }

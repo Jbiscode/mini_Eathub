@@ -67,4 +67,20 @@ public class RestaurantController {
         return "/restaurant/review";
     }
 
+    @GetMapping("/detail/{restaurant_seq}/menuList")
+    public String menu(@PathVariable Long restaurant_seq){
+        return "/restaurant/menuList";
+    }
+
+    @GetMapping("/detail/{restaurant_seq}/photo")
+    public String photo(@PathVariable Long restaurant_seq){
+        return "/restaurant/photo";
+    }
+
+    @GetMapping("/detail/{restaurant_seq}/review")
+    public String review(@PathVariable Long restaurant_seq){
+        return "/restaurant/review";
+    }
+
+
 }
