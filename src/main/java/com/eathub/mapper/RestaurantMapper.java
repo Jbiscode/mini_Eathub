@@ -35,6 +35,9 @@ public interface RestaurantMapper {
     OwnerRestaurantDetailDTO selectRestaurantInfoWithType(Long restaurant_seq);
     List<MyPageDTO> selectOwnerRestaurantList(Long member_seq);
 
+    //category_seq별 레스토랑 리스트
+    List<SearchResultDTO> selectSearchCategotyResultList(Long categorySeq);
+
 
 
 //    UPDATE
@@ -61,4 +64,6 @@ public interface RestaurantMapper {
     void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
 
     String getRestaurantType(Long categorySeq);
+
+
 }

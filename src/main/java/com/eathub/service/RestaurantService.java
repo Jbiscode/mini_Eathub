@@ -164,5 +164,16 @@ public class RestaurantService {
         return restaurantMapper.selectRestaurantInfoWithType(restaurant_seq);
     }
 
+    //카테고리별 레스토랑 조회
+    public List<SearchResultDTO> selectSearchCategotyResultList(Long member_seq, Long category_seq) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectSearchCategotyResultList(category_seq);
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
+
 
 }

@@ -118,6 +118,7 @@ section {
     height: 10px;
     width: 100%;
     border-bottom: 7px solid #f9f9f9;
+    margin-bottom: 30px;
 }
 
 /* shortcut_list_wrap */
@@ -146,6 +147,17 @@ section {
     width: 50px; 
     height: 50px; 
     margin-bottom: 5px;
+}
+
+.list_item .icon_food{
+    padding-top: 5px;
+}
+
+.list_item .icon_food img {
+    width: 43px;
+    height: 43px;
+    margin-bottom: 5px;
+    opacity: 70%;
 }
 
 .title {
