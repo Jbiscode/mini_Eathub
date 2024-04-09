@@ -60,4 +60,14 @@ public class RestaurantApi {
             return ResponseEntity.badRequest().body("오류 메시지");
         }
     }
+
+    @PostMapping("/admin/updateRestaurantStatus")
+    public ResponseEntity<?> updateRestaurantStatus(@RequestBody Map<String, Object> json) {
+        Long restaurant_seq = Long.parseLong(json.get("restaurantSeq").toString());
+        String  status= (String) json.get("status");
+        restaurantService.updateRestaurantStatus(restaurant_seq, 1L,status,null);
+        return ResponseEntity.ok().body(Map.of(
+                "success", true
+        ));
+    }
 }

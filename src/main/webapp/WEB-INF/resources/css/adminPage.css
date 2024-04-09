@@ -1,6 +1,9 @@
 table {
-    width: 100%;
+    width: 100vh;
     border-collapse: collapse;
+}
+#adminTable{
+    width: 100%;
 }
 table, th, td {
     border: 1px solid black;
@@ -18,4 +21,10 @@ th {
 }
 .status-select {
     margin-right: 10px;
+}
+.access{
+    color: #23B169;
+}
+.standby{
+    color: #FFC107;
 }
