@@ -140,23 +140,19 @@
 
                     <!--홈 메뉴 사진 리뷰-->
                     <hr class="separator" />
-                    <div class="tab-menu sticky" style="top: 48px">
+                    <div class="tab-menu sticky" style="top: 48px" >
                         <ul>
                             <li class="active">
                                 <a><span>홈</span></a>
                             </li>
-                            <li class="">
-                                <a href="menuList.html"><span>메뉴</span></a>
+                            <li class="" >
+                                <a th:href="@{|/restaurant/detail/${restaurant_seq}/menuList|}"><span>메뉴</span></a>
                             </li>
                             <li class="">
-                                <a href="photo.html" style="display: flex; align-items: center"
-                                    ><span>사진</span><span style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px"></span
-                                ></a>
+                                <a th:href="@{|/restaurant/detail/${restaurant_seq}/photo|}" style="display: flex; align-items: center"><span>사진</span></a>
                             </li>
                             <li class="">
-                                <a href="review.html" style="display: flex; align-items: center"
-                                    ><span>리뷰</span><span style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px"></span
-                                ></a>
+                                <a th:href="@{|/restaurant/detail/${restaurant_seq}/review|}" style="display: flex; align-items: center"><span>리뷰</span><span style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px"></span></a>
                             </li>
                         </ul>
                     </div>
