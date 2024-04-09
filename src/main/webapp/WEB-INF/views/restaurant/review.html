@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
-        <link rel="stylesheet" href="review.css" />
+        <link rel="stylesheet" th:href="@{/css/review.css}" />
         <title>페이지 제목</title>
     </head>
     <body class="disable-user-select">
@@ -19,9 +19,9 @@
                 <main id="main">
                     <div class="tab-menu sticky" style="top: 48px;">
                         <ul>
-                            <li class=""><a href="restaurantInfo.html"><span>홈</span></a></li>
-                            <li class=""><a href="menuList.html"><span>메뉴</span></a></li>
-                            <li class=""><a href="photo.html"><span>사진</span><span style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px;"></span></a></li>
+                            <li class=""><a th:href="@{|/restaurant/detail/${restaurant_seq}|}"><span>홈</span></a></li>
+                            <li class=""><a th:href="@{|/restaurant/detail/${restaurant_seq}/menuList|}"><span>메뉴</span></a></li>
+                            <li class=""><a th:href="@{|/restaurant/detail/${restaurant_seq}/photo|}"><span>사진</span><span style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px;"></span></a></li>
                             <li class="active"><a><span>리뷰</span><span style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px;"></span></a></li>
                         </ul> 
                     </div>
