@@ -1,24 +1,40 @@
 
 // 예약날짜 모달
+let resModal = $('#resModal');
+let topOpenBtn = $("div.datetime-selector a");
+let topCloseBtn = $(".btn-close");
+let bottomCloseBtn =  $("div.sticky-bottom-btns > button");
 
 $(document).ready(function () {
 
-  $("div.datetime-selector a").click(function () {
-      $('div[role="presentation"]').css("visibility", 'visible');
-      $('div[role="presentation"]').css("transform", 'translateY(-100%)');
+  // 히든 input 태그에 session값을 저장하는 메소드
+  // fillingHidden();
+
+  // 히든 input 태그값으로 모달창에 정보 입력되게 하는 메소드
+  assigningInfo();
+
+  // 모달창 정보를 히든 input과 span 태그에 각각 저장하고 session
+  fillingInfo();
+
+  topOpenBtn.click(function () {
+    resModal.css("visibility", 'visible');
+    resModal.css("transform", 'translateY(-100%)');
+    assigningInfo();
+  });
+  topCloseBtn.click(function () {
+    resModal.css("transform", 'translateY(+100%)');
+    resModal.css("visibility", 'hidden');
+  });
+  bottomCloseBtn.click(function () {
+    fillingInfo();
+    resModal.css("transform", 'translateY(+100%)');
+    resModal.css("visibility", 'hidden');
+
   });
 
-  $(".btn-close").click(function () {
-      $('div[role="presentation"]').css("transform", 'translateY(+100%)');
-      $('div[role="presentation"]').css("visibility", 'hidden');
-  });
 
-  $("div.sticky-bottom-btns > button").click(function () {
-      fillingInfo();
-      $('div[role="presentation"]').css("transform", 'translateY(+100%)');
-      $('div[role="presentation"]').css("visibility", 'hidden');
 
-  });
+
 });
 
 // // 추천순 버튼 클릭

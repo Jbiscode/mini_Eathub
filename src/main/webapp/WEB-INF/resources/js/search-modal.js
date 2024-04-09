@@ -12,11 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-let toDay = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 toDay에 Date 객체를 넣어줌
+var toDay = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 toDay에 Date 객체를 넣어줌
 let nowDate = new Date();  // @param 전역 변수, 실제 오늘날짜 고정값
-// toDay.setFullYear(2025);
-// toDay.setMonth(5);
-// toDay.setDate(5);
 
 /**
  * @brief   이전달 버튼 클릭시
@@ -235,6 +232,104 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// function fillingHidden(){
+//
+//     $.ajax({
+//         type: "POST",
+//         url: "/api/members/getWantingDetails",
+//         success: function(data) {
+//             // 서버로부터 받은 데이터를 각 input 필드에 채웁니다.
+//             // $('input.date').val(data.get("wantingDate"));
+//             // $('input.hour').val(data.get("wantingHour"));
+//             // $('input.person').val(data.get("wantingPerson"));
+//             $('input.date').val(data.wantingDate);
+//             $('input.hour').val(data.wantingHour);
+//             $('input.person').val(data.wantingPerson);
+//             alert('세션에서 알맞게 할당하였습니다..' + $('input.date').val()
+//                 + $('input.hour').val()
+//                 + $('input.person').val());
+//         },
+//         error: function(error) {
+//             console.error("에러 발생:", error);
+//         }
+//     });
+//
+// }
+
+// 캘린더에 값 넣기
+function assigningInfo(){
+
+    // hidden 태그에서 값 받아오기
+    let inputDate = $('input.date').val();
+    let time =  $('input.hour').val();
+    let number = $('input.person').val();
+
+
+    console.log("hiddenInfo value" + inputDate + " " + time + " " + number);
+
+    if(inputDate === "") {
+        this.toDay = new Date();
+    }else{
+        console.log("엘스가 실행되고 있니?")
+        let dateParts = inputDate.split('-');
+        let year = parseInt(dateParts[0]);
+        let month = parseInt(dateParts[1]);
+        let date = parseInt(dateParts[2]);
+
+        this.toDay = new Date(year, month - 1, date)
+        console.log("year =" + year + "month = " + month + "date = " + date )
+
+        buildCalendar();
+        //업적 ^김승원^
+
+        let tds = $('td');
+
+        tds.each(function() {
+            if (parseInt($(this).html()) === date) {
+                console.log("마즘")
+                $(this).click();
+            }
+
+        });
+    }
+    console.log("buildCalendarAssigning Done");
+
+    if(time == null) {
+        time = new Date().getHours();
+        if (time < 10) {
+            time = '0' + time + "00";
+        }
+        console.log("assigning 중 time 은 바로 " + time);
+    }
+
+    let timeRadio = $('input[type="radio"][name="time"]');
+
+    timeRadio.each(function() {
+        if ($(this).val() === time) {
+            // th:value와 일치하는 input을 체크합니다.
+            $(this).click();
+        }
+    });
+    console.log("timeAssigning Done");
+
+    if(number == null) {
+        number=1;
+        console.log("assigning 중 time 은 바로 " + number);
+    }
+    let countRadio = $('input[type="radio"][name="count"]');
+
+    //각 input 요소를 순회하며 th:value와 일치하는 것을 찾습니다.
+    countRadio.each(function() {
+        if ($(this).val() === number) {
+            // th:value와 일치하는 input을 체크합니다.
+            $(this).click();
+        }
+    });
+    console.log("numberAssigning Done");
+}
+
+
+
 
 function fillingInfo() {
 
@@ -246,88 +341,46 @@ function fillingInfo() {
     let time = null;
     let number = null;
 
-    if ($('td.choiceDay') !== null) {
+    if ($('td.choiceDay').length !== 0) {
         year = $('span#calYear').html();
         month = $('span#calMonth').html();
         date = $('td.choiceDay').html();
         day = getDayOfWeek($('td.choiceDay').index());
-    } else {
-        return;
-    }
-    if ($('.option-timetable label input:checked') !== null) {
-        time = $('.option-timetable label input:checked').parent().children().eq(1).html();
-    } else {
-        return;
-    }
-    if ($('.option-personnel label input:checked') !== null) {
-        number = $('.option-personnel label input:checked').parent().children().eq(1).html();
         $('span.date').text(year + " . " + month + " . " + date + " (" + day + ")");
+        $('input.date').val(year+"-"+month+"-"+date);
+    }
+    if ($('.option-timetable label input:checked').length !== 0) {
+        time = $('.option-timetable label input:checked').parent().children().eq(1).html();
         $('span.hour').text(time);
+        time = $('.option-timetable label input:checked').val();
+        $('input.hour').val(time);
+    }
+    if ($('.option-personnel label input:checked').length !== 0) {
+        number = $('.option-personnel label input:checked').parent().children().eq(1).html();
         $('span.person').text(number);
-
-        // $('input.date').val(year+"-"+month+"-"+date);
-        // $('input.hour').val(time);
-        // $('input.person').val(number);
+        number = $('.option-personnel label input:checked').val();
+        $('input.person').val(number);
         var requestData = {
             date: year+"-"+month+"-"+date, // 입력 필드에서 date 값을 읽어옴
             hour: time, // 입력 필드에서 hour 값을 읽어옴
             person: number // 입력 필드에서 person 값을 읽어옴
         };
-
         $.ajax({
             type: 'POST',
-            url: '/wantingDetails',
+            url: '/api/members/putWantingDetails',
             contentType: 'application/json',
             data: JSON.stringify(requestData),
             success: function(response) {
-                console.log('서버로부터 응답:', response);
+                alert('세션에 알맞게 저장되었습니다.' + response);
             },
             error: function(error) {
                 console.log('에러 발생:', error);
             }
         });
-
-
-
-    } else {
-        return;
     }
 }
 
 function getDayOfWeek(su) {
     const week = ['일', '월', '화', '수', '목', '금', '토'];
-    const dayOfWeek = week[su];
-    return dayOfWeek;
-}
-window.onload = function () {
-    fillingInfo();
-}
-
-
-
-// 모달 상세정보 값이 변경되면 세션에 값 저장.
-async function wantingDetails() {
-    const memberId = document.getElementById('member_id').value;
-    if (memberId) {
-        try {
-            const response = await fetch('/api/members/isexistid', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({memberId})
-            });
-            const data = await response.json();
-            const isAvailable = !data.exists;
-            updateStatusMessage(isAvailable ? '사용 가능' : '사용중인 아이디', isAvailable ? 'blue' : 'red');
-            return isAvailable;
-        } catch (error) {
-            console.error('Error:', error);
-            updateStatusMessage('에러 발생', 'red');
-            return false;
-        }
-    } else {
-        updateStatusMessage('', ''); // 메시지 초기화
-        return false;
-    }
+    return week[su];
 }
