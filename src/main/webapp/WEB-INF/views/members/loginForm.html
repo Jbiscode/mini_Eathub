@@ -15,7 +15,8 @@
         <div class="signin-wrapper">
             <div class="inner">
                 <form id="loginForm" action th:action th:object="${loginDTO}" method="post">
-                    <div class="logo">Logo</div>
+
+                    <img class="logo" src="../../resources/images/loginPageLogo.png" th:src="@{/images/loginPageLogo.png}" alt="" />
 
                     <div class="input-control mb-30">
                         <input type="text" class="form-input form-input-underline" th:autocomplete="member_id" placeholder="아이디" th:field="${loginDTO.member_id}">
