@@ -66,6 +66,11 @@ public class RestaurantController {
         model.addAttribute("restaurantInfo", selectRestaurantInfo);
         return "/restaurant/review";
     }
+    @GetMapping("/review/write/{res_seq}")
+    public String restaurantReviewWrite(@PathVariable Long res_seq,Model model,HttpSession session){
+
+        return "/restaurant/reviewWrite";
+    }
 
     @GetMapping("/detail/{restaurant_seq}/menuList")
     public String menu(@PathVariable Long restaurant_seq){
