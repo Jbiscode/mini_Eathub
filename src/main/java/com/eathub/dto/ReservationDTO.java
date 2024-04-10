@@ -22,4 +22,8 @@ public class ReservationDTO {
 
     private String restaurant_name;
     private String tag;
+
+    private String dateFormat;
+    private Long dDay;
+    private Long absDday;
 }

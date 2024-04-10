@@ -83,11 +83,12 @@
                           <div id="common_infinity_sc_0" data-dummy="189">
                               <div class="booked-restaurant-list-item" th:each="reservation : ${reservationDTOList}">
                                   <div class="booked-info">
-                                    <span class="booked-Dday">D-7</span>
+                                      <span class="booked-Dday" th:text="${reservation.dDay == 0 ? 'D-DAY' : 'D' + (reservation.dDay > 0 ? '-' : '+') + reservation.absDday}">D-day</span>
                                       <span class="booked-status" th:text="${reservation.res_status.name() == 'STANDBY' ? '예약 확인중' :
                                         reservation.res_status.name() == 'ACCESS' ? '예약 완료' :
                                         reservation.res_status.name() == 'OK' ? '방문 완료' : null}">예약확인중
                                       </span>
+                                      <span class="label" th:if="${reservation.res_status.name() == 'OK'}">리뷰작성</span>
                                   </div>
                                   <div class="restaurant-info">
                                       <a href="javascript:void(0)" class="tb">
@@ -99,9 +100,9 @@
                                               <span class="tags" th:text="${reservation.tag}">돼지고기구이 • 마곡</span>
                                           </div>
                                           <div class="booked-date-info">
-                                            <span th:text="${#dates.format(reservation.res_date, 'yyyy.MM.dd')}">2023.05.01 월</span> •
-                                            <span th:text="${#dates.format(reservation.res_date, 'a h:mm')}">오후 1:30</span> •
-                                            <span th:text="${reservation.res_people} + '명'">2명</span>
+                                              <span th:text="${reservation.dateFormat}">오후 1:30</span> •
+                                              <span th:text="${#dates.format(reservation.res_date, 'a h:mm')}">오후 1:30</span> •
+                                              <span th:text="${reservation.res_people} + '명'">2명</span>
                                           </div>
                                       </a>
                                   </div>
@@ -123,14 +124,48 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(function (){
+
+            // 예약상태에 따라 예약상태 뱃지 구분
             $('.booked-status').each(function() {
                 if ($(this).text() == "예약 완료") {
                     $(this).addClass('reserved');
                 } else if($(this).text() == "방문 완료"){
                     $(this).addClass('complete');
-                    $(this).parent().parent().addClass('hide')
+                    $(this).closest('.booked-restaurant-list-item').addClass('hide')
                 }
             });
+
+            // 방문완료 탭 누를때 방문완료인 예약들만 보기
+            $('#complete-tab').on('click', function () {
+
+                $('.booked-status').each(function() {
+                    if ($(this).text() == "예약 완료" || $(this).text() == "예약 확인중") {
+                        $(this).closest('.booked-restaurant-list-item').addClass('hide')
+                    } else if($(this).text() == "방문 완료"){
+                        $(this).closest('.booked-restaurant-list-item').removeClass('hide')
+                    }
+                });
+            });
+
+            // 방문예정 탭 누를때 방문예정인 예약들만 보기
+            $('#reserved-tab').on('click', function () {
+
+                $('.booked-status').each(function() {
+                    if ($(this).text() == "예약 완료" || $(this).text() == "예약 확인중") {
+                        $(this).closest('.booked-restaurant-list-item').removeClass('hide')
+                    } else if($(this).text() == "방문 완료"){
+                        $(this).closest('.booked-restaurant-list-item').addClass('hide')
+                    }
+                });
+            });
+
+            // D-DAY일 경우 예약카드 스타일 변경
+            $('.booked-Dday').each(function (){
+                if($(this).text() == 'D-DAY'){
+                    $(this).closest('.booked-restaurant-list-item').addClass('D-DAY')
+                }
+            })
+
         });
     </script>
 </body>
