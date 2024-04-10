@@ -63,8 +63,8 @@
 		FROM
 			reservation r
 				INNER JOIN
-			restaurant_info ri ON r.restaurant_seq = ri.restaurant_seq;
-
+			restaurant_info ri ON r.restaurant_seq = ri.restaurant_seq
+		ORDER BY ABS(DATEDIFF(r.res_date, CURDATE())) ASC;
 	</select>
 
 
