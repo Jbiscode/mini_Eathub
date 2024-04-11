@@ -69,12 +69,16 @@
         <div class="shortcut_list_wrap">
             <div class="shortcut_list">
                 <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
-                    <div class="title">예약TOP</div>
+                    <a th:href="@{|/search/top|}">
+                        <div class="icon"><img th:src="@{/images/top.png}" src="../resources/images/top.png"></div>
+                        <div class="title">예약TOP</div>
+                    </a>
                 </div>
                 <div class="list_item">
-                    <div class="icon"><img th:src="@{/images/today.png}" src="../resources/images/top.png"></div>
-                    <div class="title">오늘의 예약</div>
+                    <a th:href="@{|/search/monthly|}">
+                        <div class="icon"><img th:src="@{/images/today.png}" src="../resources/images/top.png"></div>
+                        <div class="title">이달의 맛집</div>
+                    </a>
                 </div>
                 <div class="list_item" data-category-seq="1">
                     <div class="icon_food"><img th:src="@{/images/food1.png}" src="../resources/images/top.png"></div>
@@ -113,14 +117,13 @@
                 <div class="v_scroll">
                     <div class="v_scroll_inner">
                         <div class="quick_search">
-                            <a class="icon"></a>
-                            <a class="icon1"><span>압구정<br>청담</span></a>
-                            <a class="icon1"><span>잠실<br>송파</span></a>
-                            <a class="icon1"><span>부산</span></a>
-                            <a class="icon1"><span>이태원<br>한남</span></a>
-                            <a class="icon1"><span>성수</span></a>
-                            <a class="icon1"><span>강남<br>역삼</span></a>
-                            <a class="icon7"><span>망원</span></a>
+                            <a class="icon1" data-address="apgujeong,cheongdam"><span>압구정<br>청담</span></a>
+                            <a class="icon2" data-address="hongdae,sinchon"><span>홍대<br>신촌</span></a>
+                            <a class="icon3" data-address="busan"><span>부산</span></a>
+                            <a class="icon4" data-address="hapjeong,mangwon"><span>합정<br>망원</span></a>
+                            <a class="icon5" data-address="sungsoo"><span>성수</span></a>
+                            <a class="icon6" data-address="gangnam,yeogsam"><span>강남<br>역삼</span></a>
+                            <a class="icon7" data-address="jeju"><span>제주</span></a>
                         </div>
                     </div>
                 </div>
@@ -135,7 +138,7 @@
                     <h3 class="sub_header_title">예약 핫플 BEST</h3>
                     <p>이달의 best 예약! 이번주는 여기 어떠세요?</p>
                 </div>
-                <a class="btn-more">전체보기 ></a>
+                <a class="btn-more" th:href="@{|/search/top|}">전체보기 ></a>
             </div>
             <div class="sub_body">
                 <div class="v_scroll">
@@ -159,7 +162,7 @@
                                 </div>
                             </div>
                             <div class="showall">
-                                <a><span>전체보기</span></a>
+                                <a th:href="@{|/search/top|}"><span>전체보기</span></a>
                             </div>
                         </div>
                     </div>
@@ -167,14 +170,15 @@
             </div>
         </div>
     </section>
+
     <section class="section4">
         <div  class="container_sub">
             <div class="sub_header">
                 <div class="sub_header_container">
-                    <h3 class="sub_header_title">예약 핫플 BEST</h3>
-                    <p>이달의 best 예약! 이번주는 여기 어떠세요?</p>
+                    <h3 class="sub_header_title">오늘의 예약</h3>
+                    <p>오늘 뭐 먹을지 고민하고 계신다면 여기서 골라보세요:)</p>
                 </div>
-                <a class="btn-more">전체보기 ></a>
+                <a class="btn-more" th:href="@{|/search/today|}">전체보기 ></a>
             </div>
             <div class="sub_body">
                 <div class="v_scroll">
@@ -198,7 +202,7 @@
                                 </div>
                             </div>
                             <div class="showall">
-                                <a><span>전체보기</span></a>
+                                <a th:href="@{|/search/today|}"><span>전체보기</span></a>
                             </div>
                         </div>
                     </div>

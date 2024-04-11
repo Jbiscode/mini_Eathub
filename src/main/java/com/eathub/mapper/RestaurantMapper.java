@@ -24,7 +24,9 @@ public interface RestaurantMapper {
      * @param MenuFormDTOList
      */
     void insertRestaurantMenu(@Param("restaurant_seq") Long restaurant_seq, @Param("menuFormDTOList") List<MenuFormDTO> MenuFormDTOList);
+    void insertRestaurantImage(@Param("uuid") String uuid, @Param("restaurantSeq") Long restaurantSeq);
 
+    void insertRestaurantDetail(RestaurantDetailDTO restaurantDetailDTO);
 
 
 //    SELECT
@@ -44,6 +46,20 @@ public interface RestaurantMapper {
     //category_seq별 레스토랑 리스트
     List<SearchResultDTO> selectSearchCategotyResultList(Long categorySeq);
 
+    //예약 top 리스트
+    List<SearchResultDTO> selectRestaurantTopSearchList();
+
+    //오늘의 예약 리스트
+    List<SearchResultDTO> selectRestaurantMonthlySearchList();
+
+    //어디로 가시나요?
+    List<SearchResultDTO> selectSearchAddressResultList(List address);
+
+    List<SearchResultDTO> selectRestaurantTodaySearchList();
+
+    List<SearchResultDTO> selectRandomRestaurant();
+
+    RestaurantDetailDTO selectRestaurantDetail(Long restaurantSeq);
 
 
 //    UPDATE
@@ -71,12 +87,4 @@ public interface RestaurantMapper {
 
     String getRestaurantType(Long categorySeq);
 
-
-    List<SearchResultDTO> selectRandomRestaurant();
-
-    void insertRestaurantImage(@Param("uuid") String uuid, @Param("restaurantSeq") Long restaurantSeq);
-
-    void insertRestaurantDetail(RestaurantDetailDTO restaurantDetailDTO);
-
-    RestaurantDetailDTO selectRestaurantDetail(Long restaurantSeq);
 }
