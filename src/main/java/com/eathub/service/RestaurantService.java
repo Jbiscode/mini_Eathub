@@ -3,6 +3,7 @@ package com.eathub.service;
 import com.eathub.dto.*;
 
 import com.eathub.entity.Reservation;
+
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
 import com.eathub.mapper.ObjectStorageMapper;
@@ -220,6 +221,10 @@ public class RestaurantService {
     }
 
 
+    public List<SearchResultDTO> getRandomRestaurant(Long memSeq) {
+        return restaurantMapper.selectRandomRestaurant();
+    }
+
     //session 초기값에 저장할 오늘 날짜 구하기.
     public String getTodayDate(){
         Date date = new Date();
@@ -248,6 +253,5 @@ public class RestaurantService {
         // 예약 가능한 시간 출력
         return nextReservationTime.format(formatter);
     }
-
 
 }

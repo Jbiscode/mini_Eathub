@@ -1,14 +1,7 @@
 package com.eathub.controller;
 
 import com.eathub.conf.SessionConf;
-import com.eathub.dto.CategoryDTO;
-import com.eathub.dto.LoginDTO;
-import com.eathub.dto.MemberJoinDTO;
-import com.eathub.dto.MemberUpdateDTO;
-import com.eathub.dto.MenuFormDTO;
-import com.eathub.dto.MenuFormDTOWrapper;
-import com.eathub.dto.MyPageDTO;
-import com.eathub.dto.RestaurantJoinDTO;
+import com.eathub.dto.*;
 import com.eathub.entity.ENUM.MEMBER_TYPE;
 import com.eathub.entity.ENUM.MENU_TYPE;
 import com.eathub.entity.Members;
@@ -74,6 +67,15 @@ public class MemberController {
             return "/members/ownerMyPage";
         }
 
+        // 로그인 회원 이름받아오기
+        String mem_id = (String) session.getAttribute(SessionConf.LOGIN_MEMBER);
+        Members members = memberService.selectMemberById(mem_id);
+        memberJoinDTO.setMember_name(members.getMember_name());
+
+        // 추천 레스토랑 리스트 불러오기 (랜덤 / 찜 아닌 것)
+        List<SearchResultDTO> recommendRestaurantList = restaurantService.getRandomRestaurant(mem_seq);
+
+        model.addAttribute("recommendRestaurantList", recommendRestaurantList);
         model.addAttribute("memberJoinDTO", memberJoinDTO);
         List<MyPageDTO> zzimRestaurantList = restaurantService.getZzimRestaurantList(mem_seq);
         model.addAttribute("myPageDTO", zzimRestaurantList);
