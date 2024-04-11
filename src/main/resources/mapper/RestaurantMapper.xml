@@ -71,6 +71,18 @@
         </foreach>
     </insert>
 
+    <!-- 식당 상세정보 등록  -->
+    <insert id="insertRestaurantDetail" parameterType="com.eathub.dto.RestaurantDetailDTO">
+        INSERT INTO restaurant_detail(restaurant_seq, image_url, description_detail, openhour_detail, precaution, amenities, parking, valet, drink, kidszone, room)
+        VALUES (#{restaurant_seq}, #{image_url}, #{description_detail}, #{openhour_detail}, #{precaution}, #{amenities}, #{parking}, #{valet}, #{drink}, #{kidszone}, #{room})
+    </insert>
+
+    <!-- 식당 대표이미지 등록 -->
+    <insert id="insertRestaurantImage">
+        INSERT INTO restaurant_image(restaurant_seq, image_url)
+        VALUES (#{restaurantSeq}, #{uuid})
+    </insert>
+
 <!-- SELECT-->
 
     <select id="selectRestaurantInfo" resultType="restaurantInfo">
@@ -159,6 +171,13 @@
         ORDER BY RAND() limit 5
     </select>
 
+
+    <!-- 레스토랑 상세정보 불러오기   -->
+    <select id="selectRestaurantDetail" resultType="com.eathub.dto.RestaurantDetailDTO">
+        SELECT *
+        FROM restaurant_detail
+        WHERE restaurant_seq = #{restaurantSeq}
+    </select>
 
 <!-- UPDATE-->
 
