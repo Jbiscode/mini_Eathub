@@ -46,6 +46,15 @@ public interface RestaurantMapper {
     //category_seq별 레스토랑 리스트
     List<SearchResultDTO> selectSearchCategotyResultList(Long categorySeq);
 
+    //예약 top 리스트
+    List<SearchResultDTO> selectRestaurantTopSearchList();
+
+    //오늘의 예약 리스트
+    List<SearchResultDTO> selectRestaurantMonthlySearchList();
+
+    //어디로 가시나요?
+    List<SearchResultDTO> selectSearchAddressResultList(List address);
+
 
 
 //    UPDATE
@@ -74,4 +83,5 @@ public interface RestaurantMapper {
     String getRestaurantType(Long categorySeq);
 
 
+    List<SearchResultDTO> selectRestaurantTodaySearchList();
 }

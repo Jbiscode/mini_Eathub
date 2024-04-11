@@ -73,17 +73,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //카테고리별 리스트 출력
 document.addEventListener("DOMContentLoaded", function() {
-    // 모든 list_item 요소를 가져옴
     var listItems = document.querySelectorAll('.list_item');
 
-    // 각 list_item에 대해 클릭 이벤트 리스너를 추가
     listItems.forEach(function(item) {
         item.addEventListener('click', function() {
-        // 클릭된 항목의 data-category-seq 값을 읽음
         var categorySeq = this.getAttribute('data-category-seq');
-
-        // 해당 category_seq를 가지고 페이지 이동
         window.location.href = '/search/category/' + categorySeq;
         });
     });
 });
+
+//어디로 가시나요?
+document.addEventListener("DOMContentLoaded", function() {
+    var links = document.querySelectorAll('.quick_search a');
+
+    links.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var address = this.getAttribute('data-address');
+            window.location.href = '/search/address/' + address;
+        });
+    });
+});
+
