@@ -1364,6 +1364,17 @@ p, h1, h2, h3, h4, h5, h6 {
     font-size: var(--_1ltqxcow);
     font-weight: var(--_1ltqxco11);
 }
+
+form[name="reservationJoinDTO"]{
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 480px;
+}
+
+
+
 /*밑에 독*/
 
 
@@ -1549,4 +1560,9 @@ body {
     --_1ltqxco15: 12px;
     --_1ltqxco16: 16px;
     --_1ltqxco17: 32px;
+}
+/*time radio 중 시간이 지난 input*/
+.outdated + span {
+    border: 1px solid #ddd !important;
+    color: #ddd !important;
 }

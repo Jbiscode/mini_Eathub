@@ -2,7 +2,6 @@ package com.eathub.api;
 
 import com.eathub.conf.SessionConf;
 import com.eathub.dto.OwnerRestaurantDetailDTO;
-import com.eathub.entity.RestaurantInfo;
 import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -69,5 +69,18 @@ public class RestaurantApi {
         return ResponseEntity.ok().body(Map.of(
                 "success", true
         ));
+    }
+    //오늘이라면 오픈시간부터 현재시간 전까지의 timeOption 들을 HHmm 형식으로 반환
+    @PostMapping("/getOutdatedTimes/{restaurantSeq}")
+    public List<String> getOutdatedTimes(@PathVariable("restaurantSeq") Long restaurantSeq) {
+        return restaurantService.getOutdatedTime(restaurantSeq);
+    }
+    //선택한 날짜 중 예약이 된 시간들을 HHmm 형식으로 반환.
+    @PostMapping("/getBookedTimes/{restaurantSeq}/{memberSeq}/{selectedDate}")
+    public List<String> getBookedTimes(@PathVariable("restaurantSeq") Long restaurant_seq,
+                                       @PathVariable("memberSeq") Long memberSeq,
+                                       @PathVariable("selectedDate") String selectedDate
+                                       ) {
+        return restaurantService.getBookedTimes(restaurant_seq, memberSeq, selectedDate);
     }
 }
