@@ -1,36 +1,32 @@
 package com.eathub.controller;
 
-import javax.servlet.http.HttpSession;
 
-
-import com.eathub.service.ReviewService;
-import com.eathub.dto.*;
+import com.eathub.conf.SessionConf;
+import com.eathub.dto.ReservationJoinDTO;
+import com.eathub.dto.RestaurantDetailDTO;
+import com.eathub.dto.ReviewDTO;
+import com.eathub.dto.TimeOptionDTO;
 import com.eathub.entity.Reservation;
-
+import com.eathub.entity.RestaurantInfo;
+import com.eathub.service.RestaurantService;
+import com.eathub.service.ReviewService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import com.eathub.conf.SessionConf;
-import com.eathub.entity.RestaurantInfo;
-import com.eathub.service.RestaurantService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import java.util.List;
 
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -51,6 +47,10 @@ public class RestaurantController {
     @GetMapping("/detail/{restaurant_seq}")
     public String restaurantInfo(@PathVariable Long restaurant_seq,Model model,HttpSession session){
         RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
+        RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+        if(restaurantDetailDTO != null){
+            model.addAttribute("restaurantDetailDTO", restaurantDetailDTO);
+        }
         Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
         ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
@@ -166,5 +166,6 @@ public class RestaurantController {
         log.info("reviewDTO: {}", reviewDTO);
         return "redirect:/restaurant/detail/";
     }
+
 
 }

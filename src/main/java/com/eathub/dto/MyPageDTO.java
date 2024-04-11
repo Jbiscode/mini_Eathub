@@ -23,4 +23,6 @@ public class MyPageDTO {
     private Integer review_total;
 
     private String comment;
+
+    private String image_url;
 }

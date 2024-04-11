@@ -82,10 +82,10 @@
                                 <div id="common_infinity_sc_0" data-dummy="189">
                                     <div class="saved-restaurant-list-item" th:each="restaurant : ${myPageDTO}">
                                         <div class="restaurant-info">
-                                            <a href="javascript:void(0)" class="tb">
-                                                <img class="img" th:src="@{/images/mongtanjeju.jpg}"  alt="page"/>
+                                            <a href="javascript:void(0)" class="tb" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
+                                                <img class="img" th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${restaurant.image_url}|"  alt="page"/>
                                             </a>
-                                            <a href="javascript:void(0)" class="detail">
+                                            <a href="javascript:void(0)" class="detail" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
                                                 <h4 class="name" th:text="${restaurant.restaurant_name}">산청숯불가든 마곡</h4>
                                                 <p class="excerpt" th:text="${restaurant.description}">
                                                     여기에 레스토랑 설명이 들어감
