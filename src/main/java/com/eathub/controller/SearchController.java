@@ -1,6 +1,7 @@
 package com.eathub.controller;
 
 import com.eathub.conf.SessionConf;
+import com.eathub.dto.RestaurantDetailDTO;
 import com.eathub.dto.SearchResultDTO;
 import com.eathub.dto.TimeOptionDTO;
 import com.eathub.service.RestaurantService;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -36,6 +35,18 @@ public class SearchController {
         List<TimeOptionDTO> timeOptionDTOS = searchService.generateTimeOptions();
         // 레스토랑 목록 가져오기
         List<SearchResultDTO> searchResultList = restaurantService.selectSearchResultList(member_seq);
+        try {
+            for (SearchResultDTO searchResultDTO : searchResultList) {
+                Long restaurant_seq = searchResultDTO.getRestaurant_seq();
+                RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+                if(restaurantDetailDTO != null){
+                    searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         model.addAttribute("timeOptions", timeOptionDTOS);
         model.addAttribute("restaurantList", searchResultList);
 
