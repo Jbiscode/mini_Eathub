@@ -1,11 +1,7 @@
 package com.eathub.mapper;
 
-import com.eathub.dto.CategoryDTO;
-import com.eathub.dto.MenuFormDTO;
-import com.eathub.dto.MyPageDTO;
-import com.eathub.dto.OwnerRestaurantDetailDTO;
-import com.eathub.dto.RestaurantJoinDTO;
-import com.eathub.dto.SearchResultDTO;
+import com.eathub.dto.*;
+import com.eathub.entity.Reservation;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,6 +14,8 @@ public interface RestaurantMapper {
 //    INSERT
     void insertZzimRestaurant(RestaurantZzim restaurantZzim);
     void insertRestaurant(RestaurantInfo restaurantJoinDTO);
+    void insertReservation(Reservation reservationJoinDTO);
+
     void insertRestaurantStatus(RestaurantInfo restaurantJoinDTO);
 
     /**
@@ -26,7 +24,9 @@ public interface RestaurantMapper {
      * @param MenuFormDTOList
      */
     void insertRestaurantMenu(@Param("restaurant_seq") Long restaurant_seq, @Param("menuFormDTOList") List<MenuFormDTO> MenuFormDTOList);
+    void insertRestaurantImage(@Param("uuid") String uuid, @Param("restaurantSeq") Long restaurantSeq);
 
+    void insertRestaurantDetail(RestaurantDetailDTO restaurantDetailDTO);
 
 
 //    SELECT
@@ -55,6 +55,11 @@ public interface RestaurantMapper {
     //어디로 가시나요?
     List<SearchResultDTO> selectSearchAddressResultList(List address);
 
+    List<SearchResultDTO> selectRestaurantTodaySearchList();
+
+    List<SearchResultDTO> selectRandomRestaurant();
+
+    RestaurantDetailDTO selectRestaurantDetail(Long restaurantSeq);
 
 
 //    UPDATE
@@ -82,6 +87,4 @@ public interface RestaurantMapper {
 
     String getRestaurantType(Long categorySeq);
 
-
-    List<SearchResultDTO> selectRestaurantTodaySearchList();
 }

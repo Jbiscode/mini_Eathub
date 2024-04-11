@@ -1,14 +1,7 @@
 package com.eathub.controller;
 
 import com.eathub.conf.SessionConf;
-import com.eathub.dto.CategoryDTO;
-import com.eathub.dto.LoginDTO;
-import com.eathub.dto.MemberJoinDTO;
-import com.eathub.dto.MemberUpdateDTO;
-import com.eathub.dto.MenuFormDTO;
-import com.eathub.dto.MenuFormDTOWrapper;
-import com.eathub.dto.MyPageDTO;
-import com.eathub.dto.RestaurantJoinDTO;
+import com.eathub.dto.*;
 import com.eathub.entity.ENUM.MEMBER_TYPE;
 import com.eathub.entity.ENUM.MENU_TYPE;
 import com.eathub.entity.Members;
@@ -22,12 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -74,6 +62,15 @@ public class MemberController {
             return "/members/ownerMyPage";
         }
 
+        // 로그인 회원 이름받아오기
+        String mem_id = (String) session.getAttribute(SessionConf.LOGIN_MEMBER);
+        Members members = memberService.selectMemberById(mem_id);
+        memberJoinDTO.setMember_name(members.getMember_name());
+
+        // 추천 레스토랑 리스트 불러오기 (랜덤 / 찜 아닌 것)
+        List<SearchResultDTO> recommendRestaurantList = restaurantService.getRandomRestaurant(mem_seq);
+
+        model.addAttribute("recommendRestaurantList", recommendRestaurantList);
         model.addAttribute("memberJoinDTO", memberJoinDTO);
         List<MyPageDTO> zzimRestaurantList = restaurantService.getZzimRestaurantList(mem_seq);
         model.addAttribute("myPageDTO", zzimRestaurantList);
@@ -392,8 +389,43 @@ public class MemberController {
     }
 
     @GetMapping("/restaurant/{restaurantSeq}/edit")
-    public String editForm(@PathVariable("restaurantSeq") Long restaurant_seq){
+    public String editForm(@PathVariable("restaurantSeq") Long restaurant_seq, Model model){
+
+        model.addAttribute("restaurantDetailDTO", new RestaurantDetailDTO());
+
 
         return "restaurant/restaurantDetailForm";
+    }
+
+    @PostMapping("/restaurant/{restaurantSeq}/edit")
+    public String detailSaveForm(@PathVariable("restaurantSeq") Long restaurant_seq, @ModelAttribute RestaurantDetailDTO restaurantDetailDTO, BindingResult bindingResult,HttpSession session){
+
+        String BucketFolderName = "storage/";
+        String UUID;
+        String imageOriginalName;
+        File file;
+
+        restaurantDetailDTO.setRestaurant_seq(restaurant_seq);
+        log.info("restaurantDetailInfo={}", restaurantDetailDTO);
+
+        if(bindingResult.hasErrors()){
+            log.info("bindingResult={}",bindingResult);
+        }
+
+
+
+        if (restaurantDetailDTO.getRestaurant_image() != null) {
+            imageOriginalName = restaurantDetailDTO.getRestaurant_image().getOriginalFilename();
+
+            UUID = ncpObjectStorageService.uploadFile(SessionConf.BUCKET_NAME, BucketFolderName, restaurantDetailDTO.getRestaurant_image());
+            restaurantDetailDTO.setImage_url(UUID);
+            restaurantService.saveRestaurantDetail(restaurantDetailDTO);
+            restaurantService.saveRestaurantImage(UUID,restaurant_seq);
+        }else{
+            restaurantService.saveRestaurantDetail(restaurantDetailDTO);
+        }
+
+
+        return "redirect:/members/my";
     }
 }

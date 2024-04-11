@@ -18,7 +18,7 @@ document.querySelectorAll(".owner-restaurant-list-item").forEach((item) => {
             const data = await response.json();
             console.log(JSON.stringify(data));
 
-            updateFormFields(data.restaurantInfo);
+            updateFormFields(data.restaurantInfo, data.restaurantDetailDTO);
             toggleModalVisibility(false);
             scrollToTop();
             makeLinkButton(restaurantSeq);
@@ -30,7 +30,7 @@ document.querySelectorAll(".owner-restaurant-list-item").forEach((item) => {
 });
 
 
-function updateFormFields(restaurantInfo) {
+function updateFormFields(restaurantInfo, restaurantDetailDTO) {
     const fields = ["restaurant_name", "location", "tag", "description", "phone", "zipcode", "address1", "address2"];
     fields.forEach((field) => {
         document.getElementById(field).value = restaurantInfo[field];
@@ -39,6 +39,8 @@ function updateFormFields(restaurantInfo) {
     document.getElementById("category_seq").value = restaurantInfo.restaurant_type;
     document.getElementById("openHour").value = restaurantInfo.openHour.substring(0, 5);
     document.getElementById("closeHour").value = restaurantInfo.closeHour.substring(0, 5);
+    console.log(restaurantDetailDTO.image_url)
+    document.getElementById("restaurant_img").src= "https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/" + restaurantDetailDTO.image_url;
 
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach((checkbox) => {

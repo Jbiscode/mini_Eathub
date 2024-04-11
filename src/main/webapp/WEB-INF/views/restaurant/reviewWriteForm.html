@@ -10,8 +10,8 @@
 <body>
 
 <h2>음식점 리뷰 작성</h2>
-
-<form id="reviewForm" onsubmit="submitReview(); return false;">
+<form id="reviewForm" th:action method="post" onsubmit="submitReview(); return false;" enctype="multipart/form-data">
+<input type="hidden" id="res_seq" th:value="${res_seq}">
 
     <!-- 별점 폼 -->
     <div class="star-rating">
@@ -29,7 +29,7 @@
 
     <p id="charCount">0자<span>/최대300자</span></p> <!-- 글자 수를 표시할 요소 -->
     <!-- 리뷰 텍스트 입력 -->
-    <p><textarea id="reviewText" name="reviewText" placeholder="여기에 리뷰를 작성해 주세요." oninput="countCharacters()" maxlength="300"></textarea></p>
+    <p><textarea id="reviewText" name="content" placeholder="여기에 리뷰를 작성해 주세요." oninput="countCharacters()" maxlength="300"></textarea></p>
 
     <!-- 이미지 업로드 및 미리보기 -->
     <p>이미지 첨부 (최대 10개):</p>

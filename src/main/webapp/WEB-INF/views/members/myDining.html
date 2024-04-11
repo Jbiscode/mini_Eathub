@@ -88,7 +88,7 @@
                                         reservation.res_status.name() == 'ACCESS' ? '예약 완료' :
                                         reservation.res_status.name() == 'OK' ? '방문 완료' : null}">예약확인중
                                       </span>
-                                      <span class="label" th:if="${reservation.res_status.name() == 'OK'}">리뷰작성</span>
+                                      <a class="label" th:href="@{/restaurant/review/write(res_seq=${reservation.res_seq})}" th:if="${reservation.res_status.name() == 'OK'}">리뷰작성</a>
                                   </div>
                                   <div class="restaurant-info">
                                       <a href="javascript:void(0)" class="tb">
