@@ -256,7 +256,6 @@ public class RestaurantService {
 
 
     // 타임리프에 사용할 시간 옵션을 생성하는 메서드 6시부터 23시 30분까지 30분 단위로 생성
-
     public List<TimeOptionDTO> generateTimeOptions(Long restaurant_seq) {
         RestaurantInfo restaurantinfo = restaurantMapper.selectRestaurantInfo(restaurant_seq);
         LocalTime openTime = restaurantinfo.getOpenHour().toLocalTime();
@@ -316,6 +315,47 @@ public class RestaurantService {
         // 예약 가능한 시간 출력
         return nextReservationTime.format(formatter);
     }
+    //open 시간부터 현재시간 전까지
+    public List<String> getOutdatedTime(Long restaurant_seq) {
+        //현재 시간 구하기
+        LocalTime currentTime = LocalTime.now();
+        int currentMinute = currentTime.getMinute();
+        int nextReservationMinute = ((currentMinute / 30) + 1) * 30; // 다음 예약 가능한 분
+        LocalTime nextReservationTime;
+        if (nextReservationMinute == 60) {
+            nextReservationTime = currentTime.plusHours(1).withMinute(0); // 정시로 설정
+        } else {
+            nextReservationTime = currentTime.withMinute(nextReservationMinute);
+        }
+
+        //저장할 데이터의 형태
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm");
+        RestaurantInfo restaurantinfo = restaurantMapper.selectRestaurantInfo(restaurant_seq);
+        LocalTime time = restaurantinfo.getOpenHour().toLocalTime();
+        List<String> outdatedTimes = new ArrayList<>();
+        while (!time.format(formatter2).equals(nextReservationTime.format(formatter2))) {
+            outdatedTimes.add(time.format(formatter));
+            time = time.plusMinutes(30);
+        }
+        return outdatedTimes;
+    }
+
+    //회원번호, 식당번호, 지정된날짜정보에 해당되는 예약의 시간정보를 HHmm 형식으로 반환한다.
+    public List<String> getBookedTimes(Long restaurantSeq, Long memberSeq, String selectedDate) {
+        //회원번호, 식당번호에 해당하는 예약을 전부 뽑기
+        List<Reservation> reservations = restaurantMapper.selectOnesReservation(restaurantSeq, memberSeq);
+
+        //yyyy-MM-dd HH:mm:ss 형식으로 되어있는 각각의 시간정보가  yyyy-MM-dd 형식의 selectedDate를 포함하는지 보자.
+        List<String> bookedTimes = new ArrayList<>();
+        for (Reservation reservation : reservations) {
+            String[] dateParts = reservation.getRes_date().split(" ");
+            if(dateParts[0].equals(selectedDate)){
+                String[] timeParts = dateParts[1].split(":");
+                bookedTimes.add(timeParts[0] + timeParts[1]);
+            }
+        }
+        return bookedTimes;
 
     public void saveRestaurantImage(String uuid, Long restaurantSeq) {
         restaurantMapper.insertRestaurantImage(uuid, restaurantSeq);
@@ -327,5 +367,6 @@ public class RestaurantService {
 
     public RestaurantDetailDTO getRestaurantDetail(Long restaurantSeq) {
         return restaurantMapper.selectRestaurantDetail(restaurantSeq);
+
     }
 }

@@ -546,13 +546,11 @@
                     <button class="btn-bookmark-detail2" th:classappend="${isZzimed ? 'active' : ''}" th:data-restaurant-seq="${restaurantInfo.restaurant_seq}">저장</button>
                     <span class="_1kfi3w63" th:text="${restaurantInfo.zzim_total}">총찜수</span>
                 </div>
-                <form th:action th:object="${reservationJoinDTO}" method="post">
+                <form th:action th:object="${reservationJoinDTO}" method="post" name="reservationJoinDTO">
                     <input class="date" type="hidden" name="date" th:value="${session.wantingDate}" />
                     <input class="hour" type="hidden" name="hour" th:value="${session.wantingHour}"/>
                     <input class="person" type="hidden" name="person"  th:value="${session.wantingPerson}" />
-<!--                        <input class="date" type="hidden" name="date" th:value="${session.wantingDate}" />-->
-<!--                        <input class="hour" type="hidden" name="hour" th:value="${session.wantingHour}" />-->
-<!--                        <input class="person" type="hidden" name="person"  th:value="${session.wantingPerson}" />-->
+                    <div id="restaurantSeqData" th:attr="data-restaurant-seq=${restaurant_seq}"></div>
                     <button type="submit" class="pgjaj01">
                         <div class="pgjaj02 pgjaj04">예약하기</div>
                     </button>
@@ -661,7 +659,7 @@
                     <section class="section section-overflow-hidden">
                         <div class="container gutter-sm">
                             <div class="calendarBox">
-                                <table class="scriptCalendar">
+                                <table class="scriptCalendar" >
                                     <thead>
                                     <tr>
                                         <td></td>
