@@ -2,7 +2,9 @@ package com.eathub.controller;
 
 import com.eathub.conf.SessionConf;
 import com.eathub.dto.ReservationDTO;
+import com.eathub.dto.RestaurantDetailDTO;
 import com.eathub.service.MemberService;
+import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -12,12 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Controller
@@ -26,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class MyDiningController {
 
     private final MemberService memberService;
+    private final RestaurantService restaurantService;
 
     @ModelAttribute("page")
     public String page() {
@@ -39,28 +37,12 @@ public class MyDiningController {
 
         // mem_seq로 예약상태 리스트 불러오기 (reservation Service? 일단 memberservice에)
         List<ReservationDTO> reservationList =  memberService.getReservationList(mem_seq);
-
-        // Date Format / D-day  넣기
         for (ReservationDTO reservationDTO : reservationList) {
-            Date date = reservationDTO.getRes_date();
-            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.M.d (E)");
-            String formattedDate = localDate.format(formatter);
-
-            reservationDTO.setDateFormat(formattedDate);
-
-            // D-day 계산
-            Date today = new Date();
-            long diff = reservationDTO.getRes_date().getTime() - today.getTime();
-            long dDay = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-            long absDday = Math.abs(dDay);
-
-            reservationDTO.setAbsDday(absDday);
-            reservationDTO.setDDay(dDay);
+            Long restaurant_seq = reservationDTO.getRestaurant_seq();
+            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+            reservationDTO.setImage_url(restaurantDetailDTO.getImage_url());
         }
-
         model.addAttribute("reservationDTOList", reservationList);
-
 
         return "/members/myDining";
     }

@@ -45,26 +45,19 @@
                         <div class="img"></div>
                     </div>
                     <div class="mypage-profile-meta">
-                        <h4 class="name username">이름</h4>
-                        <div class="meta">
-                            <dl>
-                                <dt>팔로잉</dt>
-                                <dt>0</dt>
-                            </dl>
-                            <span>|</span>
-                            <dl>
-                                <dt>팔로워</dt>
-                                <dt>0</dt>
-                            </dl>
-                        </div>
-                        <div class="social"></div>
+                        <h4 class="name username"  th:text="${memberJoinDTO.member_name}">이름</h4>
                     </div>
                 </div>
                 <div class="mypage-profile--desc" style="display: block;">
-                    <button class="btn btn-md btn-outline btn-rounded full-width mt-18">
-                        <a th:href="@{update}" class="label">내 정보수정</a>
-                    </button>
-                    <button class="my-restaurant btn btn-md btn-outline btn-rounded full-width mt-18">
+                    <div class="mt-18 __d-flex">
+                        <button class="btn btn-md btn-outline btn-rounded full-width ">
+                            <a th:href="@{update}" class="label">내 정보수정</a>
+                        </button>
+                        <button class="btn btn-md btn-outline btn-rounded full-width ">
+                            <a th:href="@{/members/restaurant/join}" class="label">가게 등록</a>
+                        </button>
+                    </div>
+                    <button class="my-restaurant btn btn-md btn-outline btn-rounded full-width mt-1">
                         <a href="javascript:void(0)" class="label">
                             내 가게목록
                             <span>
@@ -109,18 +102,21 @@
             <!-- <section class="section pt-20 section-overflow-hidden"></section> -->
             <section class="section pt-24 section-overflow-hidden">
                 <div class="container gutter-sm">
-                    <div class="owner-restaurant-info">
+                    <div class="nodata font-14 mb-24 mt-18 ">
+                        <b>가게를 선택해주세요</b>
+                    </div>
+                    <div class="owner-restaurant-info hide">
                         <div class="btn-box">
                             <button class="btn-rounded btn-outline btn-md btn btn-md">
-                                <a id="restaurantEditButton" href="javascript:void(0)" class="label">가게수정</a>
+                                <a id="restaurantEditButton" href="javascript:void(0)" class="label">가게 상세정보 등록</a>
                             </button>
                             <button class="btn-rounded btn-outline btn-md btn btn-md">
                                 <a id="restaurantMenuAddButton" href="javascript:void(0)" class="label">메뉴추가</a>
                             </button>
                         </div>
-                        <div class="form-block mb-32" th:object="${restaurantJoinDTO}">
-                            <div class="img mb-32">
-                                <img th:src="@{/images/mongtanjeju.jpg}" src="../../resources/images/mongtanjeju.jpg" alt="식당대표이미지" style="display: block; margin: 0 auto;">
+                        <div class="form-block mb-32"   th:object="${restaurantJoinDTO}">
+                            <div class="img mb-32" >
+                                <img id="restaurant_img" width="250"  src="../../resources/images/mongtanjeju.jpg" alt="식당대표이미지" style="display: block; margin: 0 auto;">
                             </div>
                             <div class="form-block-header">
                                 <h3 class="form-block-title">
@@ -315,7 +311,7 @@
                                     <div class="owner-restaurant-list-item" th:each="restaurant : ${myPageDTO}" th:data-restaurant-seq="${restaurant.restaurant_seq}">
                                         <div class="restaurant-info">
                                             <a href="javascript:void(0)" class="tb">
-                                                <img class="img" th:src="@{/images/mongtanjeju.jpg}"  alt="page"/>
+                                                <img class="img" th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${restaurant.image_url}|"  alt="page"/>
                                             </a>
                                             <a href="javascript:void(0)" class="detail">
                                                 <h4 class="name" th:text="${restaurant.restaurant_name}">산청숯불가든 마곡</h4>

@@ -88,11 +88,11 @@
                                         reservation.res_status.name() == 'ACCESS' ? '예약 완료' :
                                         reservation.res_status.name() == 'OK' ? '방문 완료' : null}">예약확인중
                                       </span>
-                                      <span class="label" th:if="${reservation.res_status.name() == 'OK'}">리뷰작성</span>
+                                      <a class="label" th:href="@{/restaurant/review/write(res_seq=${reservation.res_seq})}" th:if="${reservation.res_status.name() == 'OK'}">리뷰작성</a>
                                   </div>
                                   <div class="restaurant-info">
                                       <a href="javascript:void(0)" class="tb">
-                                          <img class="img" th:src="@{/images/mongtanjeju.jpg}"/>
+                                          <img class="img" th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${reservation.image_url}|"/>
                                       </a>
                                       <a href="javascript:void(0)" class="detail">
                                           <h4 class="name" th:text="${reservation.restaurant_name}">산청숯불가든 마곡</h4>

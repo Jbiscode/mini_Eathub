@@ -2,15 +2,14 @@ package com.eathub.api;
 
 import com.eathub.conf.SessionConf;
 import com.eathub.dto.OwnerRestaurantDetailDTO;
+
+import com.eathub.dto.RestaurantDetailDTO;
+
 import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -53,9 +52,16 @@ public class RestaurantApi {
             OwnerRestaurantDetailDTO restaurantInfo = restaurantService.selectRestaurantInfoWithType(restaurant_seq);
             log.info("restaurantInfo = {}", restaurantInfo);
 
-            return ResponseEntity.ok().body(Map.of(
+            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+            log.info("restaurantDetailDTO = {}", restaurantDetailDTO);
+            if(restaurantDetailDTO != null){
+                restaurantInfo.setImg_url(restaurantDetailDTO.getImage_url());
+            }
+                return ResponseEntity.ok().body(Map.of(
                         "restaurantInfo" , restaurantInfo
                 ));
+
+
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("오류 메시지");
         }
