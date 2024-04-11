@@ -12,6 +12,7 @@ import com.eathub.conf.SessionConf;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -66,6 +67,11 @@ public class RestaurantController {
         model.addAttribute("restaurantInfo", selectRestaurantInfo);
         return "/restaurant/review";
     }
+    @GetMapping("/review/write/{res_seq}")
+    public String restaurantReviewWrite(@PathVariable Long res_seq,Model model,HttpSession session){
+
+        return "/restaurant/reviewWrite";
+    }
 
     @GetMapping("/detail/{restaurant_seq}/menuList")
     public String menu(@PathVariable Long restaurant_seq){
@@ -82,5 +88,11 @@ public class RestaurantController {
         return "/restaurant/review";
     }
 
+
+    @GetMapping("/review/write")
+    public String writeReview(@RequestParam Long res_seq, Model model){
+        model.addAttribute("res_seq", res_seq);
+        return "/restaurant/reviewWriteForm";
+    }
 
 }
