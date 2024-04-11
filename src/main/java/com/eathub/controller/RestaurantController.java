@@ -71,6 +71,7 @@ public class RestaurantController {
         if(session.getAttribute("wantingPerson") == null){
             session.setAttribute("wantingPerson", 1);
         }
+        session.setAttribute("restaurantSeq", restaurant_seq);
         return "/restaurant/restaurantInfo";
     }
     @PostMapping("/detail/{restaurant_seq}")
