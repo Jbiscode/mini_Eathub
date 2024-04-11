@@ -74,4 +74,5 @@ public interface RestaurantMapper {
     String getRestaurantType(Long categorySeq);
 
 
+    List<SearchResultDTO> selectRandomRestaurant();
 }

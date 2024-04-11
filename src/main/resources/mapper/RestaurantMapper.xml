@@ -143,6 +143,14 @@
         WHERE  category_seq= #{category_seq}
     </select>
 
+    <!-- 랜덤으로 레스토랑 뽑아오기   -->
+    <select id="selectRandomRestaurant" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        WHERE  status = 'ACCESS'
+        ORDER BY RAND() limit 5
+    </select>
+
 
 <!-- UPDATE-->
 

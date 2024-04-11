@@ -87,8 +87,11 @@ input::placeholder {
 }
 
 /* margin-top */
+.mt-1{
+    margin-top: 1px !important;
+}
 .mt-10{
-    margin-top: 10px;
+    margin-top: 10px !important;
 }
 .mt-18 {
     margin-top: 18px !important;

@@ -1,14 +1,6 @@
 package com.eathub.service;
 
-import com.eathub.dto.TimeOptionDTO;
-import com.eathub.dto.CategoryDTO;
-import com.eathub.dto.MenuFormDTO;
-import com.eathub.dto.MenuFormDTOWrapper;
-import com.eathub.dto.MyPageDTO;
-import com.eathub.dto.OwnerRestaurantDetailDTO;
-import com.eathub.dto.RestaurantJoinDTO;
-import com.eathub.dto.SearchResultDTO;
-
+import com.eathub.dto.*;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
 import com.eathub.mapper.ObjectStorageMapper;
@@ -201,4 +193,21 @@ public class RestaurantService {
     }
 
 
+    public List<SearchResultDTO> getRandomRestaurant(Long memSeq) {
+        List<SearchResultDTO> randomRestaurantList = restaurantMapper.selectRandomRestaurant();
+//        List<RestaurantZzim> restaurantZzims = restaurantMapper.selectZzimList(memSeq);
+
+        // 찜이 안된 레스토랑만 추천하기
+//        Set<Long> zzimRestaurantSeqSet = restaurantZzims.stream()
+//                .map(RestaurantZzim::getRestaurant_seq)
+//                .collect(Collectors.toSet());
+//
+//        List<SearchResultDTO> filteredList = randomRestaurantList.stream()
+//                .filter(dto -> !zzimRestaurantSeqSet.contains(dto.getRestaurant_seq()))
+//                .limit(5)
+//                .collect(Collectors.toList());
+
+
+        return randomRestaurantList;
+    }
 }
