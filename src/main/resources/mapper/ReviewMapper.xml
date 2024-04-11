@@ -17,12 +17,35 @@
 </insert>
 
     <!-- SELECT-->
-<select id="checkReviewData" resultType="com.eathub.dto.ReviewDTO">
-    SELECT r.res_seq, r.restaurant_seq, r.member_seq, rv.res_seq AS existing_review
-    FROM reservation r
+
+    <select id="checkReviewData" resultType="com.eathub.dto.ReviewDTO">
+        SELECT r.res_seq, r.restaurant_seq, r.member_seq, rv.res_seq AS existing_review
+        FROM reservation r
             LEFT JOIN review rv ON r.res_seq = rv.res_seq
-    WHERE r.res_status = 'OK' AND r.res_seq = #{red_seq}
-</select>
+        WHERE r.res_status = 'OK' AND r.res_seq = #{red_seq}
+    </select>
+
+
+    <select id="selectReviewList" resultType="com.eathub.dto.ReviewDTO">
+        select res_seq,rating,content,restaurant_seq,member_seq
+        from review
+            LEFT JOIN reservation USING (res_seq)
+        where restaurant_seq = #{restaurant_seq}
+        order by rating desc;
+    </select>
+    <select id="selectReviewListPage" resultType="com.eathub.dto.ReviewDTO">
+        select res_seq,rating,content,restaurant_seq,member_seq
+        from review
+                LEFT JOIN reservation USING (res_seq)
+        where restaurant_seq = #{restaurant_seq}
+        order by rating desc
+        limit #{page},3;
+    </select>
+    <select id="selectReviewImages">
+        SELECT picture_url
+        FROM review_pictures
+        WHERE res_seq = #{res_seq}
+    </select>
 <!-- UPDATE-->
 <!-- DELETE-->
 </mapper>
