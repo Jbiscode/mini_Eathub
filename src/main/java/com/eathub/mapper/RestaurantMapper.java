@@ -1,11 +1,6 @@
 package com.eathub.mapper;
 
-import com.eathub.dto.CategoryDTO;
-import com.eathub.dto.MenuFormDTO;
-import com.eathub.dto.MyPageDTO;
-import com.eathub.dto.OwnerRestaurantDetailDTO;
-import com.eathub.dto.RestaurantJoinDTO;
-import com.eathub.dto.SearchResultDTO;
+import com.eathub.dto.*;
 import com.eathub.entity.Reservation;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
@@ -78,4 +73,10 @@ public interface RestaurantMapper {
 
 
     List<SearchResultDTO> selectRandomRestaurant();
+
+    void insertRestaurantImage(@Param("uuid") String uuid, @Param("restaurantSeq") Long restaurantSeq);
+
+    void insertRestaurantDetail(RestaurantDetailDTO restaurantDetailDTO);
+
+    RestaurantDetailDTO selectRestaurantDetail(Long restaurantSeq);
 }

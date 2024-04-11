@@ -1,9 +1,7 @@
 package com.eathub.service;
 
 import com.eathub.dto.*;
-
 import com.eathub.entity.Reservation;
-
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
 import com.eathub.mapper.ObjectStorageMapper;
@@ -13,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -254,4 +251,15 @@ public class RestaurantService {
         return nextReservationTime.format(formatter);
     }
 
+    public void saveRestaurantImage(String uuid, Long restaurantSeq) {
+        restaurantMapper.insertRestaurantImage(uuid, restaurantSeq);
+    }
+
+    public void saveRestaurantDetail(RestaurantDetailDTO restaurantDetailDTO) {
+        restaurantMapper.insertRestaurantDetail(restaurantDetailDTO);
+    }
+
+    public RestaurantDetailDTO getRestaurantDetail(Long restaurantSeq) {
+        return restaurantMapper.selectRestaurantDetail(restaurantSeq);
+    }
 }

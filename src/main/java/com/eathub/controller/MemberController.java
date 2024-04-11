@@ -15,12 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -394,8 +389,43 @@ public class MemberController {
     }
 
     @GetMapping("/restaurant/{restaurantSeq}/edit")
-    public String editForm(@PathVariable("restaurantSeq") Long restaurant_seq){
+    public String editForm(@PathVariable("restaurantSeq") Long restaurant_seq, Model model){
+
+        model.addAttribute("restaurantDetailDTO", new RestaurantDetailDTO());
+
 
         return "restaurant/restaurantDetailForm";
+    }
+
+    @PostMapping("/restaurant/{restaurantSeq}/edit")
+    public String detailSaveForm(@PathVariable("restaurantSeq") Long restaurant_seq, @ModelAttribute RestaurantDetailDTO restaurantDetailDTO, BindingResult bindingResult,HttpSession session){
+
+        String BucketFolderName = "storage/";
+        String UUID;
+        String imageOriginalName;
+        File file;
+
+        restaurantDetailDTO.setRestaurant_seq(restaurant_seq);
+        log.info("restaurantDetailInfo={}", restaurantDetailDTO);
+
+        if(bindingResult.hasErrors()){
+            log.info("bindingResult={}",bindingResult);
+        }
+
+
+
+        if (restaurantDetailDTO.getRestaurant_image() != null) {
+            imageOriginalName = restaurantDetailDTO.getRestaurant_image().getOriginalFilename();
+
+            UUID = ncpObjectStorageService.uploadFile(SessionConf.BUCKET_NAME, BucketFolderName, restaurantDetailDTO.getRestaurant_image());
+            restaurantDetailDTO.setImage_url(UUID);
+            restaurantService.saveRestaurantDetail(restaurantDetailDTO);
+            restaurantService.saveRestaurantImage(UUID,restaurant_seq);
+        }else{
+            restaurantService.saveRestaurantDetail(restaurantDetailDTO);
+        }
+
+
+        return "redirect:/members/my";
     }
 }

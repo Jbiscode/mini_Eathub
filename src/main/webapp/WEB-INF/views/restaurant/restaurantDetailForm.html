@@ -25,8 +25,6 @@
     <link rel="stylesheet" href="../../resources/css/restaurantJoinForm.css" th:href="@{/css/restaurantJoinForm.css}">
     <link rel="stylesheet" href="../../resources/css/restaurantDetailForm.css" th:href="@{/css/restaurantDetailForm.css}">
 
-    <script defer src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script defer src="../../resources/js/restaurantDetailForm.js" th:src="@{/js/restaurantJoinForm.js}"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -40,7 +38,7 @@
     <main id="main">
         <section class="section">
             <div class="container">
-                <form th:action th:object="${restaurantJoinDTO}" method="post">
+                <form th:action th:object="${restaurantDetailDTO}" method="post"  enctype="multipart/form-data">
                     <div class="form-block mb-32" >
                         <div class="form-block-header">
                             <h3 class="form-block-title">
@@ -51,24 +49,24 @@
                         <div class="form-block-body">
                             <div class="input-control">
                                 <span class="img-box"></span>
-                                <div class="camera-box">
-                                    <img src="../../resources/images/camera.svg" id="camera" width="35px">
-                                    <span>사진 첨부하기</span>
-                                </div>
-                                <input type="file" style="visibility: hidden" id="img">
+<!--                                <div class="camera-box">-->
+<!--                                    <img src="../../resources/images/camera.svg" th:src="@{/images/camera.svg}" id="camera" width="35px">-->
+<!--                                    <span>사진 첨부하기</span>-->
+<!--                                </div>-->
+                                <input type="file" id="img" th:field="${restaurantDetailDTO.restaurant_image}">
                             </div>
                         </div>
                     </div>
                     <div class="form-block mb-32" >
                         <div class="form-block-header">
                             <h3 class="form-block-title">
-                                매장소개 상세 restaurant_info table에 description으로 대체해도 될듯
+                                매장소개 상세
                                 <span class="color-red">*</span>
                             </h3>
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <textarea  class="form-input" th:field="${restaurantJoinDTO.description}" placeholder="매장소개를 입력해주세요."></textarea>
+                                <textarea  class="form-input" th:field="${restaurantDetailDTO.description_detail}" placeholder="매장소개를 입력해주세요."></textarea>
                             </div>
                         </div>
                     </div>
@@ -81,7 +79,7 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <textarea  class="form-input" th:field="${restaurantJoinDTO.description}" placeholder="영업시간 소개를 입력해주세요."></textarea>
+                                <textarea  class="form-input" th:field="${restaurantDetailDTO.openhour_detail}" placeholder="영업시간 소개를 입력해주세요."></textarea>
                             </div>
                         </div>
                     </div>
@@ -94,7 +92,7 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <textarea  class="form-input" th:field="${restaurantJoinDTO.description}" placeholder="안내 및 유의사항을 입력해주세요."></textarea>
+                                <textarea  class="form-input" th:field="${restaurantDetailDTO.precaution}" placeholder="안내 및 유의사항을 입력해주세요."></textarea>
                             </div>
                         </div>
                     </div>
@@ -107,79 +105,79 @@
                         </div>
                         <div class="form-block-body closed-day-form">
                             <div class="input-control closed-day">
-                                <input class="form-check-input" type="checkbox" value="MON" id="MON"
-                                       th:field="${restaurantJoinDTO.closedDay}">
-                                <label class="form-check-label" for="MON">
+                                <input class="form-check-input" type="checkbox" value="parkingavail" id="parkingavail"
+                                       th:field="${restaurantDetailDTO.amenities}">
+                                <label class="form-check-label" for="parkingavail">
                                     주차 가능
                                 </label>
                             </div>
                             <div class="input-control closed-day">
-                                <input class="form-check-input" type="checkbox" value="MON" id="MON"
-                                       th:field="${restaurantJoinDTO.closedDay}">
-                                <label class="form-check-label" for="MON">
+                                <input class="form-check-input" type="checkbox" value="valetavail" id="valetavail"
+                                       th:field="${restaurantDetailDTO.amenities}">
+                                <label class="form-check-label" for="valetavail">
                                     발렛 가능
                                 </label>
                             </div>
                             <div class="input-control closed-day">
-                                <input class="form-check-input" type="checkbox" value="TUE" id="TUE"
-                                       th:field="${restaurantJoinDTO.closedDay}">
-                                <label class="form-check-label" for="TUE">
+                                <input class="form-check-input" type="checkbox" value="corkage" id="corkage"
+                                       th:field="${restaurantDetailDTO.amenities}">
+                                <label class="form-check-label" for="corkage">
                                     콜키지 가능
                                 </label>
                             </div>
                             <div class="input-control closed-day">
-                                <input class="form-check-input" type="checkbox" value="TUE" id="TUE"
-                                       th:field="${restaurantJoinDTO.closedDay}">
-                                <label class="form-check-label" for="TUE">
+                                <input class="form-check-input" type="checkbox" value="freecorkage" id="freecorkage"
+                                       th:field="${restaurantDetailDTO.amenities}">
+                                <label class="form-check-label" for="freecorkage">
                                     콜키지 프리
                                 </label>
                             </div>
                             <div class="input-control closed-day">
-                                <input class="form-check-input" type="checkbox" value="WED" id="WED"
-                                       th:field="${restaurantJoinDTO.closedDay}">
-                                <label class="form-check-label" for="WED">
+                                <input class="form-check-input" type="checkbox" value="rental" id="rental"
+                                       th:field="${restaurantDetailDTO.amenities}">
+                                <label class="form-check-label" for="rental">
                                     대관 가능
                                 </label>
                             </div>
                             <div class="input-control closed-day">
-                                <input class="form-check-input" type="checkbox" value="THU" id="THU"
-                                       th:field="${restaurantJoinDTO.closedDay}">
-                                <label class="form-check-label" for="THU">
+                                <input class="form-check-input" type="checkbox" value="wine" id="wine"
+                                       th:field="${restaurantDetailDTO.amenities}">
+                                <label class="form-check-label" for="wine">
                                     와인 배송
                                 </label>
                             </div>
                             <div class="input-control closed-day">
-                                <input class="form-check-input" type="checkbox" value="THU" id="THU"
-                                       th:field="${restaurantJoinDTO.closedDay}">
-                                <label class="form-check-label" for="THU">
+                                <input class="form-check-input" type="checkbox" value="welkids" id="welkids"
+                                       th:field="${restaurantDetailDTO.amenities}">
+                                <label class="form-check-label" for="welkids">
                                     웰컴키즈존
                                 </label>
                             </div>
                             <div class="input-control closed-day">
-                                <input class="form-check-input" type="checkbox" value="THU" id="THU"
-                                       th:field="${restaurantJoinDTO.closedDay}">
-                                <label class="form-check-label" for="THU">
+                                <input class="form-check-input" type="checkbox" value="nokids" id="nokids"
+                                       th:field="${restaurantDetailDTO.amenities}">
+                                <label class="form-check-label" for="nokids">
                                     노키즈존
                                 </label>
                             </div>
                             <div class="input-control closed-day">
-                                <input class="form-check-input" type="checkbox" value="THU" id="THU"
-                                       th:field="${restaurantJoinDTO.closedDay}">
-                                <label class="form-check-label" for="THU">
+                                <input class="form-check-input" type="checkbox" value="pet" id="pet"
+                                       th:field="${restaurantDetailDTO.amenities}">
+                                <label class="form-check-label" for="pet">
                                     반려동물 동반
                                 </label>
                             </div>
                             <div class="input-control closed-day">
-                                <input class="form-check-input" type="checkbox" value="THU" id="THU"
-                                       th:field="${restaurantJoinDTO.closedDay}">
-                                <label class="form-check-label" for="THU">
+                                <input class="form-check-input" type="checkbox" value="lettering" id="lettering"
+                                       th:field="${restaurantDetailDTO.amenities}">
+                                <label class="form-check-label" for="lettering">
                                     레터링
                                 </label>
                             </div>
                             <div class="input-control closed-day">
-                                <input class="form-check-input" type="checkbox" value="THU" id="THU"
-                                       th:field="${restaurantJoinDTO.closedDay}">
-                                <label class="form-check-label" for="THU">
+                                <input class="form-check-input" type="checkbox" value="sommelier" id="sommelier"
+                                       th:field="${restaurantDetailDTO.amenities}">
+                                <label class="form-check-label" for="sommelier">
                                     전문 소믈리에
                                 </label>
                             </div>
@@ -194,7 +192,7 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <textarea  class="form-input" th:field="${restaurantJoinDTO.description}" placeholder="주차 정보를 입력해주세요."></textarea>
+                                <textarea  class="form-input" th:field="${restaurantDetailDTO.parking}" placeholder="주차 정보를 입력해주세요."></textarea>
                             </div>
                         </div>
                     </div>
@@ -207,7 +205,7 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <textarea  class="form-input" th:field="${restaurantJoinDTO.description}" placeholder="발렛 정보를 입력해주세요."></textarea>
+                                <textarea  class="form-input" th:field="${restaurantDetailDTO.valet}" placeholder="발렛 정보를 입력해주세요."></textarea>
                             </div>
                         </div>
                     </div>
@@ -220,7 +218,7 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <textarea  class="form-input" th:field="${restaurantJoinDTO.description}" placeholder="주류 및 콜키지 안내를 입력해주세요."></textarea>
+                                <textarea  class="form-input" th:field="${restaurantDetailDTO.drink}" placeholder="주류 및 콜키지 안내를 입력해주세요."></textarea>
                             </div>
                         </div>
                     </div>
@@ -233,7 +231,7 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <textarea  class="form-input" th:field="${restaurantJoinDTO.description}" placeholder="웰컴키즈존 설명을 입력해주세요."></textarea>
+                                <textarea  class="form-input" th:field="${restaurantDetailDTO.kidszone}" placeholder="웰컴키즈존 설명을 입력해주세요."></textarea>
                             </div>
                         </div>
                     </div>
@@ -246,13 +244,14 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <textarea  class="form-input" th:field="${restaurantJoinDTO.description}" placeholder="룸 이용안내를 입력해주세요."></textarea>
+                                <textarea  class="form-input" th:field="${restaurantDetailDTO.room}" placeholder="룸 이용안내를 입력해주세요."></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="sticky-bottom-btn">
                         <button type="submit" class="btn">상세정보 등록</button>
                     </div>
+                    <hr class="space-40">
                 </form>
             </div>
         </section>
