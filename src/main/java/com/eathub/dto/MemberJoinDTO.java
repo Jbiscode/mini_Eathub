@@ -3,12 +3,14 @@ package com.eathub.dto;
 import com.eathub.entity.ENUM.MEMBER_TYPE;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
+@ToString
 public class MemberJoinDTO {
 
     private final MEMBER_TYPE member_type;

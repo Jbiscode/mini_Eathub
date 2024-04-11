@@ -6,6 +6,7 @@ import com.eathub.dto.MyPageDTO;
 import com.eathub.dto.OwnerRestaurantDetailDTO;
 import com.eathub.dto.RestaurantJoinDTO;
 import com.eathub.dto.SearchResultDTO;
+import com.eathub.entity.Reservation;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,6 +19,8 @@ public interface RestaurantMapper {
 //    INSERT
     void insertZzimRestaurant(RestaurantZzim restaurantZzim);
     void insertRestaurant(RestaurantInfo restaurantJoinDTO);
+    void insertReservation(Reservation reservationJoinDTO);
+
     void insertRestaurantStatus(RestaurantInfo restaurantJoinDTO);
 
     /**
@@ -74,4 +77,5 @@ public interface RestaurantMapper {
     String getRestaurantType(Long categorySeq);
 
 
+    List<SearchResultDTO> selectRandomRestaurant();
 }

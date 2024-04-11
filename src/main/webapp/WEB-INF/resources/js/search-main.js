@@ -7,12 +7,8 @@ let bottomCloseBtn =  $("div.sticky-bottom-btns > button");
 
 $(document).ready(function () {
 
-  // 히든 input 태그에 session값을 저장하는 메소드
-  // fillingHidden();
-
   // 히든 input 태그값으로 모달창에 정보 입력되게 하는 메소드
   assigningInfo();
-
   // 모달창 정보를 히든 input과 span 태그에 각각 저장하고 session
   fillingInfo();
 
@@ -29,12 +25,7 @@ $(document).ready(function () {
     fillingInfo();
     resModal.css("transform", 'translateY(+100%)');
     resModal.css("visibility", 'hidden');
-
   });
-
-
-
-
 });
 
 // // 추천순 버튼 클릭

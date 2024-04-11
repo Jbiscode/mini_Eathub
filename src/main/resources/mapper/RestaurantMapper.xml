@@ -35,6 +35,20 @@
                 , #{closedDay})
 
     </insert>
+    <!-- 예약 추가 -->
+    <insert id="insertReservation" parameterType="Reservation">
+        INSERT INTO reservation(restaurant_seq
+        , member_seq
+        , res_date
+        , res_people
+        , res_comment)
+        VALUES ( #{restaurant_seq}
+        , #{member_seq}
+        , #{res_date}
+        , #{res_people}
+        , #{res_comment})
+
+    </insert>
 
     <!-- 레스토랑 등록대기열 추가   -->
     <insert id="insertRestaurantStatus" parameterType="restaurantInfo">
@@ -56,12 +70,6 @@
             (#{restaurant_seq}, #{menu.menu_name}, #{menu.menu_info}, #{menu.menu_image_name}, #{menu.menu_image_path}, #{menu.menu_price}, #{menu.menu_type})
         </foreach>
     </insert>
-
-
-
-
-
-
 
 <!-- SELECT-->
 
@@ -141,6 +149,14 @@
         SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
         FROM restaurant_info
         WHERE  category_seq= #{category_seq}
+    </select>
+
+    <!-- 랜덤으로 레스토랑 뽑아오기   -->
+    <select id="selectRandomRestaurant" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        WHERE  status = 'ACCESS'
+        ORDER BY RAND() limit 5
     </select>
 
 

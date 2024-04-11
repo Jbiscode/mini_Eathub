@@ -17,6 +17,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -44,7 +45,7 @@ public class MyDiningController {
         for (ReservationDTO reservationDTO : reservationList) {
             Date date = reservationDTO.getRes_date();
             LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.M.d (E)");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.M.d (E)").withLocale(Locale.KOREA);
             String formattedDate = localDate.format(formatter);
 
             reservationDTO.setDateFormat(formattedDate);
