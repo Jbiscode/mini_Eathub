@@ -35,6 +35,20 @@
                 , #{closedDay})
 
     </insert>
+    <!-- 예약 추가 -->
+    <insert id="insertReservation" parameterType="Reservation">
+        INSERT INTO reservation(restaurant_seq
+        , member_seq
+        , res_date
+        , res_people
+        , res_comment)
+        VALUES ( #{restaurant_seq}
+        , #{member_seq}
+        , #{res_date}
+        , #{res_people}
+        , #{res_comment})
+
+    </insert>
 
     <!-- 레스토랑 등록대기열 추가   -->
     <insert id="insertRestaurantStatus" parameterType="restaurantInfo">
@@ -57,11 +71,17 @@
         </foreach>
     </insert>
 
+    <!-- 식당 상세정보 등록  -->
+    <insert id="insertRestaurantDetail" parameterType="com.eathub.dto.RestaurantDetailDTO">
+        INSERT INTO restaurant_detail(restaurant_seq, image_url, description_detail, openhour_detail, precaution, amenities, parking, valet, drink, kidszone, room)
+        VALUES (#{restaurant_seq}, #{image_url}, #{description_detail}, #{openhour_detail}, #{precaution}, #{amenities}, #{parking}, #{valet}, #{drink}, #{kidszone}, #{room})
+    </insert>
 
-
-
-
-
+    <!-- 식당 대표이미지 등록 -->
+    <insert id="insertRestaurantImage">
+        INSERT INTO restaurant_image(restaurant_seq, image_url)
+        VALUES (#{restaurantSeq}, #{uuid})
+    </insert>
 
 <!-- SELECT-->
 
@@ -143,6 +163,53 @@
         WHERE  category_seq= #{category_seq}
     </select>
 
+
+    <!-- 예약 top -->
+    <select id="selectRestaurantTopSearchList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        order by review_total desc;
+    </select>
+
+    <!-- 이달의 맛집 -->
+    <select id="selectRestaurantMonthlySearchList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        order by zzim_total desc;
+    </select>
+
+    <!-- 어디로 가시나요? -->
+    <select id="selectSearchAddressResultList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,lower(location),description,openHour,closeHour,rating,review_total,zzim_total,address1
+        FROM restaurant_info
+        WHERE
+        <foreach item="item" index="index" collection="list" open="(" separator="OR" close=")">
+            address1 LIKE #{item}
+        </foreach>
+    </select>
+
+    <!-- 오늘의 예약 -->
+    <select id="selectRestaurantTodaySearchList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        order by rand() limit 20;
+    </select>
+
+    <!-- 랜덤으로 레스토랑 뽑아오기   -->
+    <select id="selectRandomRestaurant" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        WHERE  status = 'ACCESS'
+        ORDER BY RAND() limit 5
+    </select>
+
+
+    <!-- 레스토랑 상세정보 불러오기   -->
+    <select id="selectRestaurantDetail" resultType="com.eathub.dto.RestaurantDetailDTO">
+        SELECT *
+        FROM restaurant_detail
+        WHERE restaurant_seq = #{restaurantSeq}
+    </select>
 
 <!-- UPDATE-->
 

@@ -48,7 +48,7 @@
     position: relative;
     flex: 1;
     min-width: 0;
-    padding-top: 15px;
+    align-self: center;
 }
 .username {
     font-weight: 500;

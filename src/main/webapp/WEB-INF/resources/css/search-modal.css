@@ -47,22 +47,6 @@ div[role="presentation"]{
 }
 
 
-/* #root{
-  position: relative;
-  z-index: 0;
-  height: 100vh;
-  overflow:  auto;
-} */
-
-/* 원래 css에 wrapper css가 없으면 적용. */
-/* .wrapper{
-  max-width: 480px;
-  margin: 0 auto;
-  background-color: #fff;
-  width: auto;
-  position: relative;
-} */
-
 .pb-100 {
   padding-bottom: 100px !important;
 }
@@ -190,7 +174,10 @@ section {
   font-size: 13px;
 }
 
-
+.calendarBox .scriptCalendar .today{
+  background-color: #92d1ec !important;
+  border-radius: 100%;
+}
 
 
 

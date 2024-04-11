@@ -1,11 +1,13 @@
 package com.eathub.controller;
 
 import com.eathub.conf.SessionConf;
+import com.eathub.dto.RestaurantDetailDTO;
 import com.eathub.dto.SearchResultDTO;
 import com.eathub.dto.TimeOptionDTO;
 import com.eathub.service.RestaurantService;
 import com.eathub.service.SearchService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/search")
@@ -34,29 +35,31 @@ public class SearchController {
         List<TimeOptionDTO> timeOptionDTOS = searchService.generateTimeOptions();
         // 레스토랑 목록 가져오기
         List<SearchResultDTO> searchResultList = restaurantService.selectSearchResultList(member_seq);
+        try {
+            for (SearchResultDTO searchResultDTO : searchResultList) {
+                Long restaurant_seq = searchResultDTO.getRestaurant_seq();
+                RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+                if(restaurantDetailDTO != null){
+                    searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         model.addAttribute("timeOptions", timeOptionDTOS);
         model.addAttribute("restaurantList", searchResultList);
 
-        Date date = new Date();
-
-        // "yyyy-MM-dd" 형식으로 날짜를 포맷팅합니다.
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("hhmm");
-
-        // 포맷팅된 날짜 문자열을 생성합니다.
-        String today = sdf.format(date);
-        String strHour = sdf2.format(date);
-        int realHour = Integer.parseInt(strHour);
-//        int hour = realHour /
-
         // 세션에 값이 없으면 세션 생성
-        if(session.getAttribute("wantingDate") != null){
-            session.setAttribute("wantingDate", "");
-            session.setAttribute("wantingHour", "");
-            session.setAttribute("wantingPerson", "");
+        if(session.getAttribute("wantingDate") == null){
+            session.setAttribute("wantingDate", searchService.getTodayDate());
         }
-
-
+        if(session.getAttribute("wantingHour") == null){
+            session.setAttribute("wantingHour", searchService.getNextReservationTime());
+        }
+        if(session.getAttribute("wantingPerson") == null){
+            session.setAttribute("wantingPerson", 1);
+        }
         return "/members/searchResult";
     }
 

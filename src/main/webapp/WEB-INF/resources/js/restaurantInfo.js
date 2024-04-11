@@ -12,7 +12,7 @@ $("#__notes-item3").click(function () {
 let myModal = $("#myModal");
 let myBtn = $("#myBtn");
 
-$("#myBtn").click(function () {
+myBtn.click(function () {
     myModal.css("display", 'none');
 });
 
@@ -20,25 +20,50 @@ $("#mymybtn").click(function () {
     myModal.css("display", 'flex');
 });
 
+let isValidated = false;
+
+
 let resModal = $('#resModal');
-$(document).ready(function () {
-    $("div.mb-8").add('button.pgjaj01').click(function () {
+let topOpenBtn = $("div.mb-8");
+let topCloseBtn = $(".btn-close");
+let bottomCloseBtn =  $("div.sticky-bottom-btns > button");
+let reservationBtn = $("button.pgjaj01");
+let form = $("form");
+
+    $(document).ready(function () {
+
+    // 히든 input 태그값으로 모달창에 정보 입력되게 하는 메소드
+    assigningInfo();
+    // 모달창 정보를 히든 input과 span 태그에 각각 저장하고 session
+    fillingInfo();
+
+    topOpenBtn.click(function () {
         resModal.css("visibility", 'visible');
         resModal.css("transform", 'translateY(-100%)');
+        assigningInfo();
     });
-
-    $(".btn-close").click(function () {
+    topCloseBtn.click(function () {
         resModal.css("transform", 'translateY(+100%)');
         resModal.css("visibility", 'hidden');
     });
-
-    $("div.sticky-bottom-btns > button").click(function () {
+    bottomCloseBtn.click(function () {
         fillingInfo();
         resModal.css("transform", 'translateY(+100%)');
         resModal.css("visibility", 'hidden');
+        isValidated = true;
     });
-});
 
+    reservationBtn.click(function () {
+        if(isValidated){
+            form.submit();
+            console.log("submit");
+        }else{
+            alert("예약일시를 확인해주세요");
+            return false;
+        }
+    });
+
+});
 // 위아래 찜목록 연동
 $(window).on("load", function () {
     $(".btn-bookmark-detail,.btn-bookmark-detail2").on("click", handleBookmarkDetailClick);
@@ -72,3 +97,4 @@ function handleBookmarkDetailClick(e) {
         },
     });
 }
+

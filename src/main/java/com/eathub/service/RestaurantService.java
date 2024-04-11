@@ -1,14 +1,7 @@
 package com.eathub.service;
 
-import com.eathub.dto.TimeOptionDTO;
-import com.eathub.dto.CategoryDTO;
-import com.eathub.dto.MenuFormDTO;
-import com.eathub.dto.MenuFormDTOWrapper;
-import com.eathub.dto.MyPageDTO;
-import com.eathub.dto.OwnerRestaurantDetailDTO;
-import com.eathub.dto.RestaurantJoinDTO;
-import com.eathub.dto.SearchResultDTO;
-
+import com.eathub.dto.*;
+import com.eathub.entity.Reservation;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
 import com.eathub.mapper.ObjectStorageMapper;
@@ -18,11 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.time.format.DateTimeFormatter;
+
+import java.util.*;
 
 @Slf4j
 @Service
@@ -134,6 +129,26 @@ public class RestaurantService {
     public void insertRestaurant(RestaurantInfo restaurantJoinDTO) {
         restaurantMapper.insertRestaurant(restaurantJoinDTO);
     }
+    public void insertReservation(Reservation reservationJoinDTO) {
+        restaurantMapper.insertReservation(reservationJoinDTO);
+    }
+
+    public String getReservationTime(ReservationJoinDTO reservationJoinDTO) throws ParseException {
+        // date 형으로 형변환
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HHmm");
+        String date = reservationJoinDTO.getDate();
+        String time = reservationJoinDTO.getHour();
+
+        // 문자열을 Date 객체로 파싱
+        Date parsedDate = format.parse(date + " " + time);
+
+        // 다른 형식으로 변환할 SimpleDateFormat 객체 생성
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        // Date 객체를 다른 형식으로 변환
+        return outputFormat.format(parsedDate);
+    }
+
 
     public void insertRestaurantMenu(Long restaurant_seq, MenuFormDTOWrapper menuListWrapper) {
         List<MenuFormDTO> menuForm = menuListWrapper.getMenuList();
@@ -186,12 +201,69 @@ public class RestaurantService {
         return searchResultList;
     }
 
+    //예약 top
+    public List<SearchResultDTO> selectSearchTopResultList(Long member_seq) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantTopSearchList();
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
+
+    //오늘의 예약
+    public List<SearchResultDTO> selectSearchMonthlyResultList(Long member_seq) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantMonthlySearchList();
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
+
+    //어디로 가시나요?
+    public List<SearchResultDTO> selectSearchAddressResultList(Long member_seq, List address) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectSearchAddressResultList(address);
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
+
+    public String getAddressList(String address){
+        Map<String, String> addressMap = new LinkedHashMap<>();
+        addressMap.put("apgujeong,cheongdam", "압구정,청담");
+        addressMap.put("hongdae,sinchon", "홍대,신촌");
+        addressMap.put("busan", "부산");
+        addressMap.put("hapjeong,mangwon", "합정,망원");
+        addressMap.put("sungsoo", "성수");
+        addressMap.put("gangnam,yeogsam", "강남,역삼");
+        addressMap.put("jeju", "제주");
+
+        // 입력된 address에 해당하는 한글 주소 찾기
+        for (String key : addressMap.keySet()) {
+            if (key.contains(address)) {
+                return addressMap.get(key); // 매핑된 한글 주소 문자열 반환
+            }
+        }
+        return address; // 매핑되지 않았다면 원본 address 반환
+    }
+
+
 
     // 타임리프에 사용할 시간 옵션을 생성하는 메서드 6시부터 23시 30분까지 30분 단위로 생성
-    public List<TimeOptionDTO> generateTimeOptions() {
+
+    public List<TimeOptionDTO> generateTimeOptions(Long restaurant_seq) {
+        RestaurantInfo restaurantinfo = restaurantMapper.selectRestaurantInfo(restaurant_seq);
+        LocalTime openTime = restaurantinfo.getOpenHour().toLocalTime();
+        LocalTime closeTime = restaurantinfo.getCloseHour().toLocalTime();
+        LocalTime time = openTime;
         List<TimeOptionDTO> timeOptions = new ArrayList<>();
-        LocalTime time = LocalTime.of(6, 0);
-        while (!time.equals(LocalTime.of(23, 30))) {
+        while (!time.equals(closeTime)) {
             TimeOptionDTO option = new TimeOptionDTO();
             option.setTime(time.toString());
             timeOptions.add(option);
@@ -201,4 +273,59 @@ public class RestaurantService {
     }
 
 
+    //오늘의 식당
+    public List<SearchResultDTO> selectSearchTodayResultList(Long member_seq) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantTodaySearchList();
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
+
+    public List<SearchResultDTO> getRandomRestaurant(Long memSeq) {
+        return restaurantMapper.selectRandomRestaurant();
+    }
+
+    //session 초기값에 저장할 오늘 날짜 구하기.
+    public String getTodayDate(){
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
+    }
+
+    //session 초기값에 저장할 가장 가까운 예약 가능 시간 구하기.
+    public String getNextReservationTime(){
+        // 현재 시간 가져오기
+        LocalTime currentTime = LocalTime.now();
+
+        // 다음 30분 단위의 예약 가능한 시간 계산
+        int currentMinute = currentTime.getMinute();
+        int nextReservationMinute = ((currentMinute / 30) + 1) * 30; // 다음 예약 가능한 분
+        LocalTime nextReservationTime;
+
+        if (nextReservationMinute == 60) {
+            nextReservationTime = currentTime.plusHours(1).withMinute(0); // 정시로 설정
+        } else {
+            nextReservationTime = currentTime.withMinute(nextReservationMinute);
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+
+        // 예약 가능한 시간 출력
+        return nextReservationTime.format(formatter);
+    }
+
+    public void saveRestaurantImage(String uuid, Long restaurantSeq) {
+        restaurantMapper.insertRestaurantImage(uuid, restaurantSeq);
+    }
+
+    public void saveRestaurantDetail(RestaurantDetailDTO restaurantDetailDTO) {
+        restaurantMapper.insertRestaurantDetail(restaurantDetailDTO);
+    }
+
+    public RestaurantDetailDTO getRestaurantDetail(Long restaurantSeq) {
+        return restaurantMapper.selectRestaurantDetail(restaurantSeq);
+    }
 }

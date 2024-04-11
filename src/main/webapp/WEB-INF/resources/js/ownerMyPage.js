@@ -21,7 +21,9 @@ document.querySelectorAll(".owner-restaurant-list-item").forEach((item) => {
             updateFormFields(data.restaurantInfo);
             toggleModalVisibility(false);
             scrollToTop();
-            makeLinkButton(restaurantSeq);
+            makeLinkButton(restaurantSeq)
+            $('.owner-restaurant-info').removeClass('hide');
+            $('.nodata').addClass('hide')
         } catch (error) {
             alert("요청 처리 중 문제가 발생했습니다. 다시 시도해주세요.");
             console.error(error);
@@ -39,6 +41,8 @@ function updateFormFields(restaurantInfo) {
     document.getElementById("category_seq").value = restaurantInfo.restaurant_type;
     document.getElementById("openHour").value = restaurantInfo.openHour.substring(0, 5);
     document.getElementById("closeHour").value = restaurantInfo.closeHour.substring(0, 5);
+
+    document.getElementById("restaurant_img").src= "https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/" + restaurantInfo.img_url;
 
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach((checkbox) => {

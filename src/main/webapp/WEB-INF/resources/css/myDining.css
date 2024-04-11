@@ -170,6 +170,24 @@
 .booked-restaurant-list-item .booked-status.complete{
     background-color: #2DB400;
 }
-.booked-restaurant-list-item .booked-status.hide{
-    display: none;
+
+.booked-restaurant-list-item.D-DAY{
+    box-shadow: 0px 0px 10px #ff3d00;
+}
+.booked-restaurant-list-item .booked-info{
+    position: relative;
+
+}
+.booked-info .label{
+    white-space: nowrap;
+    border-radius: 18px;
+    font-weight: 500;
+    border: 1px solid #000;
+    color: #000;
+    background: #fff;
+    font-size: 13px;
+    padding: 4px 10px;
+    letter-spacing: -.05em;
+    position: absolute;
+    right: 0;
 }

@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 var toDay = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 toDay에 Date 객체를 넣어줌
-let nowDate = new Date();  // @param 전역 변수, 실제 오늘날짜 고정값
+const nowDate = new Date();  // @param 전역 변수, 실제 오늘날짜 고정값
 
 /**
  * @brief   이전달 버튼 클릭시
@@ -116,9 +116,10 @@ function buildCalendar() {
                 }
 
                 // @details 현재일인 경우
-                else if (nowDate.getDate() == day) {
-                    column.style.backgroundColor = "#92d1ec";
+                else if (nowDate.getDate() === day) {
                     column.style.cursor = "pointer";
+                    column.style.backgroundColor = "#92d1ec";
+                    column.classList.add("today");
                     column.classList.add("choiceDay");
                     column.style.borderRadius = "100%";
                     column.onclick = function () {
@@ -128,14 +129,14 @@ function buildCalendar() {
 
                 // @details 현재월보다 이전인경우
             } else if (toDay.getMonth() < nowDate.getMonth()) {
-                if (Math.sign(day) == 1 && day <= lastDate.getDate()) {
+                if (Math.sign(day) === 1 && day <= lastDate.getDate()) {
                     column.style.color = "#A9A9A9";
                 }
             }
 
             // @details 현재월보다 이후인경우
             else {
-                if (Math.sign(day) == 1 && day <= lastDate.getDate()) {
+                if (Math.sign(day) === 1 && day <= lastDate.getDate()) {
                     column.style.backgroundColor = "#FFFFFF";
                     column.style.cursor = "pointer";
                     column.onclick = function () {
@@ -177,10 +178,10 @@ function calendarChoiceDay(column) {
 
         // @see 금일인 경우
         if (document.getElementById("calMonth").innerText == autoLeftPad((nowDate.getMonth() + 1), 2) && document.getElementsByClassName("choiceDay")[0].innerText == autoLeftPad(toDay.getDate(), 2)) {
-            document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#92d1ec";
+            document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
         }
 
-        // @see 금일이 아닌 경우
+        // // @see 금일이 아닌 경우
         else {
             document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
         }
@@ -190,7 +191,7 @@ function calendarChoiceDay(column) {
     // @param 선택일 체크 표시
     column.style.backgroundColor = "#ff3d0055";
     column.style.borderRadius = "100%";
-    //column.style.color = "#fff";
+    // column.style.color = "#fff";
     column.style.color = "#000";
 
 
@@ -232,29 +233,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// function fillingHidden(){
-//
-//     $.ajax({
-//         type: "POST",
-//         url: "/api/members/getWantingDetails",
-//         success: function(data) {
-//             // 서버로부터 받은 데이터를 각 input 필드에 채웁니다.
-//             // $('input.date').val(data.get("wantingDate"));
-//             // $('input.hour').val(data.get("wantingHour"));
-//             // $('input.person').val(data.get("wantingPerson"));
-//             $('input.date').val(data.wantingDate);
-//             $('input.hour').val(data.wantingHour);
-//             $('input.person').val(data.wantingPerson);
-//             alert('세션에서 알맞게 할당하였습니다..' + $('input.date').val()
-//                 + $('input.hour').val()
-//                 + $('input.person').val());
-//         },
-//         error: function(error) {
-//             console.error("에러 발생:", error);
-//         }
-//     });
-//
-// }
 
 // 캘린더에 값 넣기
 function assigningInfo(){
@@ -264,75 +242,45 @@ function assigningInfo(){
     let time =  $('input.hour').val();
     let number = $('input.person').val();
 
+    //캘린더 click
+    let dateParts = inputDate.split('-');
+    let year = parseInt(dateParts[0]);
+    let month = parseInt(dateParts[1]);
+    let date = parseInt(dateParts[2]);
 
-    console.log("hiddenInfo value" + inputDate + " " + time + " " + number);
+    this.toDay = new Date(year, month - 1, date)
+    buildCalendar();
 
-    if(inputDate === "") {
-        this.toDay = new Date();
-    }else{
-        console.log("엘스가 실행되고 있니?")
-        let dateParts = inputDate.split('-');
-        let year = parseInt(dateParts[0]);
-        let month = parseInt(dateParts[1]);
-        let date = parseInt(dateParts[2]);
+    let tds = $('td');
 
-        this.toDay = new Date(year, month - 1, date)
-        console.log("year =" + year + "month = " + month + "date = " + date )
-
-        buildCalendar();
-        //업적 ^김승원^
-
-        let tds = $('td');
-
-        tds.each(function() {
-            if (parseInt($(this).html()) === date) {
-                console.log("마즘")
-                $(this).click();
-            }
-
-        });
-    }
-    console.log("buildCalendarAssigning Done");
-
-    if(time == null) {
-        time = new Date().getHours();
-        if (time < 10) {
-            time = '0' + time + "00";
+    tds.each(function() {
+        if (parseInt($(this).html()) === date) {
+            $(this).click();
         }
-        console.log("assigning 중 time 은 바로 " + time);
-    }
+    });
 
+    //시간 click
     let timeRadio = $('input[type="radio"][name="time"]');
-
     timeRadio.each(function() {
         if ($(this).val() === time) {
-            // th:value와 일치하는 input을 체크합니다.
             $(this).click();
         }
     });
-    console.log("timeAssigning Done");
 
-    if(number == null) {
-        number=1;
-        console.log("assigning 중 time 은 바로 " + number);
-    }
+    //인원수 click
     let countRadio = $('input[type="radio"][name="count"]');
 
-    //각 input 요소를 순회하며 th:value와 일치하는 것을 찾습니다.
     countRadio.each(function() {
         if ($(this).val() === number) {
-            // th:value와 일치하는 input을 체크합니다.
             $(this).click();
         }
     });
-    console.log("numberAssigning Done");
 }
 
 
 
 
 function fillingInfo() {
-
 
     let year = null;
     let month = null;
@@ -371,7 +319,7 @@ function fillingInfo() {
             contentType: 'application/json',
             data: JSON.stringify(requestData),
             success: function(response) {
-                alert('세션에 알맞게 저장되었습니다.' + response);
+                console.log('세션에 알맞게 저장되었습니다.' + response);
             },
             error: function(error) {
                 console.log('에러 발생:', error);

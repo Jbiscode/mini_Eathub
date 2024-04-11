@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eathub.mapper.ReviewMapper">
+<!-- INSERT-->
+<insert id="insertReview" parameterType="com.eathub.dto.ReviewDTO">
+    INSERT INTO review (res_seq, content, rating, createdAt)
+    VALUES (#{res_seq}, #{content}, #{rating}, NOW())
+</insert>
+<insert id="insertReviewImages" parameterType="com.eathub.dto.ReviewDTO">
+        INSERT INTO review_pictures (res_seq, picture_url)
+        VALUES
+    <foreach collection="pictureUrls" item="picture" separator=",">
+            (#{res_seq}, #{picture})
+    </foreach>
+</insert>
+
+    <!-- SELECT-->
+
+    <select id="checkReviewData" resultType="com.eathub.dto.ReviewDTO">
+        SELECT r.res_seq, r.restaurant_seq, r.member_seq, rv.res_seq AS existing_review
+        FROM reservation r
+            LEFT JOIN review rv ON r.res_seq = rv.res_seq
+        WHERE r.res_status = 'OK' AND r.res_seq = #{red_seq}
+    </select>
+
+
+    <select id="selectReviewList" resultType="com.eathub.dto.ReviewDTO">
+        select res_seq,rating,content,restaurant_seq,member_seq
+        from review
+            LEFT JOIN reservation USING (res_seq)
+        where restaurant_seq = #{restaurant_seq}
+        order by rating desc;
+    </select>
+    <select id="selectReviewListPage" resultType="com.eathub.dto.ReviewDTO">
+        select res_seq,rating,content,restaurant_seq,member_seq
+        from review
+                LEFT JOIN reservation USING (res_seq)
+        where restaurant_seq = #{restaurant_seq}
+        order by rating desc
+        limit #{page},3;
+    </select>
+    <select id="selectReviewImages">
+        SELECT picture_url
+        FROM review_pictures
+        WHERE res_seq = #{res_seq}
+    </select>
+<!-- UPDATE-->
+<!-- DELETE-->
+</mapper>
