@@ -1,7 +1,17 @@
 function submitReview() {
-    // 여기에 서버로 데이터를 보내는 코드를 추가.
-    alert('리뷰가 제출되었습니다!');
+    let res_seq = document.getElementById('res_seq').value;
+    let reviewText = document.getElementById('reviewText').value;
+    let ratingElement = document.querySelector('input[name="rating"]:checked');
+    let rating = ratingElement ? ratingElement.value : '0';
+    let files = document.querySelector('#reviewImages').files;
+
+    if (res_seq === '' || reviewText === '' || rating === '0' || files.length === 0) {
+        alert('모든 필드를 채워주세요.');
+        return false;
+    }
+    document.getElementById('reviewForm').submit();
 }
+
 
 function previewImages() {
     let preview = document.querySelector('#preview');
@@ -42,3 +52,5 @@ function countCharacters() {
     let charCount = document.getElementById('charCount');
     charCount.textContent = reviewText.length + '자/최대300자'; // 글자 수를 업데이트합니다.
 }
+
+

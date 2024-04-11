@@ -2,11 +2,16 @@ package com.eathub.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.eathub.dto.ReviewDTO;
 import com.eathub.dto.TimeOptionDTO;
+import com.eathub.service.ReviewService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.eathub.conf.SessionConf;
 import com.eathub.entity.RestaurantInfo;
@@ -15,12 +20,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/restaurant")
 public class RestaurantController {
     private final RestaurantService restaurantService;
+    private final ReviewService reviewService;
 
     /**
         * 해당 레스토랑의 정보를 가져와서 모델에 추가하고, 레스토랑 상세 정보 페이지로 이동합니다.
@@ -90,9 +96,22 @@ public class RestaurantController {
 
 
     @GetMapping("/review/write")
-    public String writeReview(@RequestParam Long res_seq, Model model){
+    public String writeReview(@RequestParam Long res_seq, Model model, HttpSession session){
+        Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        String  access = reviewService.checkReviewData(res_seq,loginMemberSeq);
         model.addAttribute("res_seq", res_seq);
-        return "/restaurant/reviewWriteForm";
+        if(access.equals("access granted")){
+            return "/restaurant/reviewWriteForm";
+        }else{
+            return "redirect:/members/my";
+        }
+    }
+
+    @PostMapping("/review/write")
+    public String writeReview(@ModelAttribute ReviewDTO reviewDTO, HttpSession session){
+        reviewService.insertReviewAndImages(reviewDTO,session);
+        log.info("reviewDTO: {}", reviewDTO);
+        return "redirect:/restaurant/detail/";
     }
 
 }
