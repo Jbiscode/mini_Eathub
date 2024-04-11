@@ -222,7 +222,7 @@ public class RestaurantService {
 
 
     public List<SearchResultDTO> getRandomRestaurant(Long memSeq) {
-        return restaurantMapper.selectRandomRestaurant();;
+        return restaurantMapper.selectRandomRestaurant();
     }
 
     //session 초기값에 저장할 오늘 날짜 구하기.
