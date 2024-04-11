@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -138,10 +139,11 @@ public class RestaurantController {
 
     @GetMapping("/detail/{restaurant_seq}/review")
     public String review(@PathVariable Long restaurant_seq,Model model){
-        List<ReviewDTO> reviewDTOs = reviewService.selectReviewAndImages(restaurant_seq);
+        List<ReviewDTO> reviewDTOs = new ArrayList<>();
 
         log.info("reviewDTOs: {}", reviewDTOs);
         model.addAttribute("reviewDTOs", reviewDTOs);
+        model.addAttribute("restaurant_seq", restaurant_seq);
         return "/restaurant/review";
     }
 

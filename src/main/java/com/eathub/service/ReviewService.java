@@ -83,8 +83,19 @@ public class ReviewService {
         return "access granted";
     }
 
+    // 리뷰 리스트 전체 조회
     public List<ReviewDTO> selectReviewAndImages(Long res_seq) {
         List<ReviewDTO> reviewDTO = reviewMapper.selectReviewList(res_seq);
+        for (ReviewDTO dto : reviewDTO) {
+            List<String> reviewImages = reviewMapper.selectReviewImages(dto.getRes_seq());
+            dto.setPictureUrls(reviewImages);
+        }
+        return reviewDTO;
+    }
+
+    // 리뷰 리스트 페이지 조회
+    public List<ReviewDTO> selectReviewAndImages(Long restaurant_seq, int page) {
+        List<ReviewDTO> reviewDTO = reviewMapper.selectReviewListPage(restaurant_seq, (page-1)*3);
         for (ReviewDTO dto : reviewDTO) {
             List<String> reviewImages = reviewMapper.selectReviewImages(dto.getRes_seq());
             dto.setPictureUrls(reviewImages);
