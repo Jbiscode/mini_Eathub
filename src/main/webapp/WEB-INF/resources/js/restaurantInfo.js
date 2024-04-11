@@ -28,6 +28,7 @@ let topOpenBtn = $("div.mb-8");
 let topCloseBtn = $(".btn-close");
 let bottomCloseBtn =  $("div.sticky-bottom-btns > button");
 let reservationBtn = $("button.pgjaj01");
+let form = $("form");
 
     $(document).ready(function () {
 
@@ -54,7 +55,8 @@ let reservationBtn = $("button.pgjaj01");
 
     reservationBtn.click(function () {
         if(isValidated){
-            return;
+            form.submit();
+            console.log("submit");
         }else{
             alert("예약일시를 확인해주세요");
             return false;
