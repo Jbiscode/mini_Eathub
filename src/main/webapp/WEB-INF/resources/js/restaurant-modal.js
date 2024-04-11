@@ -232,6 +232,56 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// 캘린더에 값 넣기
+function assigningInfo(){
+
+    // hidden 태그에서 값 받아오기
+    let inputDate = $('input.date').val();
+    let time =  $('input.hour').val();
+    let number = $('input.person').val();
+
+
+    console.log("assigning 중, hiddenInfo value" + inputDate + " " + time + " " + number);
+
+    //캘린더 click
+    let dateParts = inputDate.split('-');
+    let year = parseInt(dateParts[0]);
+    let month = parseInt(dateParts[1]);
+    let date = parseInt(dateParts[2]);
+
+    this.toDay = new Date(year, month - 1, date)
+
+    buildCalendar();
+
+    let tds = $('td');
+
+    tds.each(function() {
+        if (parseInt($(this).html()) === date) {
+            $(this).click();
+        }
+    });
+
+    //시간 click
+    let timeRadio = $('input[type="radio"][name="time"]');
+    timeRadio.each(function() {
+        if ($(this).val() === time) {
+            $(this).click();
+        }
+    });
+
+    //인원수 click
+    let countRadio = $('input[type="radio"][name="count"]');
+
+    countRadio.each(function() {
+        if ($(this).val() === number) {
+            $(this).click();
+        }
+    });
+}
+
+
+
+
 function fillingInfo() {
 
 
@@ -242,38 +292,46 @@ function fillingInfo() {
     let time = null;
     let number = null;
 
-    if ($('td.choiceDay') !== null) {
+    if ($('td.choiceDay').length !== 0) {
         year = $('span#calYear').html();
         month = $('span#calMonth').html();
         date = $('td.choiceDay').html();
         day = getDayOfWeek($('td.choiceDay').index());
-    } else {
-        return;
-    }
-    if ($('.option-timetable label input:checked') !== null) {
-        time = $('.option-timetable label input:checked').parent().children().eq(1).html();
-    } else {
-        return;
-    }
-    if ($('.option-personnel label input:checked') !== null) {
-        number = $('.option-personnel label input:checked').parent().children().eq(1).html();
         $('span.date').text(year + " . " + month + " . " + date + " (" + day + ")");
-        $('span.hour').text(time);
-        $('span.person').text(number);
-
         $('input.date').val(year+"-"+month+"-"+date);
+    }
+    if ($('.option-timetable label input:checked').length !== 0) {
+        time = $('.option-timetable label input:checked').parent().children().eq(1).html();
+        $('span.hour').text(time);
+        time = $('.option-timetable label input:checked').val();
         $('input.hour').val(time);
+    }
+    if ($('.option-personnel label input:checked').length !== 0) {
+        number = $('.option-personnel label input:checked').parent().children().eq(1).html();
+        $('span.person').text(number);
+        number = $('.option-personnel label input:checked').val();
         $('input.person').val(number);
-    } else {
-        return;
+        var requestData = {
+            date: year+"-"+month+"-"+date, // 입력 필드에서 date 값을 읽어옴
+            hour: time, // 입력 필드에서 hour 값을 읽어옴
+            person: number // 입력 필드에서 person 값을 읽어옴
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/api/members/putWantingDetails',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            success: function(response) {
+                console.log('세션에 알맞게 저장되었습니다.' + response);
+            },
+            error: function(error) {
+                console.log('에러 발생:', error);
+            }
+        });
     }
 }
 
 function getDayOfWeek(su) {
     const week = ['일', '월', '화', '수', '목', '금', '토'];
-    const dayOfWeek = week[su];
-    return dayOfWeek;
-}
-window.onload = function () {
-    fillingInfo();
+    return week[su];
 }

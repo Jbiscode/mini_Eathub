@@ -2,11 +2,16 @@ package com.eathub.controller;
 
 import javax.servlet.http.HttpSession;
 
-import com.eathub.dto.TimeOptionDTO;
+import com.eathub.dto.*;
+import com.eathub.entity.Reservation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.eathub.conf.SessionConf;
 import com.eathub.entity.RestaurantInfo;
@@ -14,8 +19,14 @@ import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/restaurant")
@@ -34,13 +45,49 @@ public class RestaurantController {
     public String restaurantInfo(@PathVariable Long restaurant_seq,Model model,HttpSession session){
         RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
         Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
-        List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions();
+        List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
+        ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
 
         
         model.addAttribute("isZzimed", restaurantService.getZzimCount(restaurant_seq, loginMemberSeq) > 0);
         model.addAttribute("restaurantInfo", selectRestaurantInfo);
         model.addAttribute("timeOptions", timeOptionDTOS);
+        model.addAttribute("reservationJoinDTO",reservationJoinDTO);
+
+        // 세션에 값이 없으면 세션 생성
+        if(session.getAttribute("wantingDate") == null){
+            session.setAttribute("wantingDate", restaurantService.getTodayDate());
+        }
+        if(session.getAttribute("wantingHour") == null){
+            session.setAttribute("wantingHour", restaurantService.getNextReservationTime());
+        }
+        if(session.getAttribute("wantingPerson") == null){
+            session.setAttribute("wantingPerson", 1);
+        }
+        session.setAttribute("restaurantSeq", restaurant_seq);
         return "/restaurant/restaurantInfo";
+    }
+    @PostMapping("/detail/{restaurant_seq}")
+    public String joinReservation(@PathVariable Long restaurant_seq, @Validated ReservationJoinDTO reservationJoinDTO, BindingResult bindingResult,HttpSession session) throws ParseException {
+        Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+
+        if (bindingResult.hasErrors()) {
+            log.error("오류" + bindingResult);
+            return "/detail/{restaurant_seq}";
+        }
+
+        String formattedDate = restaurantService.getReservationTime(reservationJoinDTO);
+
+        restaurantService.insertReservation(
+                Reservation.builder()
+                        .member_seq(member_seq)
+                        .restaurant_seq(restaurant_seq)
+                        .res_date(formattedDate)
+                        .res_people(reservationJoinDTO.getPerson())
+                        .build()
+        );
+
+        return "redirect:/members/my";
     }
     //레스토랑 메뉴리스트
     @GetMapping("/menuList/{restaurant_seq}")
