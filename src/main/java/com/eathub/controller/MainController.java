@@ -1,6 +1,7 @@
 package com.eathub.controller;
 
 import com.eathub.conf.SessionConf;
+import com.eathub.dto.RestaurantDetailDTO;
 import com.eathub.dto.SearchResultDTO;
 import com.eathub.dto.TimeOptionDTO;
 import com.eathub.service.RestaurantService;
@@ -33,6 +34,13 @@ public class MainController {
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<TimeOptionDTO> timeOptionDTOS = searchService.generateTimeOptions();
         List<SearchResultDTO> searchResultList = restaurantService.selectSearchCategotyResultList(member_seq, category_seq);
+        for (SearchResultDTO searchResultDTO : searchResultList) {
+            Long restaurant_seq = searchResultDTO.getRestaurant_seq();
+            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+            if(restaurantDetailDTO != null){
+                searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+            }
+        }
         model.addAttribute("timeOptions", timeOptionDTOS);
         model.addAttribute("restaurantList", searchResultList);
         return "/members/searchResult";

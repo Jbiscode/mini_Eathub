@@ -47,15 +47,18 @@ public class RestaurantApi {
     public ResponseEntity<?> selectOwnerRestaurant(@PathVariable("restaurantSeq") Long restaurant_seq) {
         try {
             OwnerRestaurantDetailDTO restaurantInfo = restaurantService.selectRestaurantInfoWithType(restaurant_seq);
-
-             RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-
             log.info("restaurantInfo = {}", restaurantInfo);
 
-            return ResponseEntity.ok().body(Map.of(
-                        "restaurantInfo" , restaurantInfo,
-                    "restaurantDetailDTO",restaurantDetailDTO
+            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+            log.info("restaurantDetailDTO = {}", restaurantDetailDTO);
+            if(restaurantDetailDTO != null){
+                restaurantInfo.setImg_url(restaurantDetailDTO.getImage_url());
+            }
+                return ResponseEntity.ok().body(Map.of(
+                        "restaurantInfo" , restaurantInfo
                 ));
+
+
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("오류 메시지");
         }
