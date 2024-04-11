@@ -283,7 +283,7 @@ body {
     color: #c5c5c5;
     font-size: 20px;
     height: 25px;
-    width: 100px;
+    width: 95px;
     margin: 0;
     position: relative;
     padding: 0;
@@ -332,7 +332,7 @@ body {
 /* 반응형 디자인 */
 @media only screen and (max-width: 600px) {
     .review-gallery img {
-        width: 100%;
-        max-height: 150px;
+        width: 150px;
+        height: 150px;
     }
 }

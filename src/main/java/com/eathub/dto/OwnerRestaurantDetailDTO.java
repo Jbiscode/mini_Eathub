@@ -1,9 +1,9 @@
 package com.eathub.dto;
 
-import java.sql.Time;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.sql.Time;
 
 @Getter
 @Setter
@@ -28,4 +28,6 @@ public class OwnerRestaurantDetailDTO {
     private Integer review_total;
     private Integer zzim_total;
     private String status;
+
+    private String img_url;
 }

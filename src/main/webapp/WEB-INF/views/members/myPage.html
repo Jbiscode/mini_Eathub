@@ -32,19 +32,7 @@
                             <div class="img"></div>
                         </div>
                         <div class="mypage-profile-meta">
-                            <h4 class="name username">이름</h4>
-                            <div class="meta">
-                                <dl>
-                                    <dt>팔로잉</dt>
-                                    <dt>0</dt>
-                                </dl>
-                                <span>|</span>
-                                <dl>
-                                    <dt>팔로워</dt>
-                                    <dt>0</dt>
-                                </dl>
-                            </div>
-                            <div class="social"></div>
+                            <h4 class="name username" th:text="${memberJoinDTO.member_name}">이름</h4>
                         </div>
                     </div>
                     <div class="mypage-profile--desc" style="display: block;">
@@ -87,10 +75,6 @@
                                     저장한 레스토랑
                                     <span class="count" th:text="${#lists.size(myPageDTO)}">0</span>
                                 </h3>
-                                <div class="__d-flex __v-center font-13"> <!-- 저장한 레스토랑 생기면 들어가는 부분 -->
-                                    전체보기
-                                    <img src="../../resources/images/arrow-right-20.svg" th:src="@{/images/arrow-right-20.svg}" alt="오른쪽화살표" style="margin-left: 4px; width: 16px; height: 16px;">
-                                </div>
                             </div>
                         </div>
                         <div class="section-body pb-32" style="padding-top: 10px;">
@@ -98,10 +82,10 @@
                                 <div id="common_infinity_sc_0" data-dummy="189">
                                     <div class="saved-restaurant-list-item" th:each="restaurant : ${myPageDTO}">
                                         <div class="restaurant-info">
-                                            <a href="javascript:void(0)" class="tb">
-                                                <img class="img" th:src="@{/images/mongtanjeju.jpg}"  alt="page"/>
+                                            <a href="javascript:void(0)" class="tb" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
+                                                <img class="img" th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${restaurant.image_url}|"  alt="page"/>
                                             </a>
-                                            <a href="javascript:void(0)" class="detail">
+                                            <a href="javascript:void(0)" class="detail" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
                                                 <h4 class="name" th:text="${restaurant.restaurant_name}">산청숯불가든 마곡</h4>
                                                 <p class="excerpt" th:text="${restaurant.description}">
                                                     여기에 레스토랑 설명이 들어감
@@ -138,77 +122,24 @@
                             </div>
                             <div class="v-scroll">
                                 <div class="v-scroll-inner">
-                                    <div class="restaurant-list restaurant-list-sm">
-                                        <div class="restaurant-list-item">
+                                    <div class="restaurant-list restaurant-list-sm" >
+                                        <div class="restaurant-list-item" th:each="recommendRestaurant :${recommendRestaurantList}">
                                             <div class="tb">
                                                 <img src="../../resources/images/mongtanjeju.jpg" th:src="@{/images/mongtanjeju.jpg}" class="img" alt="햄버거">
-                                                <a href="javascript:void(0)" class="btn-bookmark">북마크</a>
+                                                <a href="javascript:void(0)" class="btn-bookmark"
+                                                   th:classappend="${recommendRestaurant.isZzimed} ? 'active' : ''"
+                                                   th:text="${recommendRestaurant.isZzimed}"
+                                                   th:data-restaurant-seq="${recommendRestaurant.restaurant_seq}"
+                                                >북마크</a>
                                             </div>
                                             <div class="detail">
                                                 <a>
-                                                    <h3 class="name">하이디라오 코엑스점</h3>
+                                                    <h3 class="name" th:text="${recommendRestaurant.restaurant_name}">하이디라오 코엑스점</h3>
                                                     <div class="meta">
-                                                        <span class="tags">중식 • 삼성</span>
-                                                        <span class="score">
+                                                        <span class="tags" th:text="${recommendRestaurant.tag}">중식 • 삼성</span>
+                                                        <span class="score" th:text="${recommendRestaurant.rating}">
                                                             4.5
-                                                            <span class="count">(166)</span>
-                                                        </span>
-                                                        
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="restaurant-list-item">
-                                            <div class="tb">
-                                                <img src="../../resources/images/mongtanjeju.jpg" th:src="@{/images/mongtanjeju.jpg}" class="img" alt="햄버거">
-                                                <a href="javascript:void(0)" class="btn-bookmark">북마크</a>
-                                            </div>
-                                            <div class="detail">
-                                                <a>
-                                                    <h3 class="name">하이디라오 코엑스점</h3>
-                                                    <div class="meta">
-                                                        <span class="tags">중식 • 삼성</span>
-                                                        <span class="score">
-                                                            4.5
-                                                            <span class="count">(166)</span>
-                                                        </span>
-                                                        
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="restaurant-list-item">
-                                            <div class="tb">
-                                                <img src="../../resources/images/mongtanjeju.jpg" th:src="@{/images/mongtanjeju.jpg}" class="img" alt="햄버거">
-                                                <a href="javascript:void(0)" class="btn-bookmark">북마크</a>
-                                            </div>
-                                            <div class="detail">
-                                                <a>
-                                                    <h3 class="name">하이디라오 코엑스점</h3>
-                                                    <div class="meta">
-                                                        <span class="tags">중식 • 삼성</span>
-                                                        <span class="score">
-                                                            4.5
-                                                            <span class="count">(166)</span>
-                                                        </span>
-                                                        
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="restaurant-list-item">
-                                            <div class="tb">
-                                                <img src="../../resources/images/mongtanjeju.jpg" th:src="@{/images/mongtanjeju.jpg}" class="img" alt="햄버거">
-                                                <a href="javascript:void(0)" class="btn-bookmark">북마크</a>
-                                            </div>
-                                            <div class="detail">
-                                                <a>
-                                                    <h3 class="name">하이디라오 코엑스점</h3>
-                                                    <div class="meta">
-                                                        <span class="tags">중식 • 삼성</span>
-                                                        <span class="score">
-                                                            4.5
-                                                            <span class="count">(166)</span>
+                                                            <span class="count" th:text="${recommendRestaurant.review_total}">(166)</span>
                                                         </span>
                                                         
                                                     </div>

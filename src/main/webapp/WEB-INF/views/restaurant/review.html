@@ -7,198 +7,175 @@
     <title>페이지 제목</title>
 </head>
 <body class="disable-user-select">
-    <div class="wrapper" id="wrapperDiv">
-        <header id="header" class="opaque">
-            <div class="container">
-                <div class="header-left">
-                    <a href="restaurantInfo.html" class="btn-back">뒤로</a>
-                    <h1 class="page-title" style="padding-right: 4px;">숙성도 중문점</h1>
-                </div>
-            </div>
-        </header>
-        <main id="main">
-            <div class="tab-menu sticky" style="top: 48px;">
-                <ul>
-                    <li class=""><a th:href="@{|/restaurant/detail/${restaurant_seq}|}"><span>홈</span></a></li>
-                    <li class=""><a th:href="@{|/restaurant/detail/${restaurant_seq}/menuList|}"><span>메뉴</span></a>
-                    </li>
-                    <li class=""><a th:href="@{|/restaurant/detail/${restaurant_seq}/photo|}"><span>사진</span><span
-                            style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px;"></span></a>
-                    </li>
-                    <li class="active"><a><span>리뷰</span><span
-                            style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px;"></span></a>
-                    </li>
-                </ul>
-            </div>
-        </main>
-
+<div class="wrapper" id="wrapperDiv">
+    <header id="header" class="opaque">
         <div class="container">
-            <div class="ratings-container">
-                <div class="average-rating">
-                    평균평점 4.5
-                </div>
-                <div class="rating-bars">
-                    <!-- 각 점수와 막대를 나열합니다. -->
-                    <div class="rating-bar-container">
-                        <div class="rating-number">5점</div>
-                        <div class="rating-bar"><span style="width: 80%;"></span></div>
-                    </div>
-                    <div class="rating-bar-container">
-                        <div class="rating-number">4점</div>
-                        <div class="rating-bar"><span style="width: 60%;"></span></div>
-                    </div>
-                    <div class="rating-bar-container">
-                        <div class="rating-number">3점</div>
-                        <div class="rating-bar"><span style="width: 40%;"></span></div>
-                    </div>
-                    <div class="rating-bar-container">
-                        <div class="rating-number">2점</div>
-                        <div class="rating-bar"><span style="width: 20%;"></span></div>
-                    </div>
-                    <div class="rating-bar-container">
-                        <div class="rating-number">1점</div>
-                        <div class="rating-bar"><span style="width: 10%;"></span></div>
-                    </div>
-                </div>
+            <div class="header-left">
+                <a href="restaurantInfo.html" class="btn-back">뒤로</a>
+                <h1 class="page-title" style="padding-right: 4px;">숙성도 중문점</h1>
             </div>
-            <hr>
-            <!-- 추가 리뷰들을 더 불러오기 -->
-            <div class="review-container">
-                <div class="review-title">맛있는 레스토랑</div>
-                <div class="star-rating">
-                    <div class="star-rating-top" style="width: 80%">
-                        <span>★★★★★</span>
-                    </div>
-                    <div class="star-rating-bottom">
-                        <span>★★★★★</span>
-                    </div>
-                </div>
-                <div class="review-gallery">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <!-- 추가 이미지들... 최대 10장 -->
-                </div>
-                <div class="review-text">
-                    여기는 정말 맛있었어요! 특히 파스타가 인상적이었고, 서비스도 훌륭했습니다. 가족들과 함께 와서 좋은 시간을 보냈습니다.
-                </div>
-            </div>
-            <div id="reviews-container">
-                <!-- 리뷰가 동적으로 추가됩니다. -->
-            </div>
-
-            <div class="loading-indicator" id="loading">로딩 중...</div>
         </div>
+    </header>
+    <main id="main">
+        <div class="tab-menu sticky" style="top: 48px;">
+            <ul>
+                <li class=""><a th:href="@{|/restaurant/detail/${restaurant_seq}|}"><span>홈</span></a></li>
+                <li class=""><a th:href="@{|/restaurant/detail/${restaurant_seq}/menuList|}"><span>메뉴</span></a>
+                </li>
+                <li class=""><a th:href="@{|/restaurant/detail/${restaurant_seq}/photo|}"><span>사진</span><span
+                        style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px;"></span></a>
+                </li>
+                <li class="active"><a><span>리뷰</span><span
+                        style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px;"></span></a>
+                </li>
+            </ul>
+        </div>
+    </main>
+    <input type="hidden" id="restaurant_seq" th:value="${restaurant_seq}">
+    <div class="container">
+        <div class="ratings-container">
+            <div class="average-rating">
+                평균평점 4.5
+            </div>
+            <div class="rating-bars">
+                <!-- 각 점수와 막대를 나열합니다. -->
+                <div class="rating-bar-container">
+                    <div class="rating-number">5점</div>
+                    <div class="rating-bar"><span style="width: 80%;"></span></div>
+                </div>
+                <div class="rating-bar-container">
+                    <div class="rating-number">4점</div>
+                    <div class="rating-bar"><span style="width: 60%;"></span></div>
+                </div>
+                <div class="rating-bar-container">
+                    <div class="rating-number">3점</div>
+                    <div class="rating-bar"><span style="width: 40%;"></span></div>
+                </div>
+                <div class="rating-bar-container">
+                    <div class="rating-number">2점</div>
+                    <div class="rating-bar"><span style="width: 20%;"></span></div>
+                </div>
+                <div class="rating-bar-container">
+                    <div class="rating-number">1점</div>
+                    <div class="rating-bar"><span style="width: 10%;"></span></div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!-- 추가 리뷰들을 더 불러오기 -->
+        <div class="review-container" th:each="reviewDTO : ${reviewDTOs}">
+            <div class="review-title">맛있는 레스토랑</div>
+            <div class="star-rating">
+                <div class="star-rating-top" th:styleappend="'width:'+(${reviewDTO.rating}*20)+'%'">
+                    <span>★★★★★</span>
+                </div>
+                <div class="star-rating-bottom">
+                    <span>★★★★★</span>
+                </div>
+            </div>
+            <div class="review-gallery">
+                <img th:each="picture : ${reviewDTO.pictureUrls}"
+                     th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/review/${picture}|"
+                     src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
+            </div>
+            <div class="review-text" th:text="${reviewDTO.content}">
+                여기는 정말 맛있었어요! 특히 파스타가 인상적이었고, 서비스도 훌륭했습니다. 가족들과 함께 와서 좋은 시간을 보냈습니다.
+            </div>
+        </div>
+
+        <div id="reviews-container">
+            <!-- 리뷰가 동적으로 추가됩니다. -->
+        </div>
+
+        <div class="loading-indicator" id="loading">로딩 중...</div>
     </div>
+</div>
 
 
-    <!-- 추가 리뷰 컨테이너... -->
-    <script>
-        let isFetching = false;
+<!-- 추가 리뷰 컨테이너... -->
+<script>
+    const restaurant_seq = document.getElementById('restaurant_seq').value;
+    let isFetching = false;
+    let pageNumber = 1; // 현재 페이지 번호
 
-        function createReviewElement(review) {
-            // 리뷰 컨테이너 생성
-            const reviewContainer = document.createElement('div');
-            reviewContainer.className = 'review-container';
+    function createReviewElement(review) {
+        const reviewContainer = document.createElement('div');
+        reviewContainer.className = 'review-container';
 
-            // 리뷰 제목
-            const reviewTitle = document.createElement('div');
-            reviewTitle.className = 'review-title';
-            reviewTitle.textContent = review.title;
-            reviewContainer.appendChild(reviewTitle);
+        const reviewTitle = document.createElement('div');
+        reviewTitle.className = 'review-title';
+        reviewTitle.textContent = '맛있는 레스토랑'; // 실제로는 review.title로 대체 가능
+        reviewContainer.appendChild(reviewTitle);
 
-            // 별점
-            const starRating = document.createElement('div');
-            starRating.className = 'star-rating';
-            const starRatingTop = document.createElement('div');
-            starRatingTop.className = 'star-rating-top';
-            starRatingTop.style.width = `${review.rating / 5 * 100}%`;
-            starRatingTop.innerHTML = '★★★★★';
-            starRating.appendChild(starRatingTop);
-            const starRatingBottom = document.createElement('div');
-            starRatingBottom.className = 'star-rating-bottom';
-            starRatingBottom.innerHTML = '★★★★★';
-            starRating.appendChild(starRatingBottom);
-            reviewContainer.appendChild(starRating);
+        const starRating = document.createElement('div');
+        starRating.className = 'star-rating';
 
-            // 이미지 갤러리
-            const reviewGallery = document.createElement('div');
-            reviewGallery.className = 'review-gallery';
-            review.images.forEach(image => {
-                const img = document.createElement('img');
-                img.src = image;
-                img.alt = '리뷰 사진';
-                reviewGallery.appendChild(img);
-            });
-            reviewContainer.appendChild(reviewGallery);
+        const starRatingTop = document.createElement('div');
+        starRatingTop.className = 'star-rating-top';
+        starRatingTop.style.width = `${review.rating * 20}%`;
+        starRatingTop.innerHTML = '★★★★★';
+        starRating.appendChild(starRatingTop);
 
-            // 리뷰 텍스트
-            const reviewText = document.createElement('div');
-            reviewText.className = 'review-text';
-            reviewText.textContent = review.text;
-            reviewContainer.appendChild(reviewText);
+        const starRatingBottom = document.createElement('div');
+        starRatingBottom.className = 'star-rating-bottom';
+        starRatingBottom.innerHTML = '★★★★★';
+        starRating.appendChild(starRatingBottom);
+        reviewContainer.appendChild(starRating);
 
-            return reviewContainer;
-        }
-        function createFakeReview(index) {
-            return {
-                title: `리뷰 제목 ${index}`,
-                rating: Math.ceil(Math.random() * 5), // 1과 5 사이의 랜덤 평점
-                images: [
-                    '../../resources/images/bb.jpeg',
-                    '../../resources/images/bb.jpeg',
-                    '../../resources/images/bb.jpeg',
-                    '../../resources/images/bb.jpeg',
-                    '../../resources/images/bb.jpeg',
-                    '../../resources/images/bb.jpeg',
-                    '../../resources/images/bb.jpeg',
-                    '../../resources/images/bb.jpeg',
-                    '../../resources/images/bb.jpeg'
-                    // 이미지 경로는 실제 경로로 대체해야 함
-                ],
-                text: `리뷰 내용 ${index}. 맛있는 식사와 훌륭한 서비스에 감동받았습니다!`
-            };
-        }
+        const reviewGallery = document.createElement('div');
+        reviewGallery.className = 'review-gallery';
+        review.pictureUrls.forEach(imageUrl => {
+            const img = document.createElement('img');
+            img.src = `https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/review/${imageUrl}` // URL 변경 필요
+            img.alt = '리뷰 사진';
+            reviewGallery.appendChild(img);
+        });
+        reviewContainer.appendChild(reviewGallery);
 
-        // 가짜 리뷰 데이터를 페이지에 추가하는 함수
-        function fetchAndAppendReviews() {
-            if (isFetching) return;
+        const reviewText = document.createElement('div');
+        reviewText.className = 'review-text';
+        reviewText.textContent = review.content;
+        reviewContainer.appendChild(reviewText);
 
-            isFetching = true;
-            document.getElementById('loading').style.display = 'block';
+        return reviewContainer;
+    }
 
-            setTimeout(() => { // 서버 요청을 모방하기 위해 setTimeout 사용
+    function fetchAndAppendReviews() {
+        if (isFetching) return;
+        isFetching = true;
+        document.getElementById('loading').style.display = 'block';
+
+        fetch(`/api/reviews?page=${pageNumber}&restaurant_seq=${restaurant_seq}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Loaded reviews:', data);
                 const reviewsContainer = document.getElementById('reviews-container');
-                const currentReviewCount = reviewsContainer.children.length;
-
-                // 5개의 가짜 리뷰를 생성하여 페이지에 추가
-                for (let i = 1; i <= 2; i++) {
-                    const fakeReview = createFakeReview(currentReviewCount + i);
-                    const reviewElement = createReviewElement(fakeReview);
+                data.forEach(review => {
+                    const reviewElement = createReviewElement(review);
                     reviewsContainer.appendChild(reviewElement);
-                }
-
+                });
+                pageNumber++; // 다음 페이지 준비
+                document.getElementById('loading').style.display = 'none';
+                setTimeout(() => isFetching = false, 2000); // 1초 후에 다시 요청 가능하도록 설정
+            })
+            .catch(error => {
+                console.error('Error loading reviews:', error);
                 document.getElementById('loading').style.display = 'none';
                 isFetching = false;
-            }, 2000); // 1초 후에 리뷰를 로드하도록 설정
-        }
+            });
+    }
 
-
-        // 스크롤 이벤트 리스너
-        window.addEventListener('scroll', () => {
-            // 문서 끝에 도달했는지 확인
+    window.addEventListener('scroll', () => {
+        setTimeout(() => {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isFetching) {
                 fetchAndAppendReviews();
             }
-        });
+        }, 1000);
 
-        // 초기 리뷰 로드
-        fetchAndAppendReviews();
-    </script>
+    });
+
+    fetchAndAppendReviews(); // 초기 데이터 로드
+</script>
+
 </body>
 </html>

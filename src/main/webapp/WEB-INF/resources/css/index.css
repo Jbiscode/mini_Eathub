@@ -165,6 +165,10 @@ section {
     text-align: center;
 }
 
+.list_item a {
+    text-decoration: none;
+}
+
 .icon img {
     width: 50px; 
     height: 50px; 
@@ -261,12 +265,33 @@ section {
     text-align: center;
 }
 
-.icon1, .icon7 {
+.icon1, .icon2, .icon3, .icon4, .icon5, .icon6, .icon7 {
     background-color: rgba(0, 0, 0, .4) !important;
-    background-image:url('../images/quick_search.png') !important;
     background-blend-mode: multiply;
     color: #f9f9f9;
     font-size: 14px;
+}
+
+.icon1 {
+    background-image:url('../images/apgujeong.jpeg') !important;
+}
+.icon2 {
+    background-image:url('../images/hongdae.jpeg') !important;
+}
+.icon3 {
+    background-image:url('../images/busan.jpeg') !important;
+}
+.icon4 {
+    background-image:url('../images/hapjeong.png') !important;
+}
+.icon5 {
+    background-image:url('../images/sungsoo.jpeg') !important;
+}
+.icon6 {
+    background-image:url('../images/gangnam.jpeg') !important;
+}
+.icon7 {
+    background-image:url('../images/jeju_.jpg') !important;
 }
 
 /* 가게페이지 */
@@ -314,6 +339,8 @@ section {
 .btn-more {
     font-size: 12px;
     margin-right: 5px;
+    text-decoration: none;
+    color: black;
 }
 
 /* 슬라이드 관련 스타일 */
@@ -351,6 +378,8 @@ section {
     border-radius: 50%;
     box-shadow: 0 5px 15px #0000001a, 0 0 3px #00000014;
     background: #fff url(../images/more.svg) 50% 50% no-repeat;
+    text-decoration: none;
+    color: black;
 }
 
 .showall a span {
