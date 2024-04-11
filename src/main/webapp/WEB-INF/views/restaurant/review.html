@@ -63,10 +63,10 @@
             </div>
             <hr>
             <!-- 추가 리뷰들을 더 불러오기 -->
-            <div class="review-container">
+            <div class="review-container" th:each="reviewDTO : ${reviewDTOs}">
                 <div class="review-title">맛있는 레스토랑</div>
                 <div class="star-rating">
-                    <div class="star-rating-top" style="width: 80%">
+                    <div class="star-rating-top" th:styleappend="'width:'+(${reviewDTO.rating}*20)+'%'">
                         <span>★★★★★</span>
                     </div>
                     <div class="star-rating-bottom">
@@ -74,17 +74,9 @@
                     </div>
                 </div>
                 <div class="review-gallery">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <img th:src="@{/images/bb.jpeg}" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
-                    <!-- 추가 이미지들... 최대 10장 -->
+                    <img th:each="picture : ${reviewDTO.pictureUrls}" th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/review/${picture}|" src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
                 </div>
-                <div class="review-text">
+                <div class="review-text" th:text="${reviewDTO.content}">
                     여기는 정말 맛있었어요! 특히 파스타가 인상적이었고, 서비스도 훌륭했습니다. 가족들과 함께 와서 좋은 시간을 보냈습니다.
                 </div>
             </div>

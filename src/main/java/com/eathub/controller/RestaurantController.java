@@ -137,7 +137,11 @@ public class RestaurantController {
     }
 
     @GetMapping("/detail/{restaurant_seq}/review")
-    public String review(@PathVariable Long restaurant_seq){
+    public String review(@PathVariable Long restaurant_seq,Model model){
+        List<ReviewDTO> reviewDTOs = reviewService.selectReviewAndImages(restaurant_seq);
+
+        log.info("reviewDTOs: {}", reviewDTOs);
+        model.addAttribute("reviewDTOs", reviewDTOs);
         return "/restaurant/review";
     }
 

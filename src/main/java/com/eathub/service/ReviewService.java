@@ -82,6 +82,15 @@ public class ReviewService {
         }
         return "access granted";
     }
+
+    public List<ReviewDTO> selectReviewAndImages(Long res_seq) {
+        List<ReviewDTO> reviewDTO = reviewMapper.selectReviewList(res_seq);
+        for (ReviewDTO dto : reviewDTO) {
+            List<String> reviewImages = reviewMapper.selectReviewImages(dto.getRes_seq());
+            dto.setPictureUrls(reviewImages);
+        }
+        return reviewDTO;
+    }
     //    UPDATE
     //    DELETE
 }

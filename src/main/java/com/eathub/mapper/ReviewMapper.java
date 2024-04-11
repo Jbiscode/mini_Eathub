@@ -3,6 +3,8 @@ package com.eathub.mapper;
 import com.eathub.dto.ReviewDTO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface ReviewMapper {
     //    INSERT
@@ -23,6 +25,8 @@ public interface ReviewMapper {
      * @param res_seq
      */
     ReviewDTO checkReviewData(Long res_seq);
+    List<ReviewDTO> selectReviewList(Long restaurant_seq);
+    List<String > selectReviewImages(Long res_seq);
     //    UPDATE
     //    DELETE
 }
