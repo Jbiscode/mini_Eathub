@@ -282,7 +282,7 @@ public class RestaurantService {
                     .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
         }
         return searchResultList;
-
+    }
 
     public List<SearchResultDTO> getRandomRestaurant(Long memSeq) {
         return restaurantMapper.selectRandomRestaurant();
