@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>어드민 관리 테이블</title>
 <link rel="stylesheet" href="../../resources/css/adminPage.css" th:href="@{/css/adminPage.css}">
     <script defer src="../../resources/js/adminPage.js" th:src="@{/js/adminPage.js}"></script>
@@ -22,7 +23,9 @@
         <td th:text="${restaurant.restaurant_name}">식당 A</td>
         <td th:text="|${restaurant.address1} ${restaurant.address2}|">서울시 강남구</td>
         <td th:text="${restaurant.phone}">02-123-4567</td>
-        <td th:text="${restaurant.status}">대기중</td>
+        <td th:text="${restaurant.status}"
+        th:classappend="${#strings.equals(restaurant.status,'ACCESS')} ? 'access':''"
+        >대기중</td>
         <td>
             <div class="action-box">
                 <select class="status-select" th:id="${restaurant.restaurant_seq}">

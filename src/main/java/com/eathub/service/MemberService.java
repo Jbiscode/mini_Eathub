@@ -1,7 +1,7 @@
 package com.eathub.service;
 
 import com.eathub.dto.LoginDTO;
-import com.eathub.dto.MemberUpdateDTO;
+import com.eathub.dto.ReservationDTO;
 import com.eathub.entity.Members;
 import com.eathub.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -83,4 +86,7 @@ public class MemberService {
         return loginMember;
     }
 
+    public List<ReservationDTO> getReservationList(Long memSeq) {
+       return memberMapper.selectReservationList(memSeq);
+    }
 }

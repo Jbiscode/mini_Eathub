@@ -1,0 +1,121 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+h2 {
+    color: #d64a4a;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: auto;
+}
+
+/*별점 스타일링 */
+.star-rating {
+    direction: rtl;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    color: #bbb;
+    font-size: 60px;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input[type="radio"]:checked ~ label {
+    color: #f5a623;
+}
+
+#charCount {
+    text-align: right;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 180px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    resize: vertical;
+}
+
+textarea::placeholder {
+    color: #aaa;
+}
+
+/* 이미지 미리보기 스타일링 */
+#reviewImages {
+    margin-bottom: 10px;
+}
+
+#preview {
+    border: 1px dashed #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    background-color: #fafafa;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#preview img {
+    display: inline;
+    margin-right: 10px;
+    height: 100px;
+    width: 100px;
+    vertical-align: middle;
+}
+
+button {
+    background-color: #FF3D00;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #d93500;
+}
+
+/* 미디어 쿼리를 통한 반응형 디자인 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    form {
+        padding: 15px;
+    }
+}

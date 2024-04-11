@@ -190,6 +190,17 @@ public class RestaurantService {
         return restaurantMapper.selectRestaurantInfoWithType(restaurant_seq);
     }
 
+    //카테고리별 레스토랑 조회
+    public List<SearchResultDTO> selectSearchCategotyResultList(Long member_seq, Long category_seq) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectSearchCategotyResultList(category_seq);
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
+
 
     // 타임리프에 사용할 시간 옵션을 생성하는 메서드 6시부터 23시 30분까지 30분 단위로 생성
 

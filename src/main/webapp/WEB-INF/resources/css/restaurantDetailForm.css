@@ -279,3 +279,16 @@ jss1 .MuiPaper-root {
     margin-bottom: 16px;
     padding: 15px 20px;
 }
+
+.btn.btn-reverse{
+    background-color: white;
+    color: #FF3D00;
+    border: 1px solid;
+    border-color: #FF3D00;
+}
+input::placeholder {
+    color: #c8c8c8;
+    font-weight: 700;
+    letter-spacing: -.05em;
+    font-size: 13px;
+}

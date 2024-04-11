@@ -1,10 +1,15 @@
 package com.eathub.entity;
 
 import com.eathub.entity.ENUM.RES_STATUS;
-import lombok.*;
+
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.Builder;
+import lombok.Data;
+
+import java.util.Date;
+
 
 @Data
 @Builder

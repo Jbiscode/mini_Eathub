@@ -3,7 +3,25 @@ function requestUpdate(restaurantSeq) {
     let selectElement = document.getElementById(`${restaurantSeq}`);
     let selectedStatus = selectElement.value;
 
-    // 서버에 업데이트 요청을 보내는 로직을 여기에 추가
-    console.log(`식당 번호 ${restaurantSeq} 상태를 ${selectedStatus}로 업데이트 요청함`);
-    // 예: updateRestaurantStatus(restaurantSeq, selectedStatus);
+    fetch(`api/restaurants/admin/updateRestaurantStatus`
+        , {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({restaurantSeq: restaurantSeq, status: selectedStatus})
+        }
+    ).then(response =>response.json())
+        .then(data => {
+            if (data.success) {
+                    console.log(`식당 번호 ${restaurantSeq} 상태를 ${selectedStatus}로 업데이트 요청함`);
+                    window.location.reload();
+            } else {
+                console.error(`식당 번호 ${restaurantSeq} 상태를 ${selectedStatus}로 업데이트 요청 실패함`);
+            }
+
+        }
+    ).catch(error => {
+        console.error(`식당 번호 ${restaurantSeq} 상태를 ${selectedStatus}로 업데이트 요청 실패함`);
+    });
 }
