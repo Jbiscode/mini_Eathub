@@ -1,6 +1,9 @@
 package com.eathub.service;
 
 import com.eathub.dto.*;
+
+import com.eathub.entity.Reservation;
+
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.entity.RestaurantZzim;
 import com.eathub.mapper.ObjectStorageMapper;
@@ -10,11 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -126,6 +130,26 @@ public class RestaurantService {
     public void insertRestaurant(RestaurantInfo restaurantJoinDTO) {
         restaurantMapper.insertRestaurant(restaurantJoinDTO);
     }
+    public void insertReservation(Reservation reservationJoinDTO) {
+        restaurantMapper.insertReservation(reservationJoinDTO);
+    }
+
+    public String getReservationTime(ReservationJoinDTO reservationJoinDTO) throws ParseException {
+        // date 형으로 형변환
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HHmm");
+        String date = reservationJoinDTO.getDate();
+        String time = reservationJoinDTO.getHour();
+
+        // 문자열을 Date 객체로 파싱
+        Date parsedDate = format.parse(date + " " + time);
+
+        // 다른 형식으로 변환할 SimpleDateFormat 객체 생성
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        // Date 객체를 다른 형식으로 변환
+        return outputFormat.format(parsedDate);
+    }
+
 
     public void insertRestaurantMenu(Long restaurant_seq, MenuFormDTOWrapper menuListWrapper) {
         List<MenuFormDTO> menuForm = menuListWrapper.getMenuList();
@@ -180,10 +204,14 @@ public class RestaurantService {
 
 
     // 타임리프에 사용할 시간 옵션을 생성하는 메서드 6시부터 23시 30분까지 30분 단위로 생성
-    public List<TimeOptionDTO> generateTimeOptions() {
+
+    public List<TimeOptionDTO> generateTimeOptions(Long restaurant_seq) {
+        RestaurantInfo restaurantinfo = restaurantMapper.selectRestaurantInfo(restaurant_seq);
+        LocalTime openTime = restaurantinfo.getOpenHour().toLocalTime();
+        LocalTime closeTime = restaurantinfo.getCloseHour().toLocalTime();
+        LocalTime time = openTime;
         List<TimeOptionDTO> timeOptions = new ArrayList<>();
-        LocalTime time = LocalTime.of(6, 0);
-        while (!time.equals(LocalTime.of(23, 30))) {
+        while (!time.equals(closeTime)) {
             TimeOptionDTO option = new TimeOptionDTO();
             option.setTime(time.toString());
             timeOptions.add(option);
@@ -194,20 +222,36 @@ public class RestaurantService {
 
 
     public List<SearchResultDTO> getRandomRestaurant(Long memSeq) {
-        List<SearchResultDTO> randomRestaurantList = restaurantMapper.selectRandomRestaurant();
-//        List<RestaurantZzim> restaurantZzims = restaurantMapper.selectZzimList(memSeq);
-
-        // 찜이 안된 레스토랑만 추천하기
-//        Set<Long> zzimRestaurantSeqSet = restaurantZzims.stream()
-//                .map(RestaurantZzim::getRestaurant_seq)
-//                .collect(Collectors.toSet());
-//
-//        List<SearchResultDTO> filteredList = randomRestaurantList.stream()
-//                .filter(dto -> !zzimRestaurantSeqSet.contains(dto.getRestaurant_seq()))
-//                .limit(5)
-//                .collect(Collectors.toList());
-
-
-        return randomRestaurantList;
+        return restaurantMapper.selectRandomRestaurant();;
     }
+
+    //session 초기값에 저장할 오늘 날짜 구하기.
+    public String getTodayDate(){
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
+    }
+
+    //session 초기값에 저장할 가장 가까운 예약 가능 시간 구하기.
+    public String getNextReservationTime(){
+        // 현재 시간 가져오기
+        LocalTime currentTime = LocalTime.now();
+
+        // 다음 30분 단위의 예약 가능한 시간 계산
+        int currentMinute = currentTime.getMinute();
+        int nextReservationMinute = ((currentMinute / 30) + 1) * 30; // 다음 예약 가능한 분
+        LocalTime nextReservationTime;
+
+        if (nextReservationMinute == 60) {
+            nextReservationTime = currentTime.plusHours(1).withMinute(0); // 정시로 설정
+        } else {
+            nextReservationTime = currentTime.withMinute(nextReservationMinute);
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+
+        // 예약 가능한 시간 출력
+        return nextReservationTime.format(formatter);
+    }
+
 }

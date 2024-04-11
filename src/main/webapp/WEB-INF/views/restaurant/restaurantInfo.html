@@ -15,7 +15,6 @@
         <title>페이지 제목</title>
     </head>
     <body class="disable-user-select" style>
-        <noscript></noscript>
         <div class="wrapper" id="wrapperDiv">
             <header class="_9j16x80">
                 <div class="_9j16x81 icon-wrapper">
@@ -29,532 +28,540 @@
                 </div>
             </header>
         </div>
-        <main id="main">
-            <div class="section">
-                <!--사진 슬라이드-->
-                <div class="slider">
-                    <input type="radio" name="slide" id="slide1" />
-                    <input type="radio" name="slide" id="slide2" />
-                    <input type="radio" name="slide" id="slide3" />
-                    <input type="radio" name="slide" id="slide4" checked />
-                    <ul id="imgholder" class="imgs">
-                        <li><img th:src="@{/images/aa.jpg}" /></li>
-                        <li><img th:src="@{/images/bb.jpeg}" /></li>
-                        <li><img th:src="@{/images/cc.jpeg}" /></li>
-                        <li><img th:src="@{/images/dd.jpeg}" /></li>
-                    </ul>
-                    <div class="bullets">
-                        <label for="slide1">&nbsp;</label>
-                        <label for="slide2">&nbsp;</label>
-                        <label for="slide3">&nbsp;</label>
-                        <label for="slide4">&nbsp;</label>
-                    </div>
-                </div>
+            <main id="main">
 
-                <section class="section">
-                    <div class="container gutter-sm pt-24 pb-24">
-                        <div class="restaurant-summary">
-                            <span class="_4qv3383 _1ltqxco1e" th:text="|${restaurantInfo.tag} ⎢${restaurantInfo.address1}|">돼지고기구이 | 제주 서귀포</span>
-                            <h2 class="_1ltqxco19" th:text="${restaurantInfo.restaurant_name}">숙성도 중문점</h2>
-                            <div class="_4qv338e">
-                                <span class="stars yellow">
-                                    <i class="star full" style="width: 14px; height: 14px"></i>
-                                    <i class="star full" style="width: 14px; height: 14px"></i>
-                                    <i class="star full" style="width: 14px; height: 14px"></i>
-                                    <i class="star full" style="width: 14px; height: 14px"></i>
-                                    <i class="star half" style="width: 14px; height: 14px"></i>
-                                </span>
-                                <span class="_4qv3386" th:text="${restaurantInfo.rating}">평점</span>
-                                <a href="review.html"
-                                    ><span class="_4qv3387" th:text="|${restaurantInfo.review_total} 개 리뷰|">리뷰수 </span>
-                                    <img src="./image/icons/arrow-right-gray.svg" th:src="@{/images/arrow-right-gray.svg}" style="margin-top: 1px" />
-                                </a>
-                            </div>
-                        </div>
-                        <div class="_4qv3388">
-                            <p class="_1ltqxco1c" th:text="${restaurantInfo.description}">
-                                교차숙성으로 유명한 제주 흑돼지 맛집
-                                <br />
-                                웨이팅 방법 및 영업시간은 하단 상세정보에서 확인해주세요.
-                                <br />
-                                *예약-당일 2시간 전까지 접수 가능합니다.
-                                <br />
-                                *웨이팅-12시부터 온라인웨이팅 오픈됩니다.
-                                <br />
-                                아래 예약/웨이팅 중 원하시는 버튼을 선택 후 등록해주세요.
-                            </p>
-                            <div class="_4qv3389">
-                                <span class="_4qv338a lunch dinner"> 점심 저녁 동일가 2-4만원 </span>
-                            </div>
-                            <!--class="_4qv3389"-->
-                        </div>
-                        <!--class="_4qv3388"-->
-                        <div class="_4qv338g"></div>
-                        <div class="_4qv338c">
-                            <a class="_4qv338d call"> 전화 </a>
-                            <a class="_4qv338d location"> 위치 </a>
-                            <a class="_4qv338d building" id="mymybtn"> 매장정보 </a>
+                <div class="section">
+                    <!--사진 슬라이드-->
+                    <div class="slider">
+                        <input type="radio" name="slide" id="slide1" />
+                        <input type="radio" name="slide" id="slide2" />
+                        <input type="radio" name="slide" id="slide3" />
+                        <input type="radio" name="slide" id="slide4" checked />
+                        <ul id="imgholder" class="imgs">
+                            <li><img th:src="@{/images/aa.jpg}" /></li>
+                            <li><img th:src="@{/images/bb.jpeg}" /></li>
+                            <li><img th:src="@{/images/cc.jpeg}" /></li>
+                            <li><img th:src="@{/images/dd.jpeg}" /></li>
+                        </ul>
+                        <div class="bullets">
+                            <label for="slide1">&nbsp;</label>
+                            <label for="slide2">&nbsp;</label>
+                            <label for="slide3">&nbsp;</label>
+                            <label for="slide4">&nbsp;</label>
                         </div>
                     </div>
 
-                    <!--예약-->
-                    <hr class="separator" />
-                    <div>
-                        <div class="ce8v0l0">
-                            <button type="button" id="service-type-tab-VISIT_RESERVATION" class="ce8v0l1 _1ltqxco1c ce8v0l2">예약</button>
+                    <section class="section">
+                        <div class="container gutter-sm pt-24 pb-24">
+                            <div class="restaurant-summary">
+                                <span class="_4qv3383 _1ltqxco1e" th:text="|${restaurantInfo.tag} ⎢${restaurantInfo.address1}|">돼지고기구이 | 제주 서귀포</span>
+                                <h2 class="_1ltqxco19" th:text="${restaurantInfo.restaurant_name}">숙성도 중문점</h2>
+                                <div class="_4qv338e">
+                                    <span class="stars yellow">
+                                        <i class="star full" style="width: 14px; height: 14px"></i>
+                                        <i class="star full" style="width: 14px; height: 14px"></i>
+                                        <i class="star full" style="width: 14px; height: 14px"></i>
+                                        <i class="star full" style="width: 14px; height: 14px"></i>
+                                        <i class="star half" style="width: 14px; height: 14px"></i>
+                                    </span>
+                                    <span class="_4qv3386" th:text="${restaurantInfo.rating}">평점</span>
+                                    <a href="review.html"
+                                        ><span class="_4qv3387" th:text="|${restaurantInfo.review_total} 개 리뷰|">리뷰수 </span>
+                                        <img src="./image/icons/arrow-right-gray.svg" th:src="@{/images/arrow-right-gray.svg}" style="margin-top: 1px" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="_4qv3388">
+                                <p class="_1ltqxco1c" th:text="${restaurantInfo.description}">
+                                    교차숙성으로 유명한 제주 흑돼지 맛집
+                                    <br />
+                                    웨이팅 방법 및 영업시간은 하단 상세정보에서 확인해주세요.
+                                    <br />
+                                    *예약-당일 2시간 전까지 접수 가능합니다.
+                                    <br />
+                                    *웨이팅-12시부터 온라인웨이팅 오픈됩니다.
+                                    <br />
+                                    아래 예약/웨이팅 중 원하시는 버튼을 선택 후 등록해주세요.
+                                </p>
+                                <div class="_4qv3389">
+                                    <span class="_4qv338a lunch dinner"> 점심 저녁 동일가 2-4만원 </span>
+                                </div>
+                                <!--class="_4qv3389"-->
+                            </div>
+                            <!--class="_4qv3388"-->
+                            <div class="_4qv338g"></div>
+                            <div class="_4qv338c">
+                                <a class="_4qv338d call"> 전화 </a>
+                                <a class="_4qv338d location"> 위치 </a>
+                                <a class="_4qv338d building" id="mymybtn"> 매장정보 </a>
+                            </div>
                         </div>
-                        <section class="section pb-30 pt-24">
+
+                        <!--예약-->
+                        <hr class="separator" />
+                        <div>
+                            <div class="ce8v0l0">
+                                <button type="button" id="service-type-tab-VISIT_RESERVATION" class="ce8v0l1 _1ltqxco1c ce8v0l2">예약</button>
+                            </div>
+                            <section class="section pb-30 pt-24">
+                                <div class="container gutter-sm">
+                                    <div class="section-header pb-12 mb-0">
+                                        <h3 class="section-title">예약 일시</h3>
+                                    </div>
+                                    <div class="section-body">
+                                        <div class="mb-8">
+                                            <a href="#" class="btn btn-lg btn-outline btn-cta full-width arrowdown">
+                                                <span>
+                                                    <span class="label calendar">
+                                                        <span class="date"></span>
+                                                        <span class="hour"></span>
+                                                        <span class="person"></span>
+
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <div class="section-time-slot mb-24" style="height: 59px; display: flex; align-items: center">
+                                            <div
+                                                class="swiper swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-free-mode swiper-container-ios timeslot-swiper timetable-list timetable-list-sm"
+                                            >
+                                                <div class="swiper-wrapper">
+                                                    <div class="timetable-list timetable-list-sm" style="flex: 1 1 0%">
+                                                        <a
+                                                            href="#"
+                                                            id="d22"
+                                                            class="timetable-list-item empty full-width"
+                                                            style="margin-bottom: auto; margin-top: auto; text-decoration: none"
+                                                        >
+                                                            <span class="time">빈자리 알림 신청</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="swiper-slide swiper-slide-next" style="width: unset"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-centered" style="text-align: center; border: none">
+                                            <a href="#" class="btn btn-rounded btn-outline-red">
+                                                <span class="label arrow">예약가능 날짜 찾기</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!--홈 메뉴 사진 리뷰-->
+                        <hr class="separator" />
+                        <div class="tab-menu sticky" style="top: 48px" >
+                            <ul>
+                                <li class="active">
+                                    <a><span>홈</span></a>
+                                </li>
+
+                                <li class="" >
+                                    <a th:href="@{|/restaurant/detail/${restaurant_seq}/menuList|}"><span>메뉴</span></a>
+                                </li>
+                                <li class="">
+                                    <a th:href="@{|/restaurant/detail/${restaurant_seq}/photo|}" style="display: flex; align-items: center"><span>사진</span></a>
+                                </li>
+                                <li class="">
+                                    <a th:href="@{|/restaurant/detail/${restaurant_seq}/review|}" style="display: flex; align-items: center"><span>리뷰</span><span style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <section class="section pt-30 pb-25">
                             <div class="container gutter-sm">
-                                <div class="section-header pb-12 mb-0">
-                                    <h3 class="section-title">예약 일시</h3>
+                                <div class="section-header mb-20">
+                                    <h3 class="section-title __sm">예약 오픈 일정</h3>
                                 </div>
                                 <div class="section-body">
-                                    <div class="mb-8">
-                                        <a href="#" class="btn btn-lg btn-outline btn-cta full-width arrowdown">
-                                            <span>
-                                                <span class="label calendar">
-                                                    <span class="date"></span>
-                                                    <span class="hour"></span>
-                                                    <span class="person"></span>
-                                                    <input class="date" type="hidden" />
-                                                    <input class="hour" type="hidden" />
-                                                    <input class="person" type="hidden" />
+                                    <div class="__reserv-schedule">
+                                        <div>
+                                            <div class="__item mb-24">
+                                                <dl>
+                                                    <dt class="_1f7t3pl0 _1ltqxco1b">3월 25일 오후 3:00</dt>
+                                                    <dd class="_1ltqxco1e _10fm75h19">4월 1일 ~ 14일 예약이 가능합니다.</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btn-centered">
+                                        <a class="btn full-width btn-lg btn-outline-red">
+                                            <span class="__d-flex __v-center __h-center" style="gap: 0 4px">
+                                                <span class="__d-flex __v-center __h-center" style="gap: 0 4px">
+                                                    <img th:src="@{/images/alarm-new-on.svg}" src="/image/icons/alarm-new-on.svg" alt="" />
+                                                    &emsp;예약 오픈 알림 받기
                                                 </span>
                                             </span>
                                         </a>
                                     </div>
-                                    <div class="section-time-slot mb-24" style="height: 59px; display: flex; align-items: center">
-                                        <div
-                                            class="swiper swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-free-mode swiper-container-ios timeslot-swiper timetable-list timetable-list-sm"
-                                        >
-                                            <div class="swiper-wrapper">
-                                                <div class="timetable-list timetable-list-sm" style="flex: 1 1 0%">
-                                                    <a
-                                                        href="#"
-                                                        id="d22"
-                                                        class="timetable-list-item empty full-width"
-                                                        style="margin-bottom: auto; margin-top: auto; text-decoration: none"
-                                                    >
-                                                        <span class="time">빈자리 알림 신청</span>
-                                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                        <hr class="separator" />
+
+                        <section class="section pt-30 pb-30 section-overflow-hidden">
+                            <div class="container gutter-sm">
+                                <div class="section-header mb-30">
+                                    <h3 class="section-title __sm">레스토랑 공지</h3>
+                                    <div class="utils">
+                                        <a href="notice.html" class="__btn-all" style="color: black; text-decoration: none">전체보기</a>
+                                    </div>
+                                </div>
+                                <div class="section-body" style="overflow: hidden">
+                                    <div class="v-scroll">
+                                        <div class="v-scroll-inner">
+                                            <div class="__restaurant-notice-v2" style="display: flex; flex-wrap: nowrap">
+                                                <div class="swiper-slide" style="width: 350px; margin-right: 10px">
+                                                    <article class="__restaurant-notice-v2-item">
+                                                        <div class="__notice-content">
+                                                            <div class="__pic">
+                                                                <div class="img"></div>
+                                                            </div>
+                                                            <div class="__desc">
+                                                                <p>
+                                                                    올디스타코 예약 OPEN 공지
+                                                                    <br />
+                                                                    <br />
+                                                                    3월 25일 월요일 15:00 예약 오픈!
+                                                                    <br />
+                                                                    기간 : 4월 18일, 19일, 20일, 25일, 26일, 27일 오픈
+                                                                    <br />
+                                                                    시간 : 21시, 22시, 23시
+                                                                    <br />
+                                                                    예약금 : 인원당 1만원
+                                                                    <br />
+                                                                    <br />
+                                                                    특별 예약일 제외 다른 일자는 웨이팅 운영방식으로 진행됩니다.
+                                                                </p>
+                                                                <a class="__more">
+                                                                    <span>더보기</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </article>
                                                 </div>
-                                                <div class="swiper-slide swiper-slide-next" style="width: unset"></div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="btn-centered" style="text-align: center; border: none">
-                                        <a href="#" class="btn btn-rounded btn-outline-red">
-                                            <span class="label arrow">예약가능 날짜 찾기</span>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </section>
-                    </div>
+                        <hr class="separator" />
 
-                    <!--홈 메뉴 사진 리뷰-->
-                    <hr class="separator" />
-                    <div class="tab-menu sticky" style="top: 48px" >
-                        <ul>
-                            <li class="active">
-                                <a><span>홈</span></a>
-                            </li>
-
-                            <li class="" >
-                                <a th:href="@{|/restaurant/detail/${restaurant_seq}/menuList|}"><span>메뉴</span></a>
-                            </li>
-                            <li class="">
-                                <a th:href="@{|/restaurant/detail/${restaurant_seq}/photo|}" style="display: flex; align-items: center"><span>사진</span></a>
-                            </li>
-                            <li class="">
-                                <a th:href="@{|/restaurant/detail/${restaurant_seq}/review|}" style="display: flex; align-items: center"><span>리뷰</span><span style="font-size: 10px; color: rgb(170, 170, 170); padding-left: 3px; padding-top: 1px"></span></a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <section class="section pt-30 pb-25">
-                        <div class="container gutter-sm">
-                            <div class="section-header mb-20">
-                                <h3 class="section-title __sm">예약 오픈 일정</h3>
-                            </div>
-                            <div class="section-body">
-                                <div class="__reserv-schedule">
-                                    <div>
-                                        <div class="__item mb-24">
-                                            <dl>
-                                                <dt class="_1f7t3pl0 _1ltqxco1b">3월 25일 오후 3:00</dt>
-                                                <dd class="_1ltqxco1e _10fm75h19">4월 1일 ~ 14일 예약이 가능합니다.</dd>
-                                            </dl>
-                                        </div>
-                                    </div>
+                        <section class="section pt-30">
+                            <div class="container gutter-sm">
+                                <div class="mb-16 section-header">
+                                    <h3 class="section-title __sm">편의시설</h3>
                                 </div>
-                                <div class="btn-centered">
-                                    <a class="btn full-width btn-lg btn-outline-red">
-                                        <span class="__d-flex __v-center __h-center" style="gap: 0 4px">
-                                            <span class="__d-flex __v-center __h-center" style="gap: 0 4px">
-                                                <img th:src="@{/images/alarm-new-on.svg}" src="/image/icons/alarm-new-on.svg" alt="" />
-                                                &emsp;예약 오픈 알림 받기
-                                            </span>
+                                <div class="section-body">
+                                    <div class="restaurant-features mb-20">
+                                        <span class="feature-item">
+                                            <img th:src="@{/images/ic_parking.svg}" src="/image/icons/ic_parking.svg" alt="" class="icon" />
+                                            <span class="label">주차 가능</span>
                                         </span>
-                                    </a>
+                                        <span class="feature-item">
+                                            <img th:src="@{/images/ic_corkage.svg}" src="/image/icons/ic_corkage.svg" alt="" class="icon" />
+                                            <span class="label">콜키지 가능</span>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </section>
-                    <hr class="separator" />
-
-                    <section class="section pt-30 pb-30 section-overflow-hidden">
-                        <div class="container gutter-sm">
-                            <div class="section-header mb-30">
-                                <h3 class="section-title __sm">레스토랑 공지</h3>
-                                <div class="utils">
-                                    <a href="notice.html" class="__btn-all" style="color: black; text-decoration: none">전체보기</a>
-                                </div>
-                            </div>
-                            <div class="section-body" style="overflow: hidden">
-                                <div class="v-scroll">
-                                    <div class="v-scroll-inner">
-                                        <div class="__restaurant-notice-v2" style="display: flex; flex-wrap: nowrap">
-                                            <div class="swiper-slide" style="width: 350px; margin-right: 10px">
-                                                <article class="__restaurant-notice-v2-item">
-                                                    <div class="__notice-content">
-                                                        <div class="__pic">
-                                                            <div class="img"></div>
-                                                        </div>
-                                                        <div class="__desc">
-                                                            <p>
-                                                                올디스타코 예약 OPEN 공지
-                                                                <br />
-                                                                <br />
-                                                                3월 25일 월요일 15:00 예약 오픈!
-                                                                <br />
-                                                                기간 : 4월 18일, 19일, 20일, 25일, 26일, 27일 오픈
-                                                                <br />
-                                                                시간 : 21시, 22시, 23시
-                                                                <br />
-                                                                예약금 : 인원당 1만원
-                                                                <br />
-                                                                <br />
-                                                                특별 예약일 제외 다른 일자는 웨이팅 운영방식으로 진행됩니다.
-                                                            </p>
-                                                            <a class="__more">
-                                                                <span>더보기</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
+                                <div class="__notes ml--20 mr--20">
+                                    <div class="__notes-item" id="__notes-item">
+                                        <a class="__toggle">주차 정보</a>
+                                        <div class="__note">
+                                            <p>[기본요금체계]<br />10:00 - 20:00 10분당 평일 300원, 주말 500원<br />그외 시간 : 200원, 1일 최대 요금 45,000원</p>
+                                        </div>
+                                    </div>
+                                    <div class="__notes-item" id="__notes-item2">
+                                        <a class="__toggle">주류 및 콜키지 안내</a>
+                                        <div class="__note">
+                                            <p>- 고든램지버거 레스토랑에서는 더 나은 서비스 제공을 위해 콜키지를 시행합니다. ※ 콜키지 비용 - 병당 2만원</p>
+                                        </div>
+                                    </div>
+                                    <div class="__notes-item" id="__notes-item3">
+                                        <a class="__toggle">웰컴키즈존</a>
+                                        <div class="__note">
+                                            <p>- 유모차 반입 및 아기의자 필요 여부와 갯수를 반드시 요청사항에 작성해주세요.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                    <hr class="separator" />
+                        </section>
+                        <hr class="separator" />
 
-                    <section class="section pt-30">
-                        <div class="container gutter-sm">
-                            <div class="mb-16 section-header">
-                                <h3 class="section-title __sm">편의시설</h3>
-                            </div>
-                            <div class="section-body">
-                                <div class="restaurant-features mb-20">
-                                    <span class="feature-item">
-                                        <img th:src="@{/images/ic_parking.svg}" src="/image/icons/ic_parking.svg" alt="" class="icon" />
-                                        <span class="label">주차 가능</span>
-                                    </span>
-                                    <span class="feature-item">
-                                        <img th:src="@{/images/ic_corkage.svg}" src="/image/icons/ic_corkage.svg" alt="" class="icon" />
-                                        <span class="label">콜키지 가능</span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="__notes ml--20 mr--20">
-                                <div class="__notes-item" id="__notes-item">
-                                    <a class="__toggle">주차 정보</a>
-                                    <div class="__note">
-                                        <p>[기본요금체계]<br />10:00 - 20:00 10분당 평일 300원, 주말 500원<br />그외 시간 : 200원, 1일 최대 요금 45,000원</p>
-                                    </div>
-                                </div>
-                                <div class="__notes-item" id="__notes-item2">
-                                    <a class="__toggle">주류 및 콜키지 안내</a>
-                                    <div class="__note">
-                                        <p>- 고든램지버거 레스토랑에서는 더 나은 서비스 제공을 위해 콜키지를 시행합니다. ※ 콜키지 비용 - 병당 2만원</p>
-                                    </div>
-                                </div>
-                                <div class="__notes-item" id="__notes-item3">
-                                    <a class="__toggle">웰컴키즈존</a>
-                                    <div class="__note">
-                                        <p>- 유모차 반입 및 아기의자 필요 여부와 갯수를 반드시 요청사항에 작성해주세요.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <hr class="separator" />
-
-                    <section class="section pt-30 pb-16">
-                        <div class="container gutter-sm">
-                            <div class="section-header">
-                                <h3 class="section-title">메뉴</h3>
-                                <div class="utils">
-                                    <a href="menuList.html " class="__btn-all">전체보기</a>
-                                </div>
-                            </div>
-                            <div class="section-body">
-                                <div class="menupan-item-list mb-20">
-                                    <div class="__menupan-item">
-                                        <div class="__name">
-                                            <h4>고기류</h4>
-                                            <div class="__price">19,000~23,000원</div>
-                                        </div>
-                                    </div>
-                                    <div class="__menupan-item">
-                                        <div class="__name">
-                                            <h4>곁들임</h4>
-                                            <div class="__price">5,000~15,000원</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <a href="menuList.html" class="btn-menupan-photo" style="text-decoration: none">
-                                    <span>메뉴 전체보기</span>
-                                </a>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!--사진-->
-                    <hr class="separator" />
-                    <section class="section pt-30 pb-30">
-                        <div class="container gutter-sm">
-                            <div class="section-header">
-                                <h3 class="section-title">
-                                    사진
-                                    <span class="count">668</span>
-                                </h3>
-                                <div class="utils"><a href="photo.html" class="__btn-all">전체보기</a></div>
-                            </div>
-                            <div class="section-body">
-                                <div class="photo-grid-list">
-                                    <div class="photo-grid-list-item">
-                                        <a href="photo.html" class="tb">
-                                            <div class="img">
-                                                <img
-                                                    th:src="@{/images/aa.jpg}"
-                                                    src="image/aa.jpg"
-                                                    alt=""
-                                                    style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover"
-                                                />
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="photo-grid-list-item">
-                                        <a href="photo.html" class="tb">
-                                            <div class="img">
-                                                <img
-                                                    th:src="@{/images/aa.jpg}"
-                                                    src="image/aa.jpg"
-                                                    alt=""
-                                                    style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover"
-                                                />
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="photo-grid-list-item">
-                                        <a href="photo.html" class="tb">
-                                            <div class="img">
-                                                <img
-                                                    th:src="@{/images/aa.jpg}"
-                                                    src="image/aa.jpg"
-                                                    alt=""
-                                                    style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover"
-                                                />
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="photo-grid-list-item">
-                                        <a href="photo.html" class="tb">
-                                            <div class="img">
-                                                <img
-                                                    th:src="@{/images/aa.jpg}"
-                                                    src="image/aa.jpg"
-                                                    alt=""
-                                                    style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover"
-                                                />
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="photo-grid-list-item">
-                                        <a href="photo.html" class="tb">
-                                            <div class="img">
-                                                <img
-                                                    th:src="@{/images/aa.jpg}"
-                                                    src="image/aa.jpg"
-                                                    alt=""
-                                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover"
-                                                />
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="photo-grid-list-item">
-                                        <a href="photo.html" class="tb">
-                                            <div class="img">
-                                                <i class="count" style="z-index: 1">
-                                                    <span>100+</span>
-                                                </i>
-                                                <img
-                                                    th:src="@{/images/aa.jpg}"
-                                                    src="image/aa.jpg"
-                                                    alt=""
-                                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover"
-                                                />
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <hr class="separator" />
-                    <div>
-                        <section class="section pt-30 pb-30">
+                        <section class="section pt-30 pb-16">
                             <div class="container gutter-sm">
                                 <div class="section-header">
-                                    <h3 class="section-title" style="max-width: 80%">비슷한 레스토랑 추천</h3>
+                                    <h3 class="section-title">메뉴</h3>
                                     <div class="utils">
-                                        <a class="btn-all">전체보기</a>
+                                        <a href="menuList.html " class="__btn-all">전체보기</a>
                                     </div>
                                 </div>
                                 <div class="section-body">
-                                    <div class="v-scroll">
-                                        <div class="v-scroll-inner">
-                                            <div class="restaurant-list restaurant-list-sm" style="display: flex; flex-wrap: nowrap">
-                                                <div>
-                                                    <div class="restaurant-list-item">
-                                                        <a href="" class="tb">
-                                                            <div
-                                                                class="img"
-                                                                style="
-                                                                    background-image: url('https://ugc-images.catchtable.co.kr/catchtable/shopinfo/soinp4h9YNRuHm8yv09TMvg/3404fa4e8153421b9885045ab96ccbec?small400');
-                                                                "
-                                                            ></div>
-                                                        </a>
-                                                        <div class="detail">
-                                                            <a class="btn-bookmark">북마크</a>
-                                                            <a href="">
-                                                                <h3 class="name">소복재 방이본점</h3>
-                                                                <div class="meta">
-                                                                    <span class="score">4.8</span>
-                                                                    <span class="tags">샤브샤브 • 잠실</span>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="restaurant-list-item">
-                                                        <a href="" class="tb">
-                                                            <div
-                                                                class="img"
-                                                                style="
-                                                                    background-image: url('https://ugc-images.catchtable.co.kr/catchtable/shopinfo/soinp4h9YNRuHm8yv09TMvg/3404fa4e8153421b9885045ab96ccbec?small400');
-                                                                "
-                                                            ></div>
-                                                        </a>
-                                                        <div class="detail">
-                                                            <a class="btn-bookmark">북마크</a>
-                                                            <a href="">
-                                                                <h3 class="name">소복재 방이본점</h3>
-                                                                <div class="meta">
-                                                                    <span class="score">4.8</span>
-                                                                    <span class="tags">샤브샤브 • 잠실</span>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="restaurant-list-item">
-                                                        <a href="" class="tb">
-                                                            <div
-                                                                class="img"
-                                                                style="
-                                                                    background-image: url('https://ugc-images.catchtable.co.kr/catchtable/shopinfo/soinp4h9YNRuHm8yv09TMvg/3404fa4e8153421b9885045ab96ccbec?small400');
-                                                                "
-                                                            ></div>
-                                                        </a>
-                                                        <div class="detail">
-                                                            <a class="btn-bookmark">북마크</a>
-                                                            <a href="">
-                                                                <h3 class="name">소복재 방이본점</h3>
-                                                                <div class="meta">
-                                                                    <span class="score">4.8</span>
-                                                                    <span class="tags">샤브샤브 • 잠실</span>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="restaurant-list-item">
-                                                        <a href="" class="tb">
-                                                            <div
-                                                                class="img"
-                                                                style="
-                                                                    background-image: url('https://ugc-images.catchtable.co.kr/catchtable/shopinfo/soinp4h9YNRuHm8yv09TMvg/3404fa4e8153421b9885045ab96ccbec?small400');
-                                                                "
-                                                            ></div>
-                                                        </a>
-                                                        <div class="detail">
-                                                            <a class="btn-bookmark">북마크</a>
-                                                            <a href="">
-                                                                <h3 class="name">소복재 방이본점</h3>
-                                                                <div class="meta">
-                                                                    <span class="score">4.8</span>
-                                                                    <span class="tags">샤브샤브 • 잠실</span>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div></div>
-                                                <div></div>
-                                                <div></div>
-                                                <div></div>
-                                                <div></div>
-                                                <div></div>
-                                                <div class="showall">
-                                                    <a href="#showall1">
-                                                        <span>전체보기</span>
-                                                    </a>
-                                                </div>
+                                    <div class="menupan-item-list mb-20">
+                                        <div class="__menupan-item">
+                                            <div class="__name">
+                                                <h4>고기류</h4>
+                                                <div class="__price">19,000~23,000원</div>
                                             </div>
+                                        </div>
+                                        <div class="__menupan-item">
+                                            <div class="__name">
+                                                <h4>곁들임</h4>
+                                                <div class="__price">5,000~15,000원</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a href="menuList.html" class="btn-menupan-photo" style="text-decoration: none">
+                                        <span>메뉴 전체보기</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!--사진-->
+                        <hr class="separator" />
+                        <section class="section pt-30 pb-30">
+                            <div class="container gutter-sm">
+                                <div class="section-header">
+                                    <h3 class="section-title">
+                                        사진
+                                        <span class="count">668</span>
+                                    </h3>
+                                    <div class="utils"><a href="photo.html" class="__btn-all">전체보기</a></div>
+                                </div>
+                                <div class="section-body">
+                                    <div class="photo-grid-list">
+                                        <div class="photo-grid-list-item">
+                                            <a href="photo.html" class="tb">
+                                                <div class="img">
+                                                    <img
+                                                        th:src="@{/images/aa.jpg}"
+                                                        src="image/aa.jpg"
+                                                        alt=""
+                                                        style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover"
+                                                    />
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="photo-grid-list-item">
+                                            <a href="photo.html" class="tb">
+                                                <div class="img">
+                                                    <img
+                                                        th:src="@{/images/aa.jpg}"
+                                                        src="image/aa.jpg"
+                                                        alt=""
+                                                        style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover"
+                                                    />
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="photo-grid-list-item">
+                                            <a href="photo.html" class="tb">
+                                                <div class="img">
+                                                    <img
+                                                        th:src="@{/images/aa.jpg}"
+                                                        src="image/aa.jpg"
+                                                        alt=""
+                                                        style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover"
+                                                    />
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="photo-grid-list-item">
+                                            <a href="photo.html" class="tb">
+                                                <div class="img">
+                                                    <img
+                                                        th:src="@{/images/aa.jpg}"
+                                                        src="image/aa.jpg"
+                                                        alt=""
+                                                        style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover"
+                                                    />
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="photo-grid-list-item">
+                                            <a href="photo.html" class="tb">
+                                                <div class="img">
+                                                    <img
+                                                        th:src="@{/images/aa.jpg}"
+                                                        src="image/aa.jpg"
+                                                        alt=""
+                                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover"
+                                                    />
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="photo-grid-list-item">
+                                            <a href="photo.html" class="tb">
+                                                <div class="img">
+                                                    <i class="count" style="z-index: 1">
+                                                        <span>100+</span>
+                                                    </i>
+                                                    <img
+                                                        th:src="@{/images/aa.jpg}"
+                                                        src="image/aa.jpg"
+                                                        alt=""
+                                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover"
+                                                    />
+                                                </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
-                    </div>
 
-                    <hr class="separator" />
-                    <hr class="separator" />
-                    <hr class="separator" />
-                    <hr class="separator" />
-                </section>
-            </div>
-        </main>
-        <aside id="dock" class="pgjaj00">
-            <div class="_1kfi3w60">
-                <button class="btn-bookmark-detail2" th:classappend="${isZzimed ? 'active' : ''}" th:data-restaurant-seq="${restaurantInfo.restaurant_seq}">저장</button>
-                <span class="_1kfi3w63" th:text="${restaurantInfo.zzim_total}">총찜수</span>
-            </div>
-            <button class="pgjaj01" type="button">
-                <div class="pgjaj02 pgjaj04">예약하기</div>
-            </button>
-        </aside>
+                        <hr class="separator" />
+                        <div>
+                            <section class="section pt-30 pb-30">
+                                <div class="container gutter-sm">
+                                    <div class="section-header">
+                                        <h3 class="section-title" style="max-width: 80%">비슷한 레스토랑 추천</h3>
+                                        <div class="utils">
+                                            <a class="btn-all">전체보기</a>
+                                        </div>
+                                    </div>
+                                    <div class="section-body">
+                                        <div class="v-scroll">
+                                            <div class="v-scroll-inner">
+                                                <div class="restaurant-list restaurant-list-sm" style="display: flex; flex-wrap: nowrap">
+                                                    <div>
+                                                        <div class="restaurant-list-item">
+                                                            <a href="" class="tb">
+                                                                <div
+                                                                    class="img"
+                                                                    style="
+                                                                        background-image: url('https://ugc-images.catchtable.co.kr/catchtable/shopinfo/soinp4h9YNRuHm8yv09TMvg/3404fa4e8153421b9885045ab96ccbec?small400');
+                                                                    "
+                                                                ></div>
+                                                            </a>
+                                                            <div class="detail">
+                                                                <a class="btn-bookmark">북마크</a>
+                                                                <a href="">
+                                                                    <h3 class="name">소복재 방이본점</h3>
+                                                                    <div class="meta">
+                                                                        <span class="score">4.8</span>
+                                                                        <span class="tags">샤브샤브 • 잠실</span>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="restaurant-list-item">
+                                                            <a href="" class="tb">
+                                                                <div
+                                                                    class="img"
+                                                                    style="
+                                                                        background-image: url('https://ugc-images.catchtable.co.kr/catchtable/shopinfo/soinp4h9YNRuHm8yv09TMvg/3404fa4e8153421b9885045ab96ccbec?small400');
+                                                                    "
+                                                                ></div>
+                                                            </a>
+                                                            <div class="detail">
+                                                                <a class="btn-bookmark">북마크</a>
+                                                                <a href="">
+                                                                    <h3 class="name">소복재 방이본점</h3>
+                                                                    <div class="meta">
+                                                                        <span class="score">4.8</span>
+                                                                        <span class="tags">샤브샤브 • 잠실</span>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="restaurant-list-item">
+                                                            <a href="" class="tb">
+                                                                <div
+                                                                    class="img"
+                                                                    style="
+                                                                        background-image: url('https://ugc-images.catchtable.co.kr/catchtable/shopinfo/soinp4h9YNRuHm8yv09TMvg/3404fa4e8153421b9885045ab96ccbec?small400');
+                                                                    "
+                                                                ></div>
+                                                            </a>
+                                                            <div class="detail">
+                                                                <a class="btn-bookmark">북마크</a>
+                                                                <a href="">
+                                                                    <h3 class="name">소복재 방이본점</h3>
+                                                                    <div class="meta">
+                                                                        <span class="score">4.8</span>
+                                                                        <span class="tags">샤브샤브 • 잠실</span>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="restaurant-list-item">
+                                                            <a href="" class="tb">
+                                                                <div
+                                                                    class="img"
+                                                                    style="
+                                                                        background-image: url('https://ugc-images.catchtable.co.kr/catchtable/shopinfo/soinp4h9YNRuHm8yv09TMvg/3404fa4e8153421b9885045ab96ccbec?small400');
+                                                                    "
+                                                                ></div>
+                                                            </a>
+                                                            <div class="detail">
+                                                                <a class="btn-bookmark">북마크</a>
+                                                                <a href="">
+                                                                    <h3 class="name">소복재 방이본점</h3>
+                                                                    <div class="meta">
+                                                                        <span class="score">4.8</span>
+                                                                        <span class="tags">샤브샤브 • 잠실</span>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div></div>
+                                                    <div></div>
+                                                    <div></div>
+                                                    <div></div>
+                                                    <div></div>
+                                                    <div></div>
+                                                    <div class="showall">
+                                                        <a href="#showall1">
+                                                            <span>전체보기</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <hr class="separator" />
+                        <hr class="separator" />
+                        <hr class="separator" />
+                        <hr class="separator" />
+                    </section>
+                </div>
+            </main>
+            <aside id="dock" class="pgjaj00">
+                <div class="_1kfi3w60">
+                    <button class="btn-bookmark-detail2" th:classappend="${isZzimed ? 'active' : ''}" th:data-restaurant-seq="${restaurantInfo.restaurant_seq}">저장</button>
+                    <span class="_1kfi3w63" th:text="${restaurantInfo.zzim_total}">총찜수</span>
+                </div>
+                <form th:action th:object="${reservationJoinDTO}" method="post">
+                    <input class="date" type="hidden" name="date" th:value="${session.wantingDate}" />
+                    <input class="hour" type="hidden" name="hour" th:value="${session.wantingHour}"/>
+                    <input class="person" type="hidden" name="person"  th:value="${session.wantingPerson}" />
+<!--                        <input class="date" type="hidden" name="date" th:value="${session.wantingDate}" />-->
+<!--                        <input class="hour" type="hidden" name="hour" th:value="${session.wantingHour}" />-->
+<!--                        <input class="person" type="hidden" name="person"  th:value="${session.wantingPerson}" />-->
+                    <button type="submit" class="pgjaj01">
+                        <div class="pgjaj02 pgjaj04">예약하기</div>
+                    </button>
+                </form>
+
+            </aside>
         <div role="presentation" id="myModal" class="MuiDrawer-root MuiDrawer-modal jss1" style="position: fixed; z-index: 100000; inset: 0">
             <div class="MuiBackdrop-root" aria-hidden="true" style="opacity: 1; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"></div>
             <div tabindex="0" data-test="sentinelStart"></div>
