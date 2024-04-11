@@ -81,6 +81,9 @@ $(document).ready(function () {
         let timeRadio = $('input[type="radio"][name="time"]');
         let restaurantSeq = document.getElementById('restaurantSeqData').dataset.restaurantSeq;
         //클릭되었을 때 값이 오늘이라면 현재 시간 전의 예약시간들을 disable 하기
+        // console.log(parseInt(calYear) === new Date().getFullYear() );
+        // console.log(parseInt(calMonth) === new Date().getMonth() + 1);
+        // console.log( parseInt(calDate) === new Date().getDate());
         if(parseInt(calYear) === new Date().getFullYear() &&
             parseInt(calMonth) === new Date().getMonth() + 1  &&
             parseInt(calDate) === new Date().getDate()){
@@ -92,6 +95,7 @@ $(document).ready(function () {
                         let $matchingRadio  = timeRadio.filter('[value="' + outdatedTime + '"]');
                         if ($matchingRadio.length > 0) {
                             $matchingRadio.addClass('outdated');
+                            $matchingRadio.prop("checked", false);
                             $matchingRadio.prop("disabled", true);
                         }
                     });
@@ -100,10 +104,10 @@ $(document).ready(function () {
                     console.error(xhr.responseText);
                 }
             });
+        }else{
+            timeRadio.removeClass('outdated');
+            timeRadio.prop("disabled", false);
         }
-    })
-    $('input.outdated').parent().click(function(){
-        alert("지난 시간입니다.");
     })
 });
 // 위아래 찜목록 연동

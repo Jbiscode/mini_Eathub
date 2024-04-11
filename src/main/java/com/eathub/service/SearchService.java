@@ -17,7 +17,7 @@ public class SearchService {
     public List<TimeOptionDTO> generateTimeOptions() {
         List<TimeOptionDTO> timeOptions = new ArrayList<>();
         LocalTime time = LocalTime.of(6, 0);
-        while (!time.equals(LocalTime.of(23, 30))) {
+        while (!time.equals(LocalTime.of(00, 00))) {
             TimeOptionDTO option = new TimeOptionDTO();
             option.setTime(time.toString());
             timeOptions.add(option);

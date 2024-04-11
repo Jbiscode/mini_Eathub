@@ -119,7 +119,7 @@ function buildCalendar() {
                 else if (nowDate.getDate() == day) {
                     column.style.backgroundColor = "#92d1ec";
                     column.style.cursor = "pointer";
-                    column.classList.add("choiceDay");
+                    // column.classList.add("choiceDay");
                     column.style.borderRadius = "100%";
                     column.onclick = function () {
                         calendarChoiceDay(this);
@@ -176,7 +176,7 @@ function calendarChoiceDay(column) {
     if (document.getElementsByClassName("choiceDay")[0]) {
 
         // @see 금일인 경우
-        if (document.getElementById("calMonth").innerText == autoLeftPad((nowDate.getMonth() + 1), 2) && document.getElementsByClassName("choiceDay")[0].innerText == autoLeftPad(toDay.getDate(), 2)) {
+        if (document.getElementById("calMonth").innerText == autoLeftPad((nowDate.getMonth() + 1), 2) && document.getElementsByClassName("choiceDay")[0].innerText == autoLeftPad(nowDate.getDate(), 2)) {
             document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#92d1ec";
         }
 
