@@ -318,6 +318,7 @@ function fillingInfo() {
             contentType: 'application/json',
             data: JSON.stringify(requestData),
             success: function(response) {
+                console.log('세션에 알맞게 저장되었습니다.' + response);
             },
             error: function(error) {
                 console.log('에러 발생:', error);
