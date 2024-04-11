@@ -6,6 +6,7 @@ import com.eathub.dto.TimeOptionDTO;
 import com.eathub.service.RestaurantService;
 import com.eathub.service.SearchService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/search")
@@ -37,26 +39,16 @@ public class SearchController {
         model.addAttribute("timeOptions", timeOptionDTOS);
         model.addAttribute("restaurantList", searchResultList);
 
-        Date date = new Date();
-
-        // "yyyy-MM-dd" 형식으로 날짜를 포맷팅합니다.
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("hhmm");
-
-        // 포맷팅된 날짜 문자열을 생성합니다.
-        String today = sdf.format(date);
-        String strHour = sdf2.format(date);
-        int realHour = Integer.parseInt(strHour);
-//        int hour = realHour /
-
         // 세션에 값이 없으면 세션 생성
-        if(session.getAttribute("wantingDate") != null){
-            session.setAttribute("wantingDate", "");
-            session.setAttribute("wantingHour", "");
-            session.setAttribute("wantingPerson", "");
+        if(session.getAttribute("wantingDate") == null){
+            session.setAttribute("wantingDate", searchService.getTodayDate());
         }
-
-
+        if(session.getAttribute("wantingHour") == null){
+            session.setAttribute("wantingHour", searchService.getNextReservationTime());
+        }
+        if(session.getAttribute("wantingPerson") == null){
+            session.setAttribute("wantingPerson", 1);
+        }
         return "/members/searchResult";
     }
 
