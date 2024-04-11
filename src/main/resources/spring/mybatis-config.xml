@@ -10,10 +10,12 @@
                 <typeAlias type="com.eathub.entity.Members" alias="members"/>
                 <typeAlias type="com.eathub.entity.RestaurantInfo" alias="restaurantInfo"/>
                 <typeAlias type="com.eathub.entity.RestaurantZzim" alias="restaurantZzim"/>
+                <typeAlias type="com.eathub.entity.Reservation" alias="reservation"/>
 
                 <typeAlias type="com.eathub.dto.MyPageDTO" alias="myPageDTO"/>
 
                 <typeAlias type="com.eathub.dto.CategoryDTO" alias="categoryDTO"/>
                 <typeAlias type="com.eathub.dto.RestaurantJoinDTO" alias="restaurantJoinDTO"/>
+                <typeAlias type="com.eathub.dto.ReservationJoinDTO" alias="reservationJoinDTO"/>
         </typeAliases>
 </configuration>

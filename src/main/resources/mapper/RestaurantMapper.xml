@@ -35,6 +35,20 @@
                 , #{closedDay})
 
     </insert>
+    <!-- 예약 추가 -->
+    <insert id="insertReservation" parameterType="Reservation">
+        INSERT INTO reservation(restaurant_seq
+        , member_seq
+        , res_date
+        , res_people
+        , res_comment)
+        VALUES ( #{restaurant_seq}
+        , #{member_seq}
+        , #{res_date}
+        , #{res_people}
+        , #{res_comment})
+
+    </insert>
 
     <!-- 레스토랑 등록대기열 추가   -->
     <insert id="insertRestaurantStatus" parameterType="restaurantInfo">
@@ -55,12 +69,6 @@
             VALUES (#{restaurant_seq}, #{menu.menu_name}, #{menu.menu_info}, #{menu.menu_image_name}, #{menu.menu_image_path}, #{menu.menu_price}, #{menu.menu_type})
         </foreach>
     </insert>
-
-
-
-
-
-
 
 <!-- SELECT-->
 
