@@ -1,7 +1,9 @@
 package com.eathub.service;
 
 import com.eathub.conf.SessionConf;
+
 import com.eathub.dto.LoginDTO;
+
 import com.eathub.dto.ReviewDTO;
 import com.eathub.dto.ReviewStatsDTO;
 import com.eathub.mapper.RestaurantMapper;
@@ -88,6 +90,11 @@ public class ReviewService {
         return "access granted";
     }
 
+
+    public ReviewDTO isReviewed(Long resSeq) {
+        return reviewMapper.selectReviewed(resSeq);
+    }
+    
     // 리뷰 리스트 전체 조회
     public List<ReviewDTO> selectReviewAndImages(Long res_seq) {
         List<ReviewDTO> reviewDTO = reviewMapper.selectReviewList(res_seq);

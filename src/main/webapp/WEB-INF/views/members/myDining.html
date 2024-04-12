@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
     <link rel="stylesheet" href="../../resources/css/myDining.css" th:href="@{/css/myDining.css}">
 
-<!--    <script defer src="../../resources/js/myPage.js" th:src="@{/js/myPage.js}"></script>-->
+    <script defer src="../../resources/js/myPage.js" th:src="@{/js/myDining.js}"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -88,7 +88,7 @@
                                         reservation.res_status.name() == 'ACCESS' ? '예약 완료' :
                                         reservation.res_status.name() == 'OK' ? '방문 완료' : null}">예약확인중
                                       </span>
-                                      <a class="label" th:href="@{/restaurant/review/write(res_seq=${reservation.res_seq})}" th:if="${reservation.res_status.name() == 'OK'}">리뷰작성</a>
+                                      <a class="label" th:href="@{/restaurant/review/write(res_seq=${reservation.res_seq})}" th:if="${reservation.res_status.name() == 'OK'}" th:classappend="${reservation.reviewed} ? 'reviewed'">리뷰작성</a>
                                   </div>
                                   <div class="restaurant-info">
                                       <a href="javascript:void(0)" class="tb">

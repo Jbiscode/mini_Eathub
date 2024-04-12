@@ -27,5 +27,8 @@ public class ReservationDTO {
     private Long dDay;
     private Long absDday;
 
+
+    private boolean reviewed;
     private String image_url;
+
 }
