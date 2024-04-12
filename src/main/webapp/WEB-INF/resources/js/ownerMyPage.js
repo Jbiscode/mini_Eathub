@@ -18,10 +18,12 @@ document.querySelectorAll(".owner-restaurant-list-item").forEach((item) => {
             const data = await response.json();
             console.log(JSON.stringify(data));
 
-            updateFormFields(data.restaurantInfo, data.restaurantDetailDTO);
+            updateFormFields(data.restaurantInfo);
             toggleModalVisibility(false);
             scrollToTop();
-            makeLinkButton(restaurantSeq);
+            makeLinkButton(restaurantSeq)
+            $('.owner-restaurant-info').removeClass('hide');
+            $('.nodata').addClass('hide')
         } catch (error) {
             alert("요청 처리 중 문제가 발생했습니다. 다시 시도해주세요.");
             console.error(error);
@@ -30,7 +32,7 @@ document.querySelectorAll(".owner-restaurant-list-item").forEach((item) => {
 });
 
 
-function updateFormFields(restaurantInfo, restaurantDetailDTO) {
+function updateFormFields(restaurantInfo) {
     const fields = ["restaurant_name", "location", "tag", "description", "phone", "zipcode", "address1", "address2"];
     fields.forEach((field) => {
         document.getElementById(field).value = restaurantInfo[field];
@@ -39,8 +41,8 @@ function updateFormFields(restaurantInfo, restaurantDetailDTO) {
     document.getElementById("category_seq").value = restaurantInfo.restaurant_type;
     document.getElementById("openHour").value = restaurantInfo.openHour.substring(0, 5);
     document.getElementById("closeHour").value = restaurantInfo.closeHour.substring(0, 5);
-    console.log(restaurantDetailDTO.image_url)
-    document.getElementById("restaurant_img").src= "https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/" + restaurantDetailDTO.image_url;
+
+    document.getElementById("restaurant_img").src= "https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/" + restaurantInfo.img_url;
 
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach((checkbox) => {

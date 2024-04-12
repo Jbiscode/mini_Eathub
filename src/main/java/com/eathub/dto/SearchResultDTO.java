@@ -24,4 +24,6 @@ public class SearchResultDTO {
     private Integer zzim_total;
 
     private boolean isZzimed;
+
+    private String image_url;
 }

@@ -322,3 +322,7 @@ div[role="presentation"]#resModal{
   font-weight: 700 !important;
 }
 
+.today{
+  background-color:#92d1ec !important;
+  border-radius: 100%;
+}

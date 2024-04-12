@@ -117,8 +117,8 @@ function buildCalendar() {
 
                 // @details 현재일인 경우
                 else if (nowDate.getDate() == day) {
-                    column.style.backgroundColor = "#92d1ec";
                     column.style.cursor = "pointer";
+                    column.classList.add("today");
                     column.classList.add("choiceDay");
                     column.style.borderRadius = "100%";
                     column.onclick = function () {
@@ -177,7 +177,7 @@ function calendarChoiceDay(column) {
 
         // @see 금일인 경우
         if (document.getElementById("calMonth").innerText == autoLeftPad((nowDate.getMonth() + 1), 2) && document.getElementsByClassName("choiceDay")[0].innerText == autoLeftPad(toDay.getDate(), 2)) {
-            document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#92d1ec";
+            document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
         }
 
         // @see 금일이 아닌 경우

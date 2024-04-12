@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 var toDay = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 toDay에 Date 객체를 넣어줌
-let nowDate = new Date();  // @param 전역 변수, 실제 오늘날짜 고정값
+const nowDate = new Date();  // @param 전역 변수, 실제 오늘날짜 고정값
 
 /**
  * @brief   이전달 버튼 클릭시
@@ -116,9 +116,10 @@ function buildCalendar() {
                 }
 
                 // @details 현재일인 경우
-                else if (nowDate.getDate() == day) {
-                    column.style.backgroundColor = "#92d1ec";
+                else if (nowDate.getDate() === day) {
                     column.style.cursor = "pointer";
+                    column.style.backgroundColor = "#92d1ec";
+                    column.classList.add("today");
                     column.classList.add("choiceDay");
                     column.style.borderRadius = "100%";
                     column.onclick = function () {
@@ -128,14 +129,14 @@ function buildCalendar() {
 
                 // @details 현재월보다 이전인경우
             } else if (toDay.getMonth() < nowDate.getMonth()) {
-                if (Math.sign(day) == 1 && day <= lastDate.getDate()) {
+                if (Math.sign(day) === 1 && day <= lastDate.getDate()) {
                     column.style.color = "#A9A9A9";
                 }
             }
 
             // @details 현재월보다 이후인경우
             else {
-                if (Math.sign(day) == 1 && day <= lastDate.getDate()) {
+                if (Math.sign(day) === 1 && day <= lastDate.getDate()) {
                     column.style.backgroundColor = "#FFFFFF";
                     column.style.cursor = "pointer";
                     column.onclick = function () {
@@ -177,10 +178,10 @@ function calendarChoiceDay(column) {
 
         // @see 금일인 경우
         if (document.getElementById("calMonth").innerText == autoLeftPad((nowDate.getMonth() + 1), 2) && document.getElementsByClassName("choiceDay")[0].innerText == autoLeftPad(toDay.getDate(), 2)) {
-            document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#92d1ec";
+            document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
         }
 
-        // @see 금일이 아닌 경우
+        // // @see 금일이 아닌 경우
         else {
             document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
         }
@@ -190,7 +191,7 @@ function calendarChoiceDay(column) {
     // @param 선택일 체크 표시
     column.style.backgroundColor = "#ff3d0055";
     column.style.borderRadius = "100%";
-    //column.style.color = "#fff";
+    // column.style.color = "#fff";
     column.style.color = "#000";
 
 

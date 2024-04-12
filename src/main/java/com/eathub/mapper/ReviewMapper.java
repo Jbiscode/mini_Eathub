@@ -2,6 +2,9 @@ package com.eathub.mapper;
 
 import com.eathub.dto.ReviewDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface ReviewMapper {
@@ -24,7 +27,15 @@ public interface ReviewMapper {
      */
     ReviewDTO checkReviewData(Long res_seq);
 
+
     ReviewDTO selectReviewed(Long resSeq);
+
+    // 리뷰 전체 조회
+    List<ReviewDTO> selectReviewList(Long restaurant_seq);
+    // 리뷰 일부 조회
+    List<ReviewDTO> selectReviewListPage(@Param("restaurant_seq") Long restaurant_seq,@Param("page") int page);
+    List<String > selectReviewImages(Long res_seq);
+
     //    UPDATE
     //    DELETE
 }

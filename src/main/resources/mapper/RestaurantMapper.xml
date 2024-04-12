@@ -163,6 +163,38 @@
         WHERE  category_seq= #{category_seq}
     </select>
 
+
+    <!-- 예약 top -->
+    <select id="selectRestaurantTopSearchList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        order by review_total desc;
+    </select>
+
+    <!-- 이달의 맛집 -->
+    <select id="selectRestaurantMonthlySearchList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        order by zzim_total desc;
+    </select>
+
+    <!-- 어디로 가시나요? -->
+    <select id="selectSearchAddressResultList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,lower(location),description,openHour,closeHour,rating,review_total,zzim_total,address1
+        FROM restaurant_info
+        WHERE
+        <foreach item="item" index="index" collection="list" open="(" separator="OR" close=")">
+            address1 LIKE #{item}
+        </foreach>
+    </select>
+
+    <!-- 오늘의 예약 -->
+    <select id="selectRestaurantTodaySearchList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        order by rand() limit 20;
+    </select>
+
     <!-- 랜덤으로 레스토랑 뽑아오기   -->
     <select id="selectRandomRestaurant" resultType="com.eathub.dto.SearchResultDTO">
         SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total

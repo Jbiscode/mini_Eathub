@@ -33,15 +33,12 @@
                 <div class="section">
                     <!--사진 슬라이드-->
                     <div class="slider">
-                        <input type="radio" name="slide" id="slide1" />
+                        <input type="radio" name="slide" id="slide1" checked />
                         <input type="radio" name="slide" id="slide2" />
                         <input type="radio" name="slide" id="slide3" />
-                        <input type="radio" name="slide" id="slide4" checked />
+                        <input type="radio" name="slide" id="slide4" />
                         <ul id="imgholder" class="imgs">
-                            <li><img th:src="@{/images/aa.jpg}" /></li>
-                            <li><img th:src="@{/images/bb.jpeg}" /></li>
-                            <li><img th:src="@{/images/cc.jpeg}" /></li>
-                            <li><img th:src="@{/images/dd.jpeg}" /></li>
+                            <li><img th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${restaurantDetailDTO.image_url}|" alt="대표사진"/></li>
                         </ul>
                         <div class="bullets">
                             <label for="slide1">&nbsp;</label>
@@ -556,10 +553,10 @@
 <!--                        <input class="date" type="hidden" name="date" th:value="${session.wantingDate}" />-->
 <!--                        <input class="hour" type="hidden" name="hour" th:value="${session.wantingHour}" />-->
 <!--                        <input class="person" type="hidden" name="person"  th:value="${session.wantingPerson}" />-->
-                    <button type="submit" class="pgjaj01">
-                        <div class="pgjaj02 pgjaj04">예약하기</div>
-                    </button>
                 </form>
+                <button type="submit" class="pgjaj01">
+                    <div class="pgjaj02 pgjaj04">예약하기</div>
+                </button>
 
             </aside>
         <div role="presentation" id="myModal" class="MuiDrawer-root MuiDrawer-modal jss1" style="position: fixed; z-index: 100000; inset: 0">

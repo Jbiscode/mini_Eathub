@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+
 import java.time.format.DateTimeFormatter;
+
 import java.util.*;
 
 @Slf4j
@@ -199,6 +201,59 @@ public class RestaurantService {
         return searchResultList;
     }
 
+    //예약 top
+    public List<SearchResultDTO> selectSearchTopResultList(Long member_seq) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantTopSearchList();
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
+
+    //오늘의 예약
+    public List<SearchResultDTO> selectSearchMonthlyResultList(Long member_seq) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantMonthlySearchList();
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
+
+    //어디로 가시나요?
+    public List<SearchResultDTO> selectSearchAddressResultList(Long member_seq, List address) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectSearchAddressResultList(address);
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
+
+    public String getAddressList(String address){
+        Map<String, String> addressMap = new LinkedHashMap<>();
+        addressMap.put("apgujeong,cheongdam", "압구정,청담");
+        addressMap.put("hongdae,sinchon", "홍대,신촌");
+        addressMap.put("busan", "부산");
+        addressMap.put("hapjeong,mangwon", "합정,망원");
+        addressMap.put("sungsoo", "성수");
+        addressMap.put("gangnam,yeogsam", "강남,역삼");
+        addressMap.put("jeju", "제주");
+
+        // 입력된 address에 해당하는 한글 주소 찾기
+        for (String key : addressMap.keySet()) {
+            if (key.contains(address)) {
+                return addressMap.get(key); // 매핑된 한글 주소 문자열 반환
+            }
+        }
+        return address; // 매핑되지 않았다면 원본 address 반환
+    }
+
+
 
     // 타임리프에 사용할 시간 옵션을 생성하는 메서드 6시부터 23시 30분까지 30분 단위로 생성
 
@@ -217,6 +272,17 @@ public class RestaurantService {
         return timeOptions;
     }
 
+
+    //오늘의 식당
+    public List<SearchResultDTO> selectSearchTodayResultList(Long member_seq) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantTodaySearchList();
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
 
     public List<SearchResultDTO> getRandomRestaurant(Long memSeq) {
         return restaurantMapper.selectRandomRestaurant();
