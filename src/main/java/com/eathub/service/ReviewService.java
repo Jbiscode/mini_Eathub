@@ -85,7 +85,8 @@ public class ReviewService {
 
     public ReviewDTO isReviewed(Long resSeq) {
         return reviewMapper.selectReviewed(resSeq);
-
+    }
+    
     // 리뷰 리스트 전체 조회
     public List<ReviewDTO> selectReviewAndImages(Long res_seq) {
         List<ReviewDTO> reviewDTO = reviewMapper.selectReviewList(res_seq);
