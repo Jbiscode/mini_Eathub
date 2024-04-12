@@ -3,6 +3,7 @@ package com.eathub.controller;
 import com.eathub.conf.SessionConf;
 import com.eathub.dto.ReservationDTO;
 import com.eathub.service.MemberService;
+import com.eathub.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import java.util.List;
 public class MyDiningController {
 
     private final MemberService memberService;
+    private final ReviewService reviewService;
 
     @ModelAttribute("page")
     public String page() {
@@ -34,8 +36,20 @@ public class MyDiningController {
 
         // mem_seq로 예약상태 리스트 불러오기 (reservation Service? 일단 memberservice에)
         List<ReservationDTO> reservationList =  memberService.getReservationList(mem_seq);
-        model.addAttribute("reservationDTOList", reservationList);
 
+        // 예약이 존재하면 reservationDTO의 isReviewed true로 아니면 false
+        for (ReservationDTO reservationDTO : reservationList) {
+            String isExistingReview = reviewService.checkReviewData(reservationDTO.getRes_seq(),reservationDTO.getMember_seq());
+            if(isExistingReview.equals("access granted")){
+                reservationDTO.setReviewed(false);
+            }else{
+                reservationDTO.setReviewed(true);
+            }
+            log.info("reservationDTO = {} ", reservationDTO);
+        }
+
+
+        model.addAttribute("reservationDTOList", reservationList);
         return "/members/myDining";
     }
 }

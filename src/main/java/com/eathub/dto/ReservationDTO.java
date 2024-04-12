@@ -26,4 +26,6 @@ public class ReservationDTO {
     private String dateFormat;
     private Long dDay;
     private Long absDday;
+
+    private boolean reviewed;
 }

@@ -23,6 +23,8 @@ public interface ReviewMapper {
      * @param res_seq
      */
     ReviewDTO checkReviewData(Long res_seq);
+
+    ReviewDTO selectReviewed(Long resSeq);
     //    UPDATE
     //    DELETE
 }
