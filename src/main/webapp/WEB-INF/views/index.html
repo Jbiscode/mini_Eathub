@@ -38,25 +38,25 @@
             <div class="swiper swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_1" ></a>
+                        <a><img th:src="@{/images/ad1.png}" src="../resources/images/ad_ex.png" alt="ad_1" ></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_2" ></a>
+                        <a><img th:src="@{/images/ad2.png}" src="../resources/images/ad_ex.png" alt="ad_2" ></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_3" ></a>
+                        <a><img th:src="@{/images/ad3.png}" src="../resources/images/ad_ex.png" alt="ad_3" ></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_4" ></a>
+                        <a><img th:src="@{/images/ad4.jpeg}" src="../resources/images/ad_ex.png" alt="ad_4" ></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_5"></a>
+                        <a><img th:src="@{/images/ad5.jpeg}" src="../resources/images/ad_ex.png" alt="ad_5"></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_6"></a>
+                        <a><img th:src="@{/images/ad6.jpeg}" src="../resources/images/ad_ex.png" alt="ad_6"></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad_ex.png}" src="../resources/images/ad_ex.png" alt="ad_7"></a>
+                        <a><img th:src="@{/images/ad7.jpeg}" src="../resources/images/ad_ex.png" alt="ad_7"></a>
                     </div>
                 </div>
                 <!-- 페이지네이션 -->
@@ -144,8 +144,13 @@
                 <div class="v_scroll">
                     <div class="v_scroll_inner">
                         <div class="restaurant_list">
-                            <div class="restaurant_list_item"th:each="restaurant : ${restaurantList}">
-                                <a class="restaurant_list_item_img" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}"></a>
+                            <div class="restaurant_list_item"th:each="restaurant : ${topResultList}">
+                                <a class="restaurant_list_item_img" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
+                                    <img
+                                            class="img"
+                                            src="../../resources/images/mongtanjeju.jpg"
+                                            th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${restaurant.image_url}|"/>
+                                </a>
                                 <div class="detail">
                                     <a class="info" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
                                         <h3 class="restaurant_name" th:text="${restaurant.restaurant_name}">남영돈</h3>
@@ -184,8 +189,13 @@
                 <div class="v_scroll">
                     <div class="v_scroll_inner">
                         <div class="restaurant_list">
-                            <div class="restaurant_list_item" th:each="restaurant : ${restaurantList}">
-                                <a class="restaurant_list_item_img" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}"></a>
+                            <div class="restaurant_list_item" th:each="restaurant : ${todayResultList}">
+                                <a class="restaurant_list_item_img" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
+                                    <img
+                                            class="img"
+                                            src="../../resources/images/mongtanjeju.jpg"
+                                            th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${restaurant.image_url}|"/>
+                                </a>
                                 <div class="detail">
                                     <a class="info" th:href="@{|/restaurant/detail/${restaurant.restaurant_seq}|}">
                                         <h3 class="restaurant_name" th:text="${restaurant.restaurant_name}">남영돈</h3>
