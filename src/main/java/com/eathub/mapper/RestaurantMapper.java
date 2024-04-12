@@ -61,6 +61,8 @@ public interface RestaurantMapper {
 
     RestaurantDetailDTO selectRestaurantDetail(Long restaurantSeq);
 
+    Long selectRestaurantSeqByResSeq(Long res_seq);
+
 
 //    UPDATE
     void updateZzimComment(@Param("zzim_seq") Long zzim_seq, @Param("comment") String comment);

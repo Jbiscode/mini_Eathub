@@ -1,10 +1,15 @@
 package com.eathub.service;
 
 import com.eathub.conf.SessionConf;
+
+import com.eathub.dto.LoginDTO;
+
 import com.eathub.dto.ReviewDTO;
+import com.eathub.dto.ReviewStatsDTO;
 import com.eathub.mapper.RestaurantMapper;
 import com.eathub.mapper.ReviewMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -15,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ReviewService {
     private final RestaurantMapper restaurantMapper;
@@ -29,10 +35,12 @@ public class ReviewService {
      */
     @Transactional
     public void insertReviewAndImages(ReviewDTO reviewDTO, HttpSession session) {
-//        ncpObjectStorageService.uploadFile(reviewDTO);
+
         ReviewDTO reviewDTOs = uploadFile(reviewDTO, session);
         reviewMapper.insertReview(reviewDTOs);
         reviewMapper.insertReviewImages(reviewDTOs);
+        ReviewStatsDTO reviewStatsDTO=reviewMapper.calculateReviewStats(reviewDTO.getRestaurant_seq());
+        reviewMapper.updateReviewCountAndRatingAvg(reviewDTO.getRestaurant_seq(),reviewStatsDTO.getReview_count(),reviewStatsDTO.getRating_avg());
     }
     private ReviewDTO uploadFile(ReviewDTO reviewDTO, HttpSession session) {
         String BucketFolderName = "review/";
@@ -97,9 +105,10 @@ public class ReviewService {
         return reviewDTO;
     }
 
+    @Transactional
     // 리뷰 리스트 페이지 조회
     public List<ReviewDTO> selectReviewAndImages(Long restaurant_seq, int page) {
-        List<ReviewDTO> reviewDTO = reviewMapper.selectReviewListPage(restaurant_seq, (page-1)*3);
+        List<ReviewDTO> reviewDTO = reviewMapper.selectReviewListPage(restaurant_seq, (page-1)*2);
         for (ReviewDTO dto : reviewDTO) {
             List<String> reviewImages = reviewMapper.selectReviewImages(dto.getRes_seq());
             dto.setPictureUrls(reviewImages);

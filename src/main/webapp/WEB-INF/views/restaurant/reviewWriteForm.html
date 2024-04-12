@@ -11,7 +11,8 @@
 
 <h2>음식점 리뷰 작성</h2>
 <form id="reviewForm" th:action method="post" onsubmit="submitReview(); return false;" enctype="multipart/form-data">
-<input type="hidden" id="res_seq" th:value="${res_seq}">
+<input type="hidden" name="restaurant_seq" th:value="${restaurant_seq}">
+<input type="hidden" name="res_seq" th:value="${res_seq}">
 
     <!-- 별점 폼 -->
     <div class="star-rating">
