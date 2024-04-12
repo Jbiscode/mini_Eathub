@@ -71,12 +71,12 @@ public class MemberController {
                 }
             }
             model.addAttribute("myPageDTO", ownerRestaurantList);
-            model.addAttribute("restaurantJoinDTO", new RestaurantJoinDTO());
+            model.addAttribute("restaurantJoinDTO", new OwnerRestaurantDetailDTO());
             model.addAttribute("memberJoinDTO", memberJoinDTO);
             return "/members/ownerMyPage";
         }
 
-        // 추천 레스토랑 리스트 불러오기 (랜덤 / 찜 아닌 것)
+        // 추천 레스토랑 리스트 불러오기
         List<SearchResultDTO> recommendRestaurantList = restaurantService.getRandomRestaurant(mem_seq);
 
         model.addAttribute("recommendRestaurantList", recommendRestaurantList);

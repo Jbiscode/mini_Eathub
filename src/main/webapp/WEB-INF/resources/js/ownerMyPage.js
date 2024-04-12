@@ -44,9 +44,10 @@ function updateFormFields(restaurantInfo) {
 
     document.getElementById("restaurant_img").src= "https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/" + restaurantInfo.img_url;
 
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]')
+
     checkboxes.forEach((checkbox) => {
-        checkbox.checked = checkbox.value === restaurantInfo.closedDay;
+        checkbox.checked = restaurantInfo.closedDayList.includes(checkbox.value);
     });
 }
 

@@ -13,10 +13,7 @@ import org.springframework.validation.BindingResult;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -138,4 +135,14 @@ public class MemberService {
 
         return reservationList;
     }
+
+    public List<String> convertStringToList(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return Collections.emptyList();
+        }
+        String[] elements = input.split(",");
+        return Arrays.asList(elements);
+    }
+
+
 }

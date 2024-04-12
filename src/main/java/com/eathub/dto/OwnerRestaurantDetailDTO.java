@@ -2,16 +2,20 @@ package com.eathub.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.sql.Time;
+import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class OwnerRestaurantDetailDTO {
     private Long restaurant_seq;
     private Long member_seq;
     private String restaurant_type;
     private String restaurant_name;
+    private Long category_seq;
     private String tag;
     private String location;
     private String description;
@@ -22,7 +26,8 @@ public class OwnerRestaurantDetailDTO {
 
     private Time openHour;
     private Time closeHour;
-    private String  closedDay;
+    private String closedDay;
+    private List<String> closedDayList;
 
     private Double rating;
     private Integer review_total;
