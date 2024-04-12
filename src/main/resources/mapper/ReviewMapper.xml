@@ -39,13 +39,26 @@
                 LEFT JOIN reservation USING (res_seq)
         where restaurant_seq = #{restaurant_seq}
         order by rating desc
-        limit #{page},3;
+        limit #{page},2;
     </select>
     <select id="selectReviewImages">
         SELECT picture_url
         FROM review_pictures
         WHERE res_seq = #{res_seq}
     </select>
+
+<select id="calculateReviewStats" resultType="com.eathub.dto.ReviewStatsDTO">
+    SELECT COUNT(*) as review_count,
+                    AVG(rating) as rating_avg
+    from reservation r
+        LEFT JOIN review v ON r.res_seq = v.res_seq
+    WHERE restaurant_seq= #{restaurant_seq} AND rating IS NOT NULL;
+</select>
 <!-- UPDATE-->
+<update id="updateReviewCountAndRatingAvg">
+    UPDATE restaurant_info
+    SET rating = #{rating_avg}, review_total = #{review_count}
+    WHERE restaurant_seq = #{restaurant_seq};
+</update>
 <!-- DELETE-->
 </mapper>

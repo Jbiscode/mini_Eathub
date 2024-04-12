@@ -211,6 +211,13 @@
         WHERE restaurant_seq = #{restaurantSeq}
     </select>
 
+<!--예약번호로 레스토랑 번호찾기 -->
+<select id="selectRestaurantSeqByResSeq" >
+    SELECT restaurant_seq
+    FROM reservation
+    WHERE res_seq = #{res_seq}
+</select>
+
 <!-- UPDATE-->
 
 
