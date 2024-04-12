@@ -21,4 +21,16 @@ $(document).ready(function() {
     }
     // 초기 페이지 로드 시 및 라디오 버튼 변경 시 함수 실행
     $('input[name="type"]').on('change', updateVisibility).trigger('change');
+
+    //
+    $('.reviewed').each(function () {
+        $(this).text('작성완료')
+        $(this).css({
+            'background-color' : 'black',
+            'color' : 'white'
+        })
+        $(this).on('click', function (e) {
+            e.preventDefault()
+        });
+    });
 });
