@@ -26,4 +26,8 @@ public class SearchResultDTO {
     private boolean isZzimed;
 
     private String image_url;
+
+    public String getRating() {
+        return String.format("%.2f", rating);
+    }
 }

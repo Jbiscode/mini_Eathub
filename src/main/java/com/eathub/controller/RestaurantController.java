@@ -151,8 +151,10 @@ public class RestaurantController {
     @GetMapping("/review/write")
     public String writeReview(@RequestParam Long res_seq, Model model, HttpSession session){
         Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        Long restaurant_seq = restaurantService.getRestaurantSeqByResSeq(res_seq);
         String  access = reviewService.checkReviewData(res_seq,loginMemberSeq);
         model.addAttribute("res_seq", res_seq);
+        model.addAttribute("restaurant_seq", restaurant_seq);
         if(access.equals("access granted")){
             return "/restaurant/reviewWriteForm";
         }else{
@@ -163,8 +165,7 @@ public class RestaurantController {
     @PostMapping("/review/write")
     public String writeReview(@ModelAttribute ReviewDTO reviewDTO, HttpSession session){
         reviewService.insertReviewAndImages(reviewDTO,session);
-        log.info("reviewDTO: {}", reviewDTO);
-        return "redirect:/restaurant/detail/";
+        return "redirect:/restaurant/detail/"+reviewDTO.getRestaurant_seq()+"/review";
     }
 
 

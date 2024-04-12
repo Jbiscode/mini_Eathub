@@ -12,7 +12,7 @@
                 <header id="header" class="opaque">
                     <div class="container">
                         <div class="header-left">
-                            <a href="restaurantInfo.html" class="btn-back">뒤로</a>
+                            <a class="btn-back">뒤로</a>
                             <h1 class="page-title" style="padding-right: 4px;">숙성도 중문점</h1>
                         </div>
                     </div>
@@ -96,5 +96,10 @@
                 </aside>
             </div>
         </div>
+    <script>
+            document.querySelector(".btn-back").addEventListener('click', () => {
+            history.back();
+        });
+    </script>
     </body>
 </html>

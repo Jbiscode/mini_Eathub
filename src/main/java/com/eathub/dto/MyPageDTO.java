@@ -25,4 +25,8 @@ public class MyPageDTO {
     private String comment;
 
     private String image_url;
+
+    public String getRating() {
+        return String.format("%.2f", rating);
+    }
 }

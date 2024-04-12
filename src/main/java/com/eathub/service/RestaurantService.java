@@ -328,4 +328,8 @@ public class RestaurantService {
     public RestaurantDetailDTO getRestaurantDetail(Long restaurantSeq) {
         return restaurantMapper.selectRestaurantDetail(restaurantSeq);
     }
+
+    public Long getRestaurantSeqByResSeq(Long res_seq) {
+        return restaurantMapper.selectRestaurantSeqByResSeq(res_seq);
+    }
 }
