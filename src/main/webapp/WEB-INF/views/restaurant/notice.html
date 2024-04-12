@@ -8,7 +8,7 @@
     <body class="disable-user-select" style="">
         <div id="root">
             <div class="wrapper" id="wrapperDiv">
-                <div id="root">
+                <div>
                     <header id="header" class="opaque">
                         <div class="container">
                             <div class="header-left">
@@ -56,11 +56,14 @@
         </div>
     <script src="http://code.jQuery.com/jquery-3.7.1.min.js"></script>
     <script>
-        
-        $('#29280').click(function(){
-                document.getElementById('29280').classList.toggle('open');
-            });
-        
-    </script>
+
+        $('#29280').click(function () {
+            document.getElementById('29280').classList.toggle('open');
+        });
+
+            document.querySelector(".btn-back").addEventListener('click', () => {
+            history.back();
+        });
+        </script>
     </body>
 </html>

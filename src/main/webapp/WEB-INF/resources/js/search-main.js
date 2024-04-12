@@ -4,8 +4,12 @@ let resModal = $('#resModal');
 let topOpenBtn = $("div.datetime-selector a");
 let topCloseBtn = $(".btn-close");
 let bottomCloseBtn =  $("div.sticky-bottom-btns > button");
+let btnBack = $(".btn-back");
 
 $(document).ready(function () {
+  btnBack.click(function () {
+    location.href = "/";
+  } );
 
   // 히든 input 태그값으로 모달창에 정보 입력되게 하는 메소드
   assigningInfo();
@@ -66,3 +70,4 @@ $('header._14v8myn2 > div > div > div').click(function(){
     addClass('design_system_tyb3o62');
 
 })
+

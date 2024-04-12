@@ -30,4 +30,8 @@ public class RestaurantInfo {
     private Integer review_total;
     private Integer zzim_total;
     private String status;
+
+    public String getRating() {
+        return String.format("%.2f", rating);
+    }
 }

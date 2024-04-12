@@ -30,4 +30,7 @@ public class OwnerRestaurantDetailDTO {
     private String status;
 
     private String img_url;
+    public String getRating() {
+        return String.format("%.2f", rating);
+    }
 }
