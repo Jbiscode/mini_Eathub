@@ -240,14 +240,14 @@
     <!-- restaurant_status 테이블의 status 업데이트 -->
     <update id="updateRestaurantStatus">
         UPDATE restaurant_status
-        SET status = #{status} , comment = #{comment} , admin_seq = #{admin_seq}
+        SET status = #{status} , comment = #{comment} , admin_seq = #{admin_seq}, updatedAt = now()
         WHERE restaurant_seq = #{restaurant_seq}
     </update>
 
     <!-- restaurant_info 테이블의 status 업데이트 -->
     <update id="updateRestaurantInfoStatus">
         UPDATE restaurant_info
-        SET status = #{status}
+        SET status = #{status}, approvedAt = now()
         WHERE restaurant_seq = #{restaurant_seq}
     </update>
 
