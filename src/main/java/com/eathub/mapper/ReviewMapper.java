@@ -38,6 +38,7 @@ public interface ReviewMapper {
     List<String > selectReviewImages(Long res_seq);
 
     ReviewStatsDTO calculateReviewStats(Long restaurant_seq);
+    List<ReviewStatsDTO> selectReviewCount(Long restaurant_seq);
 
     //    UPDATE
 
