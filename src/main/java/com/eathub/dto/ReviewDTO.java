@@ -5,6 +5,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -22,5 +24,10 @@ public class ReviewDTO {
     private String content;
     private List<CommonsMultipartFile> reviewImages;
     private List<String> pictureUrls;
+    private Date createdAt;
 
+    public String getCreatedAt() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        return sdf.format(createdAt);
+    }
 }

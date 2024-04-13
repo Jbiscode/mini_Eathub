@@ -5,6 +5,7 @@ import com.eathub.conf.SessionConf;
 import com.eathub.dto.ReservationJoinDTO;
 import com.eathub.dto.RestaurantDetailDTO;
 import com.eathub.dto.ReviewDTO;
+import com.eathub.dto.ReviewStatsDTO;
 import com.eathub.dto.TimeOptionDTO;
 import com.eathub.entity.Reservation;
 import com.eathub.entity.RestaurantInfo;
@@ -111,8 +112,11 @@ public class RestaurantController {
     @GetMapping("/detail/{restaurant_seq}/review")
     public String review(@PathVariable Long restaurant_seq,Model model){
         List<ReviewDTO> reviewDTOs = new ArrayList<>();
-
+        RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
+        List<ReviewStatsDTO> reviewStatsDTOS = reviewService.selectReviewCount(restaurant_seq);
         log.info("reviewDTOs: {}", reviewDTOs);
+        model.addAttribute("reviewCount",reviewStatsDTOS);
+        model.addAttribute("restaurantInfo", selectRestaurantInfo);
         model.addAttribute("reviewDTOs", reviewDTOs);
         model.addAttribute("restaurant_seq", restaurant_seq);
         return "/restaurant/review";
