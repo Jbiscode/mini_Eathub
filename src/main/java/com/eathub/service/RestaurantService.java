@@ -332,4 +332,8 @@ public class RestaurantService {
     public Long getRestaurantSeqByResSeq(Long res_seq) {
         return restaurantMapper.selectRestaurantSeqByResSeq(res_seq);
     }
+
+    public List<PictureDTO> selectAllPictures(Long restaurant_seq){
+        return restaurantMapper.selectAllPictures(restaurant_seq);
+    }
 }
