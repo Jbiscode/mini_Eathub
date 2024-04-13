@@ -96,36 +96,7 @@ public class RestaurantController {
 
         return "redirect:/members/my";
     }
-    //레스토랑 메뉴리스트
-    @GetMapping("/menuList/{restaurant_seq}")
-    public String restaurantMenuList(@PathVariable Long restaurant_seq,Model model,HttpSession session){
-        RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
-        Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
 
-        model.addAttribute("restaurantInfo", selectRestaurantInfo);
-        return "/restaurant/menuList";
-    }
-    //레스토랑 사진
-    @GetMapping("/photo/{restaurant_seq}")
-    public String restaurantPhoto(@PathVariable Long restaurant_seq,Model model,HttpSession session){
-        RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
-
-        model.addAttribute("restaurantInfo", selectRestaurantInfo);
-        return "/restaurant/photo";
-    }
-    //레스토랑 리뷰
-    @GetMapping("/review/{restaurant_seq}")
-    public String restaurantReview(@PathVariable Long restaurant_seq,Model model,HttpSession session){
-        RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
-
-        model.addAttribute("restaurantInfo", selectRestaurantInfo);
-        return "/restaurant/review";
-    }
-    @GetMapping("/review/write/{res_seq}")
-    public String restaurantReviewWrite(@PathVariable Long res_seq,Model model,HttpSession session){
-
-        return "/restaurant/reviewWrite";
-    }
 
     @GetMapping("/detail/{restaurant_seq}/menuList")
     public String menu(@PathVariable Long restaurant_seq){
