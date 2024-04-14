@@ -222,6 +222,12 @@
     FROM reservation
     WHERE res_seq = #{res_seq}
 </select>
+<select id="selectAllPictures" resultType="com.eathub.dto.PictureDTO">
+    select *
+    from review_pictures
+            LEFT JOIN reservation USING (res_seq)
+    WHERE restaurant_seq=#{restaurant_seq};
+</select>
 
 <!-- UPDATE-->
 

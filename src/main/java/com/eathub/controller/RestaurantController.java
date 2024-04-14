@@ -2,6 +2,7 @@ package com.eathub.controller;
 
 
 import com.eathub.conf.SessionConf;
+import com.eathub.dto.PictureDTO;
 import com.eathub.dto.ReservationJoinDTO;
 import com.eathub.dto.RestaurantDetailDTO;
 import com.eathub.dto.ReviewDTO;
@@ -105,7 +106,9 @@ public class RestaurantController {
     }
 
     @GetMapping("/detail/{restaurant_seq}/photo")
-    public String photo(@PathVariable Long restaurant_seq){
+    public String photo(@PathVariable Long restaurant_seq,Model model){
+        List<PictureDTO> pictureDTOS = restaurantService.selectAllPictures(restaurant_seq);
+        model.addAttribute("pictures",pictureDTOS);
         return "/restaurant/photo";
     }
 

@@ -39,7 +39,7 @@
         from review
                 LEFT JOIN reservation USING (res_seq)
         where restaurant_seq = #{restaurant_seq}
-        order by rating desc
+        order by rating desc,res_seq desc
         limit #{page},2;
     </select>
     <select id="selectReviewImages">
