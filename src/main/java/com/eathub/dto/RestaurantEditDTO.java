@@ -8,12 +8,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+@ToString
 @Setter
 @Getter
-@ToString
-public class RestaurantJoinDTO {
+public class RestaurantEditDTO {
 
+    @NotNull
+    private Long restaurant_seq;
     @NotNull
     private Long category_seq;
     @NotBlank
@@ -38,6 +41,7 @@ public class RestaurantJoinDTO {
     private String closeHour;
 
     private String closedDay;
+    private List<String> closedDayList;
 
     public String getOpenHour() {
         if (this.openHour != null && !this.openHour.isEmpty()) {
@@ -74,6 +78,4 @@ public class RestaurantJoinDTO {
         }
         return null;
     }
-
-    // 상세 정보 (메뉴, 공지사항 등등)
 }

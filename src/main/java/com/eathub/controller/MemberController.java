@@ -351,6 +351,41 @@ public class MemberController {
 
         return "redirect:/members/my";
     }
+
+    @GetMapping("/restaurant/{restaurantSeq}/edit")
+    public String restaurantEditForm(@PathVariable("restaurantSeq") Long restaurant_seq, HttpSession session, Model model){
+        Long mem_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        RestaurantEditDTO restaurantEditDTO = restaurantService.getRestaurantJoinDTO(restaurant_seq, mem_seq);
+
+        if(restaurantEditDTO == null){
+
+            return "redirect:/members/my";
+        }
+
+        restaurantEditDTO.setClosedDayList(memberService.convertStringToList(restaurantEditDTO.getClosedDay()));
+
+        // 지역리스트, 카테고리 리스트 받아오기
+        Map<String, String> locationList = restaurantService.getLocationList();
+        List<CategoryDTO> categoryList = restaurantService.getCategoryList();
+
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("locationList",locationList);
+        model.addAttribute("restaurantJoinDTO", restaurantEditDTO);
+        return "members/restaurantEditForm";
+    }
+
+   @PostMapping("/restaurant/{restaurantSeq}/edit")
+   public String restaurantEdit(@PathVariable("restaurantSeq") Long restaurant_seq
+                              , @Validated @ModelAttribute RestaurantEditDTO restaurantJoinDTO
+                              , BindingResult bindingResult){
+       List<String> closedDayList = restaurantJoinDTO.getClosedDayList();
+       restaurantJoinDTO.setClosedDay(String.join(",", closedDayList));
+       restaurantService.updateRestaurantInfo(restaurantJoinDTO);
+
+       return "redirect:/members/my";
+   }
+
+
     @GetMapping("/restaurant/{restaurantSeq}/menu/add")
     public String showForm(@PathVariable("restaurantSeq") Long restaurant_seq , Model model,HttpSession session){
         Long OwnerSeq = restaurantService.selectRestaurantInfo(restaurant_seq).getMember_seq();
@@ -404,7 +439,7 @@ public class MemberController {
         return "redirect:/members/my";
     }
 
-    @GetMapping("/restaurant/{restaurantSeq}/edit")
+    @GetMapping("/restaurant/{restaurantSeq}/detailInfo/join")
     public String editForm(@PathVariable("restaurantSeq") Long restaurant_seq, Model model){
 
         model.addAttribute("restaurantDetailDTO", new RestaurantDetailDTO());
@@ -413,7 +448,7 @@ public class MemberController {
         return "restaurant/restaurantDetailForm";
     }
 
-    @PostMapping("/restaurant/{restaurantSeq}/edit")
+    @PostMapping("/restaurant/{restaurantSeq}/detailInfo/join")
     public String detailSaveForm(@PathVariable("restaurantSeq") Long restaurant_seq, @ModelAttribute RestaurantDetailDTO restaurantDetailDTO, BindingResult bindingResult,HttpSession session){
 
         String BucketFolderName = "storage/";

@@ -69,8 +69,10 @@ function makeLinkButton(restaurantSeq) {
     const btn_box = document.querySelector(".btn-box");
     const edit = document.getElementById("restaurantEditButton");
     const menu = document.getElementById("restaurantMenuAddButton");
+    const editRestaurantInfo = document.getElementById("restaurantInfoEditBtn")
     btn_box.style.visibility = "visible";
 
-    edit.href = `/members/restaurant/${restaurantSeq}/edit`;
+    edit.href = `/members/restaurant/${restaurantSeq}/detailInfo/join`;
     menu.href = `/members/restaurant/${restaurantSeq}/menu/add`;
+    editRestaurantInfo.href=`/members/restaurant/${restaurantSeq}/edit`;
 }
