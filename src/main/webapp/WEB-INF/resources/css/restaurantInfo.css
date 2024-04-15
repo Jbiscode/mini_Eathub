@@ -1475,6 +1475,11 @@ jss1 .MuiPaper-root {
 }
 /*모달*/
 
+.review_count{
+    padding-left: 4px;
+    font-size: 15px;
+    color:var(--_1ltqxco8);
+}
 
 
 a{
