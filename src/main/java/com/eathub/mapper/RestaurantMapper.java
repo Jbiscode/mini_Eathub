@@ -69,10 +69,6 @@ public interface RestaurantMapper {
     String getRestaurantType(Long categorySeq);
 
     RestaurantEditDTO selectRestaurantByRestaurantSeq(Long restaurantSeq);
-  
-    String getRestaurantType(Long categorySeq);
-
-    RestaurantEditDTO selectRestaurantByRestaurantSeq(Long restaurantSeq);
 
     List<RestaurantDetailDTO> selectAllRestaurantDetailDTO();
 
@@ -103,7 +99,6 @@ public interface RestaurantMapper {
 
     void updateRestaurantDetailExceptImg(RestaurantDetailDTO restaurantDetailDTO);
   
-    void updateRestaurantInfo(RestaurantEditDTO restaurantJoinDTO);
 
 //    DELETE
     void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
