@@ -35,11 +35,11 @@
         order by rating desc;
     </select>
     <select id="selectReviewListPage" resultType="com.eathub.dto.ReviewDTO">
-        select res_seq,rating,content,restaurant_seq,member_seq
+        select res_seq,rating,content,restaurant_seq,member_seq,createdAt
         from review
                 LEFT JOIN reservation USING (res_seq)
         where restaurant_seq = #{restaurant_seq}
-        order by rating desc
+        order by rating desc,res_seq desc
         limit #{page},2;
     </select>
     <select id="selectReviewImages">
@@ -55,6 +55,26 @@
     from reservation r
         LEFT JOIN review v ON r.res_seq = v.res_seq
     WHERE restaurant_seq= #{restaurant_seq} AND rating IS NOT NULL;
+</select>
+
+<!-- 리뷰페이지에서 평점당 갯수 구하기-->
+<select id="selectReviewCount" resultType="com.eathub.dto.ReviewStatsDTO">
+    SELECT a.rating, COALESCE(b.count, 0) AS count
+    FROM (
+             SELECT 1 AS rating
+             UNION ALL SELECT 2
+             UNION ALL SELECT 3
+             UNION ALL SELECT 4
+             UNION ALL SELECT 5
+         ) a
+             LEFT JOIN (
+        SELECT rating, COUNT(*) AS count
+        FROM reservation r
+                 LEFT JOIN review v ON r.res_seq = v.res_seq
+        WHERE r.restaurant_seq = #{restaurant_seq} AND v.rating IS NOT NULL AND v.rating BETWEEN 1 AND 5
+        GROUP BY v.rating
+    ) b ON a.rating = b.rating
+    order by rating desc;
 </select>
 
 <!-- UPDATE-->

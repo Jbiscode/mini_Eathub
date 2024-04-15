@@ -333,6 +333,7 @@ public class RestaurantService {
         return restaurantMapper.selectRestaurantSeqByResSeq(res_seq);
     }
 
+
     public RestaurantEditDTO getRestaurantJoinDTO(Long restaurantSeq, Long memSeq) {
         // memSeq로 검색한 restaurant중 restaurantSeq가 있으면 OK, 아니면 권한 없음
         List<MyPageDTO> ownerRestaurantList = getOwnerRestaurantList(memSeq);
@@ -346,5 +347,9 @@ public class RestaurantService {
 
     public void updateRestaurantInfo(RestaurantEditDTO restaurantJoinDTO) {
         restaurantMapper.updateRestaurantInfo(restaurantJoinDTO);
+    }
+
+    public List<PictureDTO> selectAllPictures(Long restaurant_seq){
+        return restaurantMapper.selectAllPictures(restaurant_seq);
     }
 }

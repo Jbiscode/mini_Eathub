@@ -62,6 +62,7 @@ public interface RestaurantMapper {
     RestaurantDetailDTO selectRestaurantDetail(Long restaurantSeq);
 
     Long selectRestaurantSeqByResSeq(Long res_seq);
+    List<PictureDTO> selectAllPictures(Long restaurant_seq);
 
 
 //    UPDATE
