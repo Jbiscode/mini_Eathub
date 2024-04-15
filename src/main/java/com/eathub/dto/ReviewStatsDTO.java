@@ -10,4 +10,7 @@ import lombok.ToString;
 public class ReviewStatsDTO {
     private Integer review_count;
     private Double rating_avg;
+
+    private Integer rating;
+    private Integer count;
 }

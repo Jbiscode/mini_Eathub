@@ -90,9 +90,9 @@ public class ReviewService {
         return "access granted";
     }
 
-
-    public ReviewDTO isReviewed(Long resSeq) {
-        return reviewMapper.selectReviewed(resSeq);
+/* 리뷰페이지에서 리뷰당 갯수 구하기*/
+    public List<ReviewStatsDTO> selectReviewCount(Long restaurant_seq){
+        return reviewMapper.selectReviewCount(restaurant_seq);
     }
     
     // 리뷰 리스트 전체 조회
