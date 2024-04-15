@@ -9,6 +9,7 @@ import com.eathub.dto.ReviewDTO;
 import com.eathub.dto.ReviewStatsDTO;
 import com.eathub.dto.TimeOptionDTO;
 import com.eathub.entity.Reservation;
+import com.eathub.entity.RestaurantDetail;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.service.RestaurantService;
 import com.eathub.service.ReviewService;
@@ -62,6 +63,8 @@ public class RestaurantController {
         model.addAttribute("restaurantInfo", selectRestaurantInfo);
         model.addAttribute("timeOptions", timeOptionDTOS);
         model.addAttribute("reservationJoinDTO",reservationJoinDTO);
+        model.addAttribute("restaurantDetailDTO",restaurantDetailDTO);
+
 
         // 세션에 값이 없으면 세션 생성
         if(session.getAttribute("wantingDate") == null){
@@ -76,6 +79,8 @@ public class RestaurantController {
         session.setAttribute("restaurantSeq", restaurant_seq);
         return "/restaurant/restaurantInfo";
     }
+
+
     @PostMapping("/detail/{restaurant_seq}")
     public String joinReservation(@PathVariable Long restaurant_seq, @Validated ReservationJoinDTO reservationJoinDTO, BindingResult bindingResult,HttpSession session) throws ParseException {
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
@@ -101,27 +106,76 @@ public class RestaurantController {
 
 
     @GetMapping("/detail/{restaurant_seq}/menuList")
-    public String menu(@PathVariable Long restaurant_seq){
+    public String menu(@PathVariable Long restaurant_seq,Model model,HttpSession session){
+        RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
+        RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+        if(restaurantDetailDTO != null){
+            model.addAttribute("restaurantDetailDTO", restaurantDetailDTO);
+        }
+        Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
+        ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
+
+
+        model.addAttribute("isZzimed", restaurantService.getZzimCount(restaurant_seq, loginMemberSeq) > 0);
+        model.addAttribute("restaurantInfo", selectRestaurantInfo);
+        model.addAttribute("timeOptions", timeOptionDTOS);
+        model.addAttribute("reservationJoinDTO",reservationJoinDTO);
+        model.addAttribute("restaurantDetailDTO",restaurantDetailDTO);
+
+        // 세션에 값이 없으면 세션 생성
+        if(session.getAttribute("wantingDate") == null){
+            session.setAttribute("wantingDate", restaurantService.getTodayDate());
+        }
+        if(session.getAttribute("wantingHour") == null){
+            session.setAttribute("wantingHour", restaurantService.getNextReservationTime());
+        }
+        if(session.getAttribute("wantingPerson") == null){
+            session.setAttribute("wantingPerson", 1);
+        }
+        session.setAttribute("restaurantSeq", restaurant_seq);
         return "/restaurant/menuList";
     }
 
     @GetMapping("/detail/{restaurant_seq}/photo")
-    public String photo(@PathVariable Long restaurant_seq,Model model){
+    public String photo(@PathVariable Long restaurant_seq, Model model, HttpSession session){
+        RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
+        RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+        if(restaurantDetailDTO != null){
+            model.addAttribute("restaurantDetailDTO", restaurantDetailDTO);
+        }
+      // 리뷰 사진들 불러오기
         List<PictureDTO> pictureDTOS = restaurantService.selectAllPictures(restaurant_seq);
+      
+        Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
+        ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
+
+
+        model.addAttribute("isZzimed", restaurantService.getZzimCount(restaurant_seq, loginMemberSeq) > 0);
+        model.addAttribute("restaurantInfo", selectRestaurantInfo);
+        model.addAttribute("timeOptions", timeOptionDTOS);
+        model.addAttribute("reservationJoinDTO",reservationJoinDTO);
+        model.addAttribute("restaurantDetailDTO",restaurantDetailDTO);
+       
         model.addAttribute("pictures",pictureDTOS);
+
         return "/restaurant/photo";
     }
 
     @GetMapping("/detail/{restaurant_seq}/review")
-    public String review(@PathVariable Long restaurant_seq,Model model){
+    public String review(@PathVariable Long restaurant_seq,Model model, HttpSession session){
         List<ReviewDTO> reviewDTOs = new ArrayList<>();
         RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
         List<ReviewStatsDTO> reviewStatsDTOS = reviewService.selectReviewCount(restaurant_seq);
         log.info("reviewDTOs: {}", reviewDTOs);
+
+
         model.addAttribute("reviewCount",reviewStatsDTOS);
         model.addAttribute("restaurantInfo", selectRestaurantInfo);
         model.addAttribute("reviewDTOs", reviewDTOs);
         model.addAttribute("restaurant_seq", restaurant_seq);
+        model.addAttribute("restaurantInfo", selectRestaurantInfo);
         return "/restaurant/review";
     }
 
@@ -144,6 +198,28 @@ public class RestaurantController {
     public String writeReview(@ModelAttribute ReviewDTO reviewDTO, HttpSession session){
         reviewService.insertReviewAndImages(reviewDTO,session);
         return "redirect:/restaurant/detail/"+reviewDTO.getRestaurant_seq()+"/review";
+    }
+
+    /*레스토랑상세페이지-공지*/
+    @GetMapping("/detail/{restaurant_seq}/notice")
+    public String notice(@PathVariable Long restaurant_seq, Model model, HttpSession session){
+        RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
+        RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+        if(restaurantDetailDTO != null){
+            model.addAttribute("restaurantDetailDTO", restaurantDetailDTO);
+        }
+        Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
+        ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
+
+
+        model.addAttribute("isZzimed", restaurantService.getZzimCount(restaurant_seq, loginMemberSeq) > 0);
+        model.addAttribute("restaurantInfo", selectRestaurantInfo);
+        model.addAttribute("timeOptions", timeOptionDTOS);
+        model.addAttribute("reservationJoinDTO",reservationJoinDTO);
+        model.addAttribute("restaurantDetailDTO",restaurantDetailDTO);
+
+        return "/restaurant/notice";
     }
 
 
