@@ -34,12 +34,22 @@ header {
     justify-content: space-between;
     transition: background .12s;
 }
+._9j16x81._9j16x82 {
+    transition: all 0.5s ease; /* 부드러운 전환 효과 */
+    background: linear-gradient(180deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .15) 37.5%, rgba(0, 0, 0, 0) 100%);
+}
 .icon-wrapper {
     background: linear-gradient(180deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .15) 37.5%, rgba(0, 0, 0, 0) 100%);
 }
 ._9j16x83 {
     display: flex;
     gap: 12px;
+}
+._9j16x82 ._9j16x86 {
+    background-image: url(../images/home-w.svg);
+}
+._9j16x82 ._9j16x85 {
+    background-image: url(../images/back-w.svg);
 }
 ._9j16x84 {
     width: 24px;
@@ -51,17 +61,23 @@ header {
     background-size: 24px 24px;
 }
 ._9j16x85 {
-    background-image: url(/images/back.svg);
+    background-image: url(../images/back.svg);
+}
+._9j16x86 {
+    background-image: url(../images/home.svg);
+}
+._9j16x87 {
+    background-image: url(../images/bookmark2.svg);
 }
 .icon-wrapper ._9j16x85 {
-    background-image: url(/images/back-w.svg);
+    background-image: url(../images/back-w.svg);
 }
 .icon-wrapper ._9j16x86 {
-    background-image: url(/images/home-w.svg);
+    background-image: url(../images/home-w.svg);
 }
 
 .btn-bookmark-detail {
-    background-image: url(../images/bookmark-w.svg);
+    background-image: url(../images/bookmark2.svg);
 }
 
 .btn-bookmark-detail.active {
@@ -90,6 +106,11 @@ button {
     width: 100%;
     margin: 0 auto;
 }
+
+
+
+
+
 
 /*사진 슬라이드*/
 .section .slider ul li img{
@@ -134,39 +155,13 @@ ul.imgs li{
     height: 10px;
     cursor: pointer;
 }
-.slider input[type=radio]:nth-child(1):checked~.bullets>label:nth-child(1){
-    background-color: #fff;
+
+/*가게 메인사진*/
+.rest_main{
+    width: 390px;
+    height: 228px;
 }
-.slider input[type=radio]:nth-child(2):checked~.bullets>label:nth-child(2){
-    background-color: #fff;
-}
-.slider input[type=radio]:nth-child(3):checked~.bullets>label:nth-child(3){
-    background-color: #fff;
-}
-.slider input[type=radio]:nth-child(4):checked~.bullets>label:nth-child(4){
-    background-color: #fff;
-}
-.slider input[type=radio]:nth-child(1):checked~ul.imgs>li:nth-child(1){
-    left: 0;
-    transition: 0.5s;
-    z-index:1;
-}
-.slider input[type=radio]:nth-child(2):checked~ul.imgs>li:nth-child(2){
-    left: 0;
-    transition: 0.5s;
-    z-index:1;
-}
-.slider input[type=radio]:nth-child(3):checked~ul.imgs>li:nth-child(3){
-    left: 0;
-    transition: 0.5s;
-    z-index:1;
-}
-.slider input[type=radio]:nth-child(4):checked~ul.imgs>li:nth-child(4){
-    left: 0;
-    transition: 0.5s;
-    z-index:1;
-}
-/*사진 슬라이드*/
+/*가게 메인사진*/
 
 
 /*가게사진*/
@@ -218,7 +213,7 @@ li {
 }
 .section .slidelist .left {
     left: 10px;
-    background: url(/images/left.png) center center / 100% no-repeat;
+    background: url(../images/left.png) center center / 100% no-repeat;
 }
 .section .slidelist label {
     position: absolute;
@@ -230,7 +225,7 @@ li {
 }
 .section .slidelist .right {
     right: 10px;
-    background: url(/images/right.png) center center / 100% no-repeat;
+    background: url(../images/right.png) center center / 100% no-repeat;
 }
 .section .slidelist > li > a img {
     width: 100%;
@@ -266,19 +261,19 @@ section {
 }
 
 .stars.yellow .star.half {
-    background-image: url(/images/star-half-yellow.svg);
+    background-image: url(../images/star-half-yellow.svg);
 }
 .stars.yellow .star.full {
-    background-image: url(/images/star-yellow.svg);
+    background-image: url(../images/star-yellow.svg);
 }
 .stars .star.full {
-    background-image: url(/images/star-yellow.svg);
+    background-image: url(../images/star-yellow.svg);
 }
 .stars .star {
     display: inline-block;
     width: 16px;
     height: 16px;
-    background: url(/images/star-void.svg) 0 0 no-repeat;
+    background: url(../images/star-void.svg) 0 0 no-repeat;
     background-size: contain;
     position: relative;
 }
@@ -286,9 +281,10 @@ section {
     font-weight: var(--_1ltqxco10);
     font-size: var(--_1ltqxcow);
     line-height: 150%;
+    margin: 6px 0px;
 }
 ._4qv338a.lunch.dinner::before {
-    background-image: url(/images/time-lunch-and-dinner-dark.svg);
+    background-image: url(../images/time-lunch-and-dinner-dark.svg);
 }
 ._4qv338a:before {
     content: "";
@@ -318,13 +314,13 @@ section {
     margin-top: 16px;
 }
 ._4qv338d.call:before {
-    background: url(/images/call.svg) 0% 50% no-repeat;
+    background: url(../images/call.svg) 0% 50% no-repeat;
 }
 ._4qv338d.location:before {
-    background: url(/images/location.svg) 0% 50% no-repeat;
+    background: url(../images/location.svg) 0% 50% no-repeat;
 }
 ._4qv338d.building:before {
-    background: url(/images/building.svg) 0% 50% no-repeat;
+    background: url(../images/building.svg) 0% 50% no-repeat;
 }
 ._4qv338d:before {
     content: "";
@@ -363,14 +359,14 @@ section {
 }
 .ce8v0l2 {
     color: #000;
-    border-bottom: 2px solid #d5d5d5;
+    border-bottom: 2px solid #000;
 }
 .ce8v0l1 {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 50px;
+    height: 48px;
 }
 ._1ltqxco1c {
     font-weight: var(--_1ltqxco10);
@@ -396,12 +392,11 @@ button {
 }
 .mb-8 {
     margin-bottom: 8px !important;
-    border:1px solid #d5d5d5;
-    border-radius: 5px;
+    border-radius: 6px;
     padding-left: 20px;
-
-
+    border:1px solid #d5d5d5;
 }
+
 .btn.full-width {
     width: 100%;
     display: block;
@@ -422,7 +417,7 @@ button {
     position: relative;
 }
 .btn-md.btn-cta>span .label.calendar:before, .btn-lg.btn-cta>span .label.calendar:before {
-    background: url(/images/calendar.svg) 50% 50% no-repeat;
+    background: url(../images/calendar.svg) 50% 50% no-repeat;
     width: 24px;
     height: 24px;
     display: block;
@@ -433,7 +428,7 @@ button {
     transform: translateY(-50%);
 }
 .btn-md.btn-cta.arrowdown:after, .btn-lg.btn-cta.arrowdown:after {
-    background: url(/images/arrow-down-red.svg) 50% 50% no-repeat;
+    background: url(../images/arrow-down-red.svg) 50% 50% no-repeat;
     width: 16px;
     height: 16px;
     content: "";
@@ -516,13 +511,14 @@ i{
     display:block;
     width: 10px;
     height: 12px;
-    background: url(/images/bell.svg) 50% 50% no-repeat;
+    background: url(../images/bell.svg) 50% 50% no-repeat;
 }
 .mb-24 {
     margin-bottom: 24px !important;
 }
 .btn-centered {
     text-align: center;
+    margin-top: 30px;
 }
 .btn-rounded.btn-outline-red {
     background-color: #fff;
@@ -547,10 +543,10 @@ i{
     position: relative;
 }
 .btn-rounded.btn-outline-red .label.arrow:after {
-    background-image: url(/images/arrow-right-red.svg);
+    background-image: url(../images/arrow-right-red.svg);
 }
 .btn-rounded .label.arrow:after {
-    background: url(/images/arrow-right-red.svg) 50% 50% no-repeat;
+    background: url(../images/arrow-right-red.svg) 50% 50% no-repeat;
     background-size: contain;
     width: 20px;
     height: 20px;
@@ -565,17 +561,20 @@ i{
 
 
  /*홈 메뉴 사진 리뷰*/
-
-.tab-menu .sticky {
+.tab-menu.sticky {
     position: sticky;
+    top: 0;
     z-index: 10;
 }
 .tab-menu {
-    border-bottom: 2px solid #f1f1f1;
     background: #fff;
 }
 .tab-menu ul {
     display: flex;
+    border-bottom: 2px solid #f1f1f1;
+}
+.tab-menu ul li {
+    flex: 1;
 }
 ol, ul {
     list-style: none;
@@ -584,10 +583,9 @@ ol, ul {
     position: relative;
 }
 .tab-menu ul li a {
-    padding: 16px 28px;
+    padding: 16px 28.5px;
     text-align: center;
     font-size: 16px;
-    color: #666;
     position: relative;
     display: flex;
     justify-content: center;
@@ -599,7 +597,15 @@ ol, ul {
 .tab-menu ul li.active a {
     color: #000;
     font-weight: 700;
-    border-bottom : 2px solid #000;
+}
+.tab-menu ul li.active a:after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #000;
 }
 /*홈 메뉴 사진 리뷰*/
 
@@ -621,7 +627,7 @@ ol, ul {
 }
 .section .section-header .__btn-all:after {
     content: "";
-    background: url(/images/arrow-right-g.svg) 50% 50% no-repeat;
+    background: url(../images/arrow-right-g.svg) 50% 50% no-repeat;
     background-size: cover;
     display: block;
     width: 16px;
@@ -672,7 +678,7 @@ ol, ul {
     margin-right: 12px;
 }
 .__restaurant-notice-v2 .__restaurant-notice-v2-item .__notice-content .__pic .img {
-    background: url(/images/restaurant.svg) 50% 50% no-repeat;
+    background: url(../images/restaurant.svg) 50% 50% no-repeat;
     display: block;
     width: 32px;
     height: 32px;
@@ -763,7 +769,7 @@ ol, ul {
     align-items: center;
 }
 .btn-menupan-photo span:after {
-    background: url(/images/arrow-right.svg) 50% 50% no-repeat;
+    background: url(../images/arrow-right.svg) 50% 50% no-repeat;
     background-size: contain;
     width: 20px;
     height: 20px;
@@ -845,7 +851,7 @@ ol, ul {
     box-sizing: border-box;
 }
 .pt-30 {
-    padding-top: 30px !important;
+    padding-top: 20px !important;
 }
 .pb-25 {
     padding-bottom: 25px !important;
@@ -890,7 +896,7 @@ ol, ul {
     line-height: 150%;
 }
 .__reserv-schedule .__item>dl dt:before {
-    background: url(/images/time-sm-b.svg) 50% 50% no-repeat;
+    background: url(../images/time-sm-b.svg) 50% 50% no-repeat;
     content: "";
     width: 16px;
     height: 16px;
@@ -922,6 +928,7 @@ ol, ul {
     width: 100%;
     display: block;
 }
+
 .btn-md, .btn-lg {
     line-height: 46px;
     text-align: center;
@@ -930,6 +937,7 @@ ol, ul {
     padding: 0 20px;
     position: relative;
     border: 1px solid #666;
+    border-radius: 6px;
     background: #fff;
 }
 .btn {
@@ -1112,7 +1120,7 @@ p, h1, h2, h3, h4, h5, h6 {
     border-top: 1px solid #f1f1f1;
 }
 .__notes .__notes-item .__toggle:before {
-    background: url(/images/check-blue-sm.svg) 50% 50% no-repeat;
+    background: url(../images/check-blue-sm.svg) 50% 50% no-repeat;
     width: 16px;
     height: 16px;
     display: block;
@@ -1126,7 +1134,7 @@ p, h1, h2, h3, h4, h5, h6 {
     transform: rotate(-180deg);
 }
 .__notes .__notes-item .__toggle:after {
-    background: url(/images/chevron-up.svg) 50% 50% no-repeat;
+    background: url(../images/chevron-up.svg) 50% 50% no-repeat;
     width: 24px;
     height: 24px;
     display: block;
@@ -1144,7 +1152,7 @@ p, h1, h2, h3, h4, h5, h6 {
 
 /*비슷한 레스토랑 추천*/
 .section .section-header .btn-all:after {
-    background: url(/images/arrow-right-gray2.svg) 50% 50% no-repeat;
+    background: url(../images/arrow-right-gray2.svg) 50% 50% no-repeat;
     background-size: cover;
     display: block;
     width: 16px;
@@ -1166,7 +1174,6 @@ p, h1, h2, h3, h4, h5, h6 {
     border: 1px solid #f4f4f4;
     overflow: hidden;
     margin-bottom: 8px;
-    -webkit-mask-image: -webkit-radial-gradient(white, black);
     position: relative;
 }
 .restaurant-list.restaurant-list-sm .restaurant-list-item .tb .img {
@@ -1229,7 +1236,7 @@ p, h1, h2, h3, h4, h5, h6 {
     margin-right: 6px;
 }
 .meta .score:before {
-    background: url(/images/star-yellow.svg) 0% 50% no-repeat;
+    background: url(../images/star-yellow.svg) 0% 50% no-repeat;
     background-size: contain;
     width: 16px;
     height: 16px;
@@ -1277,7 +1284,7 @@ p, h1, h2, h3, h4, h5, h6 {
     display: block;
     border-radius: 50%;
     box-shadow: 0 5px 15px #0000001a, 0 0 3px #00000014;
-    background: #fff url(/images/more.svg) 50% 50% no-repeat;
+    background: #fff url(../images/more.svg) 50% 50% no-repeat;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -1328,6 +1335,9 @@ p, h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     align-items: center;
     gap: 2px;
+}
+._9j16x82 ._9j16x87 {
+    background-image: url(../images/bookmark-w.svg);
 }
 .btn-bookmark-detail2 {
     overflow: hidden;
@@ -1381,7 +1391,6 @@ p, h1, h2, h3, h4, h5, h6 {
     right: 0;
     bottom: 0;
     display: flex;
-    z-index: -1;
     position: fixed;
     align-items: center;
     justify-content: center;
@@ -1407,6 +1416,15 @@ jss1 .MuiPaper-root {
     flex-direction: column;
     -webkit-overflow-scrolling: touch;
 }
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
 .drawer-box {
     border-radius: 20px 20px 0 0;
     background-color: #fff;
@@ -1415,6 +1433,8 @@ jss1 .MuiPaper-root {
     max-width: 480px;
     width: 100%;
     position: relative;
+    animation: slideUp 0.5s ease-out forwards;
+
 }
 .drawer-box .drawer-box-header {
     display: flex;
@@ -1451,7 +1471,7 @@ jss1 .MuiPaper-root {
 }
 .desc-blocks .desc-block .call:before {
     content: "";
-    background: url(/images/call.svg) 50% 50% no-repeat;
+    background: url(../images/call.svg) 50% 50% no-repeat;
     background-size: contain;
     width: 12.5px;
     margin-right: 4px;
@@ -1474,6 +1494,21 @@ jss1 .MuiPaper-root {
     width: 100%;
 }
 /*모달*/
+
+
+/*모달-예약*/
+#bottom-drawer-header{
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+    justify-content: center;
+    position: sticky;
+    background-color: rgb(255, 255, 255);
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+}
+/*모달-예약*/
 
 .review_count{
     padding-left: 4px;

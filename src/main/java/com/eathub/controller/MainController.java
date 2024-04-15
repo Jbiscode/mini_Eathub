@@ -160,4 +160,19 @@ public class MainController {
         model.addAttribute("restaurantList", searchResultList);
         return "/members/searchResult";
     }
+
+    @GetMapping("/search/best")
+    public String best(Model model, HttpSession session){
+        Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        List<SearchResultDTO> searchResultList = restaurantService.selectSearchBestResultList(member_seq);
+        for (SearchResultDTO searchResultDTO : searchResultList) {
+            Long restaurant_seq = searchResultDTO.getRestaurant_seq();
+            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+            if(restaurantDetailDTO != null){
+                searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+            }
+        }
+        model.addAttribute("restaurantList", searchResultList);
+        return "/members/searchResult";
+    }
 }

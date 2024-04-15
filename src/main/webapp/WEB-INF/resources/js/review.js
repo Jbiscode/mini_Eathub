@@ -7,159 +7,68 @@ document.querySelector(".btn-back").addEventListener('click', () => {
 });
 
 function createReviewElement(reviewDTO) {
-    // 섹션 생성
+    // Html을 문자열로 내보내면 appendChild로 변환못해서(87번줄코드) 감싸줄 태그를 우선 만들기
     const section = document.createElement('section');
     section.className = 'section mb-20';
 
-    // 컨테이너 생성
-    const container = document.createElement('div');
-    container.className = 'container gutter-sm';
-    section.appendChild(container);
+    // 응답에서 가져온 PictureUrl 먼저 html로 파싱하기
+    const pictureHtml = reviewDTO.pictureUrls.map(pictureUrl =>
+        `<img src="https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/review/${pictureUrl}" alt="리뷰 사진">`
+    ).join('');
 
-    // 섹션 본문 생성
-    const sectionBody = document.createElement('div');
-    sectionBody.className = 'section-body';
-    container.appendChild(sectionBody);
-
-    // 리뷰 목록 컨테이너 생성
-    const reviewList = document.createElement('div');
-    reviewList.className = '__my-review-list ml--20 mr--20';
-    sectionBody.appendChild(reviewList);
-
-    const div1 = document.createElement('div');
-    reviewList.appendChild(div1);
-    const div2 = document.createElement('div');
-    div1.appendChild(div2);
-
-    // 리뷰 게시글 컨테이너
-    const article = document.createElement('article');
-    article.className = '__my-review-post';
-    article.style.border = 'none';
-    div2.appendChild(article);
-
-    // 리뷰 헤더 생성
-    const header = document.createElement('div');
-    header.className = '__header';
-    article.appendChild(header);
-
-    // 유저 정보 및 리뷰 메타 정보 부분
-    const userInfo = document.createElement('div');
-    userInfo.className = '__user-info';
-    header.appendChild(userInfo);
-
-    const profile = document.createElement('a');
-    profile.className = 'profile';
-    userInfo.appendChild(profile);
-
-    const profilePic = document.createElement('div');
-    profilePic.className = 'profile-pic';
-    profile.appendChild(profilePic);
-
-    const img = document.createElement('img');
-    img.className = 'img';
-    profilePic.appendChild(img);
-
-    const h4 = document.createElement('h4');
-    h4.className = 'name username';
-    profile.appendChild(h4);
-
-    const spanName = document.createElement('span');
-    spanName.className = 'txt';
-    spanName.textContent = reviewDTO.user || "사용자 이름";
-    h4.appendChild(spanName);
-
-    const ratingData = document.createElement('div');
-    ratingData.className='__review-meta __review-meta--with-rating';
-    header.appendChild(ratingData);
-
-    const ratingData1 = document.createElement('div');
-    ratingData1.className='x9vxc46';
-    ratingData.appendChild(ratingData1);
-
-    const starImg = document.createElement('a');
-    starImg.className='ebold __rating';
-    ratingData1.appendChild(starImg);
-
-    const starScore=document.createElement('div');
-    starScore.className='_10fm75h6';
-    starScore.textContent=reviewDTO.rating;
-    starImg.appendChild(starScore);
-
-    const pFlexTag = document.createElement('p');
-    pFlexTag.className='ooezpq2 _1ltqxco1e';
-    ratingData1.appendChild(pFlexTag);
-
-    const date=document.createElement('span');
-    date.className='__date';
-    date.textContent=reviewDTO.createdAt;
-    ratingData.appendChild(date);
-
-
-
-    // 리뷰 본문 생성
-    const body = document.createElement('div');
-    body.className = '__body';
-    article.appendChild(body);
-
-    // 리뷰 갤러리 생성
-    const reviewGallery = document.createElement('div');
-    reviewGallery.className = 'review-gallery';
-    reviewDTO.pictureUrls.forEach(pictureUrl => {
-        const img = document.createElement('img');
-        img.src = `https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/review/${pictureUrl}`;
-        img.alt = '리뷰 사진';
-        reviewGallery.appendChild(img);
-    });
-    body.appendChild(reviewGallery);
-// 리뷰 래퍼 생성
-    const reviewWrapper = document.createElement('div');
-    reviewWrapper.className='__review-post';
-    body.appendChild(reviewWrapper);
-    // 리뷰 텍스트 생성
-    const reviewText = document.createElement('div');
-    reviewText.className = 'review-content expand';
-    reviewText.innerHTML = reviewDTO.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
-    reviewWrapper.appendChild(reviewText);
-
-    const moreText = document.createElement('a');
-    moreText.className='__more';
-    reviewWrapper.appendChild(moreText);
-
-    // 상호작용 영역
-    const interactionArea = document.createElement('div');
-    interactionArea.className = '__d-flex __v-center';
-    interactionArea.style.justifyContent = 'space-between';
-    body.appendChild(interactionArea);
-
-    const postMeta = document.createElement('div');
-    postMeta.className = '__post-meta mb-24';
-    interactionArea.appendChild(postMeta);
-
-    const likeSpan = document.createElement('span');
-    likeSpan.className = '__like la3t9m0';
-    likeSpan.textContent = reviewDTO.likes || '0';
-    likeSpan.style.transform = 'none';
-    postMeta.appendChild(likeSpan);
-
-    const commentSpan = document.createElement('span');
-    commentSpan.className = '__comment';
-    commentSpan.textContent = reviewDTO.comments || '0';
-    postMeta.appendChild(commentSpan);
-
-    const moreButtonDiv = document.createElement('div');
-    moreButtonDiv.className = 'x9vxc43';
-    interactionArea.appendChild(moreButtonDiv);
-
-    const moreButton = document.createElement('button');
-    moreButton.type = 'button';
-    moreButton.className = 'x9vxc44';
-    moreButtonDiv.appendChild(moreButton);
-
-    const moreButtonText = document.createElement('span');
-    moreButtonText.className = '_1e99eu30';
-    moreButtonText.textContent = 'MORE';
-    moreButton.appendChild(moreButtonText);
-
+    //만든 html 문자열 태그속에 넣기
+    section.innerHTML= `
+        <div class="container gutter-sm">
+            <div class="section-body">
+                <div class="__my-review-list ml--20 mr--20">
+                    <div>
+                        <div>
+                            <article class="__my-review-post" style="border: none;">
+                                <div class="__header">
+                                    <div class="__user-info">
+                                        <a class="profile">
+                                            <div class="profile-pic">
+                                                <img class="img">
+                                            </div>
+                                            <h4 class="name username">
+                                                <span class="txt">${reviewDTO.user || "사용자 이름"}</span>
+                                            </h4>
+                                        </a>
+                                    </div>
+                                    <div class="__review-meta __review-meta--with-rating">
+                                        <div class="x9vxc46">
+                                            <a class="ebold __rating">
+                                                <div class="_10fm75h6">${reviewDTO.rating}</div>
+                                            </a>
+                                            <p class="ooezpq2 _1ltqxco1e"></p>
+                                        </div>
+                                        <span class="__date">${reviewDTO.createdAt}</span>
+                                    </div>
+                                </div>
+                                <div class="__body">
+                                    <div class="review-gallery">${pictureHtml}</div>
+                                    <div class="__review-post">
+                                        <div class="review-content expand">${reviewDTO.content.replace(/(?:\r\n|\r|\n)/g, '<br>')}</div>
+                                        <a class="__more"></a>
+                                    </div>
+                                    <div class="__d-flex __v-center" style="justify-content: space-between;">
+                                        <div class="__post-meta mb-24">
+                                            <span class="__like la3t9m0" style="transform: none;">${reviewDTO.likes || '0'}</span>
+                                            <span class="__comment">${reviewDTO.comments || '0'}</span>
+                                        </div>
+                                        <div class="x9vxc43">
+                                            <button type="button" class="x9vxc44">
+                                                <span class="_1e99eu30">MORE</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
     return section;
 }
 

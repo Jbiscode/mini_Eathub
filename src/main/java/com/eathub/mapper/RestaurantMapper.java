@@ -55,6 +55,9 @@ public interface RestaurantMapper {
     //어디로 가시나요?
     List<SearchResultDTO> selectSearchAddressResultList(List address);
 
+    //예약핫플BEST
+    List<SearchResultDTO> selectRestaurantBestSearchList();
+
     List<SearchResultDTO> selectRestaurantTodaySearchList();
 
     List<SearchResultDTO> selectRandomRestaurant();
@@ -63,6 +66,15 @@ public interface RestaurantMapper {
 
     Long selectRestaurantSeqByResSeq(Long res_seq);
     List<PictureDTO> selectAllPictures(Long restaurant_seq);
+    String getRestaurantType(Long categorySeq);
+
+    RestaurantEditDTO selectRestaurantByRestaurantSeq(Long restaurantSeq);
+  
+    String getRestaurantType(Long categorySeq);
+
+    RestaurantEditDTO selectRestaurantByRestaurantSeq(Long restaurantSeq);
+
+    List<RestaurantDetailDTO> selectAllRestaurantDetailDTO();
 
 
 //    UPDATE
@@ -82,23 +94,19 @@ public interface RestaurantMapper {
      */
     void updateRestaurantInfoStatus(@Param("restaurant_seq") Long restaurant_seq, @Param("status") String status);
     void updateZzimTotal(@Param("restaurant_seq") Long restaurant_seq, @Param("count") int count);
-
-
-
-//    DELETE
-    void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
-
-    String getRestaurantType(Long categorySeq);
-
-    RestaurantEditDTO selectRestaurantByRestaurantSeq(Long restaurantSeq);
-
+  
     void updateRestaurantInfo(RestaurantEditDTO restaurantJoinDTO);
-
-    List<RestaurantDetailDTO> selectAllRestaurantDetailDTO();
 
     void updateRestaurantDetail(RestaurantDetailDTO restaurantDetailDTO);
 
     void updateRestaurantImage(@Param("uuid") String uuid, @Param("restaurantSeq") Long restaurantSeq);
 
     void updateRestaurantDetailExceptImg(RestaurantDetailDTO restaurantDetailDTO);
+  
+    void updateRestaurantInfo(RestaurantEditDTO restaurantJoinDTO);
+
+//    DELETE
+    void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
+
+
 }

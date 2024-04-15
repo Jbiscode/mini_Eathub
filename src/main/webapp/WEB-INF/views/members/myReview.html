@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰관리</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:replace="~{template/common-js :: common-links}"/>
+    <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
+    <link rel="stylesheet"  href="../resources/css/footer.css" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" href="../../resources/css/myReview.css" th:href="@{/css/myReview.css}"/>
+</head>
+<body>
+<div class="wrapper">
+    <header id="header">
+        <div class="container">
+            <div class="header-left">
+                <h1 class="page-title">리뷰관리</h1>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        <div class="tab-menu mb-10 sticky mt-18">
+            <ul>
+                <li class="active">
+                    <a href="javascript:void(0)">
+                        <span>
+                            내가 쓴 총 리뷰 10개
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="review-list">
+            <div class="review-item">
+                <h3>사용자1</h3>
+                <p>맛있어요!</p>
+                <button>삭제</button>
+            </div>
+        </div>
+
+        <div class="review-container" th:each="reviewDTO : ${reviewDTOs}">
+            <div class="review-title">맛있는 레스토랑</div>
+            <div class="star-rating">
+                <div class="star-rating-top" th:styleappend="'width:'+(${reviewDTO.rating}*20)+'%'">
+                    <span>★★★★★</span>
+                </div>
+                <div class="star-rating-bottom">
+                    <span>★★★★★</span>
+                </div>
+            </div>
+            <div class="review-gallery">
+                <img th:each="picture : ${reviewDTO.pictureUrls}"
+                     th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/review/${picture}|"
+                     src="../../resources/images/bb.jpeg" alt="리뷰 사진 1">
+            </div>
+            <div class="review-text" th:text="${reviewDTO.content}">
+                여기는 정말 맛있었어요! 특히 파스타가 인상적이었고, 서비스도 훌륭했습니다. 가족들과 함께 와서 좋은 시간을 보냈습니다.
+            </div>
+        </div>
+
+        <div id="reviews-container">
+            <!-- 리뷰가 동적으로 추가됩니다. -->
+        </div>
+
+        <div class="loading-indicator" id="loading">로딩 중...</div>
+    </main>
+
+</div>
+
+<div th:replace="~{template/footer :: footerFragment}"></div>
+</body>
+</html>

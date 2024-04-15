@@ -95,6 +95,9 @@ ol, ul {
     height: 16px;
 
 }
+.tab-menu ul li {
+    flex: 1;
+}
 .tab-menu ul li.active a {
     color: #000;
     font-weight: 700;
