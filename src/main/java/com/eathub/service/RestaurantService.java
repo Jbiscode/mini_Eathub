@@ -334,6 +334,16 @@ public class RestaurantService {
     }
 
 
+    public List<SearchResultDTO> selectSearchBestResultList(Long member_seq) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantBestSearchList();
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
+
     public RestaurantEditDTO getRestaurantJoinDTO(Long restaurantSeq, Long memSeq) {
         // memSeq로 검색한 restaurant중 restaurantSeq가 있으면 OK, 아니면 권한 없음
         List<MyPageDTO> ownerRestaurantList = getOwnerRestaurantList(memSeq);
