@@ -175,11 +175,7 @@ public class RestaurantController {
         model.addAttribute("restaurantInfo", selectRestaurantInfo);
         model.addAttribute("reviewDTOs", reviewDTOs);
         model.addAttribute("restaurant_seq", restaurant_seq);
-        model.addAttribute("isZzimed", restaurantService.getZzimCount(restaurant_seq, loginMemberSeq) > 0);
         model.addAttribute("restaurantInfo", selectRestaurantInfo);
-        model.addAttribute("timeOptions", timeOptionDTOS);
-        model.addAttribute("reservationJoinDTO",reservationJoinDTO);
-        model.addAttribute("restaurantDetailDTO",restaurantDetailDTO);
         return "/restaurant/review";
     }
 
