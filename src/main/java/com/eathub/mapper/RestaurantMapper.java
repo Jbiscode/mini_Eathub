@@ -55,6 +55,9 @@ public interface RestaurantMapper {
     //어디로 가시나요?
     List<SearchResultDTO> selectSearchAddressResultList(List address);
 
+    //예약핫플BEST
+    List<SearchResultDTO> selectRestaurantBestSearchList();
+
     List<SearchResultDTO> selectRestaurantTodaySearchList();
 
     List<SearchResultDTO> selectRandomRestaurant();
@@ -88,5 +91,6 @@ public interface RestaurantMapper {
     void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
 
     String getRestaurantType(Long categorySeq);
+
 
 }

@@ -1,0 +1,8 @@
+.review-list .review-item {
+    border: solid 1px gray;
+
+}
+
+.tab-menu ul li a {
+    text-align: left !important;
+}

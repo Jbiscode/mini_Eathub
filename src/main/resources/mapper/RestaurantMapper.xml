@@ -161,6 +161,7 @@
         SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
         FROM restaurant_info
         WHERE  category_seq= #{category_seq} and status = 'ACCESS'
+        LIMIT 20
     </select>
 
 
@@ -170,6 +171,15 @@
         FROM restaurant_info
         WHERE status = 'ACCESS'
         order by review_total desc
+    </select>
+
+    <!-- 예약 핫플 best -->
+    <select id="selectRestaurantBestSearchList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        WHERE status = 'ACCESS'
+        order by review_total desc
+        LIMIT 20
     </select>
 
     <!-- 이달의 맛집 -->
@@ -188,6 +198,10 @@
         <foreach item="item" index="index" collection="list" open="(" separator="OR" close=")">
             address1 LIKE #{item}
         </foreach>
+        and
+        <foreach item="item" index="index" collection="list" open="(" separator="OR" close=")">
+            tag LIKE #{item}
+        </foreach>
         and status = 'ACCESS'
     </select>
 
@@ -196,7 +210,7 @@
         SELECT restaurant_seq, member_seq, category_seq, restaurant_name, tag, location, description, openHour, closeHour, rating, review_total, zzim_total
         FROM restaurant_info
         WHERE status = 'ACCESS'
-        ORDER BY rand(TO_DAYS(NOW())) LIMIT 20;
+        ORDER BY rand(TO_DAYS(NOW())) LIMIT 20
     </select>
 
 

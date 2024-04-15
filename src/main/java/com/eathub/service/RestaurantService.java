@@ -332,4 +332,14 @@ public class RestaurantService {
     public Long getRestaurantSeqByResSeq(Long res_seq) {
         return restaurantMapper.selectRestaurantSeqByResSeq(res_seq);
     }
+
+    public List<SearchResultDTO> selectSearchBestResultList(Long member_seq) {
+        List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantBestSearchList();
+        // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+        for (SearchResultDTO restaurant : searchResultList) {
+            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+        }
+        return searchResultList;
+    }
 }
