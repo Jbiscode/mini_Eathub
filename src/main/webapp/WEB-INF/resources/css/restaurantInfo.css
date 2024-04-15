@@ -1495,6 +1495,7 @@ jss1 .MuiPaper-root {
 }
 /*모달*/
 
+
 /*모달-예약*/
 #bottom-drawer-header{
     border-radius: 20px 20px 0 0;
@@ -1508,6 +1509,12 @@ jss1 .MuiPaper-root {
     z-index: 99;
 }
 /*모달-예약*/
+
+.review_count{
+    padding-left: 4px;
+    font-size: 15px;
+    color:var(--_1ltqxco8);
+}
 
 
 a{

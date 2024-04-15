@@ -3,7 +3,7 @@
 <head>
     <meta content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
     <link rel="stylesheet" th:href="@{/css/photo.css}"/>
-    <title>페이지 제목</title>
+    <title>사진</title>
 </head>
 <body class="disable-user-select">
 <div id="root">
@@ -31,6 +31,11 @@
                 </ul>
             </div>
         </main>
+        <div class="flex-content">
+            <img  th:each="picture : ${pictures}"
+                  th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/review/${picture.picture_url}|"
+                  style="height: 127.5px; width: 127.5px; margin: 1px 1px;"/>
+        </div>
     </div>
 </div>
 <script>

@@ -161,6 +161,7 @@
         SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
         FROM restaurant_info
         WHERE  category_seq= #{category_seq} and status = 'ACCESS'
+        LIMIT 20
     </select>
 
 
@@ -169,7 +170,16 @@
         SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
         FROM restaurant_info
         WHERE status = 'ACCESS'
+        order by review_total desc limit 5;
+    </select>
+
+    <!-- 예약 핫플 best -->
+    <select id="selectRestaurantBestSearchList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        WHERE status = 'ACCESS'
         order by review_total desc
+        LIMIT 20
     </select>
 
     <!-- 이달의 맛집 -->
@@ -188,6 +198,10 @@
         <foreach item="item" index="index" collection="list" open="(" separator="OR" close=")">
             address1 LIKE #{item}
         </foreach>
+        and
+        <foreach item="item" index="index" collection="list" open="(" separator="OR" close=")">
+            tag LIKE #{item}
+        </foreach>
         and status = 'ACCESS'
     </select>
 
@@ -196,7 +210,7 @@
         SELECT restaurant_seq, member_seq, category_seq, restaurant_name, tag, location, description, openHour, closeHour, rating, review_total, zzim_total
         FROM restaurant_info
         WHERE status = 'ACCESS'
-        ORDER BY rand(TO_DAYS(NOW())) LIMIT 20;
+        ORDER BY rand(TO_DAYS(NOW())) LIMIT 20
     </select>
 
 
@@ -222,6 +236,20 @@
     FROM reservation
     WHERE res_seq = #{res_seq}
 </select>
+<select id="selectAllPictures" resultType="com.eathub.dto.PictureDTO">
+    select *
+    from review_pictures
+            LEFT JOIN reservation USING (res_seq)
+    WHERE restaurant_seq=#{restaurant_seq};
+</select>
+
+    <!--레스토랑 SEQ로 레스토랑 정보 받기 -->
+    <select id="selectRestaurantByRestaurantSeq" resultType="com.eathub.dto.RestaurantEditDTO">
+        SELECT *
+        FROM restaurant_info
+        WHERE restaurant_seq = #{restaurantSeq}
+    </select>
+
 
 <!-- UPDATE-->
 
@@ -240,18 +268,34 @@
     <!-- restaurant_status 테이블의 status 업데이트 -->
     <update id="updateRestaurantStatus">
         UPDATE restaurant_status
-        SET status = #{status} , comment = #{comment} , admin_seq = #{admin_seq}
+        SET status = #{status} , comment = #{comment} , admin_seq = #{admin_seq}, updatedAt = now()
         WHERE restaurant_seq = #{restaurant_seq}
     </update>
 
     <!-- restaurant_info 테이블의 status 업데이트 -->
     <update id="updateRestaurantInfoStatus">
         UPDATE restaurant_info
-        SET status = #{status}
+        SET status = #{status}, approvedAt = now()
         WHERE restaurant_seq = #{restaurant_seq}
     </update>
 
-
+    <!-- 가게 정보 수정 -->
+    <update id="updateRestaurantInfo" parameterType="com.eathub.dto.RestaurantEditDTO">
+        UPDATE restaurant_info
+        SET category_seq = #{category_seq},
+            restaurant_name = #{restaurant_name},
+            tag = #{tag},
+            location = #{location},
+            description = #{description},
+            phone = #{phone},
+            zipcode = #{zipcode},
+            address1 = #{address1},
+            address2 = #{address2},
+            openHour = #{openHour},
+            closeHour = #{closeHour},
+            closedDay = #{closedDay}
+        WHERE restaurant_seq = #{restaurant_seq}
+    </update>
 
 
 

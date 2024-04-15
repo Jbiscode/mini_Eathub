@@ -107,6 +107,9 @@
                     </div>
                     <div class="owner-restaurant-info hide">
                         <div class="btn-box">
+                            <button class="my-restaurant btn-rounded btn-outline btn-md btn btn-md">
+                                <a id="restaurantInfoEditBtn" href="javascript:void(0)" class="label">가게정보 수정</a>
+                            </button>
                             <button class="btn-rounded btn-outline btn-md btn btn-md">
                                 <a id="restaurantEditButton" href="javascript:void(0)" class="label">가게 상세정보 등록</a>
                             </button>
@@ -234,49 +237,49 @@
                             <div class="form-block-body closed-day-form">
                                 <div class="input-control closed-day">
                                     <input class="form-check-input" type="checkbox" value="MON" id="MON"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="MON">
                                         월
                                     </label>
                                 </div>
                                 <div class="input-control closed-day">
                                     <input class="form-check-input" type="checkbox" value="TUE" id="TUE"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="TUE">
                                         화
                                     </label>
                                 </div>
                                 <div class="input-control closed-day">
                                     <input class="form-check-input" type="checkbox" value="WED" id="WED"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="WED">
                                         수
                                     </label>
                                 </div>
                                 <div class="input-control closed-day">
                                     <input class="form-check-input" type="checkbox" value="THU" id="THU"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="THU">
                                         목
                                     </label>
                                 </div>
                                 <div class="input-control closed-day">
                                     <input class="form-check-input" type="checkbox" value="FRI" id="FRI"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="FRI">
                                         금
                                     </label>
                                 </div>
                                 <div class="input-control closed-day">
                                     <input class="form-check-input" type="checkbox" value="SAT" id="SAT"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="SAT">
                                         토
                                     </label>
                                 </div>
                                 <div class="input-control closed-day form-check-inline">
                                     <input class="form-check-input" type="checkbox" value="SUN" id="SUN"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="SUN">
                                         일
                                     </label>
@@ -285,6 +288,7 @@
                         </div>
                     </div>
                 </div>
+
             </section>
         </div>
 

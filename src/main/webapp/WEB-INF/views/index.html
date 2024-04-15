@@ -9,8 +9,8 @@
     <link rel="stylesheet"  href="../resources/css/footer.css" th:href="@{/css/footer.css}">
     <link rel="stylesheet"  href="../resources/css/index.css" th:href="@{/css/index.css}">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-    <script defer src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script defer th:src="@{/js/index.js}" src="../resources/js/index.js"></script>
     <script defer src="../../resources/js/zzim.js" th:src="@{/js/zzim.js}"></script>
 </head>
@@ -138,7 +138,7 @@
                     <h3 class="sub_header_title">예약 핫플 BEST</h3>
                     <p>이달의 best 예약! 이번주는 여기 어떠세요?</p>
                 </div>
-                <a class="btn-more" th:href="@{|/search/top|}">전체보기 ></a>
+                <a class="btn-more" th:href="@{|/search/best|}">전체보기 ></a>
             </div>
             <div class="sub_body">
                 <div class="v_scroll">
@@ -167,7 +167,7 @@
                                 </div>
                             </div>
                             <div class="showall">
-                                <a th:href="@{|/search/top|}"><span>전체보기</span></a>
+                                <a th:href="@{|/search/best|}"><span>전체보기</span></a>
                             </div>
                         </div>
                     </div>

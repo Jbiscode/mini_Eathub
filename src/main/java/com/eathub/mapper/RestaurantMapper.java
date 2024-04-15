@@ -55,6 +55,9 @@ public interface RestaurantMapper {
     //어디로 가시나요?
     List<SearchResultDTO> selectSearchAddressResultList(List address);
 
+    //예약핫플BEST
+    List<SearchResultDTO> selectRestaurantBestSearchList();
+
     List<SearchResultDTO> selectRestaurantTodaySearchList();
 
     List<SearchResultDTO> selectRandomRestaurant();
@@ -62,6 +65,10 @@ public interface RestaurantMapper {
     RestaurantDetailDTO selectRestaurantDetail(Long restaurantSeq);
 
     Long selectRestaurantSeqByResSeq(Long res_seq);
+    List<PictureDTO> selectAllPictures(Long restaurant_seq);
+    String getRestaurantType(Long categorySeq);
+
+    RestaurantEditDTO selectRestaurantByRestaurantSeq(Long restaurantSeq);
 
 
 //    UPDATE
@@ -81,12 +88,11 @@ public interface RestaurantMapper {
      */
     void updateRestaurantInfoStatus(@Param("restaurant_seq") Long restaurant_seq, @Param("status") String status);
     void updateZzimTotal(@Param("restaurant_seq") Long restaurant_seq, @Param("count") int count);
+  
+    void updateRestaurantInfo(RestaurantEditDTO restaurantJoinDTO);
 
 
 
 //    DELETE
     void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
-
-    String getRestaurantType(Long categorySeq);
-
 }

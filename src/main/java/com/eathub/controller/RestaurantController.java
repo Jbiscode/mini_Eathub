@@ -2,9 +2,11 @@ package com.eathub.controller;
 
 
 import com.eathub.conf.SessionConf;
+import com.eathub.dto.PictureDTO;
 import com.eathub.dto.ReservationJoinDTO;
 import com.eathub.dto.RestaurantDetailDTO;
 import com.eathub.dto.ReviewDTO;
+import com.eathub.dto.ReviewStatsDTO;
 import com.eathub.dto.TimeOptionDTO;
 import com.eathub.entity.Reservation;
 import com.eathub.entity.RestaurantDetail;
@@ -101,36 +103,7 @@ public class RestaurantController {
 
         return "redirect:/members/my";
     }
-    //레스토랑 메뉴리스트
-    @GetMapping("/menuList/{restaurant_seq}")
-    public String restaurantMenuList(@PathVariable Long restaurant_seq,Model model,HttpSession session){
-        RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
-        Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
 
-        model.addAttribute("restaurantInfo", selectRestaurantInfo);
-        return "/restaurant/menuList";
-    }
-    //레스토랑 사진
-    @GetMapping("/photo/{restaurant_seq}")
-    public String restaurantPhoto(@PathVariable Long restaurant_seq,Model model,HttpSession session){
-        RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
-
-        model.addAttribute("restaurantInfo", selectRestaurantInfo);
-        return "/restaurant/photo";
-    }
-    //레스토랑 리뷰
-    @GetMapping("/review/{restaurant_seq}")
-    public String restaurantReview(@PathVariable Long restaurant_seq,Model model,HttpSession session){
-        RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
-
-        model.addAttribute("restaurantInfo", selectRestaurantInfo);
-        return "/restaurant/review";
-    }
-    @GetMapping("/review/write/{res_seq}")
-    public String restaurantReviewWrite(@PathVariable Long res_seq,Model model,HttpSession session){
-
-        return "/restaurant/reviewWrite";
-    }
 
     @GetMapping("/detail/{restaurant_seq}/menuList")
     public String menu(@PathVariable Long restaurant_seq,Model model,HttpSession session){
@@ -171,6 +144,9 @@ public class RestaurantController {
         if(restaurantDetailDTO != null){
             model.addAttribute("restaurantDetailDTO", restaurantDetailDTO);
         }
+      // 리뷰 사진들 불러오기
+        List<PictureDTO> pictureDTOS = restaurantService.selectAllPictures(restaurant_seq);
+      
         Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
         ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
@@ -181,24 +157,22 @@ public class RestaurantController {
         model.addAttribute("timeOptions", timeOptionDTOS);
         model.addAttribute("reservationJoinDTO",reservationJoinDTO);
         model.addAttribute("restaurantDetailDTO",restaurantDetailDTO);
+       
+        model.addAttribute("pictures",pictureDTOS);
+
         return "/restaurant/photo";
     }
 
     @GetMapping("/detail/{restaurant_seq}/review")
     public String review(@PathVariable Long restaurant_seq,Model model, HttpSession session){
         List<ReviewDTO> reviewDTOs = new ArrayList<>();
-
+        RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
+        List<ReviewStatsDTO> reviewStatsDTOS = reviewService.selectReviewCount(restaurant_seq);
         log.info("reviewDTOs: {}", reviewDTOs);
 
-        RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
-        RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-        if(restaurantDetailDTO != null){
-            model.addAttribute("restaurantDetailDTO", restaurantDetailDTO);
-        }
-        Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
-        List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
-        ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
 
+        model.addAttribute("reviewCount",reviewStatsDTOS);
+        model.addAttribute("restaurantInfo", selectRestaurantInfo);
         model.addAttribute("reviewDTOs", reviewDTOs);
         model.addAttribute("restaurant_seq", restaurant_seq);
         model.addAttribute("isZzimed", restaurantService.getZzimCount(restaurant_seq, loginMemberSeq) > 0);
