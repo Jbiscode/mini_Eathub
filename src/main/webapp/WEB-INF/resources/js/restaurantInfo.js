@@ -1,3 +1,13 @@
+//스크롤하면 상단 독 불투명
+window.addEventListener('scroll', function() {
+    var element = document.querySelector('._9j16x81');
+    if (window.scrollY >= 228) {
+        element.classList.remove('_9j16x82');
+    } else {
+        element.classList.add('_9j16x82');
+    }
+});
+
 $("#__notes-item").click(function () {
     document.getElementById("__notes-item").classList.toggle("__closed");
 });

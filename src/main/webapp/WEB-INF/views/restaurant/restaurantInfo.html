@@ -17,7 +17,7 @@
     <body class="disable-user-select" style>
         <div class="wrapper" id="wrapperDiv">
             <header class="_9j16x80">
-                <div class="_9j16x81 icon-wrapper">
+                <div class="_9j16x81 _9j16x82">
                     <div class="_9j16x83">
                         <a class="_9j16x84 _9j16x85" th:href="@{/search}">뒤로</a>
                         <a class="_9j16x84 _9j16x86" th:href="@{/}">홈</a>
@@ -31,22 +31,9 @@
             <main id="main">
 
                 <div class="section">
-                    <!--사진 슬라이드-->
-                    <div class="slider">
-                        <input type="radio" name="slide" id="slide1" checked />
-                        <input type="radio" name="slide" id="slide2" />
-                        <input type="radio" name="slide" id="slide3" />
-                        <input type="radio" name="slide" id="slide4" />
-                        <ul id="imgholder" class="imgs">
-                            <li><img th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${restaurantDetailDTO.image_url}|" alt="대표사진"/></li>
-                        </ul>
-                        <div class="bullets">
-                            <label for="slide1">&nbsp;</label>
-                            <label for="slide2">&nbsp;</label>
-                            <label for="slide3">&nbsp;</label>
-                            <label for="slide4">&nbsp;</label>
-                        </div>
-                    </div>
+                    <!--가게 메인 사진-->
+                    <img class="rest_main" th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${restaurantDetailDTO.image_url}|" alt="대표사진"/>
+                </div>
 
                     <section class="section">
                         <div class="container gutter-sm pt-24 pb-24">
@@ -61,7 +48,7 @@
                                         <i class="star full" style="width: 14px; height: 14px"></i>
                                         <i class="star half" style="width: 14px; height: 14px"></i>
                                     </span>
-                                    <span class="_4qv3386" th:text="${restaurantInfo.rating}">평점</span>
+                                    <span class="_4qv3386" th:text="${restaurantInfo.rating} ">평점</span>
                                     <a href="review.html"
                                         ><span class="_4qv3387" th:text="|${restaurantInfo.review_total} 개 리뷰|">리뷰수 </span>
                                         <img src="./image/icons/arrow-right-gray.svg" th:src="@{/images/arrow-right-gray.svg}" style="margin-top: 1px" />
@@ -118,28 +105,10 @@
                                                 </span>
                                             </a>
                                         </div>
-                                        <div class="section-time-slot mb-24" style="height: 59px; display: flex; align-items: center">
-                                            <div
-                                                class="swiper swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-free-mode swiper-container-ios timeslot-swiper timetable-list timetable-list-sm"
-                                            >
-                                                <div class="swiper-wrapper">
-                                                    <div class="timetable-list timetable-list-sm" style="flex: 1 1 0%">
-                                                        <a
-                                                            href="#"
-                                                            id="d22"
-                                                            class="timetable-list-item empty full-width"
-                                                            style="margin-bottom: auto; margin-top: auto; text-decoration: none"
-                                                        >
-                                                            <span class="time">빈자리 알림 신청</span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="swiper-slide swiper-slide-next" style="width: unset"></div>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                         <div class="btn-centered" style="text-align: center; border: none">
                                             <a href="#" class="btn btn-rounded btn-outline-red">
-                                                <span class="label arrow">예약가능 날짜 찾기</span>
+                                                <span class="label arrow">예약하러 가기</span>
                                             </a>
                                         </div>
                                     </div>
@@ -167,43 +136,13 @@
                             </ul>
                         </div>
 
-                        <section class="section pt-30 pb-25">
-                            <div class="container gutter-sm">
-                                <div class="section-header mb-20">
-                                    <h3 class="section-title __sm">예약 오픈 일정</h3>
-                                </div>
-                                <div class="section-body">
-                                    <div class="__reserv-schedule">
-                                        <div>
-                                            <div class="__item mb-24">
-                                                <dl>
-                                                    <dt class="_1f7t3pl0 _1ltqxco1b">3월 25일 오후 3:00</dt>
-                                                    <dd class="_1ltqxco1e _10fm75h19">4월 1일 ~ 14일 예약이 가능합니다.</dd>
-                                                </dl>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="btn-centered">
-                                        <a class="btn full-width btn-lg btn-outline-red">
-                                            <span class="__d-flex __v-center __h-center" style="gap: 0 4px">
-                                                <span class="__d-flex __v-center __h-center" style="gap: 0 4px">
-                                                    <img th:src="@{/images/alarm-new-on.svg}" src="/image/icons/alarm-new-on.svg" alt="" />
-                                                    &emsp;예약 오픈 알림 받기
-                                                </span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <hr class="separator" />
-
+                        <!--홈 / 공지-->
                         <section class="section pt-30 pb-30 section-overflow-hidden">
                             <div class="container gutter-sm">
                                 <div class="section-header mb-30">
                                     <h3 class="section-title __sm">레스토랑 공지</h3>
                                     <div class="utils">
-                                        <a href="notice.html" class="__btn-all" style="color: black; text-decoration: none">전체보기</a>
+                                        <a th:href="@{|/restaurant/detail/${restaurant_seq}/notice|}" class="__btn-all" style="color: black; text-decoration: none">전체보기</a>
                                     </div>
                                 </div>
                                 <div class="section-body" style="overflow: hidden">
@@ -216,23 +155,11 @@
                                                             <div class="__pic">
                                                                 <div class="img"></div>
                                                             </div>
-                                                            <div class="__desc">
-                                                                <p>
-                                                                    올디스타코 예약 OPEN 공지
-                                                                    <br />
-                                                                    <br />
-                                                                    3월 25일 월요일 15:00 예약 오픈!
-                                                                    <br />
-                                                                    기간 : 4월 18일, 19일, 20일, 25일, 26일, 27일 오픈
-                                                                    <br />
-                                                                    시간 : 21시, 22시, 23시
-                                                                    <br />
-                                                                    예약금 : 인원당 1만원
-                                                                    <br />
-                                                                    <br />
-                                                                    특별 예약일 제외 다른 일자는 웨이팅 운영방식으로 진행됩니다.
+                                                            <div class="__desc" >
+                                                                <p th:text="${restaurantDetailDTO.description_detail}">
+                                                                    공지임다
                                                                 </p>
-                                                                <a class="__more">
+                                                                <a class="__more" th:href="@{|/restaurant/detail/${restaurant_seq}/notice|}">
                                                                     <span>더보기</span>
                                                                 </a>
                                                             </div>
@@ -268,19 +195,19 @@
                                     <div class="__notes-item" id="__notes-item">
                                         <a class="__toggle">주차 정보</a>
                                         <div class="__note">
-                                            <p>[기본요금체계]<br />10:00 - 20:00 10분당 평일 300원, 주말 500원<br />그외 시간 : 200원, 1일 최대 요금 45,000원</p>
+                                            <p th:text="${restaurantDetailDTO.parking}">[기본요금체계]<br />10:00 - 20:00 10분당 평일 300원, 주말 500원<br />그외 시간 : 200원, 1일 최대 요금 45,000원</p>
                                         </div>
                                     </div>
                                     <div class="__notes-item" id="__notes-item2">
                                         <a class="__toggle">주류 및 콜키지 안내</a>
                                         <div class="__note">
-                                            <p>- 고든램지버거 레스토랑에서는 더 나은 서비스 제공을 위해 콜키지를 시행합니다. ※ 콜키지 비용 - 병당 2만원</p>
+                                            <p th:text="${restaurantDetailDTO.drink}">- 고든램지버거 레스토랑에서는 더 나은 서비스 제공을 위해 콜키지를 시행합니다. ※ 콜키지 비용 - 병당 2만원</p>
                                         </div>
                                     </div>
                                     <div class="__notes-item" id="__notes-item3">
                                         <a class="__toggle">웰컴키즈존</a>
                                         <div class="__note">
-                                            <p>- 유모차 반입 및 아기의자 필요 여부와 갯수를 반드시 요청사항에 작성해주세요.</p>
+                                            <p th:text="${restaurantDetailDTO.kidszone}">- 유모차 반입 및 아기의자 필요 여부와 갯수를 반드시 요청사항에 작성해주세요.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -293,7 +220,7 @@
                                 <div class="section-header">
                                     <h3 class="section-title">메뉴</h3>
                                     <div class="utils">
-                                        <a href="menuList.html " class="__btn-all">전체보기</a>
+                                        <a th:href="@{|/restaurant/detail/${restaurant_seq}/menuList|}" class="__btn-all">전체보기</a>
                                     </div>
                                 </div>
                                 <div class="section-body">
@@ -313,7 +240,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="menuList.html" class="btn-menupan-photo" style="text-decoration: none">
+                                    <a th:href="@{|/restaurant/detail/${restaurant_seq}/menuList|}" class="btn-menupan-photo" style="text-decoration: none">
                                         <span>메뉴 전체보기</span>
                                     </a>
                                 </div>
@@ -329,7 +256,7 @@
                                         사진
                                         <span class="count">668</span>
                                     </h3>
-                                    <div class="utils"><a href="photo.html" class="__btn-all">전체보기</a></div>
+                                    <div class="utils"><a th:href="@{|/restaurant/detail/${restaurant_seq}/photo|}" class="__btn-all">전체보기</a></div>
                                 </div>
                                 <div class="section-body">
                                     <div class="photo-grid-list">
@@ -394,7 +321,7 @@
                                             </a>
                                         </div>
                                         <div class="photo-grid-list-item">
-                                            <a href="photo.html" class="tb">
+                                            <a th:href="@{|/restaurant/detail/${restaurant_seq}/photo|}" class="tb">
                                                 <div class="img">
                                                     <i class="count" style="z-index: 1">
                                                         <span>100+</span>
@@ -515,12 +442,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div></div>
-                                                    <div></div>
-                                                    <div></div>
-                                                    <div></div>
-                                                    <div></div>
-                                                    <div></div>
                                                     <div class="showall">
                                                         <a href="#showall1">
                                                             <span>전체보기</span>
@@ -559,7 +480,9 @@
                 </button>
 
             </aside>
-        <div role="presentation" id="myModal" class="MuiDrawer-root MuiDrawer-modal jss1" style="position: fixed; z-index: 100000; inset: 0">
+
+        <!--모달/매장정보-->
+        <div role="presentation" id="myModal" class="MuiDrawer-root MuiDrawer-modal jss1" style="position: fixed; z-index: 100000; inset: 0px; ">
             <div class="MuiBackdrop-root" aria-hidden="true" style="opacity: 1; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"></div>
             <div tabindex="0" data-test="sentinelStart"></div>
             <div
@@ -582,10 +505,9 @@
                             z-index: 99;
                         "
                     >
-                        <h2 class="drawer-box-title">숙성도 중문점</h2>
+                        <h2 class="drawer-box-title" th:text="${restaurantInfo.restaurant_name}">숙성도 중문점</h2>
                     </div>
                     <div class="drawer-box-body" style="padding: 0; overflow-y: auto; position: static; max-height: 70vh">
-                        <section class="section pt-30 pb-25"></section>
                         <section class="section pt-30">
                             <div class="container gutter-sm">
                                 <div class="section-body">
@@ -599,40 +521,24 @@
                                         <div class="desc-block">
                                             <dl>
                                                 <dt><a class="__toggle">매장 소개</a></dt>
-                                                <dd class="color-gray">
-                                                    제주가 낳고, 기른<br />
-                                                    100% 제주 흑돼지만을 사용하며<br />
-                                                    깐깐한 원육선별과 섬세한 교차숙성 기술로<br />
-                                                    숙성고기의 정점이 무엇인지 보여드리겠습니다.<br />
-                                                    프리미엄 숙성육 퀄리티 하우스<br />
-                                                    제주 숙성도 중문점을 찾아주세요!
+                                                <dd class="color-gray" th:text="${restaurantDetailDTO.description_detail}">
+                                                    --
                                                 </dd>
                                             </dl>
                                         </div>
                                         <div class="desc-block">
                                             <dl>
                                                 <dt><a class="__toggle">영업시간</a></dt>
-                                                <dd class="color-gray">
-                                                    12시 오픈일 때 (스타트 최대 24팀까지 입장 가능)<br /><br />
-                                                    11:00 부터 현장대기등록 시작<br /><br />
-                                                    12시 오픈과 동시에 원격줄서기 시작합니다.<br /><br />
-                                                    마지막 입장시간 21:00까지 입니다.<br /><br />
-                                                    대기가 길어서 부득이하게 식사시간을 2시간으로 제한 됩니다.<br /><br />
-                                                    라스트 오더 21:15<br /><br />
-                                                    퇴장시간 21:50
+                                                <dd class="color-gray" th:text="${restaurantDetailDTO.openhour_detail}">
+                                                    --
                                                 </dd>
                                             </dl>
                                         </div>
                                         <div class="desc-block">
                                             <dl>
                                                 <dt><a class="__toggle">안내 및 유의사항</a></dt>
-                                                <dd class="color-gray">
-                                                    *단체안내<br />
-                                                    숙성도를 방문해주셔서 감사합니다.<br />
-                                                    6인이상 방문객분들은 매장이 협소하고<br />
-                                                    테이블 수가 적은 관계로 안내 받으실때 <br />
-                                                    연결되지 않은 테이블로 배정 받아 따로 않으실 확률이 높습니다.<br />
-                                                    대기등록 전에 참고해주시면 감사하겠습니다.
+                                                <dd class="color-gray" th:text="${restaurantDetailDTO.precaution}">
+                                                    --
                                                 </dd>
                                             </dl>
                                         </div>
@@ -640,13 +546,14 @@
                                 </div>
                             </div>
                         </section>
+
                     </div>
                     <div class="drawer-box-footer" style="bottom: 0; left: 0; right: 0; z-index: 99; background-color: rgb(255, 255, 255)">
                         <button class="btn btn-lg btn-red" id="myBtn" style="border-radius: 6px">확인</button>
                     </div>
                 </div>
             </div>
-            <div tabindex="0" data-test="sentinelEnd"></div>
+            <div tabindex="0" id="end" data-test="sentinelEnd"></div>
         </div>
         <div role="presentation" id="resModal">
             <div class="wrapper">
