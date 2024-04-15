@@ -44,9 +44,10 @@ function updateFormFields(restaurantInfo) {
 
     document.getElementById("restaurant_img").src= "https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/" + restaurantInfo.img_url;
 
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]')
+
     checkboxes.forEach((checkbox) => {
-        checkbox.checked = checkbox.value === restaurantInfo.closedDay;
+        checkbox.checked = restaurantInfo.closedDayList.includes(checkbox.value);
     });
 }
 
@@ -68,8 +69,10 @@ function makeLinkButton(restaurantSeq) {
     const btn_box = document.querySelector(".btn-box");
     const edit = document.getElementById("restaurantEditButton");
     const menu = document.getElementById("restaurantMenuAddButton");
+    const editRestaurantInfo = document.getElementById("restaurantInfoEditBtn")
     btn_box.style.visibility = "visible";
 
-    edit.href = `/members/restaurant/${restaurantSeq}/edit`;
+    edit.href = `/members/restaurant/${restaurantSeq}/detailInfo/join`;
     menu.href = `/members/restaurant/${restaurantSeq}/menu/add`;
+    editRestaurantInfo.href=`/members/restaurant/${restaurantSeq}/edit`;
 }

@@ -90,4 +90,7 @@ public interface RestaurantMapper {
 
     String getRestaurantType(Long categorySeq);
 
+    RestaurantEditDTO selectRestaurantByRestaurantSeq(Long restaurantSeq);
+
+    void updateRestaurantInfo(RestaurantEditDTO restaurantJoinDTO);
 }
