@@ -49,8 +49,9 @@
                         </div>
                         <div class="form-block-body">
                             <div class="input-control">
-                                <span id="img-box">
-                                </span>
+                                <div id="img-box">
+                                    <img th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${restaurantDetailDTO.image_url}|" alt="preview" width="100" height="100">
+                                </div>
                                 <input type="file" id="img" th:field="${restaurantDetailDTO.restaurant_image}">
                             </div>
                         </div>
@@ -104,77 +105,77 @@
                         <div class="form-block-body closed-day-form">
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="parkingavail" id="parkingavail"
-                                       th:field="${restaurantDetailDTO.amenities}">
+                                       th:field="${restaurantDetailDTO.amenitiesList}">
                                 <label class="form-check-label" for="parkingavail">
                                     주차 가능
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="valetavail" id="valetavail"
-                                       th:field="${restaurantDetailDTO.amenities}">
+                                       th:field="${restaurantDetailDTO.amenitiesList}">
                                 <label class="form-check-label" for="valetavail">
                                     발렛 가능
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="corkage" id="corkage"
-                                       th:field="${restaurantDetailDTO.amenities}">
+                                       th:field="${restaurantDetailDTO.amenitiesList}">
                                 <label class="form-check-label" for="corkage">
                                     콜키지 가능
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="freecorkage" id="freecorkage"
-                                       th:field="${restaurantDetailDTO.amenities}">
+                                       th:field="${restaurantDetailDTO.amenitiesList}">
                                 <label class="form-check-label" for="freecorkage">
                                     콜키지 프리
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="rental" id="rental"
-                                       th:field="${restaurantDetailDTO.amenities}">
+                                       th:field="${restaurantDetailDTO.amenitiesList}">
                                 <label class="form-check-label" for="rental">
                                     대관 가능
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="wine" id="wine"
-                                       th:field="${restaurantDetailDTO.amenities}">
+                                       th:field="${restaurantDetailDTO.amenitiesList}">
                                 <label class="form-check-label" for="wine">
                                     와인 배송
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="welkids" id="welkids"
-                                       th:field="${restaurantDetailDTO.amenities}">
+                                       th:field="${restaurantDetailDTO.amenitiesList}">
                                 <label class="form-check-label" for="welkids">
                                     웰컴키즈존
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="nokids" id="nokids"
-                                       th:field="${restaurantDetailDTO.amenities}">
+                                       th:field="${restaurantDetailDTO.amenitiesList}">
                                 <label class="form-check-label" for="nokids">
                                     노키즈존
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="pet" id="pet"
-                                       th:field="${restaurantDetailDTO.amenities}">
+                                       th:field="${restaurantDetailDTO.amenitiesList}">
                                 <label class="form-check-label" for="pet">
                                     반려동물 동반
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="lettering" id="lettering"
-                                       th:field="${restaurantDetailDTO.amenities}">
+                                       th:field="${restaurantDetailDTO.amenitiesList}">
                                 <label class="form-check-label" for="lettering">
                                     레터링
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="sommelier" id="sommelier"
-                                       th:field="${restaurantDetailDTO.amenities}">
+                                       th:field="${restaurantDetailDTO.amenitiesList}">
                                 <label class="form-check-label" for="sommelier">
                                     전문 소믈리에
                                 </label>
@@ -247,7 +248,7 @@
                         </div>
                     </div>
                     <div class="sticky-bottom-btn">
-                        <button type="submit" class="btn">상세정보 등록</button>
+                        <button type="submit" class="btn">상세정보 수정</button>
                     </div>
                     <hr class="space-40">
                 </form>

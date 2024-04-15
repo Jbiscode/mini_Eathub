@@ -35,6 +35,8 @@ public class OwnerRestaurantDetailDTO {
     private String status;
 
     private String img_url;
+    private Boolean isDetailJoined;
+
     public String getRating() {
         return String.format("%.2f", rating);
     }

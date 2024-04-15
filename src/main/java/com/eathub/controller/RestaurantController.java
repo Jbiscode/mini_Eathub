@@ -2,12 +2,7 @@ package com.eathub.controller;
 
 
 import com.eathub.conf.SessionConf;
-import com.eathub.dto.PictureDTO;
-import com.eathub.dto.ReservationJoinDTO;
-import com.eathub.dto.RestaurantDetailDTO;
-import com.eathub.dto.ReviewDTO;
-import com.eathub.dto.ReviewStatsDTO;
-import com.eathub.dto.TimeOptionDTO;
+import com.eathub.dto.*;
 import com.eathub.entity.Reservation;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.service.RestaurantService;
@@ -22,11 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
 import java.util.List;
 
 
@@ -80,9 +71,9 @@ public class RestaurantController {
     public String joinReservation(@PathVariable Long restaurant_seq, @Validated ReservationJoinDTO reservationJoinDTO, BindingResult bindingResult,HttpSession session) throws ParseException {
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
 
-        if (bindingResult.hasErrors()) {
+        if (member_seq == null || bindingResult.hasErrors()) {
             log.error("오류" + bindingResult);
-            return "/detail/{restaurant_seq}";
+            return "redirect:/members/my";
         }
 
         String formattedDate = restaurantService.getReservationTime(reservationJoinDTO);

@@ -21,7 +21,7 @@ document.querySelectorAll(".owner-restaurant-list-item").forEach((item) => {
             updateFormFields(data.restaurantInfo);
             toggleModalVisibility(false);
             scrollToTop();
-            makeLinkButton(restaurantSeq)
+            makeLinkButton(restaurantSeq, data.restaurantInfo.isDetailJoined)
             $('.owner-restaurant-info').removeClass('hide');
             $('.nodata').addClass('hide')
         } catch (error) {
@@ -42,7 +42,13 @@ function updateFormFields(restaurantInfo) {
     document.getElementById("openHour").value = restaurantInfo.openHour.substring(0, 5);
     document.getElementById("closeHour").value = restaurantInfo.closeHour.substring(0, 5);
 
-    document.getElementById("restaurant_img").src= "https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/" + restaurantInfo.img_url;
+    if (restaurantInfo.img_url !== null) {
+        document.getElementById("restaurant_img").src = "https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/" + restaurantInfo.img_url;
+    }else{
+        document.getElementById("restaurant_img").src = "https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/default.png";
+    }
+
+    // document.getElementById("restaurant_img").src= "https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/" + restaurantInfo.img_url;
 
     const checkboxes = document.querySelectorAll('input[type="checkbox"]')
 
@@ -65,14 +71,25 @@ function scrollToTop() {
     });
 }
 
-function makeLinkButton(restaurantSeq) {
+function makeLinkButton(restaurantSeq,isDetailJoined) {
     const btn_box = document.querySelector(".btn-box");
-    const edit = document.getElementById("restaurantEditButton");
+    const detailJoin = document.getElementById("restaurantDetailJoinButton");
+    const detailEdit = document.getElementById("restaurantDetailEditButton")
     const menu = document.getElementById("restaurantMenuAddButton");
     const editRestaurantInfo = document.getElementById("restaurantInfoEditBtn")
+
     btn_box.style.visibility = "visible";
 
-    edit.href = `/members/restaurant/${restaurantSeq}/detailInfo/join`;
+    if(isDetailJoined){
+        detailJoin.parentNode.style.display = 'none';
+        detailEdit.parentNode.style.display = 'block';
+    }else{
+        detailEdit.parentNode.style.display = 'none';
+        detailJoin.parentNode.style.display = 'block';
+    }
+
+    detailJoin.href = `/members/restaurant/${restaurantSeq}/detailInfo/join`;
+    detailEdit.href = `/members/restaurant/${restaurantSeq}/detailInfo/edit`
     menu.href = `/members/restaurant/${restaurantSeq}/menu/add`;
     editRestaurantInfo.href=`/members/restaurant/${restaurantSeq}/edit`;
 }

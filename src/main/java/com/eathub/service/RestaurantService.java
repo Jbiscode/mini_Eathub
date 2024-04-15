@@ -395,4 +395,16 @@ public class RestaurantService {
     public List<RestaurantDetailDTO> getRestaurantDetailList() {
         return restaurantMapper.selectAllRestaurantDetailDTO();
     }
+
+    public void updateRestaurantDetail(RestaurantDetailDTO restaurantDetailDTO) {
+        restaurantMapper.updateRestaurantDetail(restaurantDetailDTO);
+    }
+
+    public void updateRestaurantImage(String uuid, Long restaurantSeq) {
+        restaurantMapper.updateRestaurantImage(uuid, restaurantSeq);
+    }
+
+    public void updateRestaurantDetailExceptImg(RestaurantDetailDTO restaurantDetailDTO) {
+        restaurantMapper.updateRestaurantDetailExceptImg(restaurantDetailDTO);
+    }
 }

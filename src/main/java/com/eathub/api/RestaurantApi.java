@@ -49,16 +49,13 @@ public class RestaurantApi {
     public ResponseEntity<?> selectOwnerRestaurant(@PathVariable("restaurantSeq") Long restaurant_seq) {
         try {
             OwnerRestaurantDetailDTO restaurantInfo = restaurantService.selectRestaurantInfoWithType(restaurant_seq);
-
             restaurantInfo.setClosedDayList(memberService.convertStringToList(restaurantInfo.getClosedDay()));
-
-            log.info("restaurantInfo = {}", restaurantInfo);
-
-
             RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-            log.info("restaurantDetailDTO = {}", restaurantDetailDTO);
-            if(restaurantDetailDTO != null){
+            restaurantInfo.setIsDetailJoined(false);
+
+            if(restaurantDetailDTO != null){ // null 이 아니다? => 있다
                 restaurantInfo.setImg_url(restaurantDetailDTO.getImage_url());
+                restaurantInfo.setIsDetailJoined(true);
             }
                 return ResponseEntity.ok().body(Map.of(
                         "restaurantInfo" , restaurantInfo

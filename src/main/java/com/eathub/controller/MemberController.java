@@ -441,12 +441,19 @@ public class MemberController {
     }
 
     @GetMapping("/restaurant/{restaurantSeq}/detailInfo/join")
-    public String editForm(@PathVariable("restaurantSeq") Long restaurant_seq, Model model){
+    public String editForm(@PathVariable("restaurantSeq") Long restaurant_seq, Model model, HttpSession session){
 
-        model.addAttribute("restaurantDetailDTO", new RestaurantDetailDTO());
+        Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        List<MyPageDTO> ownerRestaurantList = restaurantService.getOwnerRestaurantList(member_seq);
+        for (MyPageDTO myPageDTO : ownerRestaurantList) {
+            if(myPageDTO.getRestaurant_seq().equals(restaurant_seq)){
+                model.addAttribute("restaurantDetailDTO", new RestaurantDetailDTO());
+                return "restaurant/restaurantDetailForm";
+            }
+        }
 
+        return "redirect:/members/my";
 
-        return "restaurant/restaurantDetailForm";
     }
 
     @PostMapping("/restaurant/{restaurantSeq}/detailInfo/join")
@@ -477,6 +484,43 @@ public class MemberController {
             restaurantService.saveRestaurantDetail(restaurantDetailDTO);
         }
 
+
+        return "redirect:/members/my";
+    }
+
+    @GetMapping("/restaurant/{restaurantSeq}/detailInfo/edit")
+    public String detailEditForm(@PathVariable("restaurantSeq") Long restaurant_seq, Model model){
+        RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+
+        restaurantDetailDTO.setAmenitiesList(memberService.convertStringToList(restaurantDetailDTO.getAmenities()));
+        model.addAttribute("restaurantDetailDTO", restaurantDetailDTO);
+        return "restaurant/restaurantDetailUpdateForm";
+    }
+
+    @PostMapping("/restaurant/{restaurantSeq}/detailInfo/edit")
+    public String detailUpdate(@PathVariable("restaurantSeq") Long restaurant_seq, @ModelAttribute RestaurantDetailDTO restaurantDetailDTO){
+
+        String BucketFolderName = "storage/";
+        String UUID;
+
+        restaurantDetailDTO.setRestaurant_seq(restaurant_seq);
+        restaurantDetailDTO.setAmenities(String.join(",", restaurantDetailDTO.getAmenitiesList()));
+
+        if (restaurantDetailDTO.getRestaurant_image() != null) {
+            // NCP Object Storage에서 이전 이미지 삭제
+            String image_url = restaurantService.getRestaurantDetail(restaurant_seq).getImage_url();
+            ncpObjectStorageService.deleteFile(SessionConf.BUCKET_NAME, BucketFolderName, image_url);
+
+            // NCP Object Storage에 새 이미지 올리기
+            UUID = ncpObjectStorageService.uploadFile(SessionConf.BUCKET_NAME, BucketFolderName, restaurantDetailDTO.getRestaurant_image());
+            // DB 업데이트
+            restaurantDetailDTO.setImage_url(UUID);
+
+            restaurantService.updateRestaurantDetail(restaurantDetailDTO);
+            restaurantService.updateRestaurantImage(UUID,restaurant_seq);
+        }else{
+            restaurantService.updateRestaurantDetailExceptImg(restaurantDetailDTO);
+        }
 
         return "redirect:/members/my";
     }

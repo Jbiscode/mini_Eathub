@@ -95,4 +95,10 @@ public interface RestaurantMapper {
     void updateRestaurantInfo(RestaurantEditDTO restaurantJoinDTO);
 
     List<RestaurantDetailDTO> selectAllRestaurantDetailDTO();
+
+    void updateRestaurantDetail(RestaurantDetailDTO restaurantDetailDTO);
+
+    void updateRestaurantImage(@Param("uuid") String uuid, @Param("restaurantSeq") Long restaurantSeq);
+
+    void updateRestaurantDetailExceptImg(RestaurantDetailDTO restaurantDetailDTO);
 }

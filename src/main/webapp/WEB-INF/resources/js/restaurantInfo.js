@@ -92,8 +92,9 @@ function handleBookmarkDetailClick(e) {
         },
         error: function () {
             // AJAX 호출 자체가 실패한 경우
-            $(".btn-bookmark-detail, .btn-bookmark-detail2").toggleClass("active");
-            alert("요청 처리 중 문제가 발생했습니다. 다시 시도해주세요.");
+            // $(".btn-bookmark-detail, .btn-bookmark-detail2").toggleClass("active");
+            alert("로그인이 필요합니다.");
+            location.href='/members/login';
         },
     });
 }
