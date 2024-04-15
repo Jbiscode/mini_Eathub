@@ -5,6 +5,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.util.List;
+
 @Setter
 @Getter
 @ToString
@@ -21,6 +23,7 @@ public class RestaurantDetailDTO {
     private String kidszone;
     private String room;
 
+    private List<String> amenitiesList;
 
     private CommonsMultipartFile restaurant_image;
 }

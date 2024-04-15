@@ -27,19 +27,26 @@ public class MainController {
     public String index(Model model, HttpSession session) {
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<SearchResultDTO> searchTopResultList = restaurantService.selectSearchTopResultList(member_seq);
+        List<RestaurantDetailDTO> restaurantDetailDTOList = restaurantService.getRestaurantDetailList();
+
         for (SearchResultDTO searchResultDTO : searchTopResultList) {
             Long restaurant_seq = searchResultDTO.getRestaurant_seq();
-            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-            if(restaurantDetailDTO != null){
-                searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+            for (RestaurantDetailDTO restaurantDetailDTO : restaurantDetailDTOList) {
+                if (restaurantDetailDTO.getRestaurant_seq().equals(restaurant_seq)) {
+                    searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                    break;
+                }
             }
         }
+
         List<SearchResultDTO> searchTodayResultList = restaurantService.selectSearchTodayResultList(member_seq);
         for (SearchResultDTO searchResultDTO : searchTodayResultList) {
             Long restaurant_seq = searchResultDTO.getRestaurant_seq();
-            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-            if(restaurantDetailDTO != null){
-                searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+            for (RestaurantDetailDTO restaurantDetailDTO : restaurantDetailDTOList) {
+                if (restaurantDetailDTO.getRestaurant_seq().equals(restaurant_seq)) {
+                    searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                    break;
+                }
             }
         }
         model.addAttribute("topResultList", searchTopResultList);
@@ -52,11 +59,15 @@ public class MainController {
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<TimeOptionDTO> timeOptionDTOS = searchService.generateTimeOptions();
         List<SearchResultDTO> searchResultList = restaurantService.selectSearchCategotyResultList(member_seq, category_seq);
+        List<RestaurantDetailDTO> restaurantDetailDTOList = restaurantService.getRestaurantDetailList();
+
         for (SearchResultDTO searchResultDTO : searchResultList) {
             Long restaurant_seq = searchResultDTO.getRestaurant_seq();
-            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-            if(restaurantDetailDTO != null){
-                searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+            for (RestaurantDetailDTO restaurantDetailDTO : restaurantDetailDTOList) {
+                if (restaurantDetailDTO.getRestaurant_seq().equals(restaurant_seq)) {
+                    searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                    break;
+                }
             }
         }
         model.addAttribute("timeOptions", timeOptionDTOS);
@@ -68,11 +79,15 @@ public class MainController {
     public String top(Model model, HttpSession session){
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<SearchResultDTO> searchResultList = restaurantService.selectSearchTopResultList(member_seq);
+        List<RestaurantDetailDTO> restaurantDetailDTOList = restaurantService.getRestaurantDetailList();
+
         for (SearchResultDTO searchResultDTO : searchResultList) {
             Long restaurant_seq = searchResultDTO.getRestaurant_seq();
-            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-            if(restaurantDetailDTO != null){
-                searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+            for (RestaurantDetailDTO restaurantDetailDTO : restaurantDetailDTOList) {
+                if (restaurantDetailDTO.getRestaurant_seq().equals(restaurant_seq)) {
+                    searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                    break;
+                }
             }
         }
         model.addAttribute("restaurantList", searchResultList);
@@ -83,11 +98,15 @@ public class MainController {
     public String monthly(Model model, HttpSession session){
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<SearchResultDTO> searchResultList = restaurantService.selectSearchMonthlyResultList(member_seq);
+        List<RestaurantDetailDTO> restaurantDetailDTOList = restaurantService.getRestaurantDetailList();
+
         for (SearchResultDTO searchResultDTO : searchResultList) {
             Long restaurant_seq = searchResultDTO.getRestaurant_seq();
-            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-            if(restaurantDetailDTO != null){
-                searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+            for (RestaurantDetailDTO restaurantDetailDTO : restaurantDetailDTOList) {
+                if (restaurantDetailDTO.getRestaurant_seq().equals(restaurant_seq)) {
+                    searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                    break;
+                }
             }
         }
         model.addAttribute("restaurantList", searchResultList);
@@ -106,11 +125,15 @@ public class MainController {
         KoAddr = KoAddr.stream().map(loc -> "%" + loc + "%").collect(Collectors.toList());
 
         List<SearchResultDTO> searchResultList = restaurantService.selectSearchAddressResultList(member_seq, KoAddr);
+        List<RestaurantDetailDTO> restaurantDetailDTOList = restaurantService.getRestaurantDetailList();
+
         for (SearchResultDTO searchResultDTO : searchResultList) {
             Long restaurant_seq = searchResultDTO.getRestaurant_seq();
-            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-            if(restaurantDetailDTO != null){
-                searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+            for (RestaurantDetailDTO restaurantDetailDTO : restaurantDetailDTOList) {
+                if (restaurantDetailDTO.getRestaurant_seq().equals(restaurant_seq)) {
+                    searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                    break;
+                }
             }
         }
         model.addAttribute("timeOptions", timeOptionDTOS);
@@ -122,11 +145,16 @@ public class MainController {
     public String today(Model model, HttpSession session){
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<SearchResultDTO> searchResultList = restaurantService.selectSearchTodayResultList(member_seq);
+        List<RestaurantDetailDTO> restaurantDetailDTOList = restaurantService.getRestaurantDetailList();
+
+
         for (SearchResultDTO searchResultDTO : searchResultList) {
             Long restaurant_seq = searchResultDTO.getRestaurant_seq();
-            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-            if(restaurantDetailDTO != null){
-                searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+            for (RestaurantDetailDTO restaurantDetailDTO : restaurantDetailDTOList) {
+                if (restaurantDetailDTO.getRestaurant_seq().equals(restaurant_seq)) {
+                    searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                    break;
+                }
             }
         }
         model.addAttribute("restaurantList", searchResultList);

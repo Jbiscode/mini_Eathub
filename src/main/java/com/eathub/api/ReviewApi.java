@@ -19,7 +19,7 @@ import java.util.List;
 public class ReviewApi {
     private final ReviewService reviewService;
     @GetMapping("")
-    public ResponseEntity<?> getReviews(@RequestParam("page") int page, @RequestParam("restaurant_seq") Long restaurant_seq) {
+    public ResponseEntity<?> getReviews(@RequestParam(value = "page",defaultValue = "1") int page, @RequestParam("restaurant_seq") Long restaurant_seq) {
         List<ReviewDTO> reviewDTOs = reviewService.selectReviewAndImages(restaurant_seq, page);
         if (reviewDTOs != null) {
             return ResponseEntity.ok(reviewDTOs);

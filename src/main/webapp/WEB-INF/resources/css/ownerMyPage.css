@@ -524,4 +524,36 @@ jss1 .MuiPaper-root {
     margin-top: -22px;
 
 }
+.sticky-bottom-btn {
+    /*position: fixed;*/
+    position: relative;
+    bottom: 0;
+    z-index: 99;
+    width: auto;
+    max-width: 480px;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100vw;
+    background: rgba(255, 255, 255, .7);
+    /*-webkit-backdrop-filter: blur(2px);*/
+    backdrop-filter: blur(2px);
+    display: flex;
+    gap : 5px;
+}
+.sticky-bottom-btn .btn {
+    display: block;
+    width: 100%;
+    flex: 1;
 
+    font-weight: 700;
+    background-color: #FF3D00;
+    padding: 14px 20px;
+    color: white;
+    border-radius: 5px;
+}
+.sticky-bottom-btn .btn a{
+    color: white;
+    font-weight: 700;
+}
