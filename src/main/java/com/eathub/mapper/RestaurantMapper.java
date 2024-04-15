@@ -93,4 +93,6 @@ public interface RestaurantMapper {
     RestaurantEditDTO selectRestaurantByRestaurantSeq(Long restaurantSeq);
 
     void updateRestaurantInfo(RestaurantEditDTO restaurantJoinDTO);
+
+    List<RestaurantDetailDTO> selectAllRestaurantDetailDTO();
 }

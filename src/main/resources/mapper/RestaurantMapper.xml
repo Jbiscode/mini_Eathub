@@ -169,7 +169,7 @@
         SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
         FROM restaurant_info
         WHERE status = 'ACCESS'
-        order by review_total desc limit 5;
+        order by review_total desc
     </select>
 
     <!-- 이달의 맛집 -->
@@ -196,7 +196,7 @@
         SELECT restaurant_seq, member_seq, category_seq, restaurant_name, tag, location, description, openHour, closeHour, rating, review_total, zzim_total
         FROM restaurant_info
         WHERE status = 'ACCESS'
-        ORDER BY rand(TO_DAYS(NOW())) LIMIT 5;
+        ORDER BY rand(TO_DAYS(NOW()));
     </select>
 
 
@@ -205,7 +205,7 @@
         SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
         FROM restaurant_info
         WHERE  status = 'ACCESS'
-        ORDER BY RAND() limit 5
+        ORDER BY RAND()
     </select>
 
 
@@ -236,6 +236,11 @@
         WHERE restaurant_seq = #{restaurantSeq}
     </select>
 
+    <!-- 모든 레스토랑 Detail DTO 받아오기   -->
+    <select id="selectAllRestaurantDetailDTO" resultType="com.eathub.dto.RestaurantDetailDTO">
+        SELECT *
+        FROM restaurant_detail
+    </select>
 
 <!-- UPDATE-->
 

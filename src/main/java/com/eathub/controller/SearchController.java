@@ -35,12 +35,16 @@ public class SearchController {
         List<TimeOptionDTO> timeOptionDTOS = searchService.generateTimeOptions();
         // 레스토랑 목록 가져오기
         List<SearchResultDTO> searchResultList = restaurantService.selectSearchResultList(member_seq);
+        List<RestaurantDetailDTO> restaurantDetailDTOList = restaurantService.getRestaurantDetailList();
+
         try {
             for (SearchResultDTO searchResultDTO : searchResultList) {
                 Long restaurant_seq = searchResultDTO.getRestaurant_seq();
-                RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-                if(restaurantDetailDTO != null){
-                    searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                for (RestaurantDetailDTO restaurantDetailDTO : restaurantDetailDTOList) {
+                    if (restaurantDetailDTO.getRestaurant_seq().equals(restaurant_seq)) {
+                        searchResultDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                        break;
+                    }
                 }
             }
         } catch (Exception e) {

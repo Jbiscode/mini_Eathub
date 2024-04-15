@@ -63,13 +63,18 @@ public class MemberController {
 
         if(mem_type.equals(MEMBER_TYPE.OWNER)){
             List<MyPageDTO> ownerRestaurantList = restaurantService.getOwnerRestaurantList(mem_seq);
+            List<RestaurantDetailDTO> restaurantDetailDTOList = restaurantService.getRestaurantDetailList();
+
             for (MyPageDTO myPageDTO : ownerRestaurantList) {
                 Long restaurant_seq = myPageDTO.getRestaurant_seq();
-                RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-                if(restaurantDetailDTO != null){
-                    myPageDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                for (RestaurantDetailDTO restaurantDetailDTO : restaurantDetailDTOList) {
+                    if (restaurantDetailDTO.getRestaurant_seq().equals(restaurant_seq)) {
+                        myPageDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                        break;
+                    }
                 }
             }
+
             model.addAttribute("myPageDTO", ownerRestaurantList);
             model.addAttribute("restaurantJoinDTO", new OwnerRestaurantDetailDTO());
             model.addAttribute("memberJoinDTO", memberJoinDTO);
@@ -82,13 +87,18 @@ public class MemberController {
         model.addAttribute("recommendRestaurantList", recommendRestaurantList);
         model.addAttribute("memberJoinDTO", memberJoinDTO);
         List<MyPageDTO> zzimRestaurantList = restaurantService.getZzimRestaurantList(mem_seq);
+        List<RestaurantDetailDTO> restaurantDetailDTOList = restaurantService.getRestaurantDetailList();
+
         for (MyPageDTO myPageDTO : zzimRestaurantList) {
             Long restaurant_seq = myPageDTO.getRestaurant_seq();
-            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-            if(restaurantDetailDTO != null){
-                myPageDTO.setImage_url(restaurantDetailDTO.getImage_url());
+            for (RestaurantDetailDTO restaurantDetailDTO : restaurantDetailDTOList) {
+                if (restaurantDetailDTO.getRestaurant_seq().equals(restaurant_seq)) {
+                    myPageDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                    break;
+                }
             }
         }
+
         model.addAttribute("myPageDTO", zzimRestaurantList);
         return "/members/myPage";
     }
@@ -411,9 +421,6 @@ public class MemberController {
         String imageOriginalName;
         File file;
 
-        String filepath = session.getServletContext().getRealPath("WEB-INF/storage");
-        System.out.println("실제폴더 = " + filepath);
-
         List<MenuFormDTO> menuList = menuFormDTOWrapper.getMenuList();
 
         for (MenuFormDTO menu : menuList) {
@@ -423,12 +430,6 @@ public class MemberController {
                 imageOriginalName = menu.getMenu_image().getOriginalFilename();
                 // NCP Object Storage에 이미지 업로드
                 UUID = ncpObjectStorageService.uploadFile(SessionConf.BUCKET_NAME, BucketFolderName, menu.getMenu_image());
-                file = new File(filepath, imageOriginalName);
-                try {
-                    menu.getMenu_image().transferTo(file);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
                 menu.setMenu_image_name(imageOriginalName);
                 menu.setMenu_image_path(UUID);
             }
