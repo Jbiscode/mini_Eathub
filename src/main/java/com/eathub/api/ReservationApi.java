@@ -9,26 +9,25 @@ import com.eathub.service.RestaurantService;
 import com.eathub.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/get/reservations")
+@RequestMapping("/api")
 public class ReservationApi {
 
     private final MemberService memberService;
     private final RestaurantService restaurantService;
     private final ReviewService reviewService;
 
-    @GetMapping("")
+    @GetMapping("/get/reservations")
     public ResponseEntity<?> getReservations(@RequestParam("page") int page, @RequestParam("type") int type_tab, HttpSession session){
 
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
@@ -56,5 +55,24 @@ public class ReservationApi {
             return ResponseEntity.ok(reservationList);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/post/reservations/cancel")
+    public ResponseEntity<?> reservationCancel(@RequestParam("res_seq") Long res_seq, HttpSession session){
+
+        // 세션에서 mem_seq받아서 예약자의 mem_seq와 비교함
+        Long mem_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+
+        // res_seq 가지고 reservation 테이블의 res_status => REJECT로 변경
+        // 성공시 SUCCESS , 실패시 FAIL 값 반환
+        String result = memberService.cancelReservation(res_seq, mem_seq);
+
+        if ("SUCCESS".equals(result)) {
+            // 성공 응답
+            return ResponseEntity.ok().body(Map.of("message", "예약이 취소되었습니다."));
+        }
+
+        return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(Map.of("message", "예약은 3일 전까지만 취소할 수 있습니다."));
+
     }
 }
