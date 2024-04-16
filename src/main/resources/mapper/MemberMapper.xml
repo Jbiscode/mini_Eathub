@@ -98,14 +98,17 @@
 				INNER JOIN
 			restaurant_info ri ON r.restaurant_seq = ri.restaurant_seq
 		WHERE r.member_seq = #{memberSeq}
-			<choose>
-				<when test="type_tab == 1">
-					AND r.res_status = 'OK'
-				</when>
-				<otherwise>
-					AND r.res_status IN ('ACCESS', 'STANDBY')
-				</otherwise>
-			</choose>
+		<choose>
+			<when test="type_tab == 1">
+				AND r.res_status = 'OK'
+			</when>
+			<when test="type_tab == 2">
+				AND r.res_status = 'REJECT'
+			</when>
+			<otherwise>
+				AND r.res_status IN ('ACCESS', 'STANDBY')
+			</otherwise>
+		</choose>
 		ORDER BY
 			CASE
 				WHEN DATE(r.res_date) = CURDATE() THEN 0
@@ -119,6 +122,13 @@
 			LIMIT #{page},5;
 	</select>
 
+	<!-- 예약 정보 가져오기	-->
+	<select id="getReservation" resultType="reservationDTO">
+		SELECT *
+		FROM reservation
+		WHERE res_seq = #{resSeq}
+	</select>
+
     <update id="update" parameterType="members">
         update members
         set member_name=#{member_name},
@@ -128,6 +138,12 @@
                        where member_id=#{member_id}
     </update>
 
+	<!-- 예약 취소 -->
+	<update id="updateReservationReject" >
+		UPDATE reservation
+		SET res_status = 'REJECT'
+		WHERE res_seq = #{resSeq}
+	</update>
 
 
 

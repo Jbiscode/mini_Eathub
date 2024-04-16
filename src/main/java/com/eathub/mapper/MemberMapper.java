@@ -22,4 +22,8 @@ public interface MemberMapper {
   List<ReservationDTO> selectReservationList(Long memSeq);
 
   List<ReservationDTO> selectReservationListPage(@Param("memberSeq") Long memberSeq, @Param("page")int page, @Param("type_tab") int type_tab);
+
+  void updateReservationReject(Long resSeq);
+
+  ReservationDTO getReservation(Long resSeq);
 }

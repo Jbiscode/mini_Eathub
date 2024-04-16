@@ -188,4 +188,29 @@ public class MemberService {
         }
         return reservationList;
     }
+
+    public String cancelReservation(Long resSeq, Long memSeq) {
+        ReservationDTO reservationDTO = memberMapper.getReservation(resSeq);
+
+        // 예약날짜 가져오기
+        Date reservationDate = new Date(reservationDTO.getRes_date().getTime());
+
+        // 오늘날짜 Date 객체로 생성
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+
+        // 현재 날짜와 예약 날짜 차이 계산
+        long diff = now.getTime() - reservationDate.getTime();
+        long daysBetween = diff / (24 * 60 * 60 * 1000);
+
+        // 날짜 차이가 3일 미만인 경우 업데이트 X
+        if(daysBetween < 3 || memSeq != reservationDTO.getMember_seq()){
+            return "FAIL";
+        }
+
+        // 3일 이상이면 업데이트
+        memberMapper.updateReservationReject(resSeq);
+        return "SUCCESS";
+
+    }
 }

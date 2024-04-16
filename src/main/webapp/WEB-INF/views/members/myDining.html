@@ -12,6 +12,18 @@
     <script defer src="../../resources/js/myDining.js" th:src="@{/js/myDining.js}"></script>
 </head>
 <body>
+    <div class="shadow hide" id="shadow">
+        <div>
+            <div class="background-white modal">
+                <div>
+                    <p id="message">예약이 취소되었습니다.</p>
+                    <div style="display: flex; justify-content: center">
+                          <button class="btn btn-rounded btn-md btn mt-18">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="wrapper">
       <header id="header" class="opaqpue">
          <div class="container">
@@ -50,7 +62,7 @@
                          </label>
                          <label class="">
                              <input type="radio" name="type" value="cancel">
-                             <span class="label">취소/노쇼</span>
+                             <span class="label" id="cancel-tab">예약취소</span>
                          </label>
                      </div>
                  </div>
@@ -121,52 +133,6 @@
     <!-- footer -->
     <div th:replace="~{template/footer :: footerFragment}"></div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script>
-        $(function (){
 
-            // 예약상태에 따라 예약상태 뱃지 구분
-            $('.booked-status').each(function() {
-                if ($(this).text() == "예약 완료") {
-                    $(this).addClass('reserved');
-                } else if($(this).text() == "방문 완료"){
-                    $(this).addClass('complete');
-                    $(this).closest('.booked-restaurant-list-item').addClass('hide')
-                }
-            });
-
-            // 방문완료 탭 누를때 방문완료인 예약들만 보기
-            $('#complete-tab').on('click', function () {
-
-                $('.booked-status').each(function() {
-                    if ($(this).text() == "예약 완료" || $(this).text() == "예약 확인중") {
-                        $(this).closest('.booked-restaurant-list-item').addClass('hide')
-                    } else if($(this).text() == "방문 완료"){
-                        $(this).closest('.booked-restaurant-list-item').removeClass('hide')
-                    }
-                });
-            });
-
-            // 방문예정 탭 누를때 방문예정인 예약들만 보기
-            $('#reserved-tab').on('click', function () {
-
-                $('.booked-status').each(function() {
-                    if ($(this).text() == "예약 완료" || $(this).text() == "예약 확인중") {
-                        $(this).closest('.booked-restaurant-list-item').removeClass('hide')
-                    } else if($(this).text() == "방문 완료"){
-                        $(this).closest('.booked-restaurant-list-item').addClass('hide')
-                    }
-                });
-            });
-
-            // D-DAY일 경우 예약카드 스타일 변경
-            $('.booked-Dday').each(function (){
-                if($(this).text() == 'D-DAY'){
-                    $(this).closest('.booked-restaurant-list-item').addClass('D-DAY')
-                }
-            })
-
-        });
-    </script>
 </body>
 </html>
