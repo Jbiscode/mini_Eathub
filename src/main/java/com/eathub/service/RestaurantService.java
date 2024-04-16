@@ -55,10 +55,18 @@ public class RestaurantService {
     public List<SearchResultDTO> selectSearchResultList(Long member_seq) {
         List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantSearchList();
         // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+//        for (SearchResultDTO restaurant : searchResultList) {
+//            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+//                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+//        }
+        // 먼저 member_seq에 해당하는 모든 찜 목록을 한 번에 가져옵니다.
+        List<RestaurantZzim> zzimList = restaurantMapper.selectZzimList(member_seq);
+
         for (SearchResultDTO restaurant : searchResultList) {
-            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+            restaurant.setZzimed(zzimList.stream()
                     .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
         }
+
         return searchResultList;
     }
 
@@ -209,10 +217,17 @@ public class RestaurantService {
     public List<SearchResultDTO> selectSearchCategotyResultList(Long member_seq, Long category_seq) {
         List<SearchResultDTO> searchResultList = restaurantMapper.selectSearchCategotyResultList(category_seq);
         // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+//        for (SearchResultDTO restaurant : searchResultList) {
+//            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+//                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+//        }
+        List<RestaurantZzim> zzimList = restaurantMapper.selectZzimList(member_seq);
+
         for (SearchResultDTO restaurant : searchResultList) {
-            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+            restaurant.setZzimed(zzimList.stream()
                     .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
         }
+
         return searchResultList;
     }
 
@@ -220,8 +235,14 @@ public class RestaurantService {
     public List<SearchResultDTO> selectSearchTopResultList(Long member_seq) {
         List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantTopSearchList();
         // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+//        for (SearchResultDTO restaurant : searchResultList) {
+//            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+//                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+//        }
+        List<RestaurantZzim> zzimList = restaurantMapper.selectZzimList(member_seq);
+
         for (SearchResultDTO restaurant : searchResultList) {
-            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+            restaurant.setZzimed(zzimList.stream()
                     .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
         }
         return searchResultList;
@@ -231,8 +252,14 @@ public class RestaurantService {
     public List<SearchResultDTO> selectSearchMonthlyResultList(Long member_seq) {
         List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantMonthlySearchList();
         // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+//        for (SearchResultDTO restaurant : searchResultList) {
+//            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+//                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+//        }
+        List<RestaurantZzim> zzimList = restaurantMapper.selectZzimList(member_seq);
+
         for (SearchResultDTO restaurant : searchResultList) {
-            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+            restaurant.setZzimed(zzimList.stream()
                     .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
         }
         return searchResultList;
@@ -242,8 +269,14 @@ public class RestaurantService {
     public List<SearchResultDTO> selectSearchAddressResultList(Long member_seq, List address) {
         List<SearchResultDTO> searchResultList = restaurantMapper.selectSearchAddressResultList(address);
         // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+//        for (SearchResultDTO restaurant : searchResultList) {
+//            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+//                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+//        }
+        List<RestaurantZzim> zzimList = restaurantMapper.selectZzimList(member_seq);
+
         for (SearchResultDTO restaurant : searchResultList) {
-            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+            restaurant.setZzimed(zzimList.stream()
                     .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
         }
         return searchResultList;
@@ -291,8 +324,14 @@ public class RestaurantService {
     public List<SearchResultDTO> selectSearchTodayResultList(Long member_seq) {
         List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantTodaySearchList();
         // 일치하는 항목이 있으면 isZzimed 필드를 true로 설정합니다.
+//        for (SearchResultDTO restaurant : searchResultList) {
+//            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+//                    .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
+//        }
+        List<RestaurantZzim> zzimList = restaurantMapper.selectZzimList(member_seq);
+
         for (SearchResultDTO restaurant : searchResultList) {
-            restaurant.setZzimed(restaurantMapper.selectZzimList(member_seq).stream()
+            restaurant.setZzimed(zzimList.stream()
                     .anyMatch(zzim -> zzim.getRestaurant_seq().equals(restaurant.getRestaurant_seq())));
         }
         return searchResultList;
@@ -377,5 +416,19 @@ public class RestaurantService {
         return restaurantMapper.selectAllPictures(restaurant_seq);
     }
 
+    public List<RestaurantDetailDTO> getRestaurantDetailList() {
+        return restaurantMapper.selectAllRestaurantDetailDTO();
+    }
 
+    public void updateRestaurantDetail(RestaurantDetailDTO restaurantDetailDTO) {
+        restaurantMapper.updateRestaurantDetail(restaurantDetailDTO);
+    }
+
+    public void updateRestaurantImage(String uuid, Long restaurantSeq) {
+        restaurantMapper.updateRestaurantImage(uuid, restaurantSeq);
+    }
+
+    public void updateRestaurantDetailExceptImg(RestaurantDetailDTO restaurantDetailDTO) {
+        restaurantMapper.updateRestaurantDetailExceptImg(restaurantDetailDTO);
+    }
 }

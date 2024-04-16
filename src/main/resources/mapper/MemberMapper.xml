@@ -79,6 +79,45 @@
 
 	</select>
 
+	<!-- 예약리스트 한번에 2개씩 불러오기	-->
+	<select id="selectReservationListPage" resultType="reservationDTO">
+		SELECT
+			r.res_seq,
+			r.restaurant_seq,
+			r.member_seq,
+			r.res_status,
+			r.res_log,
+			r.res_date,
+			r.res_people,
+			r.res_comment,
+			ri.restaurant_name,
+			ri.tag,
+			ABS(TIMESTAMPDIFF(MINUTE, r.res_date, NOW())) AS minutes_diff
+		FROM
+			reservation r
+				INNER JOIN
+			restaurant_info ri ON r.restaurant_seq = ri.restaurant_seq
+		WHERE r.member_seq = #{memberSeq}
+			<choose>
+				<when test="type_tab == 1">
+					AND r.res_status = 'OK'
+				</when>
+				<otherwise>
+					AND r.res_status IN ('ACCESS', 'STANDBY')
+				</otherwise>
+			</choose>
+		ORDER BY
+			CASE
+				WHEN DATE(r.res_date) = CURDATE() THEN 0
+				ELSE 1
+				END,
+			CASE
+				WHEN DATE(r.res_date) = CURDATE() THEN r.res_date
+				ELSE NULL
+				END ASC,
+			minutes_diff ASC
+			LIMIT #{page},5;
+	</select>
 
     <update id="update" parameterType="members">
         update members

@@ -73,6 +73,8 @@ public interface RestaurantMapper {
 
     RestaurantEditDTO selectRestaurantByRestaurantSeq(Long restaurantSeq);
 
+    List<RestaurantDetailDTO> selectAllRestaurantDetailDTO();
+
 
 //    UPDATE
     void updateZzimComment(@Param("zzim_seq") Long zzim_seq, @Param("comment") String comment);
@@ -94,10 +96,17 @@ public interface RestaurantMapper {
   
     void updateRestaurantInfo(RestaurantEditDTO restaurantJoinDTO);
 
+    void updateRestaurantDetail(RestaurantDetailDTO restaurantDetailDTO);
 
+    void updateRestaurantImage(@Param("uuid") String uuid, @Param("restaurantSeq") Long restaurantSeq);
+
+    void updateRestaurantDetailExceptImg(RestaurantDetailDTO restaurantDetailDTO);
+  
 
 //    DELETE
     void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
 
+
     List<MenuFormDTO> selectRestaurantMenu(Long restaurantSeq);
+
 }

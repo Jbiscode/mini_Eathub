@@ -16,6 +16,7 @@ public class ReviewDTO {
     private Long res_seq;
     private Long restaurant_seq;
     private Long member_seq;
+    private String restaurant_name;
     // 존재하는 리뷰가 있나
     private String existing_review;
 

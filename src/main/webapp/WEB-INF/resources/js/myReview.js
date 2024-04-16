@@ -1,10 +1,6 @@
-const restaurant_seq = document.getElementById('restaurant_seq').value;
+const member_seq = document.getElementById('member_seq').value;
 let isFetching = false;
 let pageNumber = 1; // 현재 페이지 번호
-
-document.querySelector(".btn-back").addEventListener('click', () => {
-    history.back();
-});
 
 function createReviewElement(reviewDTO) {
     // Html을 문자열로 내보내면 appendChild로 변환못해서(87번줄코드) 감싸줄 태그를 우선 만들기
@@ -31,7 +27,7 @@ function createReviewElement(reviewDTO) {
                                                 <img class="img">
                                             </div>
                                             <h4 class="name username">
-                                                <span class="txt">${reviewDTO.user || "사용자 이름"}</span>
+                                                <span class="txt">${reviewDTO.restaurant_name || "식당 이름"}</span>
                                             </h4>
                                         </a>
                                     </div>
@@ -77,7 +73,7 @@ function fetchAndAppendReviews() {
     isFetching = true;
     document.getElementById('loading').style.display = 'block';
 
-    fetch(`/api/reviews?page=${pageNumber}&restaurant_seq=${restaurant_seq}`)
+    fetch(`/api/myReviews?page=${member_seq}&member_seq=${member_seq}`)
         .then(response => response.json())
         .then(data => {
             console.log('Loaded reviews:', data);

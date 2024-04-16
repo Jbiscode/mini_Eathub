@@ -10,6 +10,7 @@
 .tag-radio-group {
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
 }
 .tag-radio-group label {
     display: block;
@@ -190,4 +191,14 @@
     letter-spacing: -.05em;
     position: absolute;
     right: 0;
+}
+.label.reviewed{
+    background-color: black;
+    color: white;
+}
+.common_infinity_sc_0{
+    overflow: hidden;
+}
+#main{
+    min-height: 30vh;
 }
