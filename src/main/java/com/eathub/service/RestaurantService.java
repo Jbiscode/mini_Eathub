@@ -362,4 +362,5 @@ public class RestaurantService {
     public List<PictureDTO> selectAllPictures(Long restaurant_seq){
         return restaurantMapper.selectAllPictures(restaurant_seq);
     }
+
 }

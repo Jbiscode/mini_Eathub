@@ -84,4 +84,17 @@
     WHERE restaurant_seq = #{restaurant_seq};
 </update>
 <!-- DELETE-->
+
+
+
+<!--myReview -->
+    <select id="selectMyReviewListPage" resultType="com.eathub.dto.ReviewDTO">
+        SELECT res_seq, review.rating, content, restaurant_seq, reservation.member_seq, review.createdAt, restaurant_name
+        FROM review
+                 LEFT JOIN reservation USING (res_seq)
+                 LEFT JOIN restaurant_info USING (restaurant_seq)
+        WHERE reservation.member_seq = #{member_seq}
+        ORDER BY review.rating DESC, res_seq DESC
+        LIMIT #{page},2;
+    </select>
 </mapper>
