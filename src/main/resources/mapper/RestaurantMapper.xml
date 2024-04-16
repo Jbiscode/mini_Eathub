@@ -250,6 +250,13 @@
         WHERE restaurant_seq = #{restaurantSeq}
     </select>
 
+
+    <!--메뉴 받아오기-->
+    <select id="getMenuListByRestaurantSeq" parameterType="Long" resultType="com.eathub.dto.MenuFormDTO">
+        SELECT *
+        FROM MENU
+        WHERE restaurant_seq = #{restaurant_seq}
+
     <!-- 모든 레스토랑 Detail DTO 받아오기   -->
     <select id="selectAllRestaurantDetailDTO" resultType="com.eathub.dto.RestaurantDetailDTO">
         SELECT *
