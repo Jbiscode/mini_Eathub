@@ -256,6 +256,7 @@
         SELECT *
         FROM MENU
         WHERE restaurant_seq = #{restaurant_seq}
+    </select>
 
     <!-- 모든 레스토랑 Detail DTO 받아오기   -->
     <select id="selectAllRestaurantDetailDTO" resultType="com.eathub.dto.RestaurantDetailDTO">
