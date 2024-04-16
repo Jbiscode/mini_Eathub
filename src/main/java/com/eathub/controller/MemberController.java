@@ -37,10 +37,6 @@ public class MemberController {
     private final RestaurantService restaurantService;
     private final NCPObjectStorageService ncpObjectStorageService;
 
-    @ModelAttribute("page")
-    public String page() {
-        return "members";
-    }
 
     /**
         * 사용자의 마이페이지를 반환하는 메소드입니다.
@@ -52,6 +48,7 @@ public class MemberController {
         */
     @GetMapping("/my")
     public String myPage(MemberJoinDTO memberJoinDTO, Model model, HttpSession session) {
+        model.addAttribute("page","members");
         MEMBER_TYPE mem_type = (MEMBER_TYPE) session.getAttribute(SessionConf.LOGIN_MEMBER_TYPE);
         Long mem_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
 
