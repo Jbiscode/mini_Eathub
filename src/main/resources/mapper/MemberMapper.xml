@@ -113,11 +113,15 @@
 			CASE
 				WHEN DATE(r.res_date) = CURDATE() THEN 0
 				ELSE 1
-				END,
+			END,
+			CASE
+				WHEN r.res_date > NOW() THEN 0
+				ELSE 1
+			END,
 			CASE
 				WHEN DATE(r.res_date) = CURDATE() THEN r.res_date
 				ELSE NULL
-				END ASC,
+			END ASC,
 			minutes_diff ASC
 			LIMIT #{page},5;
 	</select>
