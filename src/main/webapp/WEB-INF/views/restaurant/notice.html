@@ -12,7 +12,7 @@
                     <header id="header" class="opaque">
                         <div class="container">
                             <div class="header-left">
-                                <a  href="restaurantInfo.html"class="btn-back">뒤로</a>
+                                <a  th:href="@{|/restaurant/detail/${restaurant_seq}|}" class="btn-back" >뒤로</a>
                                 <h1 class="page-title">매장 공지사항</h1>
                             </div>
                         </div>
@@ -21,22 +21,12 @@
                         <div class="__accordion-list">
                             <article id="29280" class="__accordion-list-item">
                                 <a class="__header">
-                                    <h3 class="__title">몽촌닭갈비 예약 OPEN 공지</h3>
+                                    <h3 class="__title" th:text="|${restaurantInfo.restaurant_name} 공지|"></h3>
                                     <span class="__date">2024.03.21~2024.04.30</span>
                                 </a>
                                 <div class="__body">
-                                    <p style="white-space: pre-line;">
-        몽촌닭갈비 예약 OPEN 공지
-        
-        3월 25일 월요일 15:00 예약 오픈!
-        기간 : 4월 특별 예약 오픈
-        시간 : 월 ~ 금 11:30, 17:30, 19:30 / 토 ~ 일 17:00, 19:00   
-        
-        한정된 좌석만 예약 운영되며, 대부분의 좌석은
-        현장대기등록 및 원격웨이팅을 통해 이용 가능하십니다
-        
-        예약가능인원 점심 7-12명
-                              저녁 2-4명
+                                    <p style="white-space: pre-line;" th:text="${restaurantDetailDTO.description_detail}">
+                                        공지임다
                                     </p>
                                 </div>
                             </article>
@@ -45,8 +35,8 @@
             </div>
             <aside id="dock" class="pgjaj00">
                 <div class="_1kfi3w60">
-                    <button class="_1kfi3w61">저장</button>
-                    <span class="_1kfi3w63">1,441</span>
+                    <button class="_1kfi3w61" th:classappend="${isZzimed ? 'active' : ''}" th:data-restaurant-seq="${restaurantInfo.restaurant_seq}">저장</button>
+                    <span class="_1kfi3w63" th:text="${restaurantInfo.zzim_total}">1,441</span>
                 </div>
                 <button class="pgjaj01" type="button">
                     <div class="pgjaj02 pgjaj04">예약하기</div>
