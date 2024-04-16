@@ -25,6 +25,8 @@ public class MainController {
     private final RestaurantService restaurantService;
     @GetMapping("/")
     public String index(Model model, HttpSession session) {
+        model.addAttribute("page","home");
+
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<SearchResultDTO> searchTopResultList = restaurantService.selectSearchTopResultList(member_seq);
         List<RestaurantDetailDTO> restaurantDetailDTOList = restaurantService.getRestaurantDetailList();
