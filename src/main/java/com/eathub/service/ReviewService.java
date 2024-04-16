@@ -115,6 +115,15 @@ public class ReviewService {
         }
         return reviewDTO;
     }
+
+    public List<ReviewDTO> selectMyReviewAndImages(Long member_seq, int page) {
+        List<ReviewDTO> reviewDTO = reviewMapper.selectMyReviewListPage(member_seq, (page-1)*2);
+        for (ReviewDTO dto : reviewDTO) {
+            List<String> reviewImages = reviewMapper.selectReviewImages(dto.getRes_seq());
+            dto.setPictureUrls(reviewImages);
+        }
+        return reviewDTO;
+    }
     //    UPDATE
     //    DELETE
 }
