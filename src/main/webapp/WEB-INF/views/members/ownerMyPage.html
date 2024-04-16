@@ -108,7 +108,10 @@
                     <div class="owner-restaurant-info hide">
                         <div class="btn-box">
                             <button class="btn-rounded btn-outline btn-md btn btn-md">
-                                <a id="restaurantEditButton" href="javascript:void(0)" class="label">가게 상세정보 등록</a>
+                                <a id="restaurantDetailJoinButton" href="javascript:void(0)" class="label">상세정보 등록</a>
+                            </button>
+                            <button class="btn-rounded btn-outline btn-md btn btn-md">
+                                <a id="restaurantDetailEditButton" href="javascript:void(0)" class="label">상세정보 수정</a>
                             </button>
                             <button class="btn-rounded btn-outline btn-md btn btn-md">
                                 <a id="restaurantMenuAddButton" href="javascript:void(0)" class="label">메뉴추가</a>
@@ -116,7 +119,7 @@
                         </div>
                         <div class="form-block mb-32"   th:object="${restaurantJoinDTO}">
                             <div class="img mb-32" >
-                                <img id="restaurant_img" width="250"  src="../../resources/images/mongtanjeju.jpg" alt="식당대표이미지" style="display: block; margin: 0 auto;">
+                                <img id="restaurant_img" width="250" alt="식당대표이미지" style="display: block; margin: 0 auto;">
                             </div>
                             <div class="form-block-header">
                                 <h3 class="form-block-title">
@@ -234,54 +237,60 @@
                             <div class="form-block-body closed-day-form">
                                 <div class="input-control closed-day">
                                     <input class="form-check-input" type="checkbox" value="MON" id="MON"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="MON">
                                         월
                                     </label>
                                 </div>
                                 <div class="input-control closed-day">
                                     <input class="form-check-input" type="checkbox" value="TUE" id="TUE"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="TUE">
                                         화
                                     </label>
                                 </div>
                                 <div class="input-control closed-day">
                                     <input class="form-check-input" type="checkbox" value="WED" id="WED"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="WED">
                                         수
                                     </label>
                                 </div>
                                 <div class="input-control closed-day">
                                     <input class="form-check-input" type="checkbox" value="THU" id="THU"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="THU">
                                         목
                                     </label>
                                 </div>
                                 <div class="input-control closed-day">
                                     <input class="form-check-input" type="checkbox" value="FRI" id="FRI"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="FRI">
                                         금
                                     </label>
                                 </div>
                                 <div class="input-control closed-day">
                                     <input class="form-check-input" type="checkbox" value="SAT" id="SAT"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="SAT">
                                         토
                                     </label>
                                 </div>
                                 <div class="input-control closed-day form-check-inline">
                                     <input class="form-check-input" type="checkbox" value="SUN" id="SUN"
-                                           th:field="${restaurantJoinDTO.closedDay}" disabled>
+                                           th:field="${restaurantJoinDTO.closedDayList}" disabled>
                                     <label class="form-check-label" for="SUN">
                                         일
                                     </label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="sticky-bottom-btn">
+                            <button class="my-restaurant btn-rounded btn-outline btn-md btn btn-md">
+                                <a id="restaurantInfoEditBtn" href="javascript:void(0)" class="label">가게정보 수정</a>
+                            </button>
+<!--                            <button type="submit" class="btn">매장삭제</button>-->
                         </div>
                     </div>
                 </div>
@@ -311,7 +320,7 @@
                                     <div class="owner-restaurant-list-item" th:each="restaurant : ${myPageDTO}" th:data-restaurant-seq="${restaurant.restaurant_seq}">
                                         <div class="restaurant-info">
                                             <a href="javascript:void(0)" class="tb">
-                                                <img class="img" th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${restaurant.image_url}|"  alt="page"/>
+                                                <img class="img" th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${restaurant.image_url != null ? restaurant.image_url : 'default.png'}|"  alt="page"/>
                                             </a>
                                             <a href="javascript:void(0)" class="detail">
                                                 <h4 class="name" th:text="${restaurant.restaurant_name}">산청숯불가든 마곡</h4>

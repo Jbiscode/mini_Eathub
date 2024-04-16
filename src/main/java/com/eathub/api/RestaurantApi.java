@@ -3,6 +3,7 @@ package com.eathub.api;
 import com.eathub.conf.SessionConf;
 import com.eathub.dto.OwnerRestaurantDetailDTO;
 import com.eathub.dto.RestaurantDetailDTO;
+import com.eathub.service.MemberService;
 import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import java.util.Map;
 @RequestMapping("/api/restaurants")
 public class RestaurantApi {
     private final RestaurantService restaurantService;
+    private final MemberService memberService;
 
 //    찜 추가 및 삭제 API
     @PostMapping("/zzim/{restaurant_id}")
@@ -47,12 +49,13 @@ public class RestaurantApi {
     public ResponseEntity<?> selectOwnerRestaurant(@PathVariable("restaurantSeq") Long restaurant_seq) {
         try {
             OwnerRestaurantDetailDTO restaurantInfo = restaurantService.selectRestaurantInfoWithType(restaurant_seq);
-            log.info("restaurantInfo = {}", restaurantInfo);
-
+            restaurantInfo.setClosedDayList(memberService.convertStringToList(restaurantInfo.getClosedDay()));
             RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-            log.info("restaurantDetailDTO = {}", restaurantDetailDTO);
-            if(restaurantDetailDTO != null){
+            restaurantInfo.setIsDetailJoined(false);
+
+            if(restaurantDetailDTO != null){ // null 이 아니다? => 있다
                 restaurantInfo.setImg_url(restaurantDetailDTO.getImage_url());
+                restaurantInfo.setIsDetailJoined(true);
             }
                 return ResponseEntity.ok().body(Map.of(
                         "restaurantInfo" , restaurantInfo

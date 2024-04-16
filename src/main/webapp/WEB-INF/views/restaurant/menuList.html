@@ -12,8 +12,8 @@
                 <header id="header" class="opaque">
                     <div class="container">
                         <div class="header-left">
-                            <a class="btn-back">뒤로</a>
-                            <h1 class="page-title" style="padding-right: 4px;">숙성도 중문점</h1>
+                            <a class="btn-back" th:href="@{|/restaurant/detail/${restaurant_seq}|}">뒤로</a>
+                            <h1 class="page-title" style="padding-right: 4px;" th:text="${restaurantInfo.restaurant_name}">숙성도 중문점</h1>
                         </div>
                     </div>
                 </header>

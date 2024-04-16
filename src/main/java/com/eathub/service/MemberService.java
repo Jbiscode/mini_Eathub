@@ -13,10 +13,7 @@ import org.springframework.validation.BindingResult;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -136,6 +133,59 @@ public class MemberService {
             reservationDTO.setDDay(dDay);
         }
 
+        return reservationList;
+    }
+
+    public List<String> convertStringToList(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return Collections.emptyList();
+        }
+        String[] elements = input.split(",");
+        return Arrays.asList(elements);
+    }
+
+
+    public List<ReservationDTO> getReservationListPage(Long memberSeq, int page, int type_tab) {
+        List<ReservationDTO> reservationList = memberMapper.selectReservationListPage(memberSeq, page, type_tab);
+        // Date Format / D-day  넣기
+        for (ReservationDTO reservationDTO : reservationList) {
+            Date date = reservationDTO.getRes_date();
+            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.M.d (E)").withLocale(Locale.KOREA);
+            String formattedDate = localDate.format(formatter);
+
+            reservationDTO.setDateFormat(formattedDate);
+
+            // D-day 계산
+            Date today = new Date();
+            Date reservationDate = reservationDTO.getRes_date();
+
+
+            Calendar calendarToday = Calendar.getInstance();
+            calendarToday.setTime(today);
+
+            calendarToday.set(Calendar.HOUR_OF_DAY, 0);
+            calendarToday.set(Calendar.MINUTE, 0);
+            calendarToday.set(Calendar.SECOND, 0);
+            calendarToday.set(Calendar.MILLISECOND, 0);
+
+
+            Calendar calendarReservation = Calendar.getInstance();
+            calendarReservation.setTime(reservationDate);
+
+            calendarReservation.set(Calendar.HOUR_OF_DAY, 0);
+            calendarReservation.set(Calendar.MINUTE, 0);
+            calendarReservation.set(Calendar.SECOND, 0);
+            calendarReservation.set(Calendar.MILLISECOND, 0);
+
+
+            long diff = calendarReservation.getTimeInMillis() - calendarToday.getTimeInMillis();
+            long dDay = TimeUnit.MILLISECONDS.toDays(diff);
+            long absDday = Math.abs(dDay);
+
+            reservationDTO.setAbsDday(absDday);
+            reservationDTO.setDDay(dDay);
+        }
         return reservationList;
     }
 }

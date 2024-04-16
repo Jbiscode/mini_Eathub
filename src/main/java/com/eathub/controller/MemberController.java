@@ -37,10 +37,6 @@ public class MemberController {
     private final RestaurantService restaurantService;
     private final NCPObjectStorageService ncpObjectStorageService;
 
-    @ModelAttribute("page")
-    public String page() {
-        return "members";
-    }
 
     /**
         * 사용자의 마이페이지를 반환하는 메소드입니다.
@@ -52,6 +48,7 @@ public class MemberController {
         */
     @GetMapping("/my")
     public String myPage(MemberJoinDTO memberJoinDTO, Model model, HttpSession session) {
+        model.addAttribute("page","members");
         MEMBER_TYPE mem_type = (MEMBER_TYPE) session.getAttribute(SessionConf.LOGIN_MEMBER_TYPE);
         Long mem_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
 
@@ -63,32 +60,42 @@ public class MemberController {
 
         if(mem_type.equals(MEMBER_TYPE.OWNER)){
             List<MyPageDTO> ownerRestaurantList = restaurantService.getOwnerRestaurantList(mem_seq);
+            List<RestaurantDetailDTO> restaurantDetailDTOList = restaurantService.getRestaurantDetailList();
+
             for (MyPageDTO myPageDTO : ownerRestaurantList) {
                 Long restaurant_seq = myPageDTO.getRestaurant_seq();
-                RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-                if(restaurantDetailDTO != null){
-                    myPageDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                for (RestaurantDetailDTO restaurantDetailDTO : restaurantDetailDTOList) {
+                    if (restaurantDetailDTO.getRestaurant_seq().equals(restaurant_seq)) {
+                        myPageDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                        break;
+                    }
                 }
             }
+
             model.addAttribute("myPageDTO", ownerRestaurantList);
-            model.addAttribute("restaurantJoinDTO", new RestaurantJoinDTO());
+            model.addAttribute("restaurantJoinDTO", new OwnerRestaurantDetailDTO());
             model.addAttribute("memberJoinDTO", memberJoinDTO);
             return "/members/ownerMyPage";
         }
 
-        // 추천 레스토랑 리스트 불러오기 (랜덤 / 찜 아닌 것)
+        // 추천 레스토랑 리스트 불러오기
         List<SearchResultDTO> recommendRestaurantList = restaurantService.getRandomRestaurant(mem_seq);
 
         model.addAttribute("recommendRestaurantList", recommendRestaurantList);
         model.addAttribute("memberJoinDTO", memberJoinDTO);
         List<MyPageDTO> zzimRestaurantList = restaurantService.getZzimRestaurantList(mem_seq);
+        List<RestaurantDetailDTO> restaurantDetailDTOList = restaurantService.getRestaurantDetailList();
+
         for (MyPageDTO myPageDTO : zzimRestaurantList) {
             Long restaurant_seq = myPageDTO.getRestaurant_seq();
-            RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-            if(restaurantDetailDTO != null){
-                myPageDTO.setImage_url(restaurantDetailDTO.getImage_url());
+            for (RestaurantDetailDTO restaurantDetailDTO : restaurantDetailDTOList) {
+                if (restaurantDetailDTO.getRestaurant_seq().equals(restaurant_seq)) {
+                    myPageDTO.setImage_url(restaurantDetailDTO.getImage_url());
+                    break;
+                }
             }
         }
+
         model.addAttribute("myPageDTO", zzimRestaurantList);
         return "/members/myPage";
     }
@@ -351,6 +358,41 @@ public class MemberController {
 
         return "redirect:/members/my";
     }
+
+    @GetMapping("/restaurant/{restaurantSeq}/edit")
+    public String restaurantEditForm(@PathVariable("restaurantSeq") Long restaurant_seq, HttpSession session, Model model){
+        Long mem_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        RestaurantEditDTO restaurantEditDTO = restaurantService.getRestaurantJoinDTO(restaurant_seq, mem_seq);
+
+        if(restaurantEditDTO == null){
+
+            return "redirect:/members/my";
+        }
+
+        restaurantEditDTO.setClosedDayList(memberService.convertStringToList(restaurantEditDTO.getClosedDay()));
+
+        // 지역리스트, 카테고리 리스트 받아오기
+        Map<String, String> locationList = restaurantService.getLocationList();
+        List<CategoryDTO> categoryList = restaurantService.getCategoryList();
+
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("locationList",locationList);
+        model.addAttribute("restaurantJoinDTO", restaurantEditDTO);
+        return "members/restaurantEditForm";
+    }
+
+   @PostMapping("/restaurant/{restaurantSeq}/edit")
+   public String restaurantEdit(@PathVariable("restaurantSeq") Long restaurant_seq
+                              , @Validated @ModelAttribute RestaurantEditDTO restaurantJoinDTO
+                              , BindingResult bindingResult){
+       List<String> closedDayList = restaurantJoinDTO.getClosedDayList();
+       restaurantJoinDTO.setClosedDay(String.join(",", closedDayList));
+       restaurantService.updateRestaurantInfo(restaurantJoinDTO);
+
+       return "redirect:/members/my";
+   }
+
+
     @GetMapping("/restaurant/{restaurantSeq}/menu/add")
     public String showForm(@PathVariable("restaurantSeq") Long restaurant_seq , Model model,HttpSession session){
         Long OwnerSeq = restaurantService.selectRestaurantInfo(restaurant_seq).getMember_seq();
@@ -376,9 +418,6 @@ public class MemberController {
         String imageOriginalName;
         File file;
 
-        String filepath = session.getServletContext().getRealPath("WEB-INF/storage");
-        System.out.println("실제폴더 = " + filepath);
-
         List<MenuFormDTO> menuList = menuFormDTOWrapper.getMenuList();
 
         for (MenuFormDTO menu : menuList) {
@@ -388,12 +427,6 @@ public class MemberController {
                 imageOriginalName = menu.getMenu_image().getOriginalFilename();
                 // NCP Object Storage에 이미지 업로드
                 UUID = ncpObjectStorageService.uploadFile(SessionConf.BUCKET_NAME, BucketFolderName, menu.getMenu_image());
-                file = new File(filepath, imageOriginalName);
-                try {
-                    menu.getMenu_image().transferTo(file);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
                 menu.setMenu_image_name(imageOriginalName);
                 menu.setMenu_image_path(UUID);
             }
@@ -404,16 +437,23 @@ public class MemberController {
         return "redirect:/members/my";
     }
 
-    @GetMapping("/restaurant/{restaurantSeq}/edit")
-    public String editForm(@PathVariable("restaurantSeq") Long restaurant_seq, Model model){
+    @GetMapping("/restaurant/{restaurantSeq}/detailInfo/join")
+    public String editForm(@PathVariable("restaurantSeq") Long restaurant_seq, Model model, HttpSession session){
 
-        model.addAttribute("restaurantDetailDTO", new RestaurantDetailDTO());
+        Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        List<MyPageDTO> ownerRestaurantList = restaurantService.getOwnerRestaurantList(member_seq);
+        for (MyPageDTO myPageDTO : ownerRestaurantList) {
+            if(myPageDTO.getRestaurant_seq().equals(restaurant_seq)){
+                model.addAttribute("restaurantDetailDTO", new RestaurantDetailDTO());
+                return "restaurant/restaurantDetailForm";
+            }
+        }
 
+        return "redirect:/members/my";
 
-        return "restaurant/restaurantDetailForm";
     }
 
-    @PostMapping("/restaurant/{restaurantSeq}/edit")
+    @PostMapping("/restaurant/{restaurantSeq}/detailInfo/join")
     public String detailSaveForm(@PathVariable("restaurantSeq") Long restaurant_seq, @ModelAttribute RestaurantDetailDTO restaurantDetailDTO, BindingResult bindingResult,HttpSession session){
 
         String BucketFolderName = "storage/";
@@ -441,6 +481,43 @@ public class MemberController {
             restaurantService.saveRestaurantDetail(restaurantDetailDTO);
         }
 
+
+        return "redirect:/members/my";
+    }
+
+    @GetMapping("/restaurant/{restaurantSeq}/detailInfo/edit")
+    public String detailEditForm(@PathVariable("restaurantSeq") Long restaurant_seq, Model model){
+        RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
+
+        restaurantDetailDTO.setAmenitiesList(memberService.convertStringToList(restaurantDetailDTO.getAmenities()));
+        model.addAttribute("restaurantDetailDTO", restaurantDetailDTO);
+        return "restaurant/restaurantDetailUpdateForm";
+    }
+
+    @PostMapping("/restaurant/{restaurantSeq}/detailInfo/edit")
+    public String detailUpdate(@PathVariable("restaurantSeq") Long restaurant_seq, @ModelAttribute RestaurantDetailDTO restaurantDetailDTO){
+
+        String BucketFolderName = "storage/";
+        String UUID;
+
+        restaurantDetailDTO.setRestaurant_seq(restaurant_seq);
+        restaurantDetailDTO.setAmenities(String.join(",", restaurantDetailDTO.getAmenitiesList()));
+
+        if (restaurantDetailDTO.getRestaurant_image() != null) {
+            // NCP Object Storage에서 이전 이미지 삭제
+            String image_url = restaurantService.getRestaurantDetail(restaurant_seq).getImage_url();
+            ncpObjectStorageService.deleteFile(SessionConf.BUCKET_NAME, BucketFolderName, image_url);
+
+            // NCP Object Storage에 새 이미지 올리기
+            UUID = ncpObjectStorageService.uploadFile(SessionConf.BUCKET_NAME, BucketFolderName, restaurantDetailDTO.getRestaurant_image());
+            // DB 업데이트
+            restaurantDetailDTO.setImage_url(UUID);
+
+            restaurantService.updateRestaurantDetail(restaurantDetailDTO);
+            restaurantService.updateRestaurantImage(UUID,restaurant_seq);
+        }else{
+            restaurantService.updateRestaurantDetailExceptImg(restaurantDetailDTO);
+        }
 
         return "redirect:/members/my";
     }

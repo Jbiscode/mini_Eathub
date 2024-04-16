@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../resources/css/review.css" th:href="@{/css/review.css}"/>
+    <link rel="stylesheet"  href="../resources/css/footer.css" th:href="@{/css/footer.css}">
+    <script defer src="../../resources/js/review.js" th:src="@{/js/myReview.js}"></script>
+    <title>리뷰관리</title>
+</head>
+<body class="disable-user-select">
+<!-- Ajax요청을 보낼때 레스토랑 seq를 확인해서 가져감-->
+<input type="hidden" id="member_seq" th:value="${member_seq}">
+
+<div class="wrapper" id="wrapperDiv">
+    <header id="header" class="opaque">
+        <div class="container">
+            <div class="header-left">
+                <h1 class="page-title" style="padding-right: 4px;">리뷰관리</h1>
+            </div>
+        </div>
+    </header>
+    <main id="main">
+
+        <div class="container gutter-sm">
+            <div class="section-body"></div>
+        </div>
+        <!-- 이곳에 리뷰가 동적으로 불러와짐 -->
+    </main>
+
+
+    <div class="loading-indicator" id="loading">로딩 중...</div>
+</div>
+
+<div th:replace="~{template/footer :: footerFragment}"></div>
+</body>
+</html>

@@ -95,6 +95,9 @@ ol, ul {
     height: 16px;
 
 }
+.tab-menu ul li {
+    flex: 1;
+}
 .tab-menu ul li.active a {
     color: #000;
     font-weight: 700;
@@ -213,7 +216,7 @@ body {
     border-bottom: 1px solid #ccc;
 }
 
-.average-rating, .rating-breakdown, .review, .ratings-container {
+.average-rating, .rating-breakdown, .ratings-container {
     padding: 20px;
 }
 

@@ -60,6 +60,9 @@
             <mvc:exclude-mapping path="/js/**" />
             <mvc:exclude-mapping path="/images/**" />
             <mvc:exclude-mapping path="/storage/**" />
+            <mvc:exclude-mapping path="/search/**" />
+            <mvc:exclude-mapping path="/restaurant/detail/**" />
+
             <bean class="com.eathub.interceptor.LoginCheckInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>

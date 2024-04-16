@@ -161,6 +161,7 @@
         SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
         FROM restaurant_info
         WHERE  category_seq= #{category_seq} and status = 'ACCESS'
+        LIMIT 20
     </select>
 
 
@@ -170,6 +171,15 @@
         FROM restaurant_info
         WHERE status = 'ACCESS'
         order by review_total desc
+    </select>
+
+    <!-- 예약 핫플 best -->
+    <select id="selectRestaurantBestSearchList" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
+        FROM restaurant_info
+        WHERE status = 'ACCESS'
+        order by review_total desc
+        LIMIT 20
     </select>
 
     <!-- 이달의 맛집 -->
@@ -188,6 +198,10 @@
         <foreach item="item" index="index" collection="list" open="(" separator="OR" close=")">
             address1 LIKE #{item}
         </foreach>
+        and
+        <foreach item="item" index="index" collection="list" open="(" separator="OR" close=")">
+            tag LIKE #{item}
+        </foreach>
         and status = 'ACCESS'
     </select>
 
@@ -196,7 +210,7 @@
         SELECT restaurant_seq, member_seq, category_seq, restaurant_name, tag, location, description, openHour, closeHour, rating, review_total, zzim_total
         FROM restaurant_info
         WHERE status = 'ACCESS'
-        ORDER BY rand(TO_DAYS(NOW())) LIMIT 20;
+        ORDER BY rand(TO_DAYS(NOW()));
     </select>
 
 
@@ -205,7 +219,7 @@
         SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
         FROM restaurant_info
         WHERE  status = 'ACCESS'
-        ORDER BY RAND() limit 5
+        ORDER BY RAND()
     </select>
 
 
@@ -228,6 +242,19 @@
             LEFT JOIN reservation USING (res_seq)
     WHERE restaurant_seq=#{restaurant_seq};
 </select>
+
+    <!--레스토랑 SEQ로 레스토랑 정보 받기 -->
+    <select id="selectRestaurantByRestaurantSeq" resultType="com.eathub.dto.RestaurantEditDTO">
+        SELECT *
+        FROM restaurant_info
+        WHERE restaurant_seq = #{restaurantSeq}
+    </select>
+
+    <!-- 모든 레스토랑 Detail DTO 받아오기   -->
+    <select id="selectAllRestaurantDetailDTO" resultType="com.eathub.dto.RestaurantDetailDTO">
+        SELECT *
+        FROM restaurant_detail
+    </select>
 
 <!-- UPDATE-->
 
@@ -257,10 +284,60 @@
         WHERE restaurant_seq = #{restaurant_seq}
     </update>
 
+    <!-- 가게 정보 수정 -->
+    <update id="updateRestaurantInfo" parameterType="com.eathub.dto.RestaurantEditDTO">
+        UPDATE restaurant_info
+        SET category_seq = #{category_seq},
+            restaurant_name = #{restaurant_name},
+            tag = #{tag},
+            location = #{location},
+            description = #{description},
+            phone = #{phone},
+            zipcode = #{zipcode},
+            address1 = #{address1},
+            address2 = #{address2},
+            openHour = #{openHour},
+            closeHour = #{closeHour},
+            closedDay = #{closedDay}
+        WHERE restaurant_seq = #{restaurant_seq}
+    </update>
 
+    <!-- 레스토랑 Detail Update   -->
+    <update id="updateRestaurantDetail" parameterType="com.eathub.dto.RestaurantDetailDTO">
+        UPDATE restaurant_detail
+        SET image_url = #{image_url},
+            description_detail = #{description_detail},
+            openhour_detail = #{openhour_detail},
+            precaution = #{precaution},
+            amenities = #{amenities},
+            parking = #{parking},
+            valet = #{valet},
+            drink = #{drink},
+            kidszone = #{kidszone},
+            room = #{room}
+        WHERE restaurant_seq = #{restaurant_seq}
+    </update>
 
+    <update id="updateRestaurantImage" >
+        UPDATE restaurant_image
+        SET image_url = #{uuid}
+        WHERE restaurant_seq = #{restaurantSeq}
+    </update>
 
-
+    <!-- 이미지 업로드 안할때 -->
+    <update id="updateRestaurantDetailExceptImg" parameterType="com.eathub.dto.RestaurantDetailDTO">
+        UPDATE restaurant_detail
+        SET description_detail = #{description_detail},
+            openhour_detail = #{openhour_detail},
+            precaution = #{precaution},
+            amenities = #{amenities},
+            parking = #{parking},
+            valet = #{valet},
+            drink = #{drink},
+            kidszone = #{kidszone},
+            room = #{room}
+        WHERE restaurant_seq = #{restaurant_seq}
+    </update>
 
 
 <!-- DELETE-->

@@ -29,7 +29,8 @@ function handleBookmarkClick(e) {
         error: function () {
             // AJAX 호출 자체가 실패한 경우
             $this.toggleClass("active");
-            alert("요청 처리 중 문제가 발생했습니다. 다시 시도해주세요.");
+            alert("로그인이 필요합니다.");
+            location.href = '/members/my';
         },
     });
 }

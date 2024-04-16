@@ -31,7 +31,8 @@
     <main id="main">
         <section class="section">
             <div class="container">
-                <form th:action th:object="${restaurantJoinDTO}" method="post">
+                <form th:action="@{/members/restaurant/{restaurantSeq}/edit(restaurantSeq=${restaurantJoinDTO.restaurant_seq})}" th:object="${restaurantJoinDTO}" method="post">
+                    <input type="hidden" th:field="${restaurantJoinDTO.restaurant_seq}">
                     <div class="form-block mb-32">
                         <div class="form-block-header">
                             <h3 class="form-block-title">
@@ -232,49 +233,49 @@
                         <div class="form-block-body closed-day-form">
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="MON" id="MON"
-                                       th:field="${restaurantJoinDTO.closedDay}">
+                                       th:field="${restaurantJoinDTO.closedDayList}">
                                 <label class="form-check-label" for="MON">
                                     월
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="TUE" id="TUE"
-                                       th:field="${restaurantJoinDTO.closedDay}">
-                                <label class="form-check-label" for="TUE">
+                                       th:field="${restaurantJoinDTO.closedDayList}">
+                                    <label class="form-check-label" for="TUE">
                                     화
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="WED" id="WED"
-                                       th:field="${restaurantJoinDTO.closedDay}">
+                                       th:field="${restaurantJoinDTO.closedDayList}">
                                 <label class="form-check-label" for="WED">
                                     수
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="THU" id="THU"
-                                       th:field="${restaurantJoinDTO.closedDay}">
+                                       th:field="${restaurantJoinDTO.closedDayList}">
                                 <label class="form-check-label" for="THU">
                                     목
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="FRI" id="FRI"
-                                       th:field="${restaurantJoinDTO.closedDay}">
+                                       th:field="${restaurantJoinDTO.closedDayList}">
                                 <label class="form-check-label" for="FRI">
                                     금
                                 </label>
                             </div>
                             <div class="input-control closed-day">
                                 <input class="form-check-input" type="checkbox" value="SAT" id="SAT"
-                                       th:field="${restaurantJoinDTO.closedDay}">
+                                       th:field="${restaurantJoinDTO.closedDayList}">
                                 <label class="form-check-label" for="SAT">
                                     토
                                 </label>
                             </div>
                             <div class="input-control closed-day form-check-inline">
                                 <input class="form-check-input" type="checkbox" value="SUN" id="SUN"
-                                       th:field="${restaurantJoinDTO.closedDay}">
+                                       th:field="${restaurantJoinDTO.closedDayList}">
                                 <label class="form-check-label" for="SUN">
                                     일
                                 </label>
@@ -283,7 +284,7 @@
                         </div>
                     </div>
                     <div class="sticky-bottom-btn">
-                        <button type="submit" class="btn">매장등록</button>
+                        <button type="submit" class="btn">수정하기</button>
                     </div>
                 </form>
             </div>
@@ -293,35 +294,7 @@
     <!-- footer -->
     <div th:replace="~{template/footer :: footerFragment}"></div>
     <!--/* footer th:fragment="footerFragment" */-->
-    <aside  th:fragment="footerFragment" id="dock">
-        <div class="dock-container">
-            <nav class="dock-menu">
-                <a href="javascript:void(0)" th:href="@{/}" th:class="${page=='home'?'active':''}">
-                    <i class="home">홈</i>
-                </a>
-                <a href="javascript:void(0)"
-                   th:href="@{/search}"
-                   th:class="${page=='search'?'active':''}"
-                >
-                    <i class="search-icon">검색</i>
-                </a>
-                <a href="javascript:void(0)">
-                    <i class="review">리뷰</i>
-                </a>
-                <a href="javascript:void(0)"
-                   th:href="@{/mydining}"
-                   th:class="${page=='mydining'?'active':''}">
-                    <i class="mydining">마이다이닝</i>
-                </a>
-                <a href="javascript:void(0)"
-                   th:with="userLoggedIn=${session.loginMember != null}"
-                   th:href="${userLoggedIn} ? '/members/my' : '/members/login'"
-                   th:class="${page=='members'?'active':''}">
-                    <i class="account">내 계정</i>
-                </a>
-            </nav>
-        </div>
-    </aside>
+
     <!--/* footer */-->
 </div>
 </body>

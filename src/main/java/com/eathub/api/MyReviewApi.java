@@ -15,12 +15,12 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/reviews")
-public class ReviewApi {
+@RequestMapping("/api/myReviews")
+public class MyReviewApi {
     private final ReviewService reviewService;
     @GetMapping("")
-    public ResponseEntity<?> getReviews(@RequestParam(value = "page",defaultValue = "1") int page, @RequestParam("restaurant_seq") Long restaurant_seq) {
-        List<ReviewDTO> reviewDTOs = reviewService.selectReviewAndImages(restaurant_seq, page);
+    public ResponseEntity<?> getReviews(@RequestParam("page") int page, @RequestParam("member_seq") Long member_seq) {
+        List<ReviewDTO> reviewDTOs = reviewService.selectMyReviewAndImages(member_seq, page);
         if (reviewDTOs != null) {
             return ResponseEntity.ok(reviewDTOs);
         }
