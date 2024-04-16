@@ -8,6 +8,7 @@ import com.eathub.mapper.ObjectStorageMapper;
 import com.eathub.mapper.RestaurantMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,14 @@ public class RestaurantService {
         return restaurantMapper.selectRestaurantInfo(restaurant_seq);
     }
 
+    @Autowired
+    private RestaurantMapper RestaurantMapper;
+    public List<MenuFormDTO> getMenuListByRestaurantSeq(Long restaurant_seq) {
+        // 레스토랑 ID로 메뉴 목록 조회 로직 구현
+        List<MenuFormDTO> menuList = restaurantMapper.getMenuListByRestaurantSeq(restaurant_seq);
+        return menuList;
+    }
+
     //   식당 정보 조회
     public List<RestaurantInfo> selectRestaurantInfoList() {
         return restaurantMapper.selectRestaurantInfoList();
@@ -41,7 +50,7 @@ public class RestaurantService {
      *
      * @param member_seq 사용자의 고유 번호입니다. 이 번호를 통해 사용자의 찜 목록을 조회합니다.
      * @return 사용자가 찜한 식당들의 목록을 반환합니다. 각 식당은 SearchResultDTO 객체로 표현됩니다.
-     *         이 객체에는 식당의 고유 번호, 이름, 위치 등의 정보와 함께 사용자가 해당 식당을 찜했는지 여부를 나타내는 isZzimed 필드가 포함됩니다.
+     * 이 객체에는 식당의 고유 번호, 이름, 위치 등의 정보와 함께 사용자가 해당 식당을 찜했는지 여부를 나타내는 isZzimed 필드가 포함됩니다.
      */
     public List<SearchResultDTO> selectSearchResultList(Long member_seq) {
         List<SearchResultDTO> searchResultList = restaurantMapper.selectRestaurantSearchList();
@@ -55,12 +64,13 @@ public class RestaurantService {
 
 
 //   유저가 찜한 식당 리스트 조회
+
     /**
-        * 찜한 식당 목록을 가져오는 메소드입니다.
-        *
-        * @param member_seq 회원 번호
-        * @return 찜한 식당 정보 목록
-        */
+     * 찜한 식당 목록을 가져오는 메소드입니다.
+     *
+     * @param member_seq 회원 번호
+     * @return 찜한 식당 정보 목록
+     */
     public List<MyPageDTO> getZzimRestaurantList(Long member_seq) {
         List<RestaurantZzim> zzimList = restaurantMapper.selectZzimList(member_seq);
         List<MyPageDTO> restaurantInfoList = new ArrayList<>();
@@ -69,15 +79,17 @@ public class RestaurantService {
         }
         return restaurantInfoList;
     }
+
     public int getZzimCount(Long restaurant_seq, Long member_seq) {
         return restaurantMapper.checkZzimData(restaurant_seq, member_seq);
     }
 
 //    찜 추가 및 삭제
+
     /**
      * 회원의 찜한 식당을 토글하는 메소드입니다.
      *
-     * @param member_seq 회원 번호
+     * @param member_seq     회원 번호
      * @param restaurant_seq 식당 번호
      * @return 찜 상태가 변경되었는지 여부를 나타내는 boolean 값
      */
@@ -89,7 +101,7 @@ public class RestaurantService {
                 .restaurant_seq(restaurant_seq)
                 .build();
 
-        RestaurantZzim zzimResult =restaurantMapper.selectZzimList(member_seq).stream()
+        RestaurantZzim zzimResult = restaurantMapper.selectZzimList(member_seq).stream()
                 .filter(zzim1 -> zzim1.getRestaurant_seq().equals(restaurant_seq))
                 .findFirst()
                 .orElse(null);
@@ -97,11 +109,11 @@ public class RestaurantService {
         log.info("zzimResult: {}", zzimResult);
         if (zzimResult == null) {
             restaurantMapper.insertZzimRestaurant(zzim);
-            restaurantMapper.updateZzimTotal(restaurant_seq,1);
+            restaurantMapper.updateZzimTotal(restaurant_seq, 1);
             return true;
         } else {
             restaurantMapper.deleteZzimRestaurant(zzim);
-            restaurantMapper.updateZzimTotal(restaurant_seq,-1);
+            restaurantMapper.updateZzimTotal(restaurant_seq, -1);
             return false;
         }
     }
@@ -112,7 +124,7 @@ public class RestaurantService {
     }
 
 
-    public Map<String ,String> getLocationList(){
+    public Map<String, String> getLocationList() {
         Map<String, String> locations = new LinkedHashMap<>();
         locations.put("SEOUL", "서울");
         locations.put("BUSAN", "부산");
@@ -121,7 +133,7 @@ public class RestaurantService {
         return locations;
     }
 
-    public List<CategoryDTO> getCategoryList(){
+    public List<CategoryDTO> getCategoryList() {
         return restaurantMapper.selectCategoryList();
     }
 
@@ -129,6 +141,7 @@ public class RestaurantService {
     public void insertRestaurant(RestaurantInfo restaurantJoinDTO) {
         restaurantMapper.insertRestaurant(restaurantJoinDTO);
     }
+
     public void insertReservation(Reservation reservationJoinDTO) {
         restaurantMapper.insertReservation(reservationJoinDTO);
     }
@@ -167,25 +180,27 @@ public class RestaurantService {
     public List<MyPageDTO> getOwnerRestaurantList(Long member_seq) {
         return restaurantMapper.selectOwnerRestaurantList(member_seq);
     }
+
     /**
      * 식당의 상태를 업데이트하는 메서드입니다.
      *
      * @param restaurant_seq 업데이트하려는 식당의 고유 번호입니다.
-     * @param status 식당에 설정하려는 새로운 상태입니다.
-     * 이 메서드는 두 단계로 작동한다.
-     * 먼저, restaurantMapper의 updateRestaurantStatus 메서드를 호출하여 식당의 상태를 업데이트합니다.
-     * 그 다음, restaurantMapper의 updateRestaurantInfoStatus 메서드를 호출하여 식당 정보의 상태도 업데이트합니다.
-     * 이 두 메서드는 각각 식당 테이블과 식당 정보 테이블에서 해당 식당의 상태를 업데이트하는 SQL 쿼리를 실행합니다.
-     * 따라서 이 메서드는 식당과 관련된 두 테이블의 상태를 동시에 업데이트하므로, 데이터의 일관성을 유지하는 데 도움이 됨
+     * @param status         식당에 설정하려는 새로운 상태입니다.
+     *                       이 메서드는 두 단계로 작동한다.
+     *                       먼저, restaurantMapper의 updateRestaurantStatus 메서드를 호출하여 식당의 상태를 업데이트합니다.
+     *                       그 다음, restaurantMapper의 updateRestaurantInfoStatus 메서드를 호출하여 식당 정보의 상태도 업데이트합니다.
+     *                       이 두 메서드는 각각 식당 테이블과 식당 정보 테이블에서 해당 식당의 상태를 업데이트하는 SQL 쿼리를 실행합니다.
+     *                       따라서 이 메서드는 식당과 관련된 두 테이블의 상태를 동시에 업데이트하므로, 데이터의 일관성을 유지하는 데 도움이 됨
      */
-    public void updateRestaurantStatus(Long restaurant_seq,Long admin_seq, String status, String comment) {
-        restaurantMapper.updateRestaurantStatus(restaurant_seq,admin_seq, status ,comment);
+    public void updateRestaurantStatus(Long restaurant_seq, Long admin_seq, String status, String comment) {
+        restaurantMapper.updateRestaurantStatus(restaurant_seq, admin_seq, status, comment);
         restaurantMapper.updateRestaurantInfoStatus(restaurant_seq, status);
     }
 
     public String getRestaurantType(Long categorySeq) {
         return restaurantMapper.getRestaurantType(categorySeq);
     }
+
     public OwnerRestaurantDetailDTO selectRestaurantInfoWithType(Long restaurant_seq) {
         return restaurantMapper.selectRestaurantInfoWithType(restaurant_seq);
     }
@@ -234,7 +249,7 @@ public class RestaurantService {
         return searchResultList;
     }
 
-    public String getAddressList(String address){
+    public String getAddressList(String address) {
         Map<String, String> addressMap = new LinkedHashMap<>();
         addressMap.put("apgujeong,cheongdam", "압구정,청담");
         addressMap.put("hongdae,sinchon", "홍대,신촌");
@@ -252,7 +267,6 @@ public class RestaurantService {
         }
         return address; // 매핑되지 않았다면 원본 address 반환
     }
-
 
 
     // 타임리프에 사용할 시간 옵션을 생성하는 메서드 6시부터 23시 30분까지 30분 단위로 생성
@@ -289,14 +303,14 @@ public class RestaurantService {
     }
 
     //session 초기값에 저장할 오늘 날짜 구하기.
-    public String getTodayDate(){
+    public String getTodayDate() {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(date);
     }
 
     //session 초기값에 저장할 가장 가까운 예약 가능 시간 구하기.
-    public String getNextReservationTime(){
+    public String getNextReservationTime() {
         // 현재 시간 가져오기
         LocalTime currentTime = LocalTime.now();
 
@@ -359,7 +373,9 @@ public class RestaurantService {
         restaurantMapper.updateRestaurantInfo(restaurantJoinDTO);
     }
 
-    public List<PictureDTO> selectAllPictures(Long restaurant_seq){
+    public List<PictureDTO> selectAllPictures(Long restaurant_seq) {
         return restaurantMapper.selectAllPictures(restaurant_seq);
     }
+
+
 }

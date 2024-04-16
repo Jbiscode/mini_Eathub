@@ -2,12 +2,7 @@ package com.eathub.controller;
 
 
 import com.eathub.conf.SessionConf;
-import com.eathub.dto.PictureDTO;
-import com.eathub.dto.ReservationJoinDTO;
-import com.eathub.dto.RestaurantDetailDTO;
-import com.eathub.dto.ReviewDTO;
-import com.eathub.dto.ReviewStatsDTO;
-import com.eathub.dto.TimeOptionDTO;
+import com.eathub.dto.*;
 import com.eathub.entity.Reservation;
 import com.eathub.entity.RestaurantDetail;
 import com.eathub.entity.RestaurantInfo;
@@ -57,13 +52,25 @@ public class RestaurantController {
         Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
         ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
+        // 리뷰 사진들 불러오기
+        List<PictureDTO> pictureDTOS = restaurantService.selectAllPictures(restaurant_seq);
+        // 메뉴 목록 조회
+        List<MenuFormDTO> menuList = restaurantService.getMenuListByRestaurantSeq(restaurant_seq);
 
+        for (MenuFormDTO menu : menuList) {
+            model.addAttribute("menu_name", menu.getMenu_name());
+            model.addAttribute("menu_price", menu.getMenu_price());
+        }
         
         model.addAttribute("isZzimed", restaurantService.getZzimCount(restaurant_seq, loginMemberSeq) > 0);
         model.addAttribute("restaurantInfo", selectRestaurantInfo);
         model.addAttribute("timeOptions", timeOptionDTOS);
         model.addAttribute("reservationJoinDTO",reservationJoinDTO);
         model.addAttribute("restaurantDetailDTO",restaurantDetailDTO);
+        model.addAttribute("pictures",pictureDTOS);
+        model.addAttribute("menuList", menuList);
+
+
 
 
         // 세션에 값이 없으면 세션 생성
@@ -106,34 +113,26 @@ public class RestaurantController {
 
 
     @GetMapping("/detail/{restaurant_seq}/menuList")
-    public String menu(@PathVariable Long restaurant_seq,Model model,HttpSession session){
+    public String menu(@PathVariable Long restaurant_seq, Model model, HttpSession session) {
+        // 레스토랑 정보 조회
         RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
-        RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
-        if(restaurantDetailDTO != null){
-            model.addAttribute("restaurantDetailDTO", restaurantDetailDTO);
+        // 메뉴 목록 조회
+        List<MenuFormDTO> menuList = restaurantService.getMenuListByRestaurantSeq(restaurant_seq);
+
+        for (MenuFormDTO menu : menuList) {
+            model.addAttribute("menu_name", menu.getMenu_name());
+            model.addAttribute("menu_price", menu.getMenu_price());
         }
+        //찜
         Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
-        List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
-        ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
 
 
         model.addAttribute("isZzimed", restaurantService.getZzimCount(restaurant_seq, loginMemberSeq) > 0);
         model.addAttribute("restaurantInfo", selectRestaurantInfo);
-        model.addAttribute("timeOptions", timeOptionDTOS);
-        model.addAttribute("reservationJoinDTO",reservationJoinDTO);
-        model.addAttribute("restaurantDetailDTO",restaurantDetailDTO);
+        model.addAttribute("menuList", menuList);
 
-        // 세션에 값이 없으면 세션 생성
-        if(session.getAttribute("wantingDate") == null){
-            session.setAttribute("wantingDate", restaurantService.getTodayDate());
-        }
-        if(session.getAttribute("wantingHour") == null){
-            session.setAttribute("wantingHour", restaurantService.getNextReservationTime());
-        }
-        if(session.getAttribute("wantingPerson") == null){
-            session.setAttribute("wantingPerson", 1);
-        }
-        session.setAttribute("restaurantSeq", restaurant_seq);
+
+
         return "/restaurant/menuList";
     }
 

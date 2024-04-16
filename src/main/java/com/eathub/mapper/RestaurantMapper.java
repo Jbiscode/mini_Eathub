@@ -11,7 +11,10 @@ import java.util.List;
 
 @Mapper
 public interface RestaurantMapper {
-//    INSERT
+    List<MenuFormDTO> getMenuListByRestaurantSeq(Long restaurant_seq);
+
+
+    //    INSERT
     void insertZzimRestaurant(RestaurantZzim restaurantZzim);
     void insertRestaurant(RestaurantInfo restaurantJoinDTO);
     void insertReservation(Reservation reservationJoinDTO);
@@ -95,4 +98,6 @@ public interface RestaurantMapper {
 
 //    DELETE
     void deleteZzimRestaurant(RestaurantZzim restaurantZzim);
+
+    List<MenuFormDTO> selectRestaurantMenu(Long restaurantSeq);
 }

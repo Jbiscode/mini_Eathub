@@ -45,38 +45,15 @@
 
                     <div class="menu-collapsed-list">
                         <div class="menu-collapsed-item">
-                            <a href="#" class="submenu-item">
+                            <a href="#" class="submenu-item" th:each="menu : ${menuList}">
                                 <div class="menu-info">
                                     <div class="name">
-                                        <h4>떡도리탕 중(2-3인)</h4>
+                                        <h4 th:text="${menu.menu_name}">떡도리탕 중(2-3인)</h4>
                                     </div>
-                                    <span class="price">29,000원</span>
+                                    <span class="price" th:text="${menu.menu_price}">29,000원</span>
                                 </div>
                             </a>
-                            <a href="#" class="submenu-item">
-                                <div class="menu-info">
-                                    <div class="name">
-                                        <h4>떡도리탕 중(2-3인)</h4>
-                                    </div>
-                                    <span class="price">29,000원</span>
-                                </div>
-                            </a>
-                            <a href="#" class="submenu-item">
-                                <div class="menu-info">
-                                    <div class="name">
-                                        <h4>떡도리탕 중(2-3인)</h4>
-                                    </div>
-                                    <span class="price">29,000원</span>
-                                </div>
-                            </a>
-                            <a href="#" class="submenu-item">
-                                <div class="menu-info">
-                                    <div class="name">
-                                        <h4>떡도리탕 중(2-3인)</h4>
-                                    </div>
-                                    <span class="price">29,000원</span>
-                                </div>
-                            </a>
+
                         </div>
                         <div class="container gutter-sm pt-20 mb-30">
                             <p class="font-12 mb-6">* 메뉴와 가격은 레스토랑 사정에 따라 달라질 수 있습니다.</p>
@@ -87,8 +64,9 @@
                 </main>
                 <aside id="dock" class="pgjaj00">
                     <div class="_1kfi3w60">
+                        <button class="btn-bookmark-detail2" th:classappend="${isZzimed ? 'active' : ''}" th:data-restaurant-seq="${restaurantInfo.restaurant_seq}">저장</button>
                         <button class="_1kfi3w61">저장</button>
-                        <span class="_1kfi3w63">1,441</span>
+                        <span class="_1kfi3w63" th:text="${restaurantInfo.zzim_total}">1,441</span>
                     </div>
                     <button class="pgjaj01" type="button">
                         <div class="pgjaj02 pgjaj04">예약하기</div>
