@@ -186,13 +186,10 @@ reservationContainer.addEventListener('click', function(e) {
     if (e.target.classList.contains('booked-cancel')) {
         let res_seq = e.target.dataset.res_seq;
         fetchCancelReservation(res_seq);
-        console.log('hi');
     }
 });
 
 function fetchCancelReservation(res_seq){
-
-
     fetch(`api/post/reservations/cancel?res_seq=${res_seq}`,
         {
             method : 'POST'
@@ -214,5 +211,4 @@ function fetchCancelReservation(res_seq){
 $('#shadow').on('click', function () {
     $(this).addClass('hide')
     location.reload();
-
 });
