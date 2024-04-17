@@ -1590,3 +1590,10 @@ body {
     --_1ltqxco16: 16px;
     --_1ltqxco17: 32px;
 }
+
+.input-control.closed-day input:checked{
+    width: 15px;
+    height: 15px;
+
+    background-color: #ff3D00;
+}

@@ -18,7 +18,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.*;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -30,6 +29,7 @@ public class RestaurantService {
     public RestaurantInfo selectRestaurantInfo(Long restaurant_seq) {
         return restaurantMapper.selectRestaurantInfo(restaurant_seq);
     }
+
 
     //   식당 정보 조회
     public List<RestaurantInfo> selectRestaurantInfoList() {
@@ -288,7 +288,7 @@ public class RestaurantService {
 
 
 
-    // 타임리프에 사용할 시간 옵션을 생성하는 메서드 6시부터 23시 30분까지 30분 단위로 생성
+    // 타임리프에 사용할 시간 옵션을 생성하는 메서드 오픈시간부터  닫는시간 전까지 생성
 
     public List<TimeOptionDTO> generateTimeOptions(Long restaurant_seq) {
         RestaurantInfo restaurantinfo = restaurantMapper.selectRestaurantInfo(restaurant_seq);

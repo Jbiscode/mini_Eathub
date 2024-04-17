@@ -31,6 +31,13 @@ function nextCalendar() {
     buildCalendar();    // @param 명월 캘린더 출력 요청
 }
 
+// checkbox 요소들을 선택합니다.
+let checkboxes = $('input.form-check-input');
+// 각 checkbox 요소에 대해 숫자로 변경된 value 속성을 설정합니다.
+checkboxes.each(function(index, checkbox) {
+    checkbox.value = index;
+});
+let checkedCheckboxes = $('input.form-check-input:checked');
 /**
  * @brief   캘린더 오픈
  * @details 날짜 값을 받아 캘린더 폼을 생성하고, 날짜값을 채워넣는다.
@@ -58,7 +65,7 @@ function buildCalendar() {
     let dom = 1;
 
     // @details 시작일의 요일값( doMonth.getDay() ) + 해당월의 전체일( lastDate.getDate())을  더해준 값에서
-    //               7로 나눈값을 올림( Math.ceil() )하고 다시 시작일의 요일값( doMonth.getDay() )을 빼준다.
+    //               7로 나눈값을 올림( Math.ceil() )하고 7을 곱해서 다시 시작일의 요일값( doMonth.getDay() )을 빼준다.
     let daysLength = (Math.ceil((doMonth.getDay() + lastDate.getDate()) / 7) * 7) - doMonth.getDay();
 
     // @param 달력 출력
@@ -74,19 +81,18 @@ function buildCalendar() {
             column.innerText = autoLeftPad(day, 2);
 
             // @param 일요일인 경우
-            if (dom % 7 == 1) {
-                //   column.style.color = "#FF4D4D";
-            }
+            // if (dom % 7 == 1) {
+            //        column.style.color = "#FF4D4D";
+            // }
 
             // @param 토요일인 경우
             if (dom % 7 == 0) {
-                //   column.style.color = "#4D4DFF";
+                  // column.style.color = "#4D4DFF";
                 row = tbCalendar.insertRow();
                 // @param 토요일이 지나면 다시 가로 행을 한줄 추가한다.
             }
 
         }
-
         // @param 평일 전월일과 익월일의 데이터 날짜변경
         else {
             let exceptDay = new Date(doMonth.getFullYear(), doMonth.getMonth(), day);
@@ -119,7 +125,7 @@ function buildCalendar() {
                 else if (nowDate.getDate() == day) {
                     column.style.cursor = "pointer";
                     column.classList.add("today");
-                    column.classList.add("choiceDay");
+                    // column.classList.add("choiceDay");
                     column.style.borderRadius = "100%";
                     column.onclick = function () {
                         calendarChoiceDay(this);
@@ -162,6 +168,13 @@ function buildCalendar() {
                 }
             }
         }
+        //닫는 요일은 onclick 했을 시 효과가 없게 한다.
+        for (let i = 0; i < checkedCheckboxes.length; i++) {
+            if (dom % 7 == checkedCheckboxes.eq(i).val()) {
+                column.style.color = "#A9A9A9";
+                column.onclick = null;
+            }
+        }
         dom++;
     }
 }
@@ -176,26 +189,26 @@ function calendarChoiceDay(column) {
     if (document.getElementsByClassName("choiceDay")[0]) {
 
         // @see 금일인 경우
-        if (document.getElementById("calMonth").innerText == autoLeftPad((nowDate.getMonth() + 1), 2) && document.getElementsByClassName("choiceDay")[0].innerText == autoLeftPad(toDay.getDate(), 2)) {
-            document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
+        if (document.getElementById("calMonth").innerText == autoLeftPad((nowDate.getMonth() + 1), 2) && document.getElementsByClassName("choiceDay")[0].innerText == autoLeftPad(nowDate.getDate(), 2)) {
+            document.getElementsByClassName("choiceDay")[0].classList.add("today");
         }
-
-        // @see 금일이 아닌 경우
+        // // @see 금일이 아닌 경우
         else {
             document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
+            document.getElementsByClassName("choiceDay")[0].classList.remove("today");
         }
         document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");
     }
-
     // @param 선택일 체크 표시
     column.style.backgroundColor = "#ff3d0055";
     column.style.borderRadius = "100%";
-    //column.style.color = "#fff";
     column.style.color = "#000";
 
 
     // @param 선택일 클래스명 변경
     column.classList.add("choiceDay");
+    column.classList.remove("today");
+
 }
 
 /**
@@ -239,9 +252,8 @@ function assigningInfo(){
     let inputDate = $('input.date').val();
     let time =  $('input.hour').val();
     let number = $('input.person').val();
-
-
-    console.log("assigning 중, hiddenInfo value" + inputDate + " " + time + " " + number);
+    let timeRadio = $('input[type="radio"][name="time"]');
+    let countRadio = $('input[type="radio"][name="count"]');
 
     //캘린더 click
     let dateParts = inputDate.split('-');
@@ -249,20 +261,21 @@ function assigningInfo(){
     let month = parseInt(dateParts[1]);
     let date = parseInt(dateParts[2]);
 
-    this.toDay = new Date(year, month - 1, date)
+    if(inputDate === ""){
+        buildCalendar();
+    }else{
+        this.toDay = new Date(year, month - 1, date);
+        buildCalendar();
+        let tds = $('td');
 
-    buildCalendar();
-
-    let tds = $('td');
-
-    tds.each(function() {
-        if (parseInt($(this).html()) === date) {
-            $(this).click();
-        }
-    });
+        tds.each(function() {
+            if (parseInt($(this).html()) === date) {
+                $(this).click();
+            }
+        });
+    }
 
     //시간 click
-    let timeRadio = $('input[type="radio"][name="time"]');
     timeRadio.each(function() {
         if ($(this).val() === time) {
             $(this).click();
@@ -270,8 +283,6 @@ function assigningInfo(){
     });
 
     //인원수 click
-    let countRadio = $('input[type="radio"][name="count"]');
-
     countRadio.each(function() {
         if ($(this).val() === number) {
             $(this).click();
@@ -282,52 +293,39 @@ function assigningInfo(){
 
 
 
-function fillingInfo() {
-
-
-    let year = null;
-    let month = null;
-    let date = null;
-    let day = null;
+//modal창의 정보로 hidden input, Session, topOpenButton에 값 넣기
+function fillingInfo(){
+    //modal 값 정보
+    let checkedDate = $('td.choiceDay');
+    let checkedTime = $('.option-timetable label input:checked');
+    let checkedPerson = $('.option-personnel label input:checked');
+    let calYear = $('span#calYear').text();
+    let calMonth = $('span#calMonth').text();
+    let calDate = $('td.choiceDay').text();
+    let calDay = getDayOfWeek($('td.choiceDay').index());
     let time = null;
     let number = null;
-
-    if ($('td.choiceDay').length !== 0) {
-        year = $('span#calYear').html();
-        month = $('span#calMonth').html();
-        date = $('td.choiceDay').html();
-        day = getDayOfWeek($('td.choiceDay').index());
-        $('span.date').text(year + " . " + month + " . " + date + " (" + day + ")");
-        $('input.date').val(year+"-"+month+"-"+date);
+    if (checkedDate.length !== 0) {
+        $('span.date').text(calYear + " . " + calMonth + " . " + calDate + " (" + calDay + ")");
+        $('input.date').val(calYear+"-"+calMonth+"-"+calDate);
     }
-    if ($('.option-timetable label input:checked').length !== 0) {
-        time = $('.option-timetable label input:checked').parent().children().eq(1).html();
+    if (checkedTime.length !== 0) {
+        time = checkedTime.parent().children().eq(1).html();
+
         $('span.hour').text(time);
-        time = $('.option-timetable label input:checked').val();
+        time = checkedTime.val();
         $('input.hour').val(time);
     }
-    if ($('.option-personnel label input:checked').length !== 0) {
-        number = $('.option-personnel label input:checked').parent().children().eq(1).html();
+    if (checkedPerson.length !== 0) {
+        number = checkedPerson.parent().children().eq(1).html();
         $('span.person').text(number);
-        number = $('.option-personnel label input:checked').val();
+        number = checkedPerson.val();
         $('input.person').val(number);
         var requestData = {
-            date: year+"-"+month+"-"+date, // 입력 필드에서 date 값을 읽어옴
+            date: calYear+"-"+calMonth+"-"+calDate, // 입력 필드에서 date 값을 읽어옴
             hour: time, // 입력 필드에서 hour 값을 읽어옴
             person: number // 입력 필드에서 person 값을 읽어옴
         };
-        $.ajax({
-            type: 'POST',
-            url: '/api/members/putWantingDetails',
-            contentType: 'application/json',
-            data: JSON.stringify(requestData),
-            success: function(response) {
-                console.log('세션에 알맞게 저장되었습니다.' + response);
-            },
-            error: function(error) {
-                console.log('에러 발생:', error);
-            }
-        });
     }
 }
 

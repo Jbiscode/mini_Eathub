@@ -6,6 +6,7 @@ import com.eathub.dto.*;
 import com.eathub.entity.Reservation;
 import com.eathub.entity.RestaurantDetail;
 import com.eathub.entity.RestaurantInfo;
+import com.eathub.service.MemberService;
 import com.eathub.service.RestaurantService;
 import com.eathub.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ import java.util.List;
 @RequestMapping("/restaurant")
 public class RestaurantController {
     private final RestaurantService restaurantService;
+    private final MemberService memberService;
     private final ReviewService reviewService;
 
     /**
@@ -48,15 +50,14 @@ public class RestaurantController {
         Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
         ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
-
-        
+        String closedDay = selectRestaurantInfo.getClosedDay();
+        reservationJoinDTO.setClosedDayList(memberService.convertStringToList(closedDay));
+        Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         model.addAttribute("isZzimed", restaurantService.getZzimCount(restaurant_seq, loginMemberSeq) > 0);
         model.addAttribute("restaurantInfo", selectRestaurantInfo);
         model.addAttribute("timeOptions", timeOptionDTOS);
         model.addAttribute("reservationJoinDTO",reservationJoinDTO);
         model.addAttribute("restaurantDetailDTO",restaurantDetailDTO);
-
-
         // 세션에 값이 없으면 세션 생성
         if(session.getAttribute("wantingDate") == null){
             session.setAttribute("wantingDate", restaurantService.getTodayDate());
@@ -76,16 +77,16 @@ public class RestaurantController {
     public String joinReservation(@PathVariable Long restaurant_seq, @Validated ReservationJoinDTO reservationJoinDTO, BindingResult bindingResult,HttpSession session) throws ParseException {
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
 
-        if (member_seq == null || bindingResult.hasErrors()) {
-            log.error("오류" + bindingResult);
-            return "redirect:/members/my";
-        }
+//        if (member_seq == null || bindingResult.hasErrors()) {
+//            log.error("오류" + bindingResult);
+//            return "redirect:/members/my";
+//        }
 
         String formattedDate = restaurantService.getReservationTime(reservationJoinDTO);
 
         restaurantService.insertReservation(
                 Reservation.builder()
-                        .member_seq(member_seq)
+                        .member_seq(reservationJoinDTO.getMember_seq())
                         .restaurant_seq(restaurant_seq)
                         .res_date(formattedDate)
                         .res_people(reservationJoinDTO.getPerson())
