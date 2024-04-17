@@ -151,7 +151,7 @@
 		reservation r
 		INNER JOIN
 		restaurant_info ri ON r.restaurant_seq = ri.restaurant_seq
-		WHERE ri.member_seq = #{memberSeq} AND r.res_status = 'STANDBY'
+		WHERE ri.member_seq = #{memberSeq} AND r.res_status IN ('STANDBY', 'ACCESS')
 		ORDER BY
 		CASE
 			WHEN DATE(r.res_date) = CURDATE() THEN 0
@@ -192,6 +192,12 @@
 		WHERE res_seq=#{resSeq}
 	</update>
 
+	<!-- 방문 완료 처리-->
+	<update id="updateReservationOk">
+		UPDATE reservation
+		SET res_status = 'OK'
+		WHERE res_seq=#{resSeq}
+	</update>
 <!--삭제-->
 <!--    <delete id="delete" parameterType="String">-->
 <!--        delete from members where id=#{id}-->

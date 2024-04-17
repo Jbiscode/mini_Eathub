@@ -137,5 +137,24 @@ public class ReservationApi {
 
     }
 
+    @PostMapping("/post/reservations/ok")
+    public ResponseEntity<?> reservationOk(@RequestParam("res_seq") Long res_seq, HttpSession session){
+
+        // 세션에서 mem_seq받아서 레스토랑의 mem_seq와 비교함
+        Long mem_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+
+        // res_seq 가지고 reservation 테이블의 res_status => REJECT로 변경
+        // 성공시 SUCCESS , 실패시 FAIL 값 반환
+        String result = memberService.OkReservation(res_seq, mem_seq);
+
+        if ("SUCCESS".equals(result)) {
+            // 성공 응답
+            return ResponseEntity.ok().body(Map.of("message", "방문완료 처리했습니다."));
+        }
+
+        return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(Map.of("message", "방문완료 처리에 실패했습니다."));
+
+    }
+
 }
 

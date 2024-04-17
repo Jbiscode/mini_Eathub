@@ -30,4 +30,6 @@ public interface MemberMapper {
   List<ReservationDTO> selectStandbyReservation(@Param("page") int page, @Param("memberSeq") Long memberSeq);
 
   void updateReservationAccess(Long resSeq);
+
+  void updateReservationOk(Long resSeq);
 }
