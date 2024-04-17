@@ -73,7 +73,7 @@ function fetchAndAppendReviews() {
     isFetching = true;
     document.getElementById('loading').style.display = 'block';
 
-    fetch(`/api/myReviews?page=${pageNumber}&member_seq=${member_seq}`)
+    fetch(`/api/ownerReviews?page=${pageNumber}&member_seq=${member_seq}`)
         .then(response => response.json())
         .then(data => {
             console.log('Loaded reviews:', data);
