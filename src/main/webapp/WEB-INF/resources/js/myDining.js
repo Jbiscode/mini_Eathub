@@ -76,7 +76,7 @@ function createReservationElement(reservation) {
             </div>
             <div class="booked-date-info">
                 <span>${reservation.dateFormat}</span> •
-                <span>${new Date(reservation.res_date).toLocaleTimeString('ko-KR', {hour: '2-digit', minute:'2-digit', hour12: true})}</span> •
+                <span>${new Date(reservation.res_date).toLocaleTimeString(undefined, {hour: '2-digit', minute:'2-digit', hour12: true})}</span> •
                 <span>${reservation.res_people}명</span>
             </div>
         </a>
