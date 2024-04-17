@@ -16,13 +16,16 @@ public class SearchService {
     // 타임리프에 사용할 시간 옵션을 생성하는 메서드 6시부터 23시 30분까지 30분 단위로 생성
     public List<TimeOptionDTO> generateTimeOptions() {
         List<TimeOptionDTO> timeOptions = new ArrayList<>();
-        LocalTime time = LocalTime.of(6, 0);
+        LocalTime time = LocalTime.of(0, 0);
         while (!time.equals(LocalTime.of(23, 30))) {
             TimeOptionDTO option = new TimeOptionDTO();
             option.setTime(time.toString());
             timeOptions.add(option);
             time = time.plusMinutes(30);
         }
+        TimeOptionDTO option = new TimeOptionDTO();
+        option.setTime(time.toString());
+        timeOptions.add(option);
         return timeOptions;
     }
 
@@ -53,5 +56,33 @@ public class SearchService {
 
         // 예약 가능한 시간 출력
         return nextReservationTime.format(formatter);
+    }
+
+    //현재시간부터 자정 전까지 시간들
+    public List<String> getAvailableTimes() {
+        //현재 시간 구하기
+        LocalTime currentTime = LocalTime.now();
+        int currentMinute = currentTime.getMinute();
+        int nextReservationMinute = ((currentMinute / 30) + 1) * 30; // 다음 예약 가능한 분
+        LocalTime nextReservationTime;
+        if (nextReservationMinute == 60) {
+            nextReservationTime = currentTime.plusHours(1).withMinute(0); // 정시로 설정
+        } else {
+            nextReservationTime = currentTime.withMinute(nextReservationMinute);
+        }
+
+        //저장할 데이터의 형태
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        LocalTime time = LocalTime.of(6, 0);
+
+        List<String> outdatedTimes = new ArrayList<>();
+
+        if(Integer.parseInt(time.format(formatter))   <   Integer.parseInt(nextReservationTime.format(formatter))){
+            while (!time.format(formatter).equals(nextReservationTime.format(formatter))) {
+                outdatedTimes.add(time.format(formatter));
+                time = time.plusMinutes(30);
+            }
+        }
+        return outdatedTimes;
     }
 }

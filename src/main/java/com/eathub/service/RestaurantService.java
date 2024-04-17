@@ -19,7 +19,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.*;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -32,8 +31,7 @@ public class RestaurantService {
         return restaurantMapper.selectRestaurantInfo(restaurant_seq);
     }
 
-    @Autowired
-    private RestaurantMapper RestaurantMapper;
+
     public List<MenuFormDTO> getMenuListByRestaurantSeq(Long restaurant_seq) {
         // 레스토랑 ID로 메뉴 목록 조회 로직 구현
         List<MenuFormDTO> menuList = restaurantMapper.getMenuListByRestaurantSeq(restaurant_seq);
@@ -302,8 +300,7 @@ public class RestaurantService {
     }
 
 
-    // 타임리프에 사용할 시간 옵션을 생성하는 메서드 6시부터 23시 30분까지 30분 단위로 생성
-
+    // 타임리프에 사용할 시간 옵션을 생성하는 메서드 오픈시간부터  닫는시간 전까지 생성
     public List<TimeOptionDTO> generateTimeOptions(Long restaurant_seq) {
         RestaurantInfo restaurantinfo = restaurantMapper.selectRestaurantInfo(restaurant_seq);
         LocalTime openTime = restaurantinfo.getOpenHour().toLocalTime();

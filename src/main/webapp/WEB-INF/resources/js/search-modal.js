@@ -120,7 +120,7 @@ function buildCalendar() {
                     column.style.cursor = "pointer";
                     column.style.backgroundColor = "#92d1ec";
                     column.classList.add("today");
-                    column.classList.add("choiceDay");
+                    // column.classList.add("choiceDay");
                     column.style.borderRadius = "100%";
                     column.onclick = function () {
                         calendarChoiceDay(this);
@@ -177,26 +177,24 @@ function calendarChoiceDay(column) {
     if (document.getElementsByClassName("choiceDay")[0]) {
 
         // @see 금일인 경우
-        if (document.getElementById("calMonth").innerText == autoLeftPad((nowDate.getMonth() + 1), 2) && document.getElementsByClassName("choiceDay")[0].innerText == autoLeftPad(toDay.getDate(), 2)) {
-            document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
+        if (document.getElementById("calMonth").innerText == autoLeftPad((nowDate.getMonth() + 1), 2) && document.getElementsByClassName("choiceDay")[0].innerText == autoLeftPad(nowDate.getDate(), 2)) {
+            document.getElementsByClassName("choiceDay")[0].classList.add("today");
         }
-
         // // @see 금일이 아닌 경우
         else {
             document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
+            document.getElementsByClassName("choiceDay")[0].classList.remove("today");
         }
         document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");
     }
-
     // @param 선택일 체크 표시
     column.style.backgroundColor = "#ff3d0055";
     column.style.borderRadius = "100%";
-    // column.style.color = "#fff";
     column.style.color = "#000";
-
 
     // @param 선택일 클래스명 변경
     column.classList.add("choiceDay");
+    column.classList.remove("today");
 }
 
 /**
@@ -248,16 +246,20 @@ function assigningInfo(){
     let month = parseInt(dateParts[1]);
     let date = parseInt(dateParts[2]);
 
-    this.toDay = new Date(year, month - 1, date)
-    buildCalendar();
+    if(inputDate === ""){
+        buildCalendar();
+    }else {
+        this.toDay = new Date(year, month - 1, date);
+        buildCalendar();
 
-    let tds = $('td');
+        let tds = $('td');
 
-    tds.each(function() {
-        if (parseInt($(this).html()) === date) {
-            $(this).click();
-        }
-    });
+        tds.each(function () {
+            if (parseInt($(this).html()) === date) {
+                $(this).click();
+            }
+        });
+    }
 
     //시간 click
     let timeRadio = $('input[type="radio"][name="time"]');
