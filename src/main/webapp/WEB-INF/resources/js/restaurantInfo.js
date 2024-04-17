@@ -18,9 +18,10 @@ $("#__notes-item3").click(function () {
     document.getElementById("__notes-item3").classList.toggle("__closed");
 });
 
-/*모달*/
+/*모달-매장정보*/
 let myModal = $("#myModal");
 let myBtn = $("#myBtn");
+
 
 myBtn.click(function () {
     myModal.css("display", 'none');
@@ -29,6 +30,34 @@ myBtn.click(function () {
 $("#mymybtn").click(function () {
     myModal.css("display", 'flex');
 });
+
+
+/*모달-매장위치*/
+let myLocation = $("#myLocation");
+let mylocationBtn = $("#mylocationBtn");
+
+mylocationBtn.click(function () {
+    myLocation.css("display", 'none');
+});
+
+$("#location").click(function () {
+    myLocation.css("display", 'flex');
+});
+
+/*모달-매장전화*/
+let myPhone = $("#myPhone");
+let myPhoneBtn = $("#myPhoneBtn");
+
+myPhoneBtn.click(function () {
+    myPhone.css("display", 'none');
+});
+
+$("#phone").click(function () {
+    myPhone.css("display", 'flex');
+});
+
+
+let isValidated = false;
 
 
 
@@ -125,4 +154,5 @@ function handleBookmarkDetailClick(e) {
 document.querySelector(".btn-back").addEventListener('click', () => {
     history.back();
 });
+
 

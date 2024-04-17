@@ -43,5 +43,16 @@ public interface ReviewMapper {
     //    UPDATE
 
     void updateReviewCountAndRatingAvg(@Param("restaurant_seq") Long restaurant_seq,@Param("review_count") int review_count,@Param("rating_avg") double rating_avg);
+
+    List<ReviewDTO> selectMyReview(Long memberSeq);
+
+    //고객 리뷰관리 페이지
+    List<ReviewDTO> selectMyReviewListPage(@Param("member_seq") Long member_seq, @Param("page") int page);
+
+    //점주 리뷰관리 페이지
+    List<ReviewDTO> selectOwnerReviewListPage(@Param("member_seq") Long member_seq, @Param("page") int page);
+
+
+
     //    DELETE
 }

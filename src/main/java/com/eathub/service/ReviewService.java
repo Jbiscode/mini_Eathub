@@ -115,6 +115,28 @@ public class ReviewService {
         }
         return reviewDTO;
     }
+
+    //고객 리뷰관리 페이지
+    public List<ReviewDTO> selectMyReviewAndImages(Long member_seq, int page) {
+        List<ReviewDTO> reviewDTO = reviewMapper.selectMyReviewListPage(member_seq, (page-1)*2);
+        for (ReviewDTO dto : reviewDTO) {
+            List<String> reviewImages = reviewMapper.selectReviewImages(dto.getRes_seq());
+            dto.setPictureUrls(reviewImages);
+        }
+        return reviewDTO;
+    }
+
+    //점주 리뷰관리 페이지
+    public List<ReviewDTO> selectOwnerReviewAndImages(Long member_seq, int page) {
+        List<ReviewDTO> reviewDTO = reviewMapper.selectOwnerReviewListPage(member_seq, (page-1)*2);
+        for (ReviewDTO dto : reviewDTO) {
+            List<String> reviewImages = reviewMapper.selectReviewImages(dto.getRes_seq());
+            dto.setPictureUrls(reviewImages);
+        }
+
+        System.out.println("page = " + page);
+        return reviewDTO;
+    }
     //    UPDATE
     //    DELETE
 }

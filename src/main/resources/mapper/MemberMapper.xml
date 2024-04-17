@@ -79,6 +79,95 @@
 
 	</select>
 
+	<!-- 예약리스트 한번에 2개씩 불러오기	-->
+	<select id="selectReservationListPage" resultType="reservationDTO">
+		SELECT
+			r.res_seq,
+			r.restaurant_seq,
+			r.member_seq,
+			r.res_status,
+			r.res_log,
+			r.res_date,
+			r.res_people,
+			r.res_comment,
+			ri.restaurant_name,
+			ri.tag,
+			ABS(TIMESTAMPDIFF(MINUTE, r.res_date, NOW())) AS minutes_diff
+		FROM
+			reservation r
+				INNER JOIN
+			restaurant_info ri ON r.restaurant_seq = ri.restaurant_seq
+		WHERE r.member_seq = #{memberSeq}
+		<choose>
+			<when test="type_tab == 1">
+				AND r.res_status = 'OK'
+			</when>
+			<when test="type_tab == 2">
+				AND r.res_status = 'REJECT'
+			</when>
+			<otherwise>
+				AND r.res_status IN ('ACCESS', 'STANDBY')
+			</otherwise>
+		</choose>
+		ORDER BY
+			CASE
+				WHEN DATE(r.res_date) = CURDATE() THEN 0
+				ELSE 1
+			END,
+			CASE
+				WHEN r.res_date > NOW() THEN 0
+				ELSE 1
+			END,
+			CASE
+				WHEN DATE(r.res_date) = CURDATE() THEN r.res_date
+				ELSE NULL
+			END ASC,
+			minutes_diff ASC
+			LIMIT #{page},5;
+	</select>
+
+	<!-- 예약 정보 가져오기	-->
+	<select id="getReservation" resultType="reservationDTO">
+		SELECT *
+		FROM reservation
+		WHERE res_seq = #{resSeq}
+	</select>
+
+	<!-- 예약 요청 확인하기 -->
+	<select id="selectStandbyReservation" resultType="reservationDTO">
+		SELECT
+		r.res_seq,
+		r.restaurant_seq,
+		r.member_seq,
+		r.res_status,
+		r.res_log,
+		r.res_date,
+		r.res_people,
+		r.res_comment,
+		ri.restaurant_name,
+		ri.tag,
+		ABS(TIMESTAMPDIFF(MINUTE, r.res_date, NOW())) AS minutes_diff
+		FROM
+		reservation r
+		INNER JOIN
+		restaurant_info ri ON r.restaurant_seq = ri.restaurant_seq
+		WHERE ri.member_seq = #{memberSeq} AND r.res_status IN ('STANDBY', 'ACCESS')
+		ORDER BY
+		CASE
+			WHEN DATE(r.res_date) = CURDATE() THEN 0
+			ELSE 1
+		END,
+		CASE
+			WHEN r.res_date > NOW() THEN 0
+			ELSE 1
+		END,
+		CASE
+			WHEN DATE(r.res_date) = CURDATE() THEN r.res_date
+			ELSE NULL
+		END ASC,
+		minutes_diff ASC
+		LIMIT #{page},2;
+	</select>
 
     <update id="update" parameterType="members">
         update members
@@ -89,9 +178,26 @@
                        where member_id=#{member_id}
     </update>
 
+	<!-- 예약 거절/취소 -->
+	<update id="updateReservationReject" >
+		UPDATE reservation
+		SET res_status = 'REJECT'
+		WHERE res_seq = #{resSeq}
+	</update>
 
+	<!-- 예약 승인 -->
+	<update id="updateReservationAccess">
+		UPDATE reservation
+		SET res_status = 'ACCESS'
+		WHERE res_seq=#{resSeq}
+	</update>
 
-
+	<!-- 방문 완료 처리-->
+	<update id="updateReservationOk">
+		UPDATE reservation
+		SET res_status = 'OK'
+		WHERE res_seq=#{resSeq}
+	</update>
 <!--삭제-->
 <!--    <delete id="delete" parameterType="String">-->
 <!--        delete from members where id=#{id}-->

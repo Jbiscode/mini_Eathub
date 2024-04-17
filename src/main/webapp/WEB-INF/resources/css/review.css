@@ -216,7 +216,7 @@ body {
     border-bottom: 1px solid #ccc;
 }
 
-.average-rating, .rating-breakdown, .review, .ratings-container {
+.average-rating, .rating-breakdown, .ratings-container {
     padding: 20px;
 }
 
@@ -696,7 +696,7 @@ input, select, textarea {
 .x9vxc46 {
     display: flex !important;
     align-items: center;
-    gap: 280px;
+    gap: 330px;
 }
 .__my-review-post .__header .__review-meta .__rating {
     display: flex;
