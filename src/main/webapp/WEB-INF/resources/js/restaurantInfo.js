@@ -50,7 +50,7 @@ let form = $("form");
         resModal.css("visibility", 'visible');
         resModal.css("transform", 'translateY(-100%)');
         assigningInfo();
-    });W
+    });
     topCloseBtn.click(function () {
         resModal.css("transform", 'translateY(+100%)');
         resModal.css("visibility", 'hidden');
