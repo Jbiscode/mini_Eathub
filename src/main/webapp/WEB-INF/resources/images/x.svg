@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <g fill="none" fill-rule="evenodd">
+        <path d="M0 0H32V32H0z" transform="matrix(-1 0 0 1 32 0)"/>
+        <g stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+            <path d="M0 0.093L13.317 13.41" transform="translate(9.1 9.1)"/>
+            <path d="M0.573 0L13.89 13.317" transform="translate(9.1 9.1) matrix(1 0 0 -1 0 13.317)"/>
+        </g>
+    </g>
+</svg>

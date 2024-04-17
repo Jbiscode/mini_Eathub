@@ -5,6 +5,7 @@ import com.eathub.dto.ReservationDTO;
 import com.eathub.dto.RestaurantDetailDTO;
 import com.eathub.dto.ReviewDTO;
 import com.eathub.dto.ReviewStatsDTO;
+import com.eathub.entity.ENUM.MEMBER_TYPE;
 import com.eathub.entity.RestaurantInfo;
 import com.eathub.service.MemberService;
 import com.eathub.service.RestaurantService;
@@ -34,9 +35,17 @@ public class MyReviewController {
     @GetMapping("")
     public String review(Model model, HttpSession session){
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
+        MEMBER_TYPE mem_type = (MEMBER_TYPE) session.getAttribute(SessionConf.LOGIN_MEMBER_TYPE);
 
         model.addAttribute("member_seq", member_seq);
+
+        if(mem_type.equals(MEMBER_TYPE.OWNER)){
+            return "/members/ownerReview";
+
+        }
+
         return "/members/myReview";
+
     }
 
 

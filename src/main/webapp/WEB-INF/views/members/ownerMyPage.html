@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="../../resources/css/footer.css" th:href="@{/css/footer.css}">
     <link rel="stylesheet" href="../../resources/css/common.css" th:href="@{/css/common.css}">
     <link rel="stylesheet" href="../../resources/css/ownerMyPage.css" th:href="@{/css/ownerMyPage.css}">
+    <link rel="stylesheet" href="../../resources/css/myDining.css" th:href="@{/css/myDining.css}">
+
     <script defer src="../../resources/js/myPage.js" th:src="@{/js/myPage.js}"></script>
     <script defer src="../../resources/js/ownerMyPage.js" th:src="@{/js/ownerMyPage.js}"></script>
 
@@ -26,6 +28,18 @@
 
 </head>
 <body>
+<div class="shadow hide" id="shadow">
+    <div>
+        <div class="background-white modal">
+            <div>
+                <p id="message">예약이 취소되었습니다.</p>
+                <div style="display: flex; justify-content: center">
+                    <button class="btn btn-rounded btn-md btn mt-18">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="wrapper">
     <header id="header" class="opaque">
         <div class="container">
@@ -75,14 +89,14 @@
         </section>
         <div class="tab-menu mb-10 sticky mt-18">
             <ul>
-                <li class="active">
+                <li class="active" id="restaurant-info-tab">
                     <a href="javascript:void(0)">
                         <span>
                             가게 정보
                         </span>
                     </a>
                 </li>
-                <li>
+                <li id="request-reservation-tab">
                     <a href="javascript:void(0)">
                         <span>
                             예약확인
@@ -100,8 +114,8 @@
         </div>
         <div id="collection">
             <!-- <section class="section pt-20 section-overflow-hidden"></section> -->
-            <section class="section pt-24 section-overflow-hidden">
-                <div class="container gutter-sm">
+            <section class="section pt-24 section-overflow-hidden" id="container">
+                <div class="container gutter-sm" id="restaurantInfoContainer">
                     <div class="nodata font-14 mb-24 mt-18 ">
                         <b>가게를 선택해주세요</b>
                     </div>
@@ -293,7 +307,8 @@
 <!--                            <button type="submit" class="btn">매장삭제</button>-->
                         </div>
                     </div>
-                </div>
+                </div   >
+                <div class="container gutter-sm" id="requestReservationContainer"></div>
             </section>
         </div>
 

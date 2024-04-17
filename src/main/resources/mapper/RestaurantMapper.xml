@@ -161,6 +161,7 @@
         SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,location,description,openHour,closeHour,rating,review_total,zzim_total
         FROM restaurant_info
         WHERE  category_seq= #{category_seq} and status = 'ACCESS'
+        ORDER BY rating DESC
         LIMIT 20
     </select>
 
@@ -195,14 +196,15 @@
         SELECT restaurant_seq,member_seq,category_seq,restaurant_name,tag,lower(location),description,openHour,closeHour,rating,review_total,zzim_total,address1
         FROM restaurant_info
         WHERE
-        <foreach item="item" index="index" collection="list" open="(" separator="OR" close=")">
-            address1 LIKE #{item}
-        </foreach>
-        and
-        <foreach item="item" index="index" collection="list" open="(" separator="OR" close=")">
-            tag LIKE #{item}
-        </foreach>
-        and status = 'ACCESS'
+            <foreach item="item" index="index" collection="list" open="(" separator="OR" close=")">
+                address1 LIKE #{item}
+            </foreach>
+            and
+            <foreach item="item" index="index" collection="list" open="(" separator="OR" close=")">
+                tag LIKE #{item}
+            </foreach>
+            and status = 'ACCESS'
+        ORDER BY rating DESC
     </select>
 
     <!-- 오늘의 예약 -->
@@ -248,6 +250,14 @@
         SELECT *
         FROM restaurant_info
         WHERE restaurant_seq = #{restaurantSeq}
+    </select>
+
+
+    <!--메뉴 받아오기-->
+    <select id="getMenuListByRestaurantSeq" parameterType="Long" resultType="com.eathub.dto.MenuFormDTO">
+        SELECT *
+        FROM MENU
+        WHERE restaurant_seq = #{restaurant_seq}
     </select>
 
     <!-- 모든 레스토랑 Detail DTO 받아오기   -->

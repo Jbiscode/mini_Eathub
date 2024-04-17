@@ -394,7 +394,7 @@ button {
     margin-bottom: 8px !important;
     border-radius: 6px;
     padding-left: 20px;
-    border:1px solid #d5d5d5;
+    border:1px solid #ff3d00;
 }
 
 .btn.full-width {
@@ -728,9 +728,7 @@ ol, ul {
 }
 .menupan-item-list {
     display: block;
-    border-top: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
-    margin: 0 -20px;
     padding: 0 20px;
 }
 .__menupan-item+.__menupan-item {
@@ -793,11 +791,10 @@ ol, ul {
     flex-wrap: wrap;
     margin: -1px;
 }
-.photo-grid-list .photo-grid-list-item {
-    flex: 0 1 33.333333333%;
-    flex-basis: 33.333333333%;
+.photo-grid-list-item {
     padding: 1px;
     box-sizing: border-box;
+    display: inline-block;
 }
 .photo-grid-list-item .tb {
     display: block;
@@ -806,7 +803,6 @@ ol, ul {
     border-radius: 2px;
 }
 .photo-grid-list-item .tb .img {
-    padding-top: 100%;
     background: 50% 50% no-repeat;
     background-size: cover;
 }
@@ -1377,7 +1373,7 @@ p, h1, h2, h3, h4, h5, h6 {
 /*밑에 독*/
 
 
-/*모달*/
+/*모달-매장정보*/
 #myModal{
     display: none;
 }
@@ -1493,7 +1489,16 @@ jss1 .MuiPaper-root {
     margin-bottom: 10px;
     width: 100%;
 }
-/*모달*/
+/*모달-위치*/
+#myLocation{
+    display: none;
+}
+/*모달-매장전화*/
+#myPhone{
+    display: none;
+}
+/*모달-매장정보*/
+
 
 
 /*모달-예약*/
@@ -1509,6 +1514,9 @@ jss1 .MuiPaper-root {
     z-index: 99;
 }
 /*모달-예약*/
+
+
+
 
 .review_count{
     padding-left: 4px;
@@ -1589,4 +1597,11 @@ body {
     --_1ltqxco15: 12px;
     --_1ltqxco16: 16px;
     --_1ltqxco17: 32px;
+}
+
+.input-control.closed-day input:checked{
+    width: 15px;
+    height: 15px;
+
+    background-color: #ff3D00;
 }

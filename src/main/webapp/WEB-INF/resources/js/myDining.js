@@ -2,21 +2,25 @@ let isFetching = false;
 
 const reservation_tab = document.getElementById("reserved-tab");
 const complete_tab = document.getElementById("complete-tab");
+const cancel_tab = document.getElementById("cancel-tab")
 const reservationContainer = document.getElementById('common_infinity_sc_0');
 
 let pageNumber = 1;
 let type_tab = 0;
 
 $('.tag-radio-group .label').on('click', function (){
+    isFetching = false;
     if(this === reservation_tab){
         type_tab = 0;
         pageNumber = 1;
-        reservationContainer.innerHTML='';
     }else if (this === complete_tab){
         type_tab = 1;
         pageNumber = 1
-        reservationContainer.innerHTML='';
+    }else if(this === cancel_tab){
+        type_tab = 2;
+        pageNumber = 1
     }
+    reservationContainer.innerHTML='';
     fetchAndAppendReservation(type_tab)
 })
 
@@ -56,8 +60,10 @@ function createReservationElement(reservation) {
         <span class="booked-Dday">${reservation.dday == 0 ? 'D-DAY' : 'D' + (reservation.dday > 0 ? '-' : '+') + reservation.absDday}</span>
         <span class="booked-status">${reservation.res_status === 'STANDBY' ? '예약 확인중' :
         reservation.res_status === 'ACCESS' ? '예약 완료' :
-            reservation.res_status === 'OK' ? '방문 완료' : ''}</span>
+            reservation.res_status === 'OK' ? '방문 완료' : '예약 취소'}</span>
         ${reservation.res_status === 'OK' ? `<a class="label ${reviewedClass}" href="/restaurant/review/write?res_seq=${reservation.res_seq}">리뷰작성</a>` : ''}
+        ${reservation.res_status === 'STANDBY' || reservation.res_status === 'ACCESS' ? `<a class="label booked-cancel" data-res_seq=${reservation.res_seq} href="javascript:void(0)"> 예약취소 </a>` : ''}
+        ${reservation.res_status === 'REJECT' ? `<a class="label canceled"> 취소완료 </a>` : ''}
     </div>
     <div class="restaurant-info">
         <a href="javascript:void(0)" class="tb">
@@ -100,16 +106,22 @@ function updateVisibility() {
     var selectedValue = $('input[name="type"]:checked').val();
     if(selectedValue == "done"){
         $('.booked-status').each(function() {
-            if ($(this).text() == "예약 완료" || $(this).text() == "예약 확인중") {
+            if ($(this).text() == "예약 완료" || $(this).text() == "예약 확인중" || $(this).text() == "예약 취소") {
                 $(this).closest('.booked-restaurant-list-item').addClass('hide')
             }
         })
     }else if(selectedValue == "planned"){
             $('.booked-status').each(function() {
-                if ($(this).text() == "방문 완료") {
+                if ($(this).text() == "방문 완료" || $(this).text() == "예약 취소") {
                     $(this).closest('.booked-restaurant-list-item').addClass('hide')
                 }
-         })
+            })
+    }else if(selectedValue == "cancel"){
+            $('.booked-status').each(function() {
+                if ($(this).text() == "방문 완료" || $(this).text() == "예약 완료" || $(this).text() == "예약 확인중") {
+                    $(this).closest('.booked-restaurant-list-item').addClass('hide')
+                }
+            })
     }
 
 
@@ -120,6 +132,8 @@ function updateVisibility() {
             $(this).addClass('reserved');
         } else if($(this).text() == "방문 완료"){
             $(this).addClass('complete');
+        } else if($(this).text() == "예약 취소"){
+            $(this).addClass('cancel');
         }
     });
 
@@ -167,4 +181,34 @@ $('#reserved-tab').on('click', function () {
     });
 });
 
-// $('input[name="type"]').on('change', updateVisibility).trigger('change');
+reservationContainer.addEventListener('click', function(e) {
+    // 이벤트가 발생한 요소가 .booked-cancel 클래스를 가지고 있는지 확인
+    if (e.target.classList.contains('booked-cancel')) {
+        let res_seq = e.target.dataset.res_seq;
+        fetchCancelReservation(res_seq);
+    }
+});
+
+function fetchCancelReservation(res_seq){
+    fetch(`api/post/reservations/cancel?res_seq=${res_seq}`,
+        {
+            method : 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("result = ", data);
+            document.getElementById('shadow').classList.remove('hide')
+            document.getElementById('message').innerText= data.message
+        })
+        .catch(e => {
+            console.log(e)
+            document.getElementById('shadow').classList.remove('hide')
+            document.getElementById('message').innerText = e.message
+        })
+
+}
+
+$('#shadow').on('click', function () {
+    $(this).addClass('hide')
+    location.reload();
+});

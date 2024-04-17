@@ -18,9 +18,10 @@ $("#__notes-item3").click(function () {
     document.getElementById("__notes-item3").classList.toggle("__closed");
 });
 
-/*모달*/
+/*모달-매장정보*/
 let myModal = $("#myModal");
 let myBtn = $("#myBtn");
+
 
 myBtn.click(function () {
     myModal.css("display", 'none');
@@ -30,7 +31,34 @@ $("#mymybtn").click(function () {
     myModal.css("display", 'flex');
 });
 
+
+/*모달-매장위치*/
+let myLocation = $("#myLocation");
+let mylocationBtn = $("#mylocationBtn");
+
+mylocationBtn.click(function () {
+    myLocation.css("display", 'none');
+});
+
+$("#location").click(function () {
+    myLocation.css("display", 'flex');
+});
+
+/*모달-매장전화*/
+let myPhone = $("#myPhone");
+let myPhoneBtn = $("#myPhoneBtn");
+
+myPhoneBtn.click(function () {
+    myPhone.css("display", 'none');
+});
+
+$("#phone").click(function () {
+    myPhone.css("display", 'flex');
+});
+
+
 let isValidated = false;
+
 
 
 let resModal = $('#resModal');
@@ -60,16 +88,31 @@ let form = $("form");
         fillingInfo();
         resModal.css("transform", 'translateY(+100%)');
         resModal.css("visibility", 'hidden');
-        isValidated = true;
     });
 
     reservationBtn.click(function () {
-        if(isValidated){
-            form.submit();
-            console.log("submit");
-        }else{
-            alert("예약일시를 확인해주세요");
+        //modal 값 정보
+        let checkedDate = $('td.choiceDay');
+        let checkedTime = $('.option-timetable label input:checked');
+        let checkedPerson = $('.option-personnel label input:checked');
+        let checkedMember = $('input[name="member_seq"]');
+
+        if(checkedMember.val() === ""){
+            alert("로그인이 필요합니다.");
+            location.href='/members/login';
+        }else if(checkedDate.length === 0){
+            alert("member_seq = " + checkedMember.val())
+            alert("예약날짜를 확인해주세요");
             return false;
+        }else if(checkedTime.length === 0){
+            alert("예약시간을 확인해주세요");
+            return false;
+        }else if(checkedPerson.length === 0){
+            alert("인원수를 확인해주세요");
+            return false;
+        }else{
+            form.submit();
+            alert("예약되었습니다. 마이페이지에서 예약을 확인해주세요.")
         }
     });
 
@@ -108,4 +151,8 @@ function handleBookmarkDetailClick(e) {
         },
     });
 }
+document.querySelector(".btn-back").addEventListener('click', () => {
+    history.back();
+});
+
 
