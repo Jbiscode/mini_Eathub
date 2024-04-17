@@ -200,11 +200,11 @@ public class MemberService {
         Date now = calendar.getTime();
 
         // 현재 날짜와 예약 날짜 차이 계산
-        long diff = now.getTime() - reservationDate.getTime();
+        long diff = reservationDate.getTime() - now.getTime();
         long daysBetween = diff / (24 * 60 * 60 * 1000);
 
         // 날짜 차이가 3일 미만인 경우 업데이트 X
-        if(daysBetween < 3 || memSeq != reservationDTO.getMember_seq()){
+        if((daysBetween < 3 && daysBetween >= 0) || memSeq != reservationDTO.getMember_seq()){
             return "FAIL";
         }
 
