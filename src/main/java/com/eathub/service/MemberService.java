@@ -294,4 +294,20 @@ public class MemberService {
 
         return "FAIL";
     }
+
+    public String OkReservation(Long resSeq, Long memSeq) {
+        ReservationDTO reservationDTO = memberMapper.getReservation(resSeq);
+        List<MyPageDTO> myPageDTOS = restaurantMapper.selectOwnerRestaurantList(memSeq);
+
+        // 현재 로그인한 점주의 레스토랑 리스트를 불러와서 그 리스트의 member_seq와
+        // 로그인 세션의 memSeq를 비교해서 일치하면 업데이트 아니면 FAIL
+        for (MyPageDTO myPageDTO : myPageDTOS) {
+            if (myPageDTO.getMember_seq().equals(memSeq)) {
+                memberMapper.updateReservationOk(resSeq);
+                return "SUCCESS";
+            }
+        }
+
+        return "FAIL";
+    }
 }

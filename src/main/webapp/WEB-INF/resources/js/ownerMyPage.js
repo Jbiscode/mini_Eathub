@@ -112,6 +112,7 @@ function fetchAndCreateElement(){
                 const requestReservationElement = createRequestReservationElement(requestReservation);
                 container.appendChild(requestReservationElement);
             })
+            updateVisibility();
             pageNumber++;
             setTimeout(()=>{isFatching = false}, 1000)
         })
@@ -154,7 +155,8 @@ function createRequestReservationElement(reservation) {
     </div>
     <div class="reservation-btn-box">
         ${reservation.res_status === 'STANDBY' ? `<a class="label access reservation-btn" data-res_seq=${reservation.res_seq} href="javascript:void(0)"> 예약승인 </a>` : ''}
-        ${reservation.res_status === 'STANDBY' ? `<a class="label reject reservation-btn" data-res_seq=${reservation.res_seq}> 예약거절 </a>` : ''}
+        ${reservation.res_status === 'ACCESS' ? `<a class="label complete reservation-btn" data-res_seq=${reservation.res_seq} href="javascript:void(0)"> 방문완료 </a>` : ''}
+        ${(reservation.res_status === 'STANDBY' || reservation.res_status === 'ACCESS') ? `<a class="label reject reservation-btn" data-res_seq=${reservation.res_seq}> 예약거절 </a>` : ''}
     </div>
 `;
 
@@ -201,12 +203,14 @@ function showReservationTab(){
 }
 
 $('#requestReservationContainer').on('click', function (e) {
+    let res_seq = e.target.dataset.res_seq;
+
     if(e.target.classList.contains('access')){
-        let res_seq = e.target.dataset.res_seq;
         fetchAccessReservation(res_seq)
     }else if(e.target.classList.contains('reject')){
-        let res_seq = e.target.dataset.res_seq;
         fetchCancelReservation(res_seq)
+    }else if (e.target.classList.contains('complete')) {
+        fetchOkReservation(res_seq)
     }
 });
 
@@ -251,7 +255,59 @@ function fetchAccessReservation(res_seq){
 
 }
 
+function fetchOkReservation(res_seq){
+    fetch(`/api/post/reservations/ok?res_seq=${res_seq}`,
+        {
+            method : 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("result = ", data);
+            document.getElementById('shadow').classList.remove('hide')
+            document.getElementById('message').innerText= data.message
+            showReservationTab()
+        })
+        .catch(e => {
+            console.log(e)
+            document.getElementById('shadow').classList.remove('hide')
+            document.getElementById('message').innerText = e.message
+        })
+
+}
+
+
 $('#shadow').on('click', function () {
     $(this).addClass('hide')
     $('#request-reservation-tab').trigger('click')
+});
+
+// 예약상태을 보고 스타일 변경하는 메소드
+function updateVisibility() {
+
+    // 예약상태에 따라 예약상태 뱃지 구분
+    $('.booked-status').each(function() {
+        if ($(this).text() == "예약 완료") {
+            $(this).addClass('reserved');
+        } else if($(this).text() == "방문 완료"){
+            $(this).addClass('complete');
+        } else if($(this).text() == "예약 취소"){
+            $(this).addClass('cancel');
+        }
+    });
+
+    $('.reviewed').each(function () {
+        $(this).text('작성완료')
+        $(this).css({
+            'background-color' : 'black',
+            'color' : 'white'
+        })
+        $(this).on('click', function (e) {
+            e.preventDefault()
+        });
+    });
+
+}
+
+$(document).ready(function () {
+    updateVisibility();
 });
