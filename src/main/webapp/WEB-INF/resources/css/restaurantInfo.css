@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+
 .wrapper {
     max-width: 480px;
     margin: 0 auto;
@@ -706,7 +708,7 @@ ol, ul {
 .__restaurant-notice-v2 .__restaurant-notice-v2-item .__notice-content .__desc p {
     font-size: 14px;
     line-height: 160%;
-    letter-spacing: -.02em;
+    letter-spacing: -.05em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -835,7 +837,7 @@ ol, ul {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 * {
-    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, sans-serif;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, sans-serif;
     font-style: normal;
 }
 
@@ -866,7 +868,7 @@ ol, ul {
     font-size: 20px;
     align-items: center;
     display: flex;
-    letter-spacing: 0;
+    letter-spacing: -.05em;
     min-width: 1px;
 }
 .__reserv-schedule {

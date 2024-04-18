@@ -105,7 +105,7 @@
     font-size: 20px;
     align-items: center;
     display: flex;
-    letter-spacing: 0;
+    letter-spacing: -.05em;
     min-width: 1px;
 }
 .section .section-header .section-title .count {
@@ -168,14 +168,14 @@
     font-weight: 900;
     word-break: break-word;
     line-height: 1.4;
-    letter-spacing: -0.1em;
+    letter-spacing: -.05em;
 }
 .owner-restaurant-list-item .restaurant-info .detail .excerpt {
     font-size: 11px;
     line-height: 15px;
     color: #000;
     margin-bottom: 8px;
-    letter-spacing: -0.12em;
+    letter-spacing: -.05em;
 }
 .restaurant-meta {
     font-size: 16px;
@@ -220,7 +220,7 @@
     color: #aaa;
     margin-bottom: 5px;
     font-size: 11px;
-    letter-spacing: -0.15em;
+    letter-spacing: -.05em;
 }
 .restaurant-meta .price {
     display: flex;
@@ -232,7 +232,7 @@
     display: block;
     color: #aaa;
     font-size: 11px;
-    letter-spacing: -0.15em;
+    letter-spacing: -.05em;
 }
 .owner-restaurant-list-item .restaurant-info .btn-bookmark {
     margin-top: 5px;
@@ -567,7 +567,7 @@ jss1 .MuiPaper-root {
     padding: 14px 20px;
     color: white;
     border-radius: 5px;
-    font-weight: 700;
+    font-weight: normal;
     background-color: #FF3D00;
     text-align: center;
 }

@@ -43,7 +43,7 @@
 .owner-select div, .customer-select div {
     width: 70px;
     height: 70px;
-    mask: url(/images/user-regular.svg) 50% 50% no-repeat;
+    mask: url(../images/user-regular.svg) 50% 50% no-repeat;
     background-color: #222222;
     margin-bottom: 20px;
 }
@@ -66,7 +66,6 @@
 
 .form-input::placeholder {
     color: #c8c8c8;
-    letter-spacing: -.05em;
 }
 
 .form-input.form-input-underline {
@@ -165,7 +164,7 @@ span.error-message {
 }
 
 #header .header-left .btn-back {
-    background: url(/images/arrow-left-solid.svg) 50% 50% no-repeat;
+    background: url(../images/arrow-left-solid.svg) 50% 50% no-repeat;
     width: 20px;
     height: 20px;
     display: block;

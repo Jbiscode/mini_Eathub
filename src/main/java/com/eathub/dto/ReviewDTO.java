@@ -31,4 +31,8 @@ public class ReviewDTO {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
         return sdf.format(createdAt);
     }
+
+    public String getRating() {
+        return String.format("%.1f", rating);
+    }
 }
