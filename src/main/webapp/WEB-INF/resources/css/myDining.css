@@ -120,7 +120,7 @@
     font-weight: 900;
     word-break: break-word;
     line-height: 1.4;
-    letter-spacing: -0.1em;
+    letter-spacing: -.05em;
 }
 
 .booked-restaurant-list-item .restaurant-info .detail .restaurant-meta .tags {
@@ -128,7 +128,7 @@
     color: #aaa;
     margin-bottom: 5px;
     font-size: 13px;
-    letter-spacing: -0.15em;
+    letter-spacing: -.05em;
 }
 .booked-restaurant-list-item .booked-info{
     margin-bottom: 15px !important;
@@ -142,7 +142,6 @@
     padding: 4px 10px;
     border: 1px solid transparent;
     color: #000;
-    letter-spacing: -.05em;
 }
 .booked-restaurant-list-item .booked-status{
     white-space: nowrap;
@@ -153,7 +152,6 @@
     padding: 4px 10px;
     border: 1px solid transparent;
     color: #fff;
-    letter-spacing: -.05em;
 }
 .booked-restaurant-list-item .booked-date-info{
     white-space: nowrap;
@@ -188,7 +186,6 @@
     background: #fff;
     font-size: 13px;
     padding: 4px 10px;
-    letter-spacing: -.05em;
     position: absolute;
     right: 0;
 }

@@ -1,9 +1,13 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+
 *{
-    letter-spacing: -.15em;
+    letter-spacing: -.05em;
     -webkit-font-smoothing: antialiased;
+    font-family: "Pretendard Variable", "Roboto", "Noto Sans KR", sans-serif;
 }
+
 body{
-    font-family: "Roboto", "Noto Sans KR", sans-serif;
+    font-family: "Pretendard Variable", "Roboto", "Noto Sans KR", sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 a{
@@ -272,7 +276,7 @@ input::placeholder {
     color: #666;
     white-space: nowrap;
     text-overflow: ellipsis;
-    letter-spacing: -.10em;
+    letter-spacing: -.05em;
 }
 .meta .score {
     display: block;
@@ -281,7 +285,6 @@ input::placeholder {
     font-size: 14px;
     font-weight: 500;
     margin-right: 6px;
-    letter-spacing: -.05em;
 }
 .meta .score:before {
     background: url(../images/star-yellow.svg) 0% 50% no-repeat;
@@ -297,7 +300,6 @@ input::placeholder {
 .meta .score .count {
     font-size: 13px;
     color: #999;
-    letter-spacing: -.04em;
 }
 
 /* form-input */
@@ -312,7 +314,6 @@ input::placeholder {
 }
 .form-input::placeholder {
     color: #c8c8c8;
-    letter-spacing: -.05em;
 }
 .section .confirm-box .__select-textarea textarea, .section .form-input {
     padding: 12px;

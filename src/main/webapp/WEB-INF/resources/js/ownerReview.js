@@ -5,7 +5,7 @@ let pageNumber = 1; // 현재 페이지 번호
 function createReviewElement(reviewDTO) {
     // Html을 문자열로 내보내면 appendChild로 변환못해서(87번줄코드) 감싸줄 태그를 우선 만들기
     const section = document.createElement('section');
-    section.className = 'section mb-20';
+    section.className = 'section';
 
     // 응답에서 가져온 PictureUrl 먼저 html로 파싱하기
     const pictureHtml = reviewDTO.pictureUrls.map(pictureUrl =>
@@ -24,7 +24,7 @@ function createReviewElement(reviewDTO) {
                                     <div class="__user-info">
                                         <a class="profile">
                                             <div class="profile-pic">
-                                                <img class="img">
+                                                <div class="img">
                                             </div>
                                             <h4 class="name username">
                                                 <span class="txt">${reviewDTO.restaurant_name || "식당 이름"}</span>
