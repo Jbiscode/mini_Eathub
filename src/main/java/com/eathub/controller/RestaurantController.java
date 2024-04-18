@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +79,8 @@ public class RestaurantController {
             session.setAttribute("wantingDate", restaurantService.getTodayDate());
         }
         if(session.getAttribute("wantingHour") == null){
-            session.setAttribute("wantingHour", restaurantService.getNextReservationTime());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+            session.setAttribute("wantingHour", restaurantService.getNextReservationTime().format(formatter));
         }
         if(session.getAttribute("wantingPerson") == null){
             session.setAttribute("wantingPerson", 1);
@@ -92,23 +94,23 @@ public class RestaurantController {
     public String joinReservation(@PathVariable Long restaurant_seq, @Validated ReservationJoinDTO reservationJoinDTO, BindingResult bindingResult,HttpSession session) throws ParseException {
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
 
-//        if (member_seq == null || bindingResult.hasErrors()) {
-//            log.error("오류" + bindingResult);
-//            return "redirect:/members/my";
-//        }
+        if (member_seq == null || bindingResult.hasErrors()) {
+            log.error("오류" + bindingResult);
+            return "redirect:/members/my";
+        }
 
         String formattedDate = restaurantService.getReservationTime(reservationJoinDTO);
 
         restaurantService.insertReservation(
                 Reservation.builder()
-                        .member_seq(reservationJoinDTO.getMember_seq())
+                        .member_seq(reservationJoinDTO.getMemberSeq())
                         .restaurant_seq(restaurant_seq)
                         .res_date(formattedDate)
                         .res_people(reservationJoinDTO.getPerson())
                         .build()
         );
 
-        return "redirect:/members/my";
+        return "redirect:/mydining";
     }
 
 

@@ -15,7 +15,7 @@ import java.util.List;
 public class ReservationJoinDTO {
 
     @NotNull
-    private Long member_seq;
+    private Long memberSeq;
     @NotBlank
     private String date;
     @NotBlank

@@ -311,7 +311,6 @@ function fillingInfo(){
     }
     if (checkedTime.length !== 0) {
         time = checkedTime.parent().children().eq(1).html();
-
         $('span.hour').text(time);
         time = checkedTime.val();
         $('input.hour').val(time);
@@ -321,11 +320,6 @@ function fillingInfo(){
         $('span.person').text(number);
         number = checkedPerson.val();
         $('input.person').val(number);
-        var requestData = {
-            date: calYear+"-"+calMonth+"-"+calDate, // 입력 필드에서 date 값을 읽어옴
-            hour: time, // 입력 필드에서 hour 값을 읽어옴
-            person: number // 입력 필드에서 person 값을 읽어옴
-        };
     }
 }
 
