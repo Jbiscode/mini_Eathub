@@ -971,3 +971,15 @@ button {
     gap: 8px;
 }
 /*리뷰작성*/
+
+
+/* 총 리뷰수  */
+
+.totalReview-container .review-count{
+    padding: 10px 4px !important;
+    font-size: 16px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
