@@ -89,19 +89,63 @@ let form = $("form");
         resModal.css("transform", 'translateY(+100%)');
         resModal.css("visibility", 'hidden');
     });
-
+    $('table').on('click', 'td', function(){
+        //modal calender 정보
+        let calYear = $('span#calYear').text();
+        let calMonth = $('span#calMonth').text();
+        let calDate = $('td.choiceDay').text();
+        let timeRadio = $('input[type="radio"][name="time"]');
+        let restaurantSeq = $('.restaurantSeqData').data("restaurant-seq");
+        if (calDate === $(this).text()) {
+            let selectedDate = calYear+"-"+calMonth+"-"+calDate;
+            timeRadio.removeClass('notOpen');
+            timeRadio.removeClass('outdated');
+            timeRadio.removeClass('booked');
+            timeRadio.prop("disabled", false);
+            $.ajax({
+                type: "POST",
+                url: "/api/restaurants/getTimeStatuses/" + restaurantSeq +  "/" + selectedDate,
+                success: function(timeStatuses) {
+                    for (let key in timeStatuses) {
+                        if (timeStatuses.hasOwnProperty(key)) { // 객체 자체의 속성인지 확인합니다.
+                            let timeStatus = timeStatuses[key];
+                            let $matchingRadio = timeRadio.filter('[value="' + key + '"]');
+                            if ($matchingRadio.length > 0) {
+                                if (timeStatus !== 0){
+                                    if (timeStatus === 3) {
+                                        $matchingRadio.addClass('notOpen');
+                                    } else if (timeStatus === 2) {
+                                        $matchingRadio.addClass('outdated');
+                                    } else if (timeStatus === 1) {
+                                        $matchingRadio.addClass('booked');
+                                    }
+                                    $matchingRadio.prop("checked", false);
+                                    $matchingRadio.prop("disabled", true);
+                                }
+                            }
+                        }
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+    })
     reservationBtn.click(function () {
         //modal 값 정보
+        let calYear = $('span#calYear').text();
+        let calMonth = $('span#calMonth').text();
+        let calDate = $('td.choiceDay').text();
         let checkedDate = $('td.choiceDay');
         let checkedTime = $('.option-timetable label input:checked');
         let checkedPerson = $('.option-personnel label input:checked');
-        let checkedMember = $('input[name="member_seq"]');
-
+        let checkedMember = $('input[name="memberSeq"]')
+        let calDay = getDayOfWeek($('td.choiceDay').index());
         if(checkedMember.val() === ""){
             alert("로그인이 필요합니다.");
             location.href='/members/login';
         }else if(checkedDate.length === 0){
-            alert("member_seq = " + checkedMember.val())
             alert("예약날짜를 확인해주세요");
             return false;
         }else if(checkedTime.length === 0){
@@ -111,8 +155,16 @@ let form = $("form");
             alert("인원수를 확인해주세요");
             return false;
         }else{
-            form.submit();
-            alert("예약되었습니다. 마이페이지에서 예약을 확인해주세요.")
+            if(confirm("예약날짜 : " + calYear + "년 " + calMonth + "월 " + calDate + "일 " + calDay + "요일\n" +
+                    "예약시간 : " + checkedTime.parent().children().eq(1).html() +"\n" +
+                    "인원수 : " + checkedPerson.parent().children().eq(1).html()
+            )){
+                form.submit();
+                alert("예약되었습니다. 마이다이닝에서 예약을 확인해주세요.")
+            }else{
+                return false;
+            }
+
         }
     });
 

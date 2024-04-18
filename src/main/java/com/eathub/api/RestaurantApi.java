@@ -3,6 +3,9 @@ package com.eathub.api;
 import com.eathub.conf.SessionConf;
 import com.eathub.dto.OwnerRestaurantDetailDTO;
 import com.eathub.dto.RestaurantDetailDTO;
+import com.eathub.dto.TimeOptionDTO;
+import com.eathub.entity.RestaurantInfo;
+import com.eathub.mapper.RestaurantMapper;
 import com.eathub.service.MemberService;
 import com.eathub.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,6 +26,7 @@ import java.util.Map;
 public class RestaurantApi {
     private final RestaurantService restaurantService;
     private final MemberService memberService;
+    private final RestaurantMapper restaurantMapper;
 
 //    찜 추가 및 삭제 API
     @PostMapping("/zzim/{restaurant_id}")
@@ -75,5 +82,53 @@ public class RestaurantApi {
         return ResponseEntity.ok().body(Map.of(
                 "success", true
         ));
+    }
+
+
+
+
+
+    //0000부터 2330까지 와 그에 따른 상태 반환 ,  가능 : 0, 예약됨 : 1, 지난 시간 : 2, 오픈하지 않음 : 3
+    @PostMapping("/getTimeStatuses/{restaurantSeq}/{selectedDate}")
+    public Map<String, Integer>  timeStatuses(@PathVariable("restaurantSeq") Long restaurant_seq,
+                                       @PathVariable("selectedDate") String selectedDate
+    ) {
+
+        RestaurantInfo restaurantInfo = restaurantMapper.selectRestaurantInfo(restaurant_seq);
+        LocalTime openHour = restaurantInfo.getOpenHour().toLocalTime();
+        LocalTime closeHour = restaurantInfo.getCloseHour().toLocalTime();
+        LocalTime nextReservationTime =  restaurantService.getNextReservationTime();
+
+        Map<String, Integer> timeStatuses = new HashMap<>();
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HHmm");
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate today = LocalDate.now();
+
+        LocalTime nowTime = LocalTime.of(0, 0);
+
+        //if 문의 순서에 따라 우선순위 선택 가능
+        do {
+            // 가능 : 0
+            timeStatuses.put(nowTime.format(formatter1), 0);
+            //지난 시간 : 2
+            if(nowTime.isBefore(nextReservationTime) && selectedDate.equals(today.format(formatter2))){
+                timeStatuses.put(nowTime.format(formatter1), 2);
+            }
+            //오픈하지 않음 : 3
+            if(nowTime.isBefore(openHour) || nowTime.isAfter(closeHour)){
+                timeStatuses.put(nowTime.format(formatter1), 3);
+            }
+            nowTime = nowTime.plusMinutes(30);
+        } while (!nowTime.equals(LocalTime.of(0, 0)));
+
+        if(selectedDate != null){
+            // 예약됨 : 1
+            List<LocalTime> BookedTimes =  restaurantService.getBookedTimes(restaurant_seq, selectedDate);
+            for (LocalTime BookedTime : BookedTimes) {
+                timeStatuses.put(BookedTime.format(formatter1), 1);
+            }
+        }
+        return timeStatuses;
+
     }
 }

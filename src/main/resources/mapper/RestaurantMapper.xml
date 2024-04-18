@@ -91,6 +91,14 @@
         WHERE restaurant_seq = #{restaurant_seq}
     </select>
 
+
+
+    <select id="selectOnesReservation" resultType="reservation">
+        SELECT *
+        FROM reservation
+        WHERE restaurant_seq = #{restaurant_seq}
+    </select>
+
     <select id="selectRestaurantInfoWithType" resultType="com.eathub.dto.OwnerRestaurantDetailDTO">
         SELECT r.*, c.restaurant_type
         FROM restaurant_info r

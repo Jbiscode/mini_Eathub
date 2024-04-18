@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import java.time.format.DateTimeFormatter;
@@ -346,7 +347,7 @@ public class RestaurantService {
     }
 
     //session 초기값에 저장할 가장 가까운 예약 가능 시간 구하기.
-    public String getNextReservationTime() {
+    public LocalTime getNextReservationTime() {
         // 현재 시간 가져오기
         LocalTime currentTime = LocalTime.now();
 
@@ -361,10 +362,8 @@ public class RestaurantService {
             nextReservationTime = currentTime.withMinute(nextReservationMinute);
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
-
         // 예약 가능한 시간 출력
-        return nextReservationTime.format(formatter);
+        return nextReservationTime.withSecond(0).withNano(0);
     }
 
     public void saveRestaurantImage(String uuid, Long restaurantSeq) {
@@ -427,5 +426,23 @@ public class RestaurantService {
 
     public void updateRestaurantDetailExceptImg(RestaurantDetailDTO restaurantDetailDTO) {
         restaurantMapper.updateRestaurantDetailExceptImg(restaurantDetailDTO);
+    }
+
+    //회원번호, 식당번호, 지정된날짜정보에 해당되는 예약의 시간정보를 HHmm 형식으로 반환한다.
+    public List<LocalTime> getBookedTimes(Long restaurant_seq, String selectedDate) {
+        //회원번호, 식당번호에 해당하는 예약을 전부 뽑기
+        List<Reservation> reservations = restaurantMapper.selectOnesReservation(restaurant_seq);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        //yyyy-MM-dd HH:mm:ss 형식으로 되어있는 각각의 시간정보가  yyyy-MM-dd 형식의 selectedDate 를 포함하는지 보자.
+        List<LocalTime> bookedTimes = new ArrayList<>();
+        for (Reservation reservation : reservations) {
+            String[] dateParts = reservation.getRes_date().split(" ");
+            if (dateParts[0].equals(selectedDate)) {
+                LocalDateTime reservationDateTime = LocalDateTime.parse(reservation.getRes_date(), formatter);
+                bookedTimes.add(reservationDateTime.toLocalTime());
+            }
+        }
+        return bookedTimes;
     }
 }

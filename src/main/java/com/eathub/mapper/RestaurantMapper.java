@@ -33,6 +33,10 @@ public interface RestaurantMapper {
 
 
 //    SELECT
+    //예약 정보 조회
+    List<Reservation> selectOnesReservation(Long restaurant_seq);
+
+
     RestaurantInfo selectRestaurantInfo(Long restaurant_seq);
     List<RestaurantInfo> selectRestaurantInfoList();
     // 검색결과에 띄울 식당 정보 조회(찜 여부 포함)
