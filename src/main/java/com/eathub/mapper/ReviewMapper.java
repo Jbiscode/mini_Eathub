@@ -52,6 +52,9 @@ public interface ReviewMapper {
     //점주 리뷰관리 페이지
     List<ReviewDTO> selectOwnerReviewListPage(@Param("member_seq") Long member_seq, @Param("page") int page);
 
+    Long totalReviewCount(Long member_seq);
+
+    Long ownerTotalReviewCount(Long member_seq);
 
 
     //    DELETE

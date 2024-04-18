@@ -134,8 +134,21 @@ public class ReviewService {
             dto.setPictureUrls(reviewImages);
         }
 
-        System.out.println("page = " + page);
         return reviewDTO;
+    }
+
+    //고객 총 리뷰수
+    public Long totalReviewCount(Long member_seq) {
+        Long total_review = reviewMapper.totalReviewCount(member_seq);
+
+        return total_review;
+    }
+
+    //점주 총 리뷰수
+    public Long ownerTotalReviewCount(Long member_seq) {
+        Long total_review = reviewMapper.ownerTotalReviewCount(member_seq);
+
+        return total_review;
     }
     //    UPDATE
     //    DELETE

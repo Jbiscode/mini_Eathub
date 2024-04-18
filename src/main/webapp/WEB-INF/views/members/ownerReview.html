@@ -23,7 +23,12 @@
     <main id="main">
 
         <div class="container gutter-sm">
-            <div class="section-body"></div>
+            <div class="section-body">
+                <div class="totalReview-container">
+                    <h3 class="review-count" th:text="'내 가게 총 리뷰 ' + ${total_review} + '개'">
+                    </h3>
+                </div>
+            </div>
         </div>
         <!-- 이곳에 리뷰가 동적으로 불러와짐 -->
     </main>

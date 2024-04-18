@@ -45,7 +45,7 @@ function createReviewElement(reviewDTO) {
                                     <div class="review-gallery">${pictureHtml}</div>
                                     <div class="__review-post">
                                         <div class="review-content expand">${reviewDTO.content.replace(/(?:\r\n|\r|\n)/g, '<br>')}</div>
-                                        <a class="__more"></a>
+
                                     </div>
                                     <div class="__d-flex __v-center" style="justify-content: space-between;">
                                         <div class="__post-meta mb-24">

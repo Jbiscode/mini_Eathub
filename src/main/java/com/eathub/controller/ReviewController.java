@@ -1,13 +1,7 @@
 package com.eathub.controller;
 
 import com.eathub.conf.SessionConf;
-import com.eathub.dto.ReservationDTO;
-import com.eathub.dto.RestaurantDetailDTO;
-import com.eathub.dto.ReviewDTO;
-import com.eathub.dto.ReviewStatsDTO;
 import com.eathub.entity.ENUM.MEMBER_TYPE;
-import com.eathub.entity.RestaurantInfo;
-import com.eathub.service.MemberService;
 import com.eathub.service.RestaurantService;
 import com.eathub.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -15,19 +9,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/myreview")
+@RequestMapping("/review")
 @RequiredArgsConstructor
-public class MyReviewController {
+public class ReviewController {
 
     private final ReviewService reviewService;
     private final RestaurantService restaurantService;
@@ -37,13 +27,21 @@ public class MyReviewController {
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         MEMBER_TYPE mem_type = (MEMBER_TYPE) session.getAttribute(SessionConf.LOGIN_MEMBER_TYPE);
 
+
         model.addAttribute("member_seq", member_seq);
 
+
         if(mem_type.equals(MEMBER_TYPE.OWNER)){
+            Long total_review = reviewService.ownerTotalReviewCount(member_seq);
+
+            model.addAttribute("total_review", total_review);
             return "/members/ownerReview";
 
         }
 
+        Long total_review = reviewService.totalReviewCount(member_seq);
+
+        model.addAttribute("total_review", total_review);
         return "/members/myReview";
 
     }
