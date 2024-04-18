@@ -5,17 +5,20 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../../resources/css/review.css" th:href="@{/css/review.css}"/>
     <link rel="stylesheet"  href="../resources/css/footer.css" th:href="@{/css/footer.css}">
-    <script defer src="../../resources/js/review.js" th:src="@{/js/ownerReview.js}"></script>
+    <script defer src="../../resources/js/review.js" th:src="@{/js/review.js}"></script>
     <title>리뷰관리</title>
 </head>
 <body class="disable-user-select">
 <!-- Ajax요청을 보낼때 레스토랑 seq를 확인해서 가져감-->
-<input type="hidden" id="member_seq" th:value="${member_seq}">
+<input type="hidden" id="seq" th:value="${member_seq}">
+<input type="hidden" id="seq_type" value="member_seq">
+<input type="hidden" id="api_url" value="ownerReviews">
 
 <div class="wrapper" id="wrapperDiv">
     <header id="header" class="opaque">
         <div class="container">
             <div class="header-left">
+                <a class="btn-back">뒤로</a>
                 <h1 class="page-title" style="padding-right: 4px;">리뷰관리</h1>
             </div>
         </div>
