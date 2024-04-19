@@ -165,12 +165,13 @@ section {
 .swiper-slide img {
     background: center center no-repeat transparent;
     display: block;
-    max-width: 100%;
+    width: 380.4px;
     height: 250.23px;
     border-radius: 4%;
     border: 1px solid #f1f1f1;
 
 }
+
 
 /* 카테고리 */
 .section2 {
