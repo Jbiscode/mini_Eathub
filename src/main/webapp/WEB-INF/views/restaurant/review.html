@@ -35,14 +35,14 @@
             </ul>
         </div>
         <!--리뷰 별점-->
-        <section class="section mb-16">
+        <section class="section mb-16" >
             <div class="container gutter-sm">
                 <div class="review-rating-summary review-rating-summary-splitview">
                     <div class="average">
                         <h5><span class="_1ltqxco1h" th:text="|${restaurantInfo.review_total} 개 리뷰|">리뷰갯수</span></h5>
                         <div class="score"><strong class="_1ltqxco19 _10fm75h19" th:text="${restaurantInfo.rating}">평균점수</strong></div>
                     </div>
-                    <div class="rating-distribution">
+                    <div class="rating-distribution review-image">
                         <ul>
                             <li th:each="cnt : ${reviewCount}">
                                 <span class="score _1ltqxco1g" th:text="${cnt.rating}">5점~1점</span>
@@ -61,10 +61,7 @@
         </div>
         <!-- 이곳에 리뷰가 동적으로 불러와짐 -->
     </main>
-
-
         <div class="loading-indicator" id="loading">로딩 중...</div>
     </div>
-
 </body>
 </html>
