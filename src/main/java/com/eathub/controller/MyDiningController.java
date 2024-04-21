@@ -39,7 +39,6 @@ public class MyDiningController {
     public String myDining(Model model, HttpSession session) {
         // 로그인회원의 예약목록 불러오기위해서 session에 있는 memseq 가져오기
         Long mem_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
-        log.info("mem_seq={}", mem_seq);
 
         // mem_seq로 예약상태 리스트 불러오기 (reservation Service? 일단 memberservice에)
         List<ReservationDTO> reservationList =  memberService.getReservationList(mem_seq);
@@ -60,7 +59,6 @@ public class MyDiningController {
             }else{
                 reservationDTO.setReviewed(true);
             }
-            log.info("reservationDTO = {} ", reservationDTO);
         }
 
 

@@ -32,9 +32,7 @@ public class RestaurantApi {
     @PostMapping("/zzim/{restaurant_id}")
     public ResponseEntity<?> zzim(@PathVariable("restaurant_id") Long restaurant_seq, HttpSession session) {
         Long memberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
-        log.info("memberSeq: {}", memberSeq);
         boolean isAdded = restaurantService.toggleZzimRestaurant(memberSeq, restaurant_seq);
-        log.info("isAdded: {}", isAdded);
         return ResponseEntity.ok().body(Map.of(
                 "success", true,
                 "isBookmarked", isAdded

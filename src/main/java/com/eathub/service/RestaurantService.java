@@ -113,7 +113,6 @@ public class RestaurantService {
                 .findFirst()
                 .orElse(null);
 
-        log.info("zzimResult: {}", zzimResult);
         if (zzimResult == null) {
             restaurantMapper.insertZzimRestaurant(zzim);
             restaurantMapper.updateZzimTotal(restaurant_seq, 1);

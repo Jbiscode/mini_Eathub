@@ -78,7 +78,7 @@ function createReviewElement(reviewDTO) {
                 </div>
             </div>
             <!--사진 확대 모달-->
-            <div class="modal">
+            <div class="modal" style="overflow: hidden">
                 <header id="modal_header" class="opaque">
                     <div class="container">
                         <div class="modal_header-left">
@@ -167,14 +167,14 @@ function closeModal() {
 }
 
 function prevImage() {
-    currentIndex = (currentIndex - 1 + totalIndex) % totalIndex;
+    currentIndex = ((currentIndex - 1 + totalIndex) % totalIndex)  === 0 ? totalIndex - 1 :  (currentIndex - 1 + totalIndex) % totalIndex;
     currentImageSrc = document.querySelectorAll('.review-image')[currentIndex].src; // currentImageSrc 업데이트
     document.getElementById('modalImg').src = currentImageSrc;
     updateImageIndex();
 }
 
 function nextImage() {
-    currentIndex = (currentIndex + 1) % totalIndex;
+    currentIndex = (currentIndex + 1) % totalIndex === 0 ? 1 : (currentIndex+1) % totalIndex;
     currentImageSrc = document.querySelectorAll('.review-image')[currentIndex].src; // currentImageSrc 업데이트
     document.getElementById('modalImg').src = currentImageSrc;
     updateImageIndex();

@@ -291,7 +291,7 @@
 
     <!--사진 개수 찾기-->
     <select id="getPictureCountByRestaurantSeq" resultType="int" parameterType="Long">
-        SELECT res_seq, COUNT(*) AS picture_count
+        SELECT COUNT(*) AS picture_count
         from review_pictures
         LEFT JOIN reservation USING (res_seq)
         WHERE restaurant_seq=#{restaurant_seq};

@@ -187,8 +187,6 @@ public class RestaurantController {
         List<ReviewDTO> reviewDTOs = new ArrayList<>();
         RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
         List<ReviewStatsDTO> reviewStatsDTOS = reviewService.selectReviewCount(restaurant_seq);
-        log.info("reviewDTOs: {}", reviewDTOs);
-
 
         model.addAttribute("reviewCount",reviewStatsDTOS);
         model.addAttribute("restaurantInfo", selectRestaurantInfo);
