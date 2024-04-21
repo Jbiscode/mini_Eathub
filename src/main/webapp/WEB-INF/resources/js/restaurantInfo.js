@@ -207,4 +207,9 @@ document.querySelector(".btn-back").addEventListener('click', () => {
     history.back();
 });
 
+function navigateToCategory() {
+    var categoryUrl = "/restaurant/search/category/";
 
+    // 사용자를 카테고리 페이지로 이동시킵니다.
+    window.location.href = categoryUrl;
+}

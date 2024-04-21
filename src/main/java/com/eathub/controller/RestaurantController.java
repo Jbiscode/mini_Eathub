@@ -22,6 +22,7 @@ import java.text.ParseException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 @Slf4j
@@ -44,10 +45,13 @@ public class RestaurantController {
     @GetMapping("/detail/{restaurant_seq}")
     public String restaurantInfo(@PathVariable Long restaurant_seq,Model model,HttpSession session){
         RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
+        List<RestaurantDetailDTO> restaurantDetailDTOList=  restaurantService.getRestaurantDetailList();
+
         RestaurantDetailDTO restaurantDetailDTO = restaurantService.getRestaurantDetail(restaurant_seq);
         if(restaurantDetailDTO != null){
             model.addAttribute("restaurantDetailDTO", restaurantDetailDTO);
         }
+
         Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
         ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
@@ -59,12 +63,21 @@ public class RestaurantController {
         List<PictureDTO> pictureDTOS = restaurantService.selectAllPictures(restaurant_seq);
         // 메뉴 목록 조회
         List<MenuFormDTO> menuList = restaurantService.getMenuListByRestaurantSeq(restaurant_seq);
+        //비슷한 레스토랑 찾기
+        List<SearchResultDTO> searchsameRestaurant = restaurantService.selectSearchsameRestaurant(restaurant_seq, selectRestaurantInfo.getCategory_seq());
+        for (SearchResultDTO searchResultDTO : searchsameRestaurant) {
+            for (RestaurantDetailDTO restaurantDetailDTO2 : restaurantDetailDTOList ){
+                if(restaurantDetailDTO2.getRestaurant_seq().equals(searchResultDTO.getRestaurant_seq())){
+                    searchResultDTO.setImage_url(restaurantDetailDTO2.getImage_url());
+                }
+            }
+        }
 
         for (MenuFormDTO menu : menuList) {
             model.addAttribute("menu_name", menu.getMenu_name());
             model.addAttribute("menu_price", menu.getMenu_price());
         }
-        
+
         model.addAttribute("isZzimed", restaurantService.getZzimCount(restaurant_seq, loginMemberSeq) > 0);
         model.addAttribute("restaurantInfo", selectRestaurantInfo);
         model.addAttribute("timeOptions", timeOptionDTOS);
@@ -73,6 +86,11 @@ public class RestaurantController {
 
         model.addAttribute("pictures",pictureDTOS);
         model.addAttribute("menuList", menuList);
+        model.addAttribute("similarRestaurants", searchsameRestaurant);
+
+        // 사진 개수 가져오기
+        int pictureCount = restaurantService.getPictureCountByRestaurantSeq(restaurant_seq);
+        model.addAttribute("pictureCount", pictureCount);
 
         // 세션에 값이 없으면 세션 생성
         if(session.getAttribute("wantingDate") == null){
@@ -145,9 +163,9 @@ public class RestaurantController {
         if(restaurantDetailDTO != null){
             model.addAttribute("restaurantDetailDTO", restaurantDetailDTO);
         }
-      // 리뷰 사진들 불러오기
+        // 리뷰 사진들 불러오기
         List<PictureDTO> pictureDTOS = restaurantService.selectAllPictures(restaurant_seq);
-      
+
         Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
         ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
@@ -169,8 +187,6 @@ public class RestaurantController {
         List<ReviewDTO> reviewDTOs = new ArrayList<>();
         RestaurantInfo selectRestaurantInfo = restaurantService.selectRestaurantInfo(restaurant_seq);
         List<ReviewStatsDTO> reviewStatsDTOS = reviewService.selectReviewCount(restaurant_seq);
-        log.info("reviewDTOs: {}", reviewDTOs);
-
 
         model.addAttribute("reviewCount",reviewStatsDTOS);
         model.addAttribute("restaurantInfo", selectRestaurantInfo);

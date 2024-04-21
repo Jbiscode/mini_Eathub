@@ -103,7 +103,6 @@ public class MemberController {
     @GetMapping("/login")
     public String login(Model model, HttpSession session) {
         model.addAttribute("loginDTO", new LoginDTO());
-        log.info("login 페이지 이동");
         return "/members/loginForm";
     }
 
@@ -120,7 +119,6 @@ public class MemberController {
     public String login(@ModelAttribute LoginDTO loginDTO, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURL,
                         HttpServletRequest request) {
-        log.info("로그인 시도");
         Members loginMember = memberService.login(loginDTO, bindingResult);
 
         if (loginMember == null) {
@@ -308,8 +306,6 @@ public class MemberController {
     @PostMapping("/restaurant/join")
     public String joinRestaurant(@Validated @ModelAttribute RestaurantJoinDTO restaurantJoinDTO, BindingResult bindingResult,Model model,HttpSession session) throws ParseException {
 
-        log.info("restaurant ={}", restaurantJoinDTO.toString());
-
         Long member_seq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         Map<String, String> locationList = restaurantService.getLocationList();
         List<CategoryDTO> categoryList = restaurantService.getCategoryList();
@@ -421,7 +417,6 @@ public class MemberController {
         List<MenuFormDTO> menuList = menuFormDTOWrapper.getMenuList();
 
         for (MenuFormDTO menu : menuList) {
-            log.info("menu = {}", menu);
             // 이미지 파일 저장
             if (menu.getMenu_image() != null) {
                 imageOriginalName = menu.getMenu_image().getOriginalFilename();
@@ -462,7 +457,6 @@ public class MemberController {
         File file;
 
         restaurantDetailDTO.setRestaurant_seq(restaurant_seq);
-        log.info("restaurantDetailInfo={}", restaurantDetailDTO);
 
         if(bindingResult.hasErrors()){
             log.info("bindingResult={}",bindingResult);

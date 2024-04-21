@@ -59,6 +59,146 @@ body{
 }
 /*상단*/
 
+/*모달 사진*/
+#modal_header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    opacity: 1;
+    visibility: visible;
+}
+#modal_header .container {
+    margin: 0 auto;
+    max-width: 480px;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 48px;
+    width: 100%;
+    background: #000;
+}
+#modal_header .modal_header-left {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+#modal_header .modal_header-left .xx {
+    background: url(../images/x.svg) 50% 50% no-repeat;
+    width: 32px;
+    height: 32px;
+    display: block;
+    text-indent: -999em;
+    overflow: hidden;
+    margin-top: 8px;
+    flex: none;
+}
+#modal_header .modal_header-left .page-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 8px;
+    margin-left:7px;
+    color:white;
+}
+.modal-content {
+    transition: transform 0.5s ease-in-out;
+}
+.prevBtn{
+    position: absolute;
+    background: url(../images/back-w.svg) 50% 50% black;
+    width: 32px;
+    height: 32px;
+    display: block;
+    text-indent: -999em;
+    flex: none;
+    z-index: 1000;
+    margin-left: 5px;
+    margin-top: 350px;
+    border-radius:50%;
+    right:175px
+
+}
+.nextBtn{
+    position: absolute;
+    transform: scaleX(-1);
+    transform-origin: left center; /* 왼쪽 중앙을 기준으로 반전 */
+
+    background: url(../images/back-w.svg) 50% 50% black;
+    width: 32px;
+    height: 32px;
+    display: block;
+    text-indent: -999em;
+    margin-left: 205px;
+    margin-top: 330px;
+    flex: none;
+    z-index: 1000;
+    border-radius:50%;
+
+
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: auto;
+    width:390px;
+    height:845px;
+    background-color: #000;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width:390px;
+    height:300px;
+}
+
+.image-index {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 16px;
+}
+.modal_header-left {
+    float: left;
+}
+
+.xx {
+    cursor: pointer;
+    color: #fff;
+    text-decoration: none;
+}
+
+.xx:hover {
+    color: #ccc;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+/*모달-사진확대*/
+
 /*홈 메뉴 사진 리뷰*/
 a {
     color: #000;
@@ -539,22 +679,11 @@ input, select, textarea {
     font-weight: 500;
     letter-spacing: -.05em;
 }
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: auto;
-    top: auto;
-    margin-right: 20px;
-    margin-top:10px;
-    overflow: auto;
-}
+
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 8% auto;
-    padding: 20px;
-    width: 80%;
+    background-color: #000;
+    margin-top:180px;
 }
 
 .mb-20 {
