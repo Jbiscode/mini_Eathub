@@ -15,7 +15,7 @@ function createReviewElement(reviewDTO) {
 
     // 응답에서 가져온 PictureUrl 먼저 html로 파싱하기
     const pictureHtml = reviewDTO.pictureUrls.map(pictureUrl =>
-        `<img src="https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/review/${pictureUrl}" alt="리뷰 사진">`
+        `<img class="review-image" src="https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/review/${pictureUrl}" alt="리뷰 사진">`
     ).join('');
 
     let names;
@@ -77,7 +77,31 @@ function createReviewElement(reviewDTO) {
                     </div>
                 </div>
             </div>
+            <!--사진 확대 모달-->
+            <div class="modal">
+                <header id="modal_header" class="opaque">
+                    <div class="container">
+                        <div class="modal_header-left">
+                            <a class="xx" onclick="closeModal()">뒤로</a>
+                        </div>
+                    </div>
+                </header>
+                <div class="image-index">
+                    <a class="prevBtn" onclick="prevImage()">이전</a>
+                    <span id="currentIndex">1</span> / <span id="totalIndex">1</span>
+                    <a class="nextBtn" onclick="nextImage()">다음</a>
+                </div>
+                <img id="modalImg" class="modal-content" />
+            </div>
         </div>`;
+
+    // 각 이미지에 클릭 이벤트 추가
+    section.querySelectorAll('.review-image').forEach(image => {
+        image.addEventListener('click', () => {
+            openModal(image.src); // 클릭된 이미지의 소스를 가져옴
+        });
+    });
+
     return section;
 }
 
@@ -97,7 +121,15 @@ function fetchAndAppendReviews() {
             });
             pageNumber++; // 다음 페이지 준비
             document.getElementById('loading').style.display = 'none';
-            setTimeout(() => isFetching = false, 1000); // 1초 후에 다시 요청 가능하도록 설정
+            setTimeout(() => {
+                isFetching = false;
+                // 리뷰 사진 클릭 이벤트 핸들러 추가
+                document.querySelectorAll('.review-gallery img').forEach((image, index) => {
+                    image.addEventListener('click', () => {
+                        openModal(image.src);
+                    });
+                });
+            }, 1000); // 1초 후에 다시 요청 가능하도록 설정
         })
         .catch(error => {
             console.error('Error loading reviews:', error);
@@ -116,3 +148,50 @@ window.addEventListener('scroll', () => {
 });
 
 fetchAndAppendReviews(); // 초기 데이터 로드
+
+let currentIndex = 0;
+let totalIndex = 0;
+let currentImageSrc = '';
+
+function openModal(imageSrc) {
+    currentImageSrc = imageSrc;
+    document.querySelector('.modal').style.display = 'block';
+    document.getElementById('modalImg').src = imageSrc;
+    currentIndex = Array.from(document.querySelectorAll('.review-image')).findIndex(img => img.src === imageSrc); // 이미지 소스를 기준으로 currentIndex 업데이트
+    totalIndex = document.querySelectorAll('.review-image').length; // totalIndex 업데이트
+    updateImageIndex();
+}
+
+function closeModal() {
+    document.querySelector('.modal').style.display = 'none';
+}
+
+function prevImage() {
+    currentIndex = (currentIndex - 1 + totalIndex) % totalIndex;
+    currentImageSrc = document.querySelectorAll('.review-image')[currentIndex].src; // currentImageSrc 업데이트
+    document.getElementById('modalImg').src = currentImageSrc;
+    updateImageIndex();
+}
+
+function nextImage() {
+    currentIndex = (currentIndex + 1) % totalIndex;
+    currentImageSrc = document.querySelectorAll('.review-image')[currentIndex].src; // currentImageSrc 업데이트
+    document.getElementById('modalImg').src = currentImageSrc;
+    updateImageIndex();
+}
+
+function updateImageIndex() {
+    document.getElementById('currentIndex').textContent = currentIndex + 1;
+    document.getElementById('totalIndex').textContent = totalIndex;
+}
+
+document.querySelectorAll('.review-gallery').forEach((gallery, index) => {
+    const images = gallery.querySelectorAll('.review-image');
+    images.forEach((image, idx) => {
+        image.addEventListener('click', () => {
+            currentIndex = idx; // 클릭된 이미지의 인덱스를 currentIndex에 설정
+            totalIndex = images.length; // 해당 리뷰의 이미지 개수로 totalIndex 설정
+            openModal(images, idx); // 이미지 리스트와 클릭된 이미지의 인덱스를 전달
+        });
+    });
+});

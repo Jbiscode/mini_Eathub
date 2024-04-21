@@ -404,6 +404,35 @@ public class RestaurantService {
         return null;
     }
 
+    // 비슷한 레스토랑을 찾는 서비스 메서드
+    public List<SearchResultDTO> selectSearchsameRestaurant(Long restaurant_seq, Long category_seq) {
+        List<SearchResultDTO> allRestaurants = restaurantMapper.selectSearchsameRestaurantByCategory(restaurant_seq, category_seq);
+        List<SearchResultDTO> randomRestaurants = new ArrayList<>();
+
+        // allRestaurants 리스트의 크기가 8보다 작으면 그대로 반환합니다.
+        if (allRestaurants.size() <= 8) {
+            return allRestaurants;
+        }
+
+        // 중복되지 않도록 랜덤하게 4개의 인덱스를 선택하여 randomRestaurants 리스트에 추가합니다.
+        Set<Integer> indexes = new HashSet<>();
+        Random random = new Random();
+        while (indexes.size() < 8) {
+            int index = random.nextInt(allRestaurants.size());
+            indexes.add(index);
+        }
+        for (int index : indexes) {
+            randomRestaurants.add(allRestaurants.get(index));
+        }
+        return randomRestaurants;
+    }
+
+    /*사진 개수 찾기*/
+    public int getPictureCountByRestaurantSeq(Long restaurant_seq) {
+        return restaurantMapper.getPictureCountByRestaurantSeq(restaurant_seq);
+    }
+
+
     public void updateRestaurantInfo(RestaurantEditDTO restaurantJoinDTO) {
         restaurantMapper.updateRestaurantInfo(restaurantJoinDTO);
     }
@@ -427,6 +456,7 @@ public class RestaurantService {
     public void updateRestaurantDetailExceptImg(RestaurantDetailDTO restaurantDetailDTO) {
         restaurantMapper.updateRestaurantDetailExceptImg(restaurantDetailDTO);
     }
+
 
     //회원번호, 식당번호, 지정된날짜정보에 해당되는 예약의 시간정보를 HHmm 형식으로 반환한다.
     public List<LocalTime> getBookedTimes(Long restaurant_seq, String selectedDate) {

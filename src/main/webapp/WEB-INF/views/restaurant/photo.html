@@ -47,6 +47,11 @@
                     </div>
                 </div>
             </header>
+            <div class="image-index">
+                <a class="prevBtn" onclick="prevImage()">이전</a>
+                <span id="currentIndex">1</span> / <span id="totalIndex">1</span>
+                <a class="nextBtn" onclick="nextImage()">다음</a>
+            </div>
             <img id="modalImg" class="modal-content" />
         </div>
 
@@ -68,6 +73,55 @@
     function closeModal() {
         var modal = document.querySelector('.modal');
         modal.style.display = 'none';
+    }
+
+
+    const modalImg = document.getElementById('modalImg');
+    const prevBtn = document.querySelector('.modal .prevBtn');
+    const nextBtn = document.querySelector('.modal .nextBtn');
+
+    let currentIndex = 0;
+
+    let pictures = [];
+    const imageElements = document.querySelectorAll('.flex-content img');
+    imageElements.forEach(img => {
+        pictures.push(img.src);
+    });
+
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + pictures.length) % pictures.length;
+        modalImg.src = pictures[currentIndex];
+        updateImageIndex();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % pictures.length;
+        modalImg.src = pictures[currentIndex];
+        updateImageIndex();
+    });
+
+    prevBtn.addEventListener('click', prevImage);
+
+    function prevImage() {
+        currentIndex = (currentIndex - 1 + pictures.length) % pictures.length;
+        modalImg.src = pictures[currentIndex];
+        updateImageIndex();
+    }
+
+    nextBtn.addEventListener('click', nextImage);
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % pictures.length;
+        modalImg.src = pictures[currentIndex];
+        updateImageIndex();
+    }
+
+    const currentIndexEl = document.getElementById('currentIndex');
+    const totalIndexEl = document.getElementById('totalIndex');
+
+    function updateImageIndex() {
+        currentIndexEl.textContent = currentIndex + 1;
+        totalIndexEl.textContent = pictures.length;
     }
 </script>
 </body>

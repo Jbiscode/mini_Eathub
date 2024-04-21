@@ -259,7 +259,7 @@
                                                 <img th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/review/${picture.picture_url}|"
                                                      style="height: 110.5px; width: 110.5px; margin: 1px 1px; float: left;" />
                                                 <div th:if="${stat.index == 5}" class="count" style="position: absolute; z-index: 1;">
-                                                    <span>100+</span>
+                                                    <span th:text="|${pictureCount} +|"></span>
                                                 </div>
                                             </div>
                                         </a>
@@ -268,114 +268,42 @@
                             </div>
                         </section>
 
+                        <!-- 비슷한 레스토랑 찾아오는 쿼리 -->
                         <hr class="separator" />
-                        <div>
+                        <div style="margin-bottom: 20px;">
                             <section class="section pt-30 pb-30">
                                 <div class="container gutter-sm">
                                     <div class="section-header">
                                         <h3 class="section-title" style="max-width: 80%">비슷한 레스토랑 추천</h3>
                                         <div class="utils">
-                                            <a class="btn-all">전체보기</a>
+                                            <a class="btn-all" th:href="@{|/search/category/${restaurantInfo.category_seq}|}">전체보기</a>
                                         </div>
                                     </div>
                                     <div class="section-body">
                                         <div class="v-scroll">
                                             <div class="v-scroll-inner">
                                                 <div class="restaurant-list restaurant-list-sm" style="display: flex; flex-wrap: nowrap">
-                                                    <div>
+                                                    <div th:each="similarRestaurant : ${similarRestaurants}">
                                                         <div class="restaurant-list-item">
-                                                            <a href="" class="tb">
-                                                                <div
-                                                                    class="img"
-                                                                    style="
-                                                                        background-image: url('https://ugc-images.catchtable.co.kr/catchtable/shopinfo/soinp4h9YNRuHm8yv09TMvg/3404fa4e8153421b9885045ab96ccbec?small400');
-                                                                    "
-                                                                ></div>
+                                                            <a th:href="@{|/restaurant/detail/${similarRestaurant.restaurant_seq}|}" class="tb">
+                                                                <div class="img">
+                                                                    <img class="rest_main" th:src="|https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/storage/${similarRestaurant.image_url}|" alt="Restaurant Image">
+                                                                </div>
                                                             </a>
                                                             <div class="detail">
-                                                                <a class="btn-bookmark">북마크</a>
                                                                 <a href="">
-                                                                    <h3 class="name">소복재 방이본점</h3>
+                                                                    <!-- 레스토랑 이름과 평점, 태그 등을 새로운 데이터로 수정합니다 -->
+                                                                    <h3 class="name" th:text="${similarRestaurant.restaurant_name}">가게이름</h3>
                                                                     <div class="meta">
-                                                                        <span class="score">4.8</span>
-                                                                        <span class="tags">샤브샤브 • 잠실</span>
+                                                                        <span class="score" th:text="${similarRestaurant.rating}">평점</span>
+                                                                        <span class="tags" th:text="${similarRestaurant.tag}">태그</span>
                                                                     </div>
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="restaurant-list-item">
-                                                            <a href="" class="tb">
-                                                                <div
-                                                                    class="img"
-                                                                    style="
-                                                                        background-image: url('https://ugc-images.catchtable.co.kr/catchtable/shopinfo/soinp4h9YNRuHm8yv09TMvg/3404fa4e8153421b9885045ab96ccbec?small400');
-                                                                    "
-                                                                ></div>
-                                                            </a>
-                                                            <div class="detail">
-                                                                <a class="btn-bookmark">북마크</a>
-                                                                <a href="">
-                                                                    <h3 class="name">소복재 방이본점</h3>
-                                                                    <div class="meta">
-                                                                        <span class="score">4.8</span>
-                                                                        <span class="tags">샤브샤브 • 잠실</span>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="restaurant-list-item">
-                                                            <a href="" class="tb">
-                                                                <div
-                                                                    class="img"
-                                                                    style="
-                                                                        background-image: url('https://ugc-images.catchtable.co.kr/catchtable/shopinfo/soinp4h9YNRuHm8yv09TMvg/3404fa4e8153421b9885045ab96ccbec?small400');
-                                                                    "
-                                                                ></div>
-                                                            </a>
-                                                            <div class="detail">
-                                                                <a class="btn-bookmark">북마크</a>
-                                                                <a href="">
-                                                                    <h3 class="name">소복재 방이본점</h3>
-                                                                    <div class="meta">
-                                                                        <span class="score">4.8</span>
-                                                                        <span class="tags">샤브샤브 • 잠실</span>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="restaurant-list-item">
-                                                            <a href="" class="tb">
-                                                                <div
-                                                                    class="img"
-                                                                    style="
-                                                                        background-image: url('https://ugc-images.catchtable.co.kr/catchtable/shopinfo/soinp4h9YNRuHm8yv09TMvg/3404fa4e8153421b9885045ab96ccbec?small400');
-                                                                    "
-                                                                ></div>
-                                                            </a>
-                                                            <div class="detail">
-                                                                <a class="btn-bookmark">북마크</a>
-                                                                <a href="">
-                                                                    <h3 class="name">소복재 방이본점</h3>
-                                                                    <div class="meta">
-                                                                        <span class="score">4.8</span>
-                                                                        <span class="tags">샤브샤브 • 잠실</span>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="showall">
-                                                        <a href="#showall1">
-                                                            <span>전체보기</span>
-                                                        </a>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>

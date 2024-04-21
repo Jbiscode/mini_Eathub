@@ -240,18 +240,19 @@
         WHERE restaurant_seq = #{restaurantSeq}
     </select>
 
-<!--예약번호로 레스토랑 번호찾기 -->
-<select id="selectRestaurantSeqByResSeq" >
-    SELECT restaurant_seq
-    FROM reservation
-    WHERE res_seq = #{res_seq}
-</select>
-<select id="selectAllPictures" resultType="com.eathub.dto.PictureDTO">
-    select *
-    from review_pictures
-            LEFT JOIN reservation USING (res_seq)
-    WHERE restaurant_seq=#{restaurant_seq};
-</select>
+    <!--예약번호로 레스토랑 번호찾기 -->
+    <select id="selectRestaurantSeqByResSeq" >
+        SELECT restaurant_seq
+        FROM reservation
+        WHERE res_seq = #{res_seq}
+    </select>
+
+    <select id="selectAllPictures" resultType="com.eathub.dto.PictureDTO">
+        select *
+        from review_pictures
+                LEFT JOIN reservation USING (res_seq)
+        WHERE restaurant_seq=#{restaurant_seq};
+    </select>
 
     <!--레스토랑 SEQ로 레스토랑 정보 받기 -->
     <select id="selectRestaurantByRestaurantSeq" resultType="com.eathub.dto.RestaurantEditDTO">
@@ -274,7 +275,29 @@
         FROM restaurant_detail
     </select>
 
-<!-- UPDATE-->
+    <!-- 비슷한 레스토랑 찾아오는 쿼리 -->
+    <select id="selectSearchsameRestaurantByCategory" resultType="com.eathub.dto.SearchResultDTO">
+        SELECT r.restaurant_seq, r.member_seq, r.category_seq, r.restaurant_name, r.tag, r.location, r.description, r.openHour, r.closeHour, r.rating, r.review_total, r.zzim_total
+        FROM restaurant_info r
+        JOIN (
+        SELECT category_seq
+        FROM restaurant_info
+        WHERE restaurant_seq = #{restaurant_seq}
+        ) AS current_restaurant ON r.category_seq = current_restaurant.category_seq
+        WHERE r.restaurant_seq != #{restaurant_seq}
+        ORDER BY RAND()
+        LIMIT 8;
+    </select>
+
+    <!--사진 개수 찾기-->
+    <select id="getPictureCountByRestaurantSeq" resultType="int" parameterType="Long">
+        SELECT res_seq, COUNT(*) AS picture_count
+        from review_pictures
+        LEFT JOIN reservation USING (res_seq)
+        WHERE restaurant_seq=#{restaurant_seq};
+    </select>
+
+    <!-- UPDATE-->
 
 
     <!-- 마이페이지 찜목록 comment 업데이트-->
