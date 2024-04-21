@@ -12,7 +12,7 @@
 <!-- Ajax요청을 보낼때 레스토랑 seq를 확인해서 가져감-->
 <input type="hidden" id="seq" th:value="${member_seq}">
 <input type="hidden" id="seq_type" value="member_seq">
-<input type="hidden" id="api_url" value="myReviews">
+<input type="hidden" id="api_url" value="ownerReviews">
 
 <div class="wrapper" id="wrapperDiv">
     <header id="header" class="opaque">
@@ -28,7 +28,7 @@
         <div class="container gutter-sm">
             <div class="section-body">
                 <div class="totalReview-container">
-                    <h3 class="review-count" th:text="'내가 쓴 총 리뷰 ' + ${total_review} + '개'">
+                    <h3 class="review-count" th:text="'내 가게 총 리뷰 ' + ${total_review} + '개'">
                     </h3>
                 </div>
             </div>

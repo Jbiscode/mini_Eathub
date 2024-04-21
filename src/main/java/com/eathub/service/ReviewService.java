@@ -116,6 +116,7 @@ public class ReviewService {
         return reviewDTO;
     }
 
+    //고객 리뷰관리 페이지
     public List<ReviewDTO> selectMyReviewAndImages(Long member_seq, int page) {
         List<ReviewDTO> reviewDTO = reviewMapper.selectMyReviewListPage(member_seq, (page-1)*2);
         for (ReviewDTO dto : reviewDTO) {
@@ -123,6 +124,31 @@ public class ReviewService {
             dto.setPictureUrls(reviewImages);
         }
         return reviewDTO;
+    }
+
+    //점주 리뷰관리 페이지
+    public List<ReviewDTO> selectOwnerReviewAndImages(Long member_seq, int page) {
+        List<ReviewDTO> reviewDTO = reviewMapper.selectOwnerReviewListPage(member_seq, (page-1)*2);
+        for (ReviewDTO dto : reviewDTO) {
+            List<String> reviewImages = reviewMapper.selectReviewImages(dto.getRes_seq());
+            dto.setPictureUrls(reviewImages);
+        }
+
+        return reviewDTO;
+    }
+
+    //고객 총 리뷰수
+    public Long totalReviewCount(Long member_seq) {
+        Long total_review = reviewMapper.totalReviewCount(member_seq);
+
+        return total_review;
+    }
+
+    //점주 총 리뷰수
+    public Long ownerTotalReviewCount(Long member_seq) {
+        Long total_review = reviewMapper.ownerTotalReviewCount(member_seq);
+
+        return total_review;
     }
     //    UPDATE
     //    DELETE

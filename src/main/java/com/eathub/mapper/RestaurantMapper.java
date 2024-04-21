@@ -36,7 +36,11 @@ public interface RestaurantMapper {
     void insertRestaurantDetail(RestaurantDetailDTO restaurantDetailDTO);
 
 
-    //    SELECT
+
+//    SELECT
+    //예약 정보 조회
+    List<Reservation> selectOnesReservation(Long restaurant_seq);
+
     RestaurantInfo selectRestaurantInfo(Long restaurant_seq);
 
     List<RestaurantInfo> selectRestaurantInfoList();

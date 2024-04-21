@@ -38,25 +38,25 @@
             <div class="swiper swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad1.png}" src="../resources/images/ad_ex.png" alt="ad_1" ></a>
+                        <a th:href="@{|/search/monthly|}"><img th:src="@{/images/ad1.png}" src="../resources/images/ad_ex.png" alt="ad_1" ></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad2.png}" src="../resources/images/ad_ex.png" alt="ad_2" ></a>
+                        <a th:href="@{|/search/top|}"><img th:src="@{/images/ad2.png}" src="../resources/images/ad_ex.png" alt="ad_2" ></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad3.png}" src="../resources/images/ad_ex.png" alt="ad_3" ></a>
+                        <a th:href="@{|/search/today|}"><img th:src="@{/images/ad3.png}" src="../resources/images/ad_ex.png" alt="ad_3" ></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad4.jpeg}" src="../resources/images/ad_ex.png" alt="ad_4" ></a>
+                        <a th:href="@{/restaurant/detail/47}"><img th:src="@{/images/ad4.png}" src="../resources/images/ad_ex.png" alt="ad_4" ></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad5.jpeg}" src="../resources/images/ad_ex.png" alt="ad_5"></a>
+                        <a th:href="@{/restaurant/detail/11}"><img th:src="@{/images/ad5.jpeg}" src="../resources/images/ad_ex.png" alt="ad_5"></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad6.jpeg}" src="../resources/images/ad_ex.png" alt="ad_6"></a>
+                        <a th:href="@{/restaurant/detail/135}"><img th:src="@{/images/ad6.jpeg}" src="../resources/images/ad_ex.png" alt="ad_6"></a>
                     </div>
                     <div class="swiper-slide">
-                        <a><img th:src="@{/images/ad7.jpeg}" src="../resources/images/ad_ex.png" alt="ad_7"></a>
+                        <a th:href="@{/restaurant/detail/9}"><img th:src="@{/images/ad7.jpeg}" src="../resources/images/ad_ex.png" alt="ad_7"></a>
                     </div>
                 </div>
                 <!-- 페이지네이션 -->
@@ -134,11 +134,11 @@
     <section class="section4">
         <div  class="container_sub">
             <div class="sub_header">
-                <div class="sub_header_container">
+                <div class="sub_header_container section-header-v">
                     <h3 class="sub_header_title">예약 핫플 BEST</h3>
                     <p>이달의 best 예약! 이번주는 여기 어떠세요?</p>
+                    <a class="btn-more" th:href="@{|/search/best|}">전체보기</a>
                 </div>
-                <a class="btn-more" th:href="@{|/search/best|}">전체보기 ></a>
             </div>
             <div class="sub_body">
                 <div class="v_scroll">
@@ -179,11 +179,11 @@
     <section class="section4">
         <div  class="container_sub">
             <div class="sub_header">
-                <div class="sub_header_container">
+                <div class="sub_header_container section-header-v">
                     <h3 class="sub_header_title">오늘의 예약</h3>
                     <p>오늘 뭐 먹을지 고민하고 계신다면 여기서 골라보세요:)</p>
+                    <a class="btn-more" th:href="@{|/search/today|}">전체보기</a>
                 </div>
-                <a class="btn-more" th:href="@{|/search/today|}">전체보기 ></a>
             </div>
             <div class="sub_body">
                 <div class="v_scroll">

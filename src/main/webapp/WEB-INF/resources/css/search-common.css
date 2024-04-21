@@ -1,5 +1,7 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+
 *{
-    letter-spacing: -.15em;
+    letter-spacing: -.05em;;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -8,7 +10,7 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 * {
-    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, sans-serif;
+    font-family: "Pretendard Variable", Pretendard, -apple-system;, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, sans-serif;
     font-style: normal;
 }
 body{
@@ -309,7 +311,7 @@ input::placeholder {
     color: #666;
     white-space: nowrap;
     text-overflow: ellipsis;
-    letter-spacing: -.10em;
+    letter-spacing: -.05em;
 }
 .meta .score {
     display: block;
@@ -334,7 +336,7 @@ input::placeholder {
 .meta .score .count {
     font-size: 13px;
     color: #999;
-    letter-spacing: -.04em;
+    letter-spacing: -.05em;
 }
 
 /* form-input */

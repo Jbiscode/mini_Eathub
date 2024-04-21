@@ -87,14 +87,49 @@
 
 
 
-<!--myReview -->
+    <!--myReview -->
     <select id="selectMyReviewListPage" resultType="com.eathub.dto.ReviewDTO">
         SELECT res_seq, review.rating, content, restaurant_seq, reservation.member_seq, review.createdAt, restaurant_name
         FROM review
                  LEFT JOIN reservation USING (res_seq)
                  LEFT JOIN restaurant_info USING (restaurant_seq)
         WHERE reservation.member_seq = #{member_seq}
-        ORDER BY review.rating DESC, res_seq DESC
+        ORDER BY review.createdAt DESC, rating DESC
         LIMIT #{page},2;
+    </select>
+
+    <select id="totalReviewCount">
+        SELECT COUNT(*)
+        FROM review
+                 LEFT JOIN reservation USING (res_seq)
+                 LEFT JOIN restaurant_info USING (restaurant_seq)
+        WHERE reservation.member_seq = #{member_seq}
+    </select>
+
+    <!-- ownerReview -->
+    <select id="selectOwnerReviewListPage" resultType="com.eathub.dto.ReviewDTO">
+        SELECT res_seq, review.rating, content, restaurant_seq, reservation.member_seq, review.createdAt, restaurant_name
+        FROM review
+                 LEFT JOIN reservation USING (res_seq)
+                 LEFT JOIN restaurant_info USING (restaurant_seq)
+        WHERE restaurant_seq IN (
+            SELECT restaurant_seq
+            FROM restaurant_info
+            WHERE member_seq = #{member_seq}
+        )
+        ORDER BY review.createdAt DESC, rating DESC
+        LIMIT #{page},2;
+    </select>
+
+    <select id="ownerTotalReviewCount">
+        SELECT COUNT(*)
+        FROM review
+                 LEFT JOIN reservation USING (res_seq)
+                 LEFT JOIN restaurant_info USING (restaurant_seq)
+        WHERE restaurant_seq IN (
+            SELECT restaurant_seq
+            FROM restaurant_info
+            WHERE member_seq = #{member_seq}
+        )
     </select>
 </mapper>

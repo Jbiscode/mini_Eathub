@@ -9,7 +9,9 @@
 </head>
 <body class="disable-user-select">
 <!-- Ajax요청을 보낼때 레스토랑 seq를 확인해서 가져감-->
-<input type="hidden" id="restaurant_seq" th:value="${restaurant_seq}">
+<input type="hidden" id="seq" th:value="${restaurant_seq}">
+<input type="hidden" id="seq_type" value="restaurant_seq">
+<input type="hidden" id="api_url" value="reviews">
 
 <div class="wrapper" id="wrapperDiv">
     <header id="header" class="opaque">

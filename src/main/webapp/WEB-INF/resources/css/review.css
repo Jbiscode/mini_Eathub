@@ -1,7 +1,12 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+
 /*상단*/
 #root {
     position: relative;
     z-index: 0;
+}
+body{
+    font-family: "Pretendard Variable", "Roboto", "Noto Sans KR", sans-serif;
 }
 .wrapper {
     max-width: 480px;
@@ -43,7 +48,7 @@
     height: 100%;
 }
 #header .header-left .btn-back {
-    background: url(/images/back.svg) 50% 50% no-repeat;
+    background: url(../images/back.svg) 50% 50% no-repeat;
     width: 32px;
     height: 32px;
     display: block;
@@ -291,7 +296,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 * {
-    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, sans-serif;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, sans-serif;
     font-style: normal;
 }
 body {
@@ -341,7 +346,7 @@ body {
     --_1ltqxco17: 32px;
 }
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Pretendard Variable", 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     background: #f4f4f4;
@@ -355,7 +360,14 @@ body {
     overflow: hidden;
     border-bottom: 1px solid #ccc;
 }
-
+.review-content{
+    line-height: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
 .average-rating, .rating-breakdown, .ratings-container {
     padding: 20px;
 }
@@ -455,7 +467,7 @@ body {
     gap: 10px;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 .review-gallery img {
@@ -485,6 +497,7 @@ body {
 /* 별점 */
 .section {
     box-sizing: border-box;
+    margin-bottom: 8px;
 }
 .mb-16 {
     margin-bottom: 16px !important;
@@ -739,7 +752,6 @@ input, select, textarea {
 /*리뷰작성*/
 .__body{
     position: relative;
-    padding: 0 16px 40px;
 }
 .ml--20 {
     margin-left: -20px !important;
@@ -749,12 +761,13 @@ input, select, textarea {
 }
 .__my-review-post .__header {
     position: relative;
-    padding: 7px 16px 8px;
+    padding: 12px 16px 0px;
 }
 .__my-review-post .__header .__user-info {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 .profile {
     display: flex;
@@ -766,6 +779,8 @@ input, select, textarea {
 }
 .profile-pic {
     position: relative;
+    margin-right: auto;
+    margin-bottom: 15px;
 }
 .profile-pic .img {
     width: 30px;
@@ -775,6 +790,7 @@ input, select, textarea {
     border-radius: 50%;
     box-sizing: border-box;
     background-image: url("../images/profile_default_v2.png");
+    margin-right: 10px;
 }
 .__my-review-post .__header .__user-info .profile .name {
     flex: initial;
@@ -821,11 +837,12 @@ input, select, textarea {
     align-items: center;
     font-size: 14px;
     gap: 8px;
+    width: 100%;
 }
 .x9vxc46 {
     display: flex !important;
     align-items: center;
-    gap: 330px;
+    margin-right: auto;
 }
 .__my-review-post .__header .__review-meta .__rating {
     display: flex;
@@ -840,9 +857,9 @@ input, select, textarea {
 .__my-review-post .__header .__review-meta .__rating:before {
     background: url(../images/star-yellow.svg) 0% 50% no-repeat;
     background-size: contain;
-    width: 14px;
+    width: 16px;
     min-width: 14px;
-    height: 14px;
+    height: 16px;
     content: "";
     margin-right: 4px;
 
@@ -877,6 +894,7 @@ input, select, textarea {
 }
 ._10fm75h6 {
     display: flex;
+    letter-spacing: -.05em;
 }
 .__my-review-post .__header .__review-meta--with-rating .__rating .__arrow {
     display: block;
@@ -905,8 +923,7 @@ input, select, textarea {
     position: absolute;
     top: 0;
     right: 0;
-    font-size: 12px;
-    margin-right: 10px;
+    font-size: 13px;
 }
 
 .__my-review-post .__header .__review-meta .__date {
@@ -1083,3 +1100,15 @@ button {
     gap: 8px;
 }
 /*리뷰작성*/
+
+
+/* 총 리뷰수  */
+
+.totalReview-container .review-count{
+    padding: 10px 4px !important;
+    font-size: 16px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}

@@ -1,9 +1,11 @@
 package com.eathub.service;
 
 import com.eathub.dto.LoginDTO;
+import com.eathub.dto.MyPageDTO;
 import com.eathub.dto.ReservationDTO;
 import com.eathub.entity.Members;
 import com.eathub.mapper.MemberMapper;
+import com.eathub.mapper.RestaurantMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class MemberService {
 
     private final MemberMapper memberMapper;
+    private final RestaurantMapper restaurantMapper;
 
     // member_id로 회원정보 가져오기
     public Members selectMemberById(String member_id) {
@@ -187,5 +190,124 @@ public class MemberService {
             reservationDTO.setDDay(dDay);
         }
         return reservationList;
+    }
+
+    public String cancelReservation(Long resSeq, Long memSeq) {
+        ReservationDTO reservationDTO = memberMapper.getReservation(resSeq);
+
+        // 예약날짜 가져오기
+        Date reservationDate = new Date(reservationDTO.getRes_date().getTime());
+
+        // 오늘날짜 Date 객체로 생성
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+
+        // 현재 날짜와 예약 날짜 차이 계산
+        long diff = reservationDate.getTime() - now.getTime();
+        long daysBetween = diff / (24 * 60 * 60 * 1000);
+
+        // 날짜 차이가 3일 미만인 경우 업데이트 X
+        if((daysBetween < 3 && daysBetween >= 0) || memSeq != reservationDTO.getMember_seq()){
+            return "FAIL";
+        }
+
+        // 3일 이상이면 업데이트
+        memberMapper.updateReservationReject(resSeq);
+        return "SUCCESS";
+
+    }
+
+    public List<ReservationDTO> getRequestReservations(int page, Long memberSeq) {
+        List<ReservationDTO> reservationList = memberMapper.selectStandbyReservation(page, memberSeq);
+        for (ReservationDTO reservationDTO : reservationList) {
+            Date date = reservationDTO.getRes_date();
+            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.M.d (E)").withLocale(Locale.KOREA);
+            String formattedDate = localDate.format(formatter);
+
+            reservationDTO.setDateFormat(formattedDate);
+
+            // D-day 계산
+            Date today = new Date();
+            Date reservationDate = reservationDTO.getRes_date();
+
+
+            Calendar calendarToday = Calendar.getInstance();
+            calendarToday.setTime(today);
+
+            calendarToday.set(Calendar.HOUR_OF_DAY, 0);
+            calendarToday.set(Calendar.MINUTE, 0);
+            calendarToday.set(Calendar.SECOND, 0);
+            calendarToday.set(Calendar.MILLISECOND, 0);
+
+
+            Calendar calendarReservation = Calendar.getInstance();
+            calendarReservation.setTime(reservationDate);
+
+            calendarReservation.set(Calendar.HOUR_OF_DAY, 0);
+            calendarReservation.set(Calendar.MINUTE, 0);
+            calendarReservation.set(Calendar.SECOND, 0);
+            calendarReservation.set(Calendar.MILLISECOND, 0);
+
+
+            long diff = calendarReservation.getTimeInMillis() - calendarToday.getTimeInMillis();
+            long dDay = TimeUnit.MILLISECONDS.toDays(diff);
+            long absDday = Math.abs(dDay);
+
+            reservationDTO.setAbsDday(absDday);
+            reservationDTO.setDDay(dDay);
+        }
+
+
+        return reservationList;
+    }
+
+    public String rejectReservation(Long resSeq, Long memSeq) {
+        ReservationDTO reservationDTO = memberMapper.getReservation(resSeq);
+        List<MyPageDTO> myPageDTOS = restaurantMapper.selectOwnerRestaurantList(memSeq);
+
+        // 현재 로그인한 점주의 레스토랑 리스트를 불러와서 그 리스트의 member_seq와
+        // 로그인 세션의 memSeq를 비교해서 일치하면 업데이트 아니면 FAIL
+        for (MyPageDTO myPageDTO : myPageDTOS) {
+            if (myPageDTO.getMember_seq().equals(memSeq)) {
+                memberMapper.updateReservationReject(resSeq);
+                return "SUCCESS";
+            }
+        }
+
+        return "FAIL";
+
+    }
+
+    public String accessReservation(Long resSeq, Long memSeq) {
+        ReservationDTO reservationDTO = memberMapper.getReservation(resSeq);
+        List<MyPageDTO> myPageDTOS = restaurantMapper.selectOwnerRestaurantList(memSeq);
+
+        // 현재 로그인한 점주의 레스토랑 리스트를 불러와서 그 리스트의 member_seq와
+        // 로그인 세션의 memSeq를 비교해서 일치하면 업데이트 아니면 FAIL
+        for (MyPageDTO myPageDTO : myPageDTOS) {
+            if (myPageDTO.getMember_seq().equals(memSeq)) {
+                memberMapper.updateReservationAccess(resSeq);
+                return "SUCCESS";
+            }
+        }
+
+        return "FAIL";
+    }
+
+    public String OkReservation(Long resSeq, Long memSeq) {
+        ReservationDTO reservationDTO = memberMapper.getReservation(resSeq);
+        List<MyPageDTO> myPageDTOS = restaurantMapper.selectOwnerRestaurantList(memSeq);
+
+        // 현재 로그인한 점주의 레스토랑 리스트를 불러와서 그 리스트의 member_seq와
+        // 로그인 세션의 memSeq를 비교해서 일치하면 업데이트 아니면 FAIL
+        for (MyPageDTO myPageDTO : myPageDTOS) {
+            if (myPageDTO.getMember_seq().equals(memSeq)) {
+                memberMapper.updateReservationOk(resSeq);
+                return "SUCCESS";
+            }
+        }
+
+        return "FAIL";
     }
 }

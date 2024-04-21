@@ -19,7 +19,7 @@
             <header class="_9j16x80">
                 <div class="_9j16x81 _9j16x82">
                     <div class="_9j16x83">
-                        <a class="_9j16x84 _9j16x85" th:href="@{/search}">뒤로</a>
+                        <a class="_9j16x84 _9j16x85 btn-back">뒤로</a>
                         <a class="_9j16x84 _9j16x86" th:href="@{/}">홈</a>
                     </div>
                     <div class="_9j16x83">
@@ -323,13 +323,29 @@
                     <button class="btn-bookmark-detail2" th:classappend="${isZzimed ? 'active' : ''}" th:data-restaurant-seq="${restaurantInfo.restaurant_seq}">저장</button>
                     <span class="_1kfi3w63" th:text="${restaurantInfo.zzim_total}">총찜수</span>
                 </div>
+                <input class="restaurantSeqData" type= "hidden" th:attr="data-restaurant-seq=${restaurant_seq}"/>
                 <form th:action th:object="${reservationJoinDTO}" method="post">
+                    <input class="memberSeq" type="hidden" name="memberSeq" th:value="${session.loginMemberSeq}" />
                     <input class="date" type="hidden" name="date" th:value="${session.wantingDate}" />
                     <input class="hour" type="hidden" name="hour" th:value="${session.wantingHour}"/>
                     <input class="person" type="hidden" name="person"  th:value="${session.wantingPerson}" />
-<!--                        <input class="date" type="hidden" name="date" th:value="${session.wantingDate}" />-->
-<!--                        <input class="hour" type="hidden" name="hour" th:value="${session.wantingHour}" />-->
-<!--                        <input class="person" type="hidden" name="person"  th:value="${session.wantingPerson}" />-->
+                    <div display="none" style="width: 0">
+                        <input class="form-check-input" type="checkbox" value="SAT" id="SAT"
+                               th:field="${reservationJoinDTO.closedDayList}"><label for="SAT"></label>
+                        <input class="form-check-input" type="checkbox" value="SUN" id="SUN"
+                               th:field="${reservationJoinDTO.closedDayList}"><label for="SUN"></label>
+                        <input class="form-check-input" type="checkbox" value="MON" id="MON"
+                               th:field="${reservationJoinDTO.closedDayList}" ><label for="MON"></label>
+                        <input class="form-check-input" type="checkbox" value="TUE" id="TUE"
+                               th:field="${reservationJoinDTO.closedDayList}"><label for="TUE"></label>
+                        <input class="form-check-input" type="checkbox" value="WED" id="WED"
+                               th:field="${reservationJoinDTO.closedDayList}"><label for="WED"></label>
+                        <input class="form-check-input" type="checkbox" value="THU" id="THU"
+                               th:field="${reservationJoinDTO.closedDayList}"><label for="THU"></label>
+                        <input class="form-check-input" type="checkbox" value="FRI" id="FRI"
+                               th:field="${reservationJoinDTO.closedDayList}"><label for="FRI"></label>
+
+                    </div>
                 </form>
                 <button type="submit" class="pgjaj01">
                     <div class="pgjaj02 pgjaj04">예약하기</div>

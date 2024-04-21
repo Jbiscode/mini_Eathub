@@ -6,6 +6,7 @@ import com.eathub.dto.*;
 import com.eathub.entity.Reservation;
 import com.eathub.entity.RestaurantDetail;
 import com.eathub.entity.RestaurantInfo;
+import com.eathub.service.MemberService;
 import com.eathub.service.RestaurantService;
 import com.eathub.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,6 +31,7 @@ import java.util.Random;
 @RequestMapping("/restaurant")
 public class RestaurantController {
     private final RestaurantService restaurantService;
+    private final MemberService memberService;
     private final ReviewService reviewService;
 
     /**
@@ -52,6 +55,10 @@ public class RestaurantController {
         Long loginMemberSeq = (Long) session.getAttribute(SessionConf.LOGIN_MEMBER_SEQ);
         List<TimeOptionDTO> timeOptionDTOS = restaurantService.generateTimeOptions(restaurant_seq);
         ReservationJoinDTO reservationJoinDTO = new ReservationJoinDTO();
+
+        String closedDay = selectRestaurantInfo.getClosedDay();
+        reservationJoinDTO.setClosedDayList(memberService.convertStringToList(closedDay));
+     
         // 리뷰 사진들 불러오기
         List<PictureDTO> pictureDTOS = restaurantService.selectAllPictures(restaurant_seq);
         // 메뉴 목록 조회
@@ -76,6 +83,7 @@ public class RestaurantController {
         model.addAttribute("timeOptions", timeOptionDTOS);
         model.addAttribute("reservationJoinDTO",reservationJoinDTO);
         model.addAttribute("restaurantDetailDTO",restaurantDetailDTO);
+
         model.addAttribute("pictures",pictureDTOS);
         model.addAttribute("menuList", menuList);
         model.addAttribute("similarRestaurants", searchsameRestaurant);
@@ -89,7 +97,8 @@ public class RestaurantController {
             session.setAttribute("wantingDate", restaurantService.getTodayDate());
         }
         if(session.getAttribute("wantingHour") == null){
-            session.setAttribute("wantingHour", restaurantService.getNextReservationTime());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+            session.setAttribute("wantingHour", restaurantService.getNextReservationTime().format(formatter));
         }
         if(session.getAttribute("wantingPerson") == null){
             session.setAttribute("wantingPerson", 1);
@@ -112,14 +121,14 @@ public class RestaurantController {
 
         restaurantService.insertReservation(
                 Reservation.builder()
-                        .member_seq(member_seq)
+                        .member_seq(reservationJoinDTO.getMemberSeq())
                         .restaurant_seq(restaurant_seq)
                         .res_date(formattedDate)
                         .res_people(reservationJoinDTO.getPerson())
                         .build()
         );
 
-        return "redirect:/members/my";
+        return "redirect:/mydining";
     }
 
 

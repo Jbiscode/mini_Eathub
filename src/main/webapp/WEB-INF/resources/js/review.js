@@ -1,4 +1,6 @@
-const restaurant_seq = document.getElementById('restaurant_seq').value;
+const seq = document.getElementById('seq').value;
+const seq_type = document.getElementById('seq_type').value;
+const api_url = document.getElementById('api_url').value;
 let isFetching = false;
 let pageNumber = 1; // 현재 페이지 번호
 
@@ -9,15 +11,21 @@ document.querySelector(".btn-back").addEventListener('click', () => {
 function createReviewElement(reviewDTO) {
     // Html을 문자열로 내보내면 appendChild로 변환못해서(87번줄코드) 감싸줄 태그를 우선 만들기
     const section = document.createElement('section');
-    section.className = 'section mb-20';
+    section.className = 'section';
 
     // 응답에서 가져온 PictureUrl 먼저 html로 파싱하기
     const pictureHtml = reviewDTO.pictureUrls.map(pictureUrl =>
         `<img class="review-image" src="https://kr.object.ncloudstorage.com/bitcamp-6th-bucket-97/review/${pictureUrl}" alt="리뷰 사진">`
     ).join('');
 
+    let names;
+    if (seq_type === "member_seq") {
+        names = `<span class="txt">${reviewDTO.restaurant_name || "식당 이름"}</span>`
+    }else {
+        names = `<span class="txt">${reviewDTO.user || "익명의 이용자"}</span>`
+    }
     //만든 html 문자열 태그속에 넣기
-    section.innerHTML= `
+    section.innerHTML = `
         <div class="container gutter-sm">
             <div class="section-body">
                 <div class="__my-review-list ml--20 mr--20">
@@ -28,10 +36,10 @@ function createReviewElement(reviewDTO) {
                                     <div class="__user-info">
                                         <a class="profile">
                                             <div class="profile-pic">
-                                                <img class="img">
+                                                <div class="img">
                                             </div>
                                             <h4 class="name username">
-                                                <span class="txt">${reviewDTO.user || "사용자 이름"}</span>
+                                                ${names}
                                             </h4>
                                         </a>
                                     </div>
@@ -49,7 +57,7 @@ function createReviewElement(reviewDTO) {
                                     <div class="review-gallery">${pictureHtml}</div>
                                     <div class="__review-post">
                                         <div class="review-content expand">${reviewDTO.content.replace(/(?:\r\n|\r|\n)/g, '<br>')}</div>
-                                        <a class="__more"></a>
+
                                     </div>
                                     <div class="__d-flex __v-center" style="justify-content: space-between;">
                                         <div class="__post-meta mb-24">
@@ -62,6 +70,7 @@ function createReviewElement(reviewDTO) {
                                             </button>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </article>
                         </div>
@@ -101,7 +110,7 @@ function fetchAndAppendReviews() {
     isFetching = true;
     document.getElementById('loading').style.display = 'block';
 
-    fetch(`/api/reviews?page=${pageNumber}&restaurant_seq=${restaurant_seq}`)
+    fetch(`/api/${api_url}?page=${pageNumber}&${seq_type}=${seq}`)
         .then(response => response.json())
         .then(data => {
             console.log('Loaded reviews:', data);
